@@ -99,7 +99,8 @@ Future<void> init() async {
       final dio = Dio(
         BaseOptions(
           // connectTimeout: const Duration(seconds: 20),
-          connectTimeout: const Duration(seconds: 5), // 5 seconds
+          connectTimeout: const Duration(seconds: 5),
+          // 5 seconds
           // receiveTimeout: const Duration(seconds: 5),
           // connectTimeout: Duration(seconds: 3), // Time to establish connection
           // receiveTimeout: Duration(seconds: 3), // Time to receive response
@@ -324,4 +325,12 @@ Future<void> init() async {
   // del();
   // await Firebase.initializeApp();
   Get.put(AppController(), permanent: true);
+
+  /// NEW INJECTIONS
+  _newCubitsInjection();
+}
+
+void _newCubitsInjection() {
+
+
 }
