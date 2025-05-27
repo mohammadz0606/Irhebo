@@ -5,6 +5,12 @@ import 'package:irhebo/app/resources/style/text_style.dart';
 final darkTheme = ThemeData(
     bottomSheetTheme:
         const BottomSheetThemeData(backgroundColor: Colors.transparent),
+    pageTransitionsTheme: const PageTransitionsTheme(
+      builders: {
+        TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+        TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+      },
+    ),
     colorScheme: ColorScheme(
       primary: AppDarkColors.primaryColor,
       onPrimary: AppDarkColors.pureWhite,
@@ -203,6 +209,12 @@ final darkTheme = ThemeData(
 final lightTheme = ThemeData(
     bottomSheetTheme:
         const BottomSheetThemeData(backgroundColor: Colors.transparent),
+    pageTransitionsTheme: const PageTransitionsTheme(
+      builders: {
+        TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+        TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+      },
+    ),
     colorScheme: ColorScheme(
       primary: AppLightColors.primaryColor,
       onPrimary: AppLightColors.pureWhite,
