@@ -1,0 +1,54 @@
+// ignore_for_file: unused_local_variable, unused_catch_clause
+
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:irhebo/app/app_controller.dart';
+import 'package:irhebo/app/injection.dart';
+import 'package:irhebo/app/router/routes.dart';
+import 'package:irhebo/domain/params/login_params.dart';
+import 'package:irhebo/domain/usecases/auth_usecases/login_use_case.dart';
+
+class LoginController extends GetxController {
+  final appController = Get.find<AppController>();
+
+  final GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
+
+  TextEditingController loginPhone = TextEditingController();
+  TextEditingController loginPassword = TextEditingController();
+  final RxBool _isVisibileLogin = (false).obs;
+  final RxBool _isLoading = (false).obs;
+
+  bool get isVisibileLogin => _isVisibileLogin.value;
+  bool get isLoading => _isLoading.value;
+
+  set isVisibileLogin(value) => _isVisibileLogin.value = value;
+  set isLoading(value) => _isLoading.value = value;
+
+  onTapVisibile() {
+    isVisibileLogin = !isVisibileLogin;
+  }
+
+  loginClient() async {
+    if (loginFormKey.currentState!.validate()) {
+      isLoading = true;
+      LoginUseCase loginUseCase = sl();
+      final result = await loginUseCase(LoginParams(
+          password: loginPassword.text,
+          phone: loginPhone.text,
+          prefix: appController.countryCode));
+      result!.fold((l) {
+        isLoading = false;
+      }, (r) {
+        isLoading = false;
+        appController.setAccessToken(r.data!.token ?? "");
+        Get.offAllNamed(AppRoutes.bottomNavBar);
+      });
+    }
+  }
+
+  onTapForgetPassword() {
+    Get.toNamed(AppRoutes.forgetPassword, arguments: {
+      "phone": loginPhone.text,
+    });
+  }
+}

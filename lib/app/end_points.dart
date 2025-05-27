@@ -1,0 +1,49 @@
+// ignore_for_file: non_constant_identifier_names
+
+class AppEndpoints {
+  static String base_url = 'https://irhebo-backend.smartedge.me/api/v1';
+
+  static String login = '$base_url/login';
+  static String logout = '$base_url/auth/logout';
+  static String home = '$base_url/home';
+  static String services = '$base_url/services/';
+  static String wishlist = '$base_url/wishlist';
+  static String filters = '$base_url/filters/';
+  static String checkout = '$base_url/checkout/proceed';
+  static String requests = '$base_url/requests/';
+  static String updateRequest = '$base_url/requests/add-comment';
+  static String portfolios = '$base_url/portfolio/featured';
+  static String freelancerProfile = '$base_url/users/freelancer-profile/';
+  static String changePassword = '$base_url/users/change-password';
+  static String requestDetails = '$base_url/requests/details/';
+  static String notifications = '$base_url/notifications/';
+  static String faqs = '$base_url/faqs/';
+  static String tickets = '$base_url/tickets/';
+  static String applyFilter = '$base_url/filters/apply';
+  static String quotations = '$base_url/quotations/get-by-user-id';
+  static String quotationDetails = '$base_url/quotations/details/';
+  static String createQuotationComment = '$base_url/quotations/create-comment';
+  static String quotationCommentList = '$base_url/quotations/comment-list/';
+  static String createQuotation = '$base_url/quotations/create';
+  static String updateProfile = '$base_url/users/update-profile';
+  static String createTicket = '$base_url/tickets/submit-ticket';
+  static String closeTicket = '$base_url/tickets/close-ticket/';
+  static String addTicketResponse = '$base_url/tickets/add-response';
+  static String readNotification = '$base_url/notifications/read/';
+  static String toggleFav = '$base_url/wishlist/toggle';
+  static String createRequest = '$base_url/requests/create';
+  static String review = '$base_url/submit-review';
+  static String searchServices = '$base_url/services/search';
+  static String categories = '$base_url/categories/';
+  static String subcategories = '$base_url/sub-categories/';
+  static String serivceDetails = '$base_url/services/details/';
+  static String portfolioDetails = '$base_url/portfolio/details/';
+  static String verifyCode = '$base_url/verify-code';
+  static String resetPassword = '$base_url/reset-password';
+  static String register = '$base_url/register';
+  static String general = '$base_url/shared/general-data';
+  static String config = '$base_url/shared/register-data';
+  static String steps = '$base_url/sliders';
+  static String myProfile = '$base_url/users/client-profile';
+  static String requestCode = '$base_url/generate-code';
+}

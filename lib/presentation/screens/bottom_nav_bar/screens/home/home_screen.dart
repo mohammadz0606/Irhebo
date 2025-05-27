@@ -1,0 +1,78 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:irhebo/app/app_controller.dart';
+import 'package:irhebo/app/resources/style/colors.dart';
+import 'package:irhebo/presentation/screens/bottom_nav_bar/screens/home/home_controller.dart';
+import 'package:irhebo/presentation/screens/bottom_nav_bar/screens/home/widgets/categories_section.dart';
+import 'package:irhebo/presentation/screens/bottom_nav_bar/screens/home/widgets/custome_paginagtion_footer.dart';
+import 'package:irhebo/presentation/screens/bottom_nav_bar/screens/home/widgets/home_app_bar.dart';
+import 'package:irhebo/presentation/screens/bottom_nav_bar/screens/home/widgets/portfolio_section.dart';
+import 'package:irhebo/presentation/screens/bottom_nav_bar/screens/home/widgets/services_section.dart';
+import 'package:irhebo/presentation/screens/bottom_nav_bar/widgets/bot_floating_button.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:showcaseview/showcaseview.dart';
+
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  HomeController controller = Get.find<HomeController>();
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (mounted) {
+        Get.find<AppController>().showCaseView(context);
+      }
+    });
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    var w = MediaQuery.of(context).size.width;
+    return Scaffold(
+      backgroundColor: Get.find<AppController>().darkMode
+          ? null
+          : AppLightColors.scaffoldColor,
+      appBar: PreferredSize(
+          preferredSize: Size.fromHeight(20 * (w / 100)), child: HomeAppBar()),
+      body: SmartRefresher(
+        controller: controller.refreshController,
+        onRefresh: controller.onRefreshList,
+        enablePullDown: true,
+        enablePullUp: true,
+        footer: CustomePaginagtionFooter(),
+        onLoading: controller.getFeaturedPortfolio,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Showcase(
+                  key: Get.find<AppController>().categoriesKey,
+                  description: "This is categories section".tr,
+                  child: CategoriesSection()),
+              Showcase(
+                  key: Get.find<AppController>().serviceKey,
+                  description: "This is services section".tr,
+                  child: ServicesSection()),
+              Showcase(
+                  key: Get.find<AppController>().porfolioKey,
+                  description: "This is porfolio section".tr,
+                  child: PortfolioSection())
+            ],
+          ),
+        ),
+      ),
+      floatingActionButton: Showcase(
+          targetBorderRadius: BorderRadius.circular(50),
+          key: Get.find<AppController>().botKey,
+          description: "This is bot made for you".tr,
+          child: BotFloatingButton()),
+      floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
+    );
+  }
+}
