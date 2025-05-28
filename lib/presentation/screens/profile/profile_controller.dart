@@ -16,6 +16,8 @@ import 'package:irhebo/domain/usecases/setting_usecase/update_profile_picture_us
 import 'package:irhebo/domain/usecases/setting_usecase/update_profile_use_case.dart';
 import 'package:irhebo/presentation/screens/profile/update_profile_screen.dart';
 
+import '../../../domain/models/new_config_model.dart';
+
 class ProfileController extends GetxController {
   final appController = Get.find<AppController>();
 
@@ -36,9 +38,9 @@ class ProfileController extends GetxController {
   TextEditingController phone = TextEditingController();
   TextEditingController userName = TextEditingController();
   GenderEntity? gender;
-  DataModel? country;
-  ProfessionModel? profession;
-  RxList<DataModel?> selectedLanguages = <DataModel?>[].obs;
+  NewConfigModelDataCountries? country;
+  NewConfigModelDataProfessions? profession;
+  RxList<NewConfigModelDataLanguagesData?> selectedLanguages = <NewConfigModelDataLanguagesData?>[].obs;
 
   UserModel? user;
   dio.MultipartFile? imageProfile;
@@ -54,18 +56,18 @@ class ProfileController extends GetxController {
     gender = val;
   }
 
-  onConfirmLanguages(List<DataModel?>? selected) {
+  onConfirmLanguages(List<NewConfigModelDataLanguagesData?>? selected) {
     selectedLanguages.clear();
     if (selected!.isNotEmpty) {
       selectedLanguages.value = selected;
     }
   }
 
-  onSelectProfession(ProfessionModel? val) {
+  onSelectProfession(NewConfigModelDataProfessions? val) {
     profession = val;
   }
 
-  onSelectCountry(DataModel? val) {
+  onSelectCountry(NewConfigModelDataCountries? val) {
     country = val;
   }
 
@@ -97,10 +99,10 @@ class ProfileController extends GetxController {
     userName.text = user?.name ?? "";
     phone.text = user?.phone ?? "";
     profession = appController.professions.firstWhere(
-      (element) => element.id == (user?.professionObject?.id ?? 0),
+      (element) => element?.id == (user?.professionObject?.id ?? 0),
     );
     country = appController.countries.firstWhere(
-      (element) => element.id == (user?.countryObject?.id ?? 0),
+      (element) => element?.id == (user?.countryObject?.id ?? 0),
     );
     gender = appController.genders.firstWhere(
       (element) => element.name == (user?.gender?.toLowerCase()),

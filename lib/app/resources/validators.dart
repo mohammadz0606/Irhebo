@@ -4,6 +4,8 @@ import 'package:irhebo/app/enums.dart';
 import 'package:irhebo/domain/entities/gender_entity.dart';
 import 'package:irhebo/domain/models/config_model.dart';
 
+import '../../domain/models/new_config_model.dart';
+
 ///
 /// Validator class
 ///
@@ -75,7 +77,7 @@ class AppValidators {
     return null;
   }
 
-  static String? languagesValidator(List<DataModel?>? selected) {
+  static String? languagesValidator(List<NewConfigModelDataLanguagesData?>? selected) {
     if (selected!.isEmpty) {
       return Get.find<AppController>().lang.value.languageCode ==
               AppLanguage.ar.name
@@ -86,7 +88,7 @@ class AppValidators {
     return null;
   }
 
-  static String? validateProfession(ProfessionModel? name) {
+  static String? validateProfession(NewConfigModelDataProfessions? name) {
     if (name == null) {
       return Get.find<AppController>().lang.value.languageCode ==
               AppLanguage.ar.name
@@ -106,7 +108,7 @@ class AppValidators {
     return null;
   }
 
-  static String? validateCountry(DataModel? name) {
+  static String? validateCountry(NewConfigModelDataCountries? name) {
     if (name == null) {
       return Get.find<AppController>().lang.value.languageCode ==
               AppLanguage.ar.name

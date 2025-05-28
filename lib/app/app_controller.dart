@@ -21,7 +21,10 @@ import 'package:irhebo/domain/usecases/intro_usecases/get_general_use_case.dart'
 import 'package:showcaseview/showcaseview.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../domain/models/new_config_model.dart';
 import 'enums.dart';
+import 'network/end_points.dart';
+import 'network/network.dart';
 
 class AppController extends GetxController {
   late Rx<Locale> lang;
@@ -32,6 +35,7 @@ class AppController extends GetxController {
   ];
 
   bool get darkMode => _darkMode.value;
+
   set darkMode(value) => _darkMode.value = value;
 
   String token = '';
@@ -41,9 +45,10 @@ class AppController extends GetxController {
   GeneralModel? generalData;
   AppPreferences prefs = sl();
 
-  List<ProfessionModel> professions = [];
-  List<DataModel> countries = [];
-  List<DataModel> languages = [];
+  List<NewConfigModelDataProfessions?> professions = [];
+  List<NewConfigModelDataCountries?> countries = [];
+  List<NewConfigModelDataLanguagesData?> languages = [];
+
   List<GenderEntity> genders = [
     GenderEntity("1", "male"),
     GenderEntity("2", "female"),
@@ -56,7 +61,7 @@ class AppController extends GetxController {
     await detectAppTheme();
     token = prefs.getAccessToken();
     getConfig();
-    log(AppLoggerColors.magenta + token.toString() + "token");
+    log("${AppLoggerColors.magenta}${token}token");
   }
 
   final botKey = GlobalKey();
@@ -90,13 +95,19 @@ class AppController extends GetxController {
   }
 
   getConfig() async {
-    GetConfigUseCase getConfigUseCase = sl();
-    final result = await getConfigUseCase(());
-    result!.fold((l) {}, (r) {
-      professions = r.data!.professions ?? [];
-      countries = r.data!.countries!.data ?? [];
-      languages = r.data!.languages!.data ?? [];
-    });
+    // GetConfigUseCase getConfigUseCase = sl();
+    // final result = await getConfigUseCase(());
+    // result!.fold((l) {}, (r) {
+    //   professions = r.data!.professions ?? [];
+    //   countries = r.data!.countries!.data ?? [];
+    //   languages = r.data!.languages!.data ?? [];
+    // });
+    final response = await Network().get(url: AppEndpoints.config);
+
+    NewConfigModel configModel = NewConfigModel.fromJson(response.data);
+    professions = configModel.data?.professions ?? [];
+    countries = configModel.data?.countries ?? [];
+    languages = configModel.data?.languages?.data ?? [];
   }
 
   detectLanguageLocale() async {

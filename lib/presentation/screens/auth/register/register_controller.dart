@@ -12,6 +12,8 @@ import 'package:irhebo/domain/params/send_otp_params.dart';
 import 'package:irhebo/domain/usecases/auth_usecases/register_use_case.dart';
 import 'package:irhebo/domain/usecases/auth_usecases/send_otp_use_case.dart';
 
+import '../../../../domain/models/new_config_model.dart';
+
 class RegisterController extends GetxController {
   final appController = Get.find<AppController>();
   GlobalKey<FormState> signupKey = GlobalKey<FormState>();
@@ -32,9 +34,9 @@ class RegisterController extends GetxController {
   set isLoading(value) => _isLoading.value = value;
 
   GenderEntity? gender;
-  DataModel? country;
-  ProfessionModel? profession;
-  RxList<DataModel?> selectedLanguages = <DataModel?>[].obs;
+  NewConfigModelDataCountries? country;
+  NewConfigModelDataProfessions? profession;
+  RxList<NewConfigModelDataLanguagesData?> selectedLanguages = <NewConfigModelDataLanguagesData?>[].obs;
 
   @override
   onInit() async {
@@ -46,18 +48,18 @@ class RegisterController extends GetxController {
     gender = val;
   }
 
-  onConfirmLanguages(List<DataModel?>? selected) {
+  onConfirmLanguages(List<NewConfigModelDataLanguagesData?>? selected) {
     selectedLanguages.clear();
     if (selected!.isNotEmpty) {
       selectedLanguages.value = selected;
     }
   }
 
-  onSelectProfession(ProfessionModel? val) {
+  onSelectProfession(NewConfigModelDataProfessions? val) {
     profession = val;
   }
 
-  onSelectCountry(DataModel? val) {
+  onSelectCountry(NewConfigModelDataCountries? val) {
     country = val;
   }
 
