@@ -41,7 +41,7 @@ class AppPreferences {
   }
 
   String getAccessToken() {
-    return _sharedPreferences.getString(AppPrefsKeys.TOKEN) ?? "";
+    return _sharedPreferences.getString(AppPrefsKeys.TOKEN) ?? '';
   }
 
   Future<void> removeAccessToken() async {

@@ -14,7 +14,7 @@ import 'package:irhebo/app/resources/logger_colors.dart';
 import 'package:irhebo/app/snack_bar.dart';
 import 'package:irhebo/app/storage/app_prefs.dart';
 
-import '../network_info.dart';
+import '../network/network_info.dart';
 
 typedef FutureEitherOr<T> = Future<Either<BaseErrorModel, T>> Function();
 typedef FutureEitherOrWithToken<T> = Future<Either<BaseErrorModel, T>> Function(

@@ -5,6 +5,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:irhebo/app/app.dart';
 import 'package:irhebo/app/injection.dart';
 
+import 'app/network/network.dart';
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await init();
@@ -13,6 +15,7 @@ Future<void> main() async {
   // await Firebase.initializeApp(
   //   options: DefaultFirebaseOptions.currentPlatform,
   // );
+  Network().init();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,

@@ -1,12 +1,13 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:irhebo/app/base/base_remote_data_source.dart';
-import 'package:irhebo/app/network_info.dart';
+import 'package:irhebo/app/network/network_info.dart';
 import 'package:irhebo/app/storage/app_prefs.dart';
 import 'package:irhebo/data/auth_remote_data_source.dart';
 import 'package:irhebo/data/setting_remote_data_source.dart';
@@ -60,13 +61,15 @@ import 'package:irhebo/domain/usecases/setting_usecase/update_password_use_case.
 import 'package:irhebo/domain/usecases/setting_usecase/update_profile_picture_use_case.dart';
 import 'package:irhebo/domain/usecases/setting_usecase/update_profile_use_case.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:talker_dio_logger/talker_dio_logger_interceptor.dart';
+import 'package:talker_dio_logger/talker_dio_logger_settings.dart';
 
 import '../domain/repository/auth_repository.dart';
 import '../domain/repository/home_repository.dart';
 // import 'Usecases/Home_UseCases/get_sections_usecase.dart';
 
 import 'app_controller.dart';
-import 'end_points.dart';
+import 'network/end_points.dart';
 
 final sl = GetIt.instance;
 
@@ -114,15 +117,21 @@ Future<void> init() async {
           responseType: ResponseType.plain,
         ),
       );
-      dio.interceptors.add(
-        LogInterceptor(
-          responseBody: true,
-          requestBody: true,
-          responseHeader: true,
-          requestHeader: true,
-          request: true,
-        ),
-      );
+      if (kDebugMode) {
+        dio.interceptors.add(
+          TalkerDioLogger(
+            settings: const TalkerDioLoggerSettings(
+              printRequestHeaders: true,
+              printResponseHeaders: true,
+              printResponseMessage: true,
+              printRequestData: true,
+              printResponseData: true,
+              printErrorData: true,
+              printErrorMessage: true,
+            ),
+          ),
+        );
+      }
       return dio;
     },
   );
@@ -330,7 +339,4 @@ Future<void> init() async {
   _newCubitsInjection();
 }
 
-void _newCubitsInjection() {
-
-
-}
+void _newCubitsInjection() {}

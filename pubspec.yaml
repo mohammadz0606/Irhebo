@@ -70,6 +70,8 @@ dependencies:
   pull_to_refresh: 
   intl:
   gradient_borders: 
+  provider: ^6.1.5
+  talker_dio_logger: ^4.8.0
 
 dev_dependencies:
   flutter_test:

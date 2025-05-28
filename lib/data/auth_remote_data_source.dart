@@ -4,7 +4,7 @@ import 'package:dartz/dartz.dart';
 import 'package:irhebo/app/base/base_models/base_error_model.dart';
 import 'package:irhebo/app/base/base_models/base_response_model.dart';
 import 'package:irhebo/app/base/base_remote_data_source.dart';
-import 'package:irhebo/app/end_points.dart';
+import 'package:irhebo/app/network/end_points.dart';
 import 'package:irhebo/app/resources/logger_colors.dart';
 import 'package:irhebo/domain/models/login_model.dart';
 import 'package:irhebo/domain/models/otp_model.dart';
