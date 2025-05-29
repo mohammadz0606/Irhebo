@@ -50,7 +50,7 @@ class ErrorHandler {
     return false;
   }
 
-  static getErrorMessage(ErrorCode error) {
+  static String getErrorMessage(ErrorCode error) {
     switch (error) {
       case ErrorCode.BAD_REQUEST:
         return "BAD REQUEST";

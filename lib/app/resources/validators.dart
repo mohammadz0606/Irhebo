@@ -4,7 +4,7 @@ import 'package:irhebo/app/enums.dart';
 import 'package:irhebo/domain/entities/gender_entity.dart';
 import 'package:irhebo/domain/models/config_model.dart';
 
-import '../../domain/models/new_config_model.dart';
+import '../../domain/models/new_models/new_config_model.dart';
 
 ///
 /// Validator class

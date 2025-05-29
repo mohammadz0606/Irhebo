@@ -16,7 +16,7 @@ import 'package:irhebo/domain/usecases/setting_usecase/update_profile_picture_us
 import 'package:irhebo/domain/usecases/setting_usecase/update_profile_use_case.dart';
 import 'package:irhebo/presentation/screens/profile/update_profile_screen.dart';
 
-import '../../../domain/models/new_config_model.dart';
+import '../../../domain/models/new_models/new_config_model.dart';
 
 class ProfileController extends GetxController {
   final appController = Get.find<AppController>();

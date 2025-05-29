@@ -7,6 +7,8 @@ import 'package:talker_dio_logger/talker_dio_logger_interceptor.dart';
 import 'package:talker_dio_logger/talker_dio_logger_settings.dart';
 
 import '../app_controller.dart';
+import '../enums.dart';
+import '../error/error_handler.dart';
 import '../injection.dart';
 import '../storage/app_prefs.dart';
 
@@ -25,7 +27,7 @@ final class Network {
 
   void init() {
     BaseOptions options =
-        BaseOptions(headers: {'ContentType': 'application/json'});
+    BaseOptions(headers: {'ContentType': 'application/json'});
     _dio = Dio(options);
 
     if (kDebugMode) {
@@ -86,8 +88,16 @@ final class Network {
           ? Headers.multipartFormDataContentType
           : 'application/json',
       'Accept': 'application/json',
-      'Accept-Language': Get.find<AppController>().lang.value.languageCode,
-      'lang': Get.find<AppController>().lang.value.languageCode,
+      'Accept-Language': Get
+          .find<AppController>()
+          .lang
+          .value
+          .languageCode,
+      'lang': Get
+          .find<AppController>()
+          .lang
+          .value
+          .languageCode,
       'Device-Type': Platform.isAndroid ? 'Android' : 'IOS',
     };
     AppPreferences prefs = sl();
@@ -100,5 +110,25 @@ final class Network {
       headers: headers,
       validateStatus: (status) => status != null && status < 500,
     );
+  }
+
+  Future<String> handelError({required Response response}) async {
+    if (response.statusCode != 200) {
+      return response.data['message'];
+    }
+    return '';
+  }
+
+  String handelDioException(DioException error) {
+    if (error.type == DioExceptionType.connectionTimeout ||
+        error.type == DioExceptionType.connectionError ||
+        error.type == DioExceptionType.receiveTimeout ||
+        error.type == DioExceptionType.sendTimeout) {
+      return ErrorHandler.getErrorMessage(ErrorCode.TIMEOUT);
+    } else if (error.type == DioExceptionType.badResponse) {
+      return ErrorHandler.getErrorMessage(ErrorCode.BAD_REQUEST);
+    } else {
+      return ErrorHandler.getErrorMessage(ErrorCode.SERVER_ERROR);
+    }
   }
 }

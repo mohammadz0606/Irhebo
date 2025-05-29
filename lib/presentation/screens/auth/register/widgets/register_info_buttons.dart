@@ -7,7 +7,7 @@ import 'package:irhebo/presentation/widgets/dropdown_widget.dart';
 import 'package:irhebo/presentation/widgets/multi_dropdown_widget.dart';
 import 'package:multi_select_flutter/util/multi_select_item.dart';
 
-import '../../../../../domain/models/new_config_model.dart';
+import '../../../../../domain/models/new_models/new_config_model.dart';
 
 class RegisterInfoButtons extends StatelessWidget {
   final String languagesHint;

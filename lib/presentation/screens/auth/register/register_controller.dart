@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:irhebo/app/app_controller.dart';
@@ -12,7 +15,12 @@ import 'package:irhebo/domain/params/send_otp_params.dart';
 import 'package:irhebo/domain/usecases/auth_usecases/register_use_case.dart';
 import 'package:irhebo/domain/usecases/auth_usecases/send_otp_use_case.dart';
 
-import '../../../../domain/models/new_config_model.dart';
+import '../../../../app/network/end_points.dart';
+import '../../../../app/network/network.dart';
+import '../../../../app/snack_bar.dart';
+import '../../../../domain/models/general_model.dart';
+import '../../../../domain/models/new_models/general_model.dart';
+import '../../../../domain/models/new_models/new_config_model.dart';
 
 class RegisterController extends GetxController {
   final appController = Get.find<AppController>();
@@ -28,15 +36,18 @@ class RegisterController extends GetxController {
   final RxBool _isLoading = (false).obs;
 
   bool get registerIsVisibile => _registerIsVisibile.value;
+
   bool get isLoading => _isLoading.value;
 
   set registerIsVisibile(value) => _registerIsVisibile.value = value;
+
   set isLoading(value) => _isLoading.value = value;
 
   GenderEntity? gender;
   NewConfigModelDataCountries? country;
   NewConfigModelDataProfessions? profession;
-  RxList<NewConfigModelDataLanguagesData?> selectedLanguages = <NewConfigModelDataLanguagesData?>[].obs;
+  RxList<NewConfigModelDataLanguagesData?> selectedLanguages =
+      <NewConfigModelDataLanguagesData?>[].obs;
 
   @override
   onInit() async {
@@ -78,7 +89,8 @@ class RegisterController extends GetxController {
     if (signupKey.currentState!.validate()) {
       isLoading = true;
       RegisterUseCase registerUseCase = sl();
-      final result = await registerUseCase(RegisterParams(
+
+      RegisterParams data = RegisterParams(
           username: registerUserName.text,
           confirmPassword: registerPassword.text,
           password: registerPassword.text,
@@ -92,26 +104,112 @@ class RegisterController extends GetxController {
                 (element) => element?.id ?? 0,
               )
               .toList(),
-          gender: gender?.name ?? ""));
-      result!.fold((l) {
+          gender: gender?.name ?? "");
+
+      try {
+        final response = await Network()
+            .post(url: AppEndpoints.register, data: data.toJson());
+        String errorMessage = await Network().handelError(response: response);
+
+        if (errorMessage.isNotEmpty) {
+          isLoading = false;
+          AppSnackBar.openErrorSnackBar(
+            message: errorMessage,
+          );
+          return;
+        }
+
+        NewGeneralModel generalModel = NewGeneralModel.fromJson(response.data);
+
+        if (generalModel.status == true) {
+          isLoading = false;
+          sendOtp();
+        }
+      } catch (error) {
+        if (error is DioException) {
+          AppSnackBar.openErrorSnackBar(
+            message: Network().handelDioException(error),
+          );
+        } else {
+          AppSnackBar.openErrorSnackBar(
+            message: error.toString(),
+          );
+        }
         isLoading = false;
-      }, (r) {
-        isLoading = false;
-        sendOtp();
-      });
+      }
+
+      // final result = await registerUseCase(RegisterParams(
+      //     username: registerUserName.text,
+      //     confirmPassword: registerPassword.text,
+      //     password: registerPassword.text,
+      //     email: registerEmail.text,
+      //     phone: registerPhone.text,
+      //     prefix: appController.countryCode,
+      //     professionId: profession?.id ?? 0,
+      //     countryId: country?.id ?? 0,
+      //     languages: selectedLanguages
+      //         .map(
+      //           (element) => element?.id ?? 0,
+      //         )
+      //         .toList(),
+      //     gender: gender?.name ?? ""));
+      // result!.fold((l) {
+      //   isLoading = false;
+      // }, (r) {
+      //   isLoading = false;
+      //   sendOtp();
+      // });
     }
   }
 
   sendOtp() async {
-    SendOtpUseCase requestCodeUseCase = sl();
-    final result = await requestCodeUseCase(SendOtpParams(
-        phone: registerPhone.text, prefix: appController.countryCode));
-    result!.fold((l) {}, (r) {
-      Get.toNamed(AppRoutes.verification, arguments: {
-        "verify_type": VerifyScreenType.register,
-        "code": r.data!.code,
-        "phone": registerPhone.text,
-      });
-    });
+    // SendOtpUseCase requestCodeUseCase = sl();
+    // final result = await requestCodeUseCase(SendOtpParams(
+    //     phone: registerPhone.text, prefix: appController.countryCode));
+    // result!.fold((l) {}, (r) {
+    //   Get.toNamed(AppRoutes.verification, arguments: {
+    //     "verify_type": VerifyScreenType.register,
+    //     "code": r.data!.code,
+    //     "phone": registerPhone.text,
+    //   });
+    // });
+
+    try {
+      SendOtpParams data = SendOtpParams(
+        phone: registerPhone.text,
+        prefix: appController.countryCode,
+      );
+      final response = await Network().post(
+        url: AppEndpoints.requestCode,
+        data: data.toJson(),
+      );
+
+      String errorMessage = await Network().handelError(response: response);
+
+      if (errorMessage.isNotEmpty) {
+        AppSnackBar.openErrorSnackBar(
+          message: errorMessage,
+        );
+        return;
+      }
+      NewGeneralModel generalModel = NewGeneralModel.fromJson(response.data);
+      if (generalModel.status == true) {
+        Get.toNamed(AppRoutes.verification, arguments: {
+          "verify_type": VerifyScreenType.register,
+          "code": generalModel.data,
+          "phone": registerPhone.text,
+        });
+      }
+    } catch (error) {
+      if (error is DioException) {
+        AppSnackBar.openErrorSnackBar(
+          message: Network().handelDioException(error),
+        );
+      } else {
+        AppSnackBar.openErrorSnackBar(
+          message: error.toString(),
+        );
+      }
+    }
   }
 }

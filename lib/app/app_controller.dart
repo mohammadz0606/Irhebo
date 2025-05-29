@@ -21,7 +21,7 @@ import 'package:irhebo/domain/usecases/intro_usecases/get_general_use_case.dart'
 import 'package:showcaseview/showcaseview.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../domain/models/new_config_model.dart';
+import '../domain/models/new_models/new_config_model.dart';
 import 'enums.dart';
 import 'network/end_points.dart';
 import 'network/network.dart';
