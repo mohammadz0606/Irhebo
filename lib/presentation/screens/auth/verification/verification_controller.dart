@@ -12,6 +12,7 @@ import 'package:irhebo/domain/usecases/auth_usecases/verify_otp_use_case.dart';
 
 class VerificationController extends GetxController {
   final appController = Get.find<AppController>();
+
   // GlobalKey<FormState> otpKey = GlobalKey<FormState>();
 
   final TextEditingController pinPutController = TextEditingController();
@@ -24,13 +25,19 @@ class VerificationController extends GetxController {
   final RxBool _isLoadingVerify = false.obs;
 
   bool get isValidOtp => _isValidOtp.value;
+
   bool get isLoadingSend => _isLoadingSend.value;
+
   bool get isLoadingVerify => _isLoadingVerify.value;
+
   int get endTime => _endTime.value;
 
   set isValidOtp(value) => _isValidOtp.value = value;
+
   set isLoadingSend(value) => _isLoadingSend.value = value;
+
   set isLoadingVerify(value) => _isLoadingVerify.value = value;
+
   set endTime(value) => _endTime.value = value;
 
   VerifyScreenType type = VerifyScreenType.register;
@@ -95,9 +102,10 @@ class VerificationController extends GetxController {
       isLoadingVerify = true;
       VerifyOtpUseCase verifyOtpUseCase = sl();
       final result = await verifyOtpUseCase(VerifyOtpParams(
-          phone: phone,
-          prefix: appController.countryCode,
-          code: pinPutController.text));
+        phone: phone,
+        prefix: appController.countryCode,
+        code: pinPutController.text,
+      ));
       result!.fold((l) {
         if (pinPutController.text != code) {
           isValidOtp = false;
@@ -112,7 +120,17 @@ class VerificationController extends GetxController {
           Get.offAndToNamed(AppRoutes.createPassword,
               arguments: {"phone": phone});
         } else {
+
+
+          /// IMPLEMENT FREELANCER LOGIC
           appController.setAccessToken(r.data!.token ?? "");
+
+          /// SET USER RULE IN SHARE PREFERENCES
+
+          r.data?.user?.role;
+
+
+
           Get.offAllNamed(AppRoutes.bottomNavBar);
         }
       });
