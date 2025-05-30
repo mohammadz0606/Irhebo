@@ -213,4 +213,6 @@ Map<String, String> ar = {
   "File is too large": "الملف كبير جدًا. الحد الأقصى المسموح به هو 3 ميغابايت.",
   "Please fill all fields": "يرجى تعبئة جميع الحقول",
   "Category Choices": "اختر احد الفئات",
+  "Create Service": "إنشاء خدمة",
+  "Add Portfolio": "إضافة معرض أعمال",
 };

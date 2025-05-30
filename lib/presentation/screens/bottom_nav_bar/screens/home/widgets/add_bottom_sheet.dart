@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as UserRole;
+import 'package:irhebo/app/global_imports.dart';
 import 'package:irhebo/presentation/screens/bottom_nav_bar/screens/home/home_controller.dart';
 
 import 'package:irhebo/presentation/widgets/app_button.dart';
@@ -22,17 +24,35 @@ class AddBottomSheet extends GetView<HomeController> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+          spacing:  4.97 * (w / 100),
+          children: getUserRole == UserRole.Client ? [
             AppButton(
               onPressed: controller.onTapCreateSupportTicket,
               title: "Create support ticket",
-            ),
-            SizedBox(
-              height: 4.97 * (w / 100),
+              backGroundColor: AppLightColors.greenContainer,
             ),
             AppButton(
               onPressed: controller.onTapRequestForQuotation,
               title: "Request for quotation",
+              backGroundColor: AppLightColors.greenContainer,
+            ),
+          ] : [
+            AppButton(
+              onPressed: () {},
+              title: "Create Service",
+              backGroundColor: AppLightColors.greenContainer,
+            ),
+
+            AppButton(
+              onPressed: () {},
+              title: "Add Portfolio",
+              backGroundColor: AppLightColors.greenContainer,
+            ),
+
+            AppButton(
+              onPressed: () {},
+              title: "Create support ticket",
+              backGroundColor: AppLightColors.greenContainer,
             ),
           ],
         ),

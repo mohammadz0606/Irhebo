@@ -216,4 +216,8 @@ Map<String, String> en = {
   "File is too large": "File is too large. Max allowed size is 3MB.",
   "Please fill all fields": "Please fill all fields",
   "Category Choices": "Choose a category",
+
+  "Create Service" :"Create Service",
+  "Add Portfolio" : "Add Portfolio",
+
 };
