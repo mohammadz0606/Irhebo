@@ -139,7 +139,7 @@ class VerificationController extends GetxController {
               Get.offAllNamed(AppRoutes.bottomNavBar);
             } else {
               Get.back();
-              Get.off(AppRoutes.registerFreelancer);
+              Get.offNamed(AppRoutes.registerFreelancer);
             }
           }
         },
