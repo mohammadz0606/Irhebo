@@ -5,7 +5,7 @@ Map<String, String> ar = {
   "Apply": "تطبيق",
   "What would you like to do": "ماذا تريد أن تفعل؟",
   "Choose your role in Irhebo": "اختر دورك في Irhebo",
-  "Choose your role in FREECO":"اختر دورك في FREECO",
+  "Choose your role in FREECO": "اختر دورك في FREECO",
   "Find Service": "البحث عن خدمة",
   "Sell Service": "بيع خدمة",
   "Continue": "متابعة",
@@ -209,5 +209,7 @@ Map<String, String> ar = {
   "Certificates": "الشهادات",
   "Upload another": "+ تحميل ملف آخر",
   "Tell us a little about yourself!": "حدثنا قليلاً عن نفسك!",
-  "File is too large": "الملف كبير جدًا. الحد الأقصى المسموح به هو 3 ميغابايت."
+  "File is too large": "الملف كبير جدًا. الحد الأقصى المسموح به هو 3 ميغابايت.",
+  "Please fill all fields": "يرجى تعبئة جميع الحقول",
+  "Category Choices": "اختر احد الفئات",
 };

@@ -16,7 +16,7 @@ class AppSnackBar {
       colorText: Get.find<AppController>().darkMode
           ? Get.theme.secondaryHeaderColor
           : Colors.white,
-      title ?? "Sorry".tr,
+      title ?? 'Sorry'.tr,
       message,
       snackPosition: SnackPosition.BOTTOM,
     );

@@ -46,4 +46,5 @@ class AppEndpoints {
   static String steps = '$base_url/sliders';
   static String myProfile = '$base_url/users/client-profile';
   static String requestCode = '$base_url/generate-code';
+  static String completeProfile = '$base_url/users/complete-profile';
 }

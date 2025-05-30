@@ -10,7 +10,7 @@ import 'package:irhebo/presentation/widgets/no_data.dart';
 import 'package:irhebo/presentation/widgets/search_service_item.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-class ServicePageViewItem extends GetWidget<sr.SearchController> {
+class ServicePageViewItem extends GetWidget<sr.SearchControllerGetx> {
   const ServicePageViewItem({
     super.key,
   });

@@ -8,7 +8,7 @@ import 'package:irhebo/presentation/screens/search/widgets/filter/filter_rate_wi
 import 'package:irhebo/presentation/screens/search/search_controller.dart'
     as sr;
 
-class FilterRatings extends GetWidget<sr.SearchController> {
+class FilterRatings extends GetWidget<sr.SearchControllerGetx> {
   final List<FilterModel> filters;
 
   const FilterRatings({

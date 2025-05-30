@@ -7,7 +7,7 @@ import 'package:irhebo/app/resources/style/decoration.dart';
 import 'package:irhebo/presentation/screens/search/search_controller.dart'
     as sr;
 
-class BudgetSlider extends GetWidget<sr.SearchController> {
+class BudgetSlider extends GetWidget<sr.SearchControllerGetx> {
   const BudgetSlider({
     super.key,
   });

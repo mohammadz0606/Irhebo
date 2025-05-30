@@ -7,7 +7,7 @@ import 'package:irhebo/presentation/screens/search/widgets/search_page_view.dart
 import 'package:irhebo/presentation/widgets/app_text_field.dart';
 import 'package:irhebo/presentation/widgets/normal_app_bar.dart';
 
-class SearchScreen extends GetView<sr.SearchController> {
+class SearchScreen extends GetView<sr.SearchControllerGetx> {
   const SearchScreen({super.key});
 
   @override

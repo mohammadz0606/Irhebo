@@ -38,3 +38,6 @@ export 'package:irhebo/app/resources/style/theme.dart';
 export 'package:provider/provider.dart';
 
 export 'package:flutter_screenutil/flutter_screenutil.dart';
+
+export 'network/end_points.dart';
+

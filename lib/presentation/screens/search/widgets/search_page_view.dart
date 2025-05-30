@@ -7,6 +7,7 @@ import 'package:irhebo/presentation/screens/search/widgets/subcategory_page_view
 class SearchPageView extends StatelessWidget {
   final PageController controller;
   final Function(int index) onPageChanged;
+
   const SearchPageView({
     super.key,
     required this.controller,
@@ -20,7 +21,7 @@ class SearchPageView extends StatelessWidget {
         physics: const NeverScrollableScrollPhysics(),
         controller: controller,
         onPageChanged: onPageChanged,
-        children: [
+        children: const [
           CategoryPageViewItem(),
           SubCategoryPageViewItem(),
           ServicePageViewItem(),

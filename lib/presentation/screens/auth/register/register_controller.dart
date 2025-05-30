@@ -88,7 +88,7 @@ class RegisterController extends GetxController {
   onTapSignUp() async {
     if (signupKey.currentState!.validate()) {
       isLoading = true;
-      RegisterUseCase registerUseCase = sl();
+      //RegisterUseCase registerUseCase = sl();
 
       RegisterParams data = RegisterParams(
           username: registerUserName.text,
@@ -104,7 +104,7 @@ class RegisterController extends GetxController {
                 (element) => element?.id ?? 0,
               )
               .toList(),
-          gender: gender?.name ?? "");
+          gender: gender?.name ?? '');
 
       try {
         final response = await Network()

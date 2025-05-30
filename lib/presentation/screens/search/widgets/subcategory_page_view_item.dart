@@ -6,7 +6,7 @@ import 'package:irhebo/presentation/screens/search/search_controller.dart'
 import 'package:irhebo/presentation/screens/search/widgets/search_subcategory_shimmer.dart';
 import 'package:irhebo/presentation/screens/search/widgets/subcategory_item.dart';
 
-class SubCategoryPageViewItem extends GetWidget<sr.SearchController> {
+class SubCategoryPageViewItem extends GetWidget<sr.SearchControllerGetx> {
   const SubCategoryPageViewItem({
     super.key,
   });

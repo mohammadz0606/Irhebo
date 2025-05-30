@@ -6,7 +6,7 @@ import 'package:irhebo/presentation/screens/search/search_controller.dart'
 import 'package:irhebo/presentation/screens/search/widgets/tag_item.dart';
 import 'package:irhebo/presentation/widgets/app_loading.dart';
 
-class ServicesFiltersSection extends GetWidget<sr.SearchController> {
+class ServicesFiltersSection extends GetWidget<sr.SearchControllerGetx> {
   const ServicesFiltersSection({
     super.key,
   });

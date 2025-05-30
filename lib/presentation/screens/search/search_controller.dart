@@ -22,7 +22,7 @@ import 'package:irhebo/presentation/widgets/app_dialog.dart';
 import 'package:irhebo/presentation/widgets/login_required_dialog.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-class SearchController extends GetxController {
+class SearchControllerGetx extends GetxController {
   final appController = Get.find<AppController>();
 
   List<TextEditingController> numbers = <TextEditingController>[];

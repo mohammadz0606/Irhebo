@@ -5,7 +5,7 @@ import 'package:irhebo/presentation/screens/search/widgets/filter/category_item_
 import 'package:irhebo/presentation/screens/search/search_controller.dart'
     as sr;
 
-class CategoriesCheckbox extends GetWidget<sr.SearchController> {
+class CategoriesCheckbox extends GetWidget<sr.SearchControllerGetx> {
   final List<FilterModel> filters;
   const CategoriesCheckbox({
     super.key,

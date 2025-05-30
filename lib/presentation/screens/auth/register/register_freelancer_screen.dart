@@ -1,14 +1,23 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:irhebo/presentation/screens/auth/register/widgets/upload_file.dart';
+import 'package:multi_select_flutter/util/multi_select_item.dart';
 
 import '../../../../app/global_imports.dart';
+import '../../../../app/resources/validators.dart';
+import '../../../../domain/models/home_model.dart';
+import '../../../../domain/params/new_params/freelanser/complete_profile_param.dart';
+import '../../../../domain/providers/freelancer/complete_profile.dart';
 import '../../../widgets/app_button.dart';
 import '../../../widgets/app_text_button.dart';
 import '../../../widgets/app_text_field.dart';
 import '../../../widgets/auth_app_bar.dart';
 import '../../../widgets/auth_headline.dart';
+import '../../../widgets/multi_dropdown_widget.dart';
+import '../../search/search_controller.dart';
+import '../../search/widgets/category_page_view_item.dart';
 
 class RegisterFreelancerScreen extends StatefulWidget {
   const RegisterFreelancerScreen({super.key});
@@ -20,12 +29,22 @@ class RegisterFreelancerScreen extends StatefulWidget {
 
 class _RegisterFreelancerScreenState extends State<RegisterFreelancerScreen> {
   final TextEditingController _biography = TextEditingController();
-  final TextEditingController _certificates = TextEditingController();
+  final TextEditingController _certificatesDesc = TextEditingController();
+  late final SearchControllerGetx searchController;
+
+  File? avatar;
+
+  @override
+  void initState() {
+    searchController = Get.find<SearchControllerGetx>();
+    searchController.getCategories();
+    super.initState();
+  }
 
   @override
   void dispose() {
     _biography.dispose();
-    _certificates.dispose();
+    _certificatesDesc.dispose();
     super.dispose();
   }
 
@@ -59,6 +78,23 @@ class _RegisterFreelancerScreenState extends State<RegisterFreelancerScreen> {
                       "Finish setting up your profile so others can find you and assign you to jobs!",
                   bottomPadding: 8.95 * (w / 100),
                 ),
+                Obx(
+                  () {
+                    return MultiCustomDropdown<CategoryModel?>(
+                      items: searchController.categories
+                          .map(
+                            (language) => MultiSelectItem<CategoryModel?>(
+                                language, language.title ?? ''),
+                          )
+                          .toList(),
+                      buttonText: 'Category Choices',
+                      label: "Categories",
+                      onConfirm: (values) {},
+                      //validators: AppValidators.languagesValidator,
+                    );
+                  },
+                ),
+                const SizedBox(height: 30),
                 Text(
                   'Avatar'.tr,
                   style: Get.textTheme.headlineSmall,
@@ -90,7 +126,7 @@ class _RegisterFreelancerScreenState extends State<RegisterFreelancerScreen> {
                   onFileSelected: (file) {},
                 ),
                 AppTextField(
-                  controller: _certificates,
+                  controller: _certificatesDesc,
                   hint: "Description",
                   textInputType: TextInputType.multiline,
                   maxLines: 1,
@@ -103,10 +139,31 @@ class _RegisterFreelancerScreenState extends State<RegisterFreelancerScreen> {
                   text: 'Upload another',
                 ),
                 const SizedBox(height: 30),
-                AppButton(
-                  onPressed: () {},
-                  title: "Confirm",
-                  isLoading: false,
+                Consumer<CompleteProfileProvider>(
+                  builder: (context, provider, _) {
+                    return AppButton(
+                      onPressed: () async {
+                        if (avatar != null ||
+                            _biography.text.trim().isNotEmpty) {
+                          await provider.completeProfile(
+                            data: CompleteProfileParam(
+                              avatar: avatar!,
+                              bio: _biography.text.trim(),
+                              categoryIds: [10],
+                              descriptions: [],
+                              files: [],
+                            ),
+                          );
+                        } else {
+                          AppSnackBar.openErrorSnackBar(
+                            message: 'Please fill all fields'.tr,
+                          );
+                        }
+                      },
+                      title: "Confirm",
+                      isLoading: provider.isLoading,
+                    );
+                  },
                 ),
               ],
             ),

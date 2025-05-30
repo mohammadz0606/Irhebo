@@ -6,11 +6,6 @@ import 'package:file_picker/file_picker.dart';
 import '../../app/global_imports.dart';
 
 class UploadFilesProvider extends ChangeNotifier {
-  //String fileName = file.path.split('/').last;
-  // "file": await MultipartFile.fromFile(
-  // file.path,
-  // filename: fileName,
-  // ),
 
   bool isLoadingPickFile = false;
 

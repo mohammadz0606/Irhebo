@@ -5,7 +5,7 @@ Map<String, String> en = {
   "Apply": "Apply",
   "What would you like to do": "What would you like to do?",
   "Choose your role in Irhebo": "Choose your role in Irhebo",
-  "Choose your role in FREECO":"Choose your role in FREECO",
+  "Choose your role in FREECO": "Choose your role in FREECO",
   "Find Service": "Find Service",
   "Sell Service": "Sell Service",
   "Continue": "Continue",
@@ -213,4 +213,6 @@ Map<String, String> en = {
   "Upload another": "+ Upload another",
   "Tell us a little about yourself!": "Tell us a little about yourself!",
   "File is too large": "File is too large. Max allowed size is 3MB.",
+  "Please fill all fields": "Please fill all fields",
+  "Category Choices": "Choose a category",
 };

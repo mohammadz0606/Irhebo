@@ -18,7 +18,8 @@ class RegisterInfoButtons extends StatelessWidget {
   final Function(GenderEntity?) onChangedGender;
   final Function(NewConfigModelDataProfessions?) onChangedProfession;
   final Function(NewConfigModelDataCountries?) onChangedCountry;
-  final void Function(List<NewConfigModelDataLanguagesData?>) onConfirmLanguages;
+  final void Function(List<NewConfigModelDataLanguagesData?>)
+      onConfirmLanguages;
 
   const RegisterInfoButtons({
     super.key,
@@ -60,7 +61,8 @@ class RegisterInfoButtons extends StatelessWidget {
         MultiCustomDropdown<NewConfigModelDataLanguagesData?>(
           items: languages
               .map((language) =>
-                  MultiSelectItem<NewConfigModelDataLanguagesData?>(language, language?.title ?? ""))
+                  MultiSelectItem<NewConfigModelDataLanguagesData?>(
+                      language, language?.title ?? ""))
               .toList(),
           buttonText: languagesHint,
           label: "Languages",
@@ -87,11 +89,8 @@ class RegisterInfoButtons extends StatelessWidget {
           height: 2.98 * (w / 100),
         ),
         CustomDropdown<NewConfigModelDataCountries?>(
-
           itemBuilder: (context, item, isDisabled, isSelected) => DropdownItem(
-
             label: item?.title ?? "",
-
           ),
           showSearchBox: true,
           label: "Country",

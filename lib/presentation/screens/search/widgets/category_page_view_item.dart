@@ -8,7 +8,7 @@ import 'package:irhebo/presentation/screens/search/search_controller.dart'
 import 'package:irhebo/presentation/screens/search/widgets/search_category_shimmer.dart';
 // import 'package:irhebo/presentation/screens/intro/steps/steps_controller.dart' as sr;
 
-class CategoryPageViewItem extends GetWidget<sr.SearchController> {
+class CategoryPageViewItem extends GetWidget<sr.SearchControllerGetx> {
   const CategoryPageViewItem({
     super.key,
   });
@@ -25,7 +25,7 @@ class CategoryPageViewItem extends GetWidget<sr.SearchController> {
             children: [
               // AppTitleWithAction(title: "Popular Services"),
               controller.isLoadingCategory
-                  ? SearchCategoryShimmer()
+                  ? const SearchCategoryShimmer()
                   : Wrap(
                       runSpacing: 11.9 * (w / 100),
                       spacing: 7.46 * (w / 100),

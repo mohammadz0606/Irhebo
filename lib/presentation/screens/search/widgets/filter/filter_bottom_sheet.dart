@@ -12,7 +12,7 @@ import 'package:irhebo/presentation/screens/search/widgets/filter/filter_ratings
 import 'package:irhebo/presentation/widgets/app_button.dart';
 import 'package:irhebo/presentation/widgets/bottom_sheet_header.dart';
 
-class FilterBottomSheet extends GetView<sr.SearchController> {
+class FilterBottomSheet extends GetView<sr.SearchControllerGetx> {
   const FilterBottomSheet({super.key});
 
   @override
