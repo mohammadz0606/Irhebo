@@ -34,7 +34,7 @@ class ServiceItemShimmer extends StatelessWidget {
             ),
             Positioned(
               bottom: 0,
-              child: Container(
+              child: SizedBox(
                 width: 57.46 * (w / 100),
                 height: 37.3 * (w / 100),
                 child: Container(
@@ -81,7 +81,7 @@ class ServiceItemShimmer extends StatelessWidget {
                         height: 1,
                         color: AppDarkColors.pureWhite.withOpacity(0.2),
                       ),
-                      FreelancerItemShimmer()
+                      const FreelancerItemShimmer()
                     ],
                   ),
                 ),

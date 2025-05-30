@@ -35,10 +35,10 @@ class AppLoading extends StatelessWidget {
             borderRadius: BorderRadius.circular(radius ?? 15), border: border),
         child: Shimmer.fromColors(
           baseColor: Get.find<AppController>().darkMode
-              ? Color(0xFF282828)
+              ? const Color(0xFF282828)
               : Colors.grey[300]!,
           highlightColor: Get.find<AppController>().darkMode
-              ? Color(0xFF3A3A3A)
+              ? const Color(0xFF3A3A3A)
               : Colors.grey[100]!,
           enabled: true,
           child: Container(color: Theme.of(context).colorScheme.secondary),

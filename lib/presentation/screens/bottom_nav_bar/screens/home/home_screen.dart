@@ -7,6 +7,7 @@ import 'package:irhebo/presentation/screens/bottom_nav_bar/screens/home/widgets/
 import 'package:irhebo/presentation/screens/bottom_nav_bar/screens/home/widgets/custome_paginagtion_footer.dart';
 import 'package:irhebo/presentation/screens/bottom_nav_bar/screens/home/widgets/freelancer/freelancer_request.dart';
 import 'package:irhebo/presentation/screens/bottom_nav_bar/screens/home/widgets/freelancer/freelancer_services.dart';
+import 'package:irhebo/presentation/screens/bottom_nav_bar/screens/home/widgets/freelancer/portfolio_for_freelancer.dart';
 import 'package:irhebo/presentation/screens/bottom_nav_bar/screens/home/widgets/home_app_bar.dart';
 import 'package:irhebo/presentation/screens/bottom_nav_bar/screens/home/widgets/portfolio_section.dart';
 import 'package:irhebo/presentation/screens/bottom_nav_bar/screens/home/widgets/services_section.dart';
@@ -51,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
         controller: controller.refreshController,
         onRefresh: controller.onRefreshList,
         enablePullDown: true,
-        enablePullUp: true,
+        enablePullUp: getUserRole == UserRoles.client ? true : false,
         footer: const CustomePaginagtionFooter(),
         onLoading: getUserRole == UserRoles.client
             ? controller.getFeaturedPortfolio
@@ -62,17 +63,20 @@ class _HomeScreenState extends State<HomeScreen> {
             children: getUserRole == UserRoles.client
                 ? [
                     Showcase(
-                        key: Get.find<AppController>().categoriesKey,
-                        description: "This is categories section".tr,
-                        child: const CategoriesSection()),
+                      key: Get.find<AppController>().categoriesKey,
+                      description: "This is categories section".tr,
+                      child: const CategoriesSection(),
+                    ),
                     Showcase(
-                        key: Get.find<AppController>().serviceKey,
-                        description: "This is services section".tr,
-                        child: const ServicesSection()),
+                      key: Get.find<AppController>().serviceKey,
+                      description: "This is services section".tr,
+                      child: const ServicesSection(),
+                    ),
                     Showcase(
-                        key: Get.find<AppController>().porfolioKey,
-                        description: "This is porfolio section".tr,
-                        child: const PortfolioSection())
+                      key: Get.find<AppController>().porfolioKey,
+                      description: "This is porfolio section".tr,
+                      child: const PortfolioSection(),
+                    )
                   ]
                 : [
                     Showcase(
@@ -84,6 +88,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       key: Get.find<AppController>().serviceFreelancer,
                       description: "This is services section".tr,
                       child: const FreelancerServices(),
+                    ),
+                    Showcase(
+                      key: Get.find<AppController>().porfolioFreelancerKey,
+                      description: "This is porfolio section".tr,
+                      child: const PortfolioForFreelancer(),
                     ),
                   ],
           ),

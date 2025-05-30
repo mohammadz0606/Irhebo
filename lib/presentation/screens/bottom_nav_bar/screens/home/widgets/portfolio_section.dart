@@ -21,26 +21,26 @@ class PortfolioSection extends GetWidget<HomeController> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        AppTitleWithAction(
+        const AppTitleWithAction(
           title: "Featured",
           // action: "See All",
         ),
         Obx(
           () => controller.isLoading
-              ? PortfolioShimmer()
+              ? const PortfolioShimmer()
               : controller.portfolios.isEmpty
-                  ? NoData()
+                  ? const NoData()
                   : Padding(
                       padding: EdgeInsets.symmetric(
                           horizontal: 3.98 * (w / 100),
                           vertical: 2.48 * (w / 100)),
                       child: MasonryGridView.builder(
-                        physics: NeverScrollableScrollPhysics(),
+                        physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
                         crossAxisSpacing: 3.48 * (w / 100),
                         mainAxisSpacing: 3.48 * (w / 100),
                         gridDelegate:
-                            SliverSimpleGridDelegateWithFixedCrossAxisCount(
+                            const SliverSimpleGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2, // Fixed number of columns
                         ),
                         itemCount: controller.portfolios.length,
@@ -74,7 +74,7 @@ class PortfolioSection extends GetWidget<HomeController> {
                                             : 74.12 * (w / 100),
                                         radius: 18,
                                       ),
-                                Positioned(
+                                const Positioned(
                                     bottom: 0, child: BottomShadowWidget())
                               ],
                             ),

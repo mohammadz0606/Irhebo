@@ -69,6 +69,7 @@ class AppController extends GetxController {
   final whatsappKey = GlobalKey();
   final serviceKey = GlobalKey();
   final porfolioKey = GlobalKey();
+  final porfolioFreelancerKey = GlobalKey();
   final chatKey = GlobalKey();
   final notificationsKey = GlobalKey();
   final categoriesKey = GlobalKey();
@@ -89,6 +90,7 @@ class AppController extends GetxController {
         porfolioKey,
         requestFreelancer,
         serviceFreelancer,
+        porfolioFreelancerKey,
       ]);
     }
   }

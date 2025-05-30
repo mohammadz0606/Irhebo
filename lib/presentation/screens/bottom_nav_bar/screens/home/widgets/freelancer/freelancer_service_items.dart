@@ -21,7 +21,6 @@ class FreelancerServiceItems extends StatelessWidget {
           ? null
           : AppDecoration.getDecorationWithShadow(radius: 18),
       child: Stack(
-
         children: [
           AppImage(
             imageUrl: data?.cover ?? '',
@@ -67,7 +66,6 @@ class FreelancerServiceItems extends StatelessWidget {
               ),
             ),
           ),
-
           Positioned(
             top: 2.98 * (w / 100),
             right: 2.98 * (w / 100),

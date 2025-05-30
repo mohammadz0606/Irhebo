@@ -3,9 +3,14 @@ import '../../../../../../../app/resources/images.dart';
 import '../../../../../../widgets/decorated_icon.dart';
 
 class EditOrDelete extends StatelessWidget {
-  const EditOrDelete({super.key, required this.id});
+  const EditOrDelete({
+    super.key,
+    required this.id,
+    this.space = 36,
+  });
 
   final int id;
+  final double space;
 
   @override
   Widget build(BuildContext context) {
@@ -26,9 +31,7 @@ class EditOrDelete extends StatelessWidget {
             svgColor: AppDarkColors.pureWhite,
           ),
         ),
-        SizedBox(
-          width: 36 * (w / 100),
-        ),
+        SizedBox(width: space * (w / 100)),
         GestureDetector(
           onTap: () {},
           child: DecoratedIcon(
