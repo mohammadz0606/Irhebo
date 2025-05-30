@@ -20,7 +20,7 @@ class LogoutBottomSheet extends GetWidget<SettingsController> {
         title: "Cancel",
         titlStyle: Get.find<AppController>().darkMode
             ? null
-            : TextStyle(
+            : const TextStyle(
                 color: AppLightColors.primaryColor,
               ),
         backGroundColor: Get.find<AppController>().darkMode

@@ -31,7 +31,7 @@ final darkTheme = ThemeData(
     primaryColor: AppLightColors.primaryColor,
     primaryColorLight: AppLightColors.primaryColor.withOpacity(0.4),
     scaffoldBackgroundColor: AppDarkColors.darkScaffoldColor,
-    iconTheme: IconThemeData(color: AppDarkColors.pureWhite),
+    iconTheme: const IconThemeData(color: AppDarkColors.pureWhite),
     textTheme: TextTheme(
       displayLarge: getBoldStyle(
           color: AppDarkColors.primaryColor, fontSize: AppTextStyle.size34),
@@ -98,11 +98,11 @@ final darkTheme = ThemeData(
           fontWeight: FontWeight.w700,
           height: null,
           color: Colors.white),
-      iconTheme: IconThemeData(
+      iconTheme: const IconThemeData(
         color: AppDarkColors.pureWhite,
       ),
     ),
-    floatingActionButtonTheme: FloatingActionButtonThemeData(
+    floatingActionButtonTheme: const FloatingActionButtonThemeData(
         backgroundColor: AppDarkColors.primaryColor,
         foregroundColor: AppDarkColors.primaryColor),
     switchTheme: SwitchThemeData(
@@ -122,11 +122,23 @@ final darkTheme = ThemeData(
         ),
       ),
     ),
+    textButtonTheme: TextButtonThemeData(
+      style: TextButton.styleFrom(
+        foregroundColor: AppDarkColors.pureWhite,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(38)),
+        elevation: 0,
+        textStyle: TextStyle(
+          fontSize: AppTextStyle.size14,
+          fontWeight: FontWeight.w700,
+          fontFamily: FontConstants.fontFamilyUnison,
+        ),
+      ),
+    ),
     dividerTheme: DividerThemeData(
         color: AppDarkColors.pureWhite.withOpacity(0.2),
         thickness: 1,
         space: 1),
-    listTileTheme: ListTileThemeData(),
+    listTileTheme: const ListTileThemeData(),
     fontFamily: FontConstants.fontFamilyUnison,
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       backgroundColor: AppDarkColors.darkScaffoldColor,
@@ -215,7 +227,7 @@ final lightTheme = ThemeData(
         TargetPlatform.android: CupertinoPageTransitionsBuilder(),
       },
     ),
-    colorScheme: ColorScheme(
+    colorScheme: const ColorScheme(
       primary: AppLightColors.primaryColor,
       onPrimary: AppLightColors.pureWhite,
       secondary: AppLightColors.secondary,
@@ -236,7 +248,7 @@ final lightTheme = ThemeData(
     primaryColorLight: AppLightColors.primaryColor.withOpacity(0.3),
     scaffoldBackgroundColor: AppLightColors.scaffoldColor2,
     ////
-    iconTheme: IconThemeData(color: AppLightColors.primaryColor),
+    iconTheme: const IconThemeData(color: AppLightColors.primaryColor),
     textTheme: TextTheme(
       displayLarge: getBoldStyle(
           color: AppLightColors.primaryColor, fontSize: AppTextStyle.size34),
@@ -297,11 +309,11 @@ final lightTheme = ThemeData(
           fontWeight: FontWeight.w700,
           height: null,
           color: Colors.black),
-      iconTheme: IconThemeData(
+      iconTheme: const IconThemeData(
         color: AppLightColors.secondary,
       ),
     ),
-    floatingActionButtonTheme: FloatingActionButtonThemeData(
+    floatingActionButtonTheme: const FloatingActionButtonThemeData(
         backgroundColor: AppLightColors.primaryColor,
         foregroundColor: AppLightColors.primaryColor),
     switchTheme: SwitchThemeData(
@@ -321,19 +333,33 @@ final lightTheme = ThemeData(
         ),
       ),
     ),
-    dividerTheme: DividerThemeData(
+
+    textButtonTheme: TextButtonThemeData(
+      style: TextButton.styleFrom(
+        foregroundColor: AppDarkColors.darkScaffoldColor,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(38)),
+        elevation: 0,
+        textStyle: TextStyle(
+          fontSize: AppTextStyle.size14,
+          fontWeight: FontWeight.w700,
+          fontFamily: FontConstants.fontFamilyUnison,
+        ),
+      ),
+    ),
+
+    dividerTheme: const DividerThemeData(
         color: AppLightColors.dividerColor, thickness: 1, space: 1),
     dividerColor: AppLightColors.dividerColor,
-    listTileTheme: ListTileThemeData(),
+    listTileTheme: const ListTileThemeData(),
     fontFamily: FontConstants.fontFamilyUnison,
     checkboxTheme: CheckboxThemeData(
-      side: BorderSide(
+      side: const BorderSide(
         color: AppLightColors.primaryColor,
         width: 1,
       ),
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(2),
-          side: BorderSide(color: AppLightColors.primaryColor, width: 1)),
+          side: const BorderSide(color: AppLightColors.primaryColor, width: 1)),
       checkColor: WidgetStateProperty.all<Color>(AppLightColors.primaryColor),
     ),
     dialogTheme: DialogThemeData(

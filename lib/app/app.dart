@@ -18,6 +18,7 @@ import 'package:irhebo/app/router/screens.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:showcaseview/showcaseview.dart';
 
+import '../presentation/widgets/scroll_behavior.dart';
 import 'app_controller.dart';
 
 class Irhebo extends StatelessWidget {
@@ -50,6 +51,7 @@ class Irhebo extends StatelessWidget {
                 getPages: AppScreens.screens,
                 initialRoute: AppRoutes.splash,
                 initialBinding: RootBinding(),
+                scrollBehavior: AppScrollBehavior(),
                 themeMode: Get.find<AppController>().darkMode
                     ? ThemeMode.dark
                     : ThemeMode.light,
@@ -60,7 +62,8 @@ class Irhebo extends StatelessWidget {
                 translations: LocalizationService(),
                 navigatorKey: GlobalVariable.navState,
                 supportedLocales: LocalizationService.locales,
-                localizationsDelegates: [
+
+                localizationsDelegates: const [
                   GlobalMaterialLocalizations.delegate,
                   GlobalWidgetsLocalizations.delegate,
                   GlobalCupertinoLocalizations.delegate,

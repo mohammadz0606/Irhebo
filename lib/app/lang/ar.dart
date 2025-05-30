@@ -206,5 +206,6 @@ Map<String, String> ar = {
   "Avatar": "الصورة الرمزية",
   "Biography": "السيرة الذاتية",
   "Certificates": "الشهادات",
-  "Upload another": "+ تحميل ملف آخر"
+  "Upload another": "+ تحميل ملف آخر",
+  "Tell us a little about yourself!": "حدثنا قليلاً عن نفسك!"
 };

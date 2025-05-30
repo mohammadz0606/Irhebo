@@ -1,4 +1,6 @@
 import '../../../../../app/global_imports.dart';
+import '../../../../../app/resources/images.dart';
+import '../../../../widgets/app_icon.dart';
 
 class UploadFileWidget extends StatelessWidget {
   const UploadFileWidget({super.key});
@@ -21,7 +23,11 @@ class UploadFileWidget extends StatelessWidget {
       alignment: Alignment.center,
       child: IconButton(
         onPressed: () {},
-        icon: Icon(Icons.upload),
+        icon: AppIcon(
+          path: AppIcons.upload,
+          width: 5.97 * (w / 100),
+          height: 5.97 * (w / 100),
+        ),
       ),
     );
   }

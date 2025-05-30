@@ -12,6 +12,9 @@ import 'package:irhebo/presentation/widgets/language_bottom_sheet.dart';
 import 'package:irhebo/presentation/widgets/login_required_dialog.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
+import '../../../../../app/storage/app_prefs.dart';
+import '../../../../../app/storage/app_prefs_keys.dart';
+
 class SettingsController extends GetxController {
   final appController = Get.find<AppController>();
   RefreshController refreshController =
@@ -89,6 +92,8 @@ class SettingsController extends GetxController {
     }, (r) {
       isLoadingLogout.value = false;
       appController.removeToken();
+      AppPreferences pref = sl();
+      pref.removeItem(AppPrefsKeys.USER_ROLE);
       Get.offAllNamed(AppRoutes.splash);
     });
   }

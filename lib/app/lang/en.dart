@@ -206,9 +206,9 @@ Map<String, String> en = {
   "Finish up your profile": "Finish up your profile",
   "Finish setting up your profile so others can find you and assign you to jobs!":
       "Finish setting up your profile so others can find you and assign you to jobs!",
-
   "Avatar": "Avatar",
   "Biography": "Biography",
   "Certificates": "Certificates",
-  "Upload another " : "+ Upload another"
+  "Upload another": "+ Upload another",
+  "Tell us a little about yourself!": "Tell us a little about yourself!"
 };
