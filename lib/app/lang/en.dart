@@ -210,5 +210,6 @@ Map<String, String> en = {
   "Biography": "Biography",
   "Certificates": "Certificates",
   "Upload another": "+ Upload another",
-  "Tell us a little about yourself!": "Tell us a little about yourself!"
+  "Tell us a little about yourself!": "Tell us a little about yourself!",
+  "File is too large": "File is too large. Max allowed size is 3MB.",
 };

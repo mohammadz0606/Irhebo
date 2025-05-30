@@ -186,8 +186,9 @@ class AppController extends GetxController {
     if (website == false) {
       if (!await launchUrl(Uri.parse(url!))) throw 'Could not launch $url';
     } else {
-      if (!await launchUrl(Uri.parse(url!), mode: LaunchMode.inAppWebView))
+      if (!await launchUrl(Uri.parse(url!), mode: LaunchMode.inAppWebView)) {
         throw 'Could not launch $url';
+      }
     }
   }
 

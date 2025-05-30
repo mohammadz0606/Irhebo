@@ -207,5 +207,6 @@ Map<String, String> ar = {
   "Biography": "السيرة الذاتية",
   "Certificates": "الشهادات",
   "Upload another": "+ تحميل ملف آخر",
-  "Tell us a little about yourself!": "حدثنا قليلاً عن نفسك!"
+  "Tell us a little about yourself!": "حدثنا قليلاً عن نفسك!",
+  "File is too large": "الملف كبير جدًا. الحد الأقصى المسموح به هو 3 ميغابايت."
 };
