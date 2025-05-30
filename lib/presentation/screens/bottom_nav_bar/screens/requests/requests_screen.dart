@@ -23,9 +23,9 @@ class RequestsScreen extends GetView<RequestsController> {
       body: Obx(
         () => SingleChildScrollView(
           child: controller.isLoading
-              ? RequestsScreenShimmer()
+              ? const RequestsScreenShimmer()
               : controller.requests.isEmpty
-                  ? NoData(
+                  ? const NoData(
                       forHome: false,
                     )
                   : Column(

@@ -5,12 +5,17 @@ import 'package:irhebo/app/resources/style/colors.dart';
 import 'package:irhebo/presentation/screens/bottom_nav_bar/screens/home/home_controller.dart';
 import 'package:irhebo/presentation/screens/bottom_nav_bar/screens/home/widgets/categories_section.dart';
 import 'package:irhebo/presentation/screens/bottom_nav_bar/screens/home/widgets/custome_paginagtion_footer.dart';
+import 'package:irhebo/presentation/screens/bottom_nav_bar/screens/home/widgets/freelancer/freelancer_request.dart';
+import 'package:irhebo/presentation/screens/bottom_nav_bar/screens/home/widgets/freelancer/freelancer_services.dart';
 import 'package:irhebo/presentation/screens/bottom_nav_bar/screens/home/widgets/home_app_bar.dart';
 import 'package:irhebo/presentation/screens/bottom_nav_bar/screens/home/widgets/portfolio_section.dart';
 import 'package:irhebo/presentation/screens/bottom_nav_bar/screens/home/widgets/services_section.dart';
 import 'package:irhebo/presentation/screens/bottom_nav_bar/widgets/bot_floating_button.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:showcaseview/showcaseview.dart';
+
+import '../../../../../app/app_functions.dart';
+import '../../../../../app/enums.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -21,6 +26,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   HomeController controller = Get.find<HomeController>();
+
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
@@ -39,31 +45,47 @@ class _HomeScreenState extends State<HomeScreen> {
           ? null
           : AppLightColors.scaffoldColor,
       appBar: PreferredSize(
-          preferredSize: Size.fromHeight(20 * (w / 100)), child: const HomeAppBar()),
+          preferredSize: Size.fromHeight(20 * (w / 100)),
+          child: const HomeAppBar()),
       body: SmartRefresher(
         controller: controller.refreshController,
         onRefresh: controller.onRefreshList,
         enablePullDown: true,
         enablePullUp: true,
         footer: const CustomePaginagtionFooter(),
-        onLoading: controller.getFeaturedPortfolio,
+        onLoading: getUserRole == UserRoles.client
+            ? controller.getFeaturedPortfolio
+            : null,
         child: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
-            children: [
-              Showcase(
-                  key: Get.find<AppController>().categoriesKey,
-                  description: "This is categories section".tr,
-                  child: const CategoriesSection()),
-              Showcase(
-                  key: Get.find<AppController>().serviceKey,
-                  description: "This is services section".tr,
-                  child: const ServicesSection()),
-              Showcase(
-                  key: Get.find<AppController>().porfolioKey,
-                  description: "This is porfolio section".tr,
-                  child: const PortfolioSection())
-            ],
+            children: getUserRole == UserRoles.client
+                ? [
+                    Showcase(
+                        key: Get.find<AppController>().categoriesKey,
+                        description: "This is categories section".tr,
+                        child: const CategoriesSection()),
+                    Showcase(
+                        key: Get.find<AppController>().serviceKey,
+                        description: "This is services section".tr,
+                        child: const ServicesSection()),
+                    Showcase(
+                        key: Get.find<AppController>().porfolioKey,
+                        description: "This is porfolio section".tr,
+                        child: const PortfolioSection())
+                  ]
+                : [
+                    Showcase(
+                      key: Get.find<AppController>().requestFreelancer,
+                      description: "This is request section".tr,
+                      child: const FreelancerRequest(),
+                    ),
+                    Showcase(
+                      key: Get.find<AppController>().serviceFreelancer,
+                      description: "This is services section".tr,
+                      child: const FreelancerServices(),
+                    ),
+                  ],
           ),
         ),
       ),

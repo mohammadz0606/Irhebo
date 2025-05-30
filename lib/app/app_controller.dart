@@ -72,6 +72,8 @@ class AppController extends GetxController {
   final chatKey = GlobalKey();
   final notificationsKey = GlobalKey();
   final categoriesKey = GlobalKey();
+  final requestFreelancer = GlobalKey();
+  final serviceFreelancer = GlobalKey();
 
   showCaseView(context) {
     bool showcaseHomeKey = getBoolValue(AppPrefsKeys.SHOW_CASE_HOME);
@@ -85,6 +87,8 @@ class AppController extends GetxController {
         categoriesKey,
         serviceKey,
         porfolioKey,
+        requestFreelancer,
+        serviceFreelancer,
       ]);
     }
   }

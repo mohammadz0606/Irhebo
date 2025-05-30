@@ -1,8 +1,13 @@
 // ignore_for_file: invalid_use_of_protected_member
 
+import 'dart:developer';
+
+import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:irhebo/app/app_controller.dart';
+import 'package:irhebo/app/app_functions.dart';
 import 'package:irhebo/app/constants.dart';
+import 'package:irhebo/app/global_imports.dart';
 import 'package:irhebo/app/injection.dart';
 import 'package:irhebo/app/resources/style/colors.dart';
 import 'package:irhebo/app/router/routes.dart';
@@ -18,36 +23,52 @@ import 'package:irhebo/presentation/widgets/app_dialog.dart';
 import 'package:irhebo/presentation/widgets/login_required_dialog.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
+import '../../../../../app/network/network.dart';
+import '../../../../../domain/models/new_models/freelancer/freelancer_home_model.dart';
+
 class HomeController extends GetxController {
   final appController = Get.find<AppController>();
 
   RefreshController refreshController =
       RefreshController(initialRefresh: false);
   final RxBool _isLoading = true.obs;
-  RxInt _pageNumber = 1.obs;
+  final RxInt _pageNumber = 1.obs;
   final RxList<ServiceModel> _services = <ServiceModel>[].obs;
 
-  RxList<DataModel> _portfolios = <DataModel>[].obs;
+  final RxList<DataModel> _portfolios = <DataModel>[].obs;
 
   List<ServiceModel> get services => _services.value;
+
   List<DataModel> get portfolios => _portfolios.value;
+
   bool get isLoading => _isLoading.value;
+
   int get pageNumber => _pageNumber.value;
 
   set services(value) => _services.value = value;
+
   set portfolios(value) => _portfolios.value = value;
+
   set isLoading(value) => _isLoading.value = value;
+
   set pageNumber(value) => _pageNumber.value = value;
 
   List<CategoryModel> categories = [];
+
+  FreelancerHomeModel? freelancerHomeModel;
 
   @override
   Future<void> onInit() async {
     super.onInit();
 
     if (isClosed) return;
-    await getHome();
-    await getFeaturedPortfolio();
+    if (getUserRole == UserRoles.client) {
+      await getHome();
+      await getFeaturedPortfolio();
+    } else {
+      await getFreelancerHome();
+    }
+
     isLoading = false;
   }
 
@@ -60,7 +81,7 @@ class HomeController extends GetxController {
   }
 
   onTapService(int index) {
-    Get.to(() => ServiceDetailsScreen(),
+    Get.to(() => const ServiceDetailsScreen(),
         arguments: {"id": services[index].id ?? 0});
   }
 
@@ -99,8 +120,13 @@ class HomeController extends GetxController {
   onRefreshList() async {
     isLoading = true;
     clearData();
-    await getHome();
-    await getFeaturedPortfolio();
+
+    if (getUserRole == UserRoles.client) {
+      await getHome();
+      await getFeaturedPortfolio();
+    } else {
+      await getFreelancerHome();
+    }
     isLoading = false;
     refreshController.refreshCompleted();
     refreshController.refreshToIdle();
@@ -111,6 +137,7 @@ class HomeController extends GetxController {
     categories.clear();
     services.clear();
     portfolios.clear();
+    freelancerHomeModel = null;
   }
 
   onTapFreelancer(int index) {
@@ -126,6 +153,39 @@ class HomeController extends GetxController {
       services = r.data?.recommendedServices ?? [];
       _services.refresh();
     });
+  }
+
+  getFreelancerHome() async {
+    try {
+      this.freelancerHomeModel = null;
+      final response = await Network().get(url: AppEndpoints.homeFreelancer);
+      String errorMessage = await Network().handelError(response: response);
+      if (errorMessage.isNotEmpty) {
+        isLoading = false;
+        AppSnackBar.openErrorSnackBar(
+          message: errorMessage,
+        );
+        return;
+      }
+
+      FreelancerHomeModel freelancerHomeModel =
+          FreelancerHomeModel.fromJson(response.data);
+      if (freelancerHomeModel.status == true) {
+        this.freelancerHomeModel = freelancerHomeModel;
+        _services.refresh();
+      }
+      log('DONE GET FREELANCER HOME');
+    } catch (error) {
+      if (error is DioException) {
+        AppSnackBar.openErrorSnackBar(
+          message: Network().handelDioException(error),
+        );
+      } else {
+        AppSnackBar.openErrorSnackBar(
+          message: error.toString(),
+        );
+      }
+    }
   }
 
   getFeaturedPortfolio() async {
@@ -150,20 +210,18 @@ class HomeController extends GetxController {
   }
 
   removeLikedService(int id) {
-    services.forEach(
-      (element) {
-        if (element.id == id) {
-          element.isWishlist = !element.isWishlist!;
-          _services.refresh();
-        }
-      },
-    );
+    for (var element in services) {
+      if (element.id == id) {
+        element.isWishlist = !element.isWishlist!;
+        _services.refresh();
+      }
+    }
   }
 
   openAddBottomSheet() {
     if (Get.context != null && Get.context!.mounted) {
       Get.bottomSheet(
-        AddBottomSheet(),
+        const AddBottomSheet(),
         backgroundColor: Get.find<AppController>().darkMode
             ? AppDarkColors.darkScaffoldColor
             : AppLightColors.pureWhite,
@@ -199,7 +257,7 @@ class HomeController extends GetxController {
       barrierColor: Get.find<AppController>().darkMode
           ? AppDarkColors.darkContainer.withOpacity(0.3)
           : AppLightColors.shadow.withOpacity(0.3),
-      AppDialog(
+      const AppDialog(
         child: LoginRequiredDialog(),
       ),
     );

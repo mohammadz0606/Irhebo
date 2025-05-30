@@ -62,5 +62,6 @@ enum ErrorCode {
 enum UserRoles {
   freelancer,
   client,
+  non,
 }
 

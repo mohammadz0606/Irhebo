@@ -82,6 +82,6 @@ UserRoles get getUserRole {
       return UserRoles.client;
 
     default:
-      return UserRoles.client;
+      return UserRoles.non;
   }
 }

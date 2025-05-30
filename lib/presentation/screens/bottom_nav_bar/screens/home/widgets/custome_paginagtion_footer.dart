@@ -28,7 +28,7 @@ class CustomePaginagtionFooter extends StatelessWidget {
           body = const SizedBox();
         }
         return Container(
-          padding: EdgeInsets.only(bottom: 20),
+          padding: const EdgeInsets.only(bottom: 20),
           height: 55.0,
           child: Center(child: body),
         );

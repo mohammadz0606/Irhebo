@@ -79,6 +79,7 @@ Map<String, String> ar = {
   "Wishlist": "المفضلة",
   "Settings": "الإعدادات",
   "This is categories section": "هذا هو قسم الفئات",
+  "This is request section" :"هذه قسم الطلبات",
   "This is services section": "هذا هو قسم الخدمات",
   "This is porfolio section": "هذا هو قسم المعرض",
   "This is bot made for you": "هذا هو الروبوت المصمم لك",

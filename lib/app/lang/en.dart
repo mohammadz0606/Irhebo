@@ -71,8 +71,9 @@ Map<String, String> en = {
   "Wishlist": "Wishlist",
   "Settings": "Settings",
   "This is categories section": "This is categories section",
+  "This is request section" :"This is request section",
   "This is services section": "This is services section",
-  "This is porfolio section": "This is porfolio section",
+  "This is porfolio section": "This is portfolio section",
   "This is bot made for you": "This is bot made for you",
   "This is notifications center": "This is notifications center",
   "This is for you to contact us on whatsapp":

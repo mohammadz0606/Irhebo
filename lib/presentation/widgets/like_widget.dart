@@ -29,7 +29,7 @@ class LikeWidget extends StatelessWidget {
         if (Get.find<AppController>().token.isEmpty) {
           Get.dialog(
             barrierColor: AppDarkColors.darkContainer.withOpacity(0.3),
-            AppDialog(
+            const AppDialog(
               child: LoginRequiredDialog(),
             ),
           );

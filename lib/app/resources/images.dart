@@ -88,6 +88,8 @@ class AppIcons {
   static const String attachment = "${icons}attachment.svg";
   static const String arrowbottom = "${icons}arrow_bottom.svg";
   static const String moreIcon = "${icons}more.svg";
+  static const String delete = "${icons}delete.svg";
+  static const String edit = "${icons}edit.svg";
 }
 
 class AppRives {

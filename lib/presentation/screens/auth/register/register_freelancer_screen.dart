@@ -1,12 +1,10 @@
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:irhebo/presentation/screens/auth/register/widgets/upload_file.dart';
 import 'package:multi_select_flutter/util/multi_select_item.dart';
 
 import '../../../../app/global_imports.dart';
-import '../../../../app/resources/validators.dart';
 import '../../../../domain/models/home_model.dart';
 import '../../../../domain/params/new_params/freelanser/complete_profile_param.dart';
 import '../../../../domain/providers/freelancer/complete_profile.dart';
@@ -17,7 +15,6 @@ import '../../../widgets/auth_app_bar.dart';
 import '../../../widgets/auth_headline.dart';
 import '../../../widgets/multi_dropdown_widget.dart';
 import '../../search/search_controller.dart';
-import '../../search/widgets/category_page_view_item.dart';
 
 class RegisterFreelancerScreen extends StatefulWidget {
   const RegisterFreelancerScreen({super.key});

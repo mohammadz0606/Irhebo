@@ -18,7 +18,7 @@ class ServicesSection extends GetWidget<HomeController> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        AppTitleWithAction(
+        const AppTitleWithAction(
           title: "Recommended",
         ),
         Obx(
@@ -30,20 +30,18 @@ class ServicesSection extends GetWidget<HomeController> {
                       SizedBox(
                         width: 1.99 * (w / 100),
                       ),
-                      for (int i = 0; i < 5; i++) ServiceItemShimmer()
+                      for (int i = 0; i < 5; i++) const ServiceItemShimmer()
                     ],
                   ),
                 )
               : controller.services.isEmpty
-                  ? NoData()
+                  ? const NoData()
                   : SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(
-                            width: 1.99 * (w / 100),
-                          ),
+                          SizedBox(width: 1.99 * (w / 100)),
                           for (int i = 0; i < controller.services.length; i++)
                             ServiceItem(
                               onTapFreelancer: () =>

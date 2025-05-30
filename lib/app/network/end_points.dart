@@ -47,4 +47,5 @@ class AppEndpoints {
   static String myProfile = '$base_url/users/client-profile';
   static String requestCode = '$base_url/generate-code';
   static String completeProfile = '$base_url/users/complete-profile';
+  static String homeFreelancer = '$base_url/home-freelancer';
 }

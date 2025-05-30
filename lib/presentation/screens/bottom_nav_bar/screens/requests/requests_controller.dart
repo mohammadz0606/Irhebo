@@ -5,6 +5,9 @@ import 'package:irhebo/app/router/routes.dart';
 import 'package:irhebo/domain/models/request_model.dart';
 import 'package:irhebo/domain/usecases/home_usecases/get_requests_use_case.dart';
 
+import '../../../../../app/app_functions.dart';
+import '../../../../../app/enums.dart';
+
 class RequestsController extends GetxController {
   final appController = Get.find<AppController>();
 
@@ -13,16 +16,26 @@ class RequestsController extends GetxController {
   RxList<RequestModel> _requests = <RequestModel>[].obs;
 
   String get selectedTab => _selectedTab.value;
+
   List<RequestModel> get requests => _requests;
+
   bool get isLoading => _isLoading.value;
 
   set selectedTab(value) => _selectedTab.value = value;
+
   set requests(value) => _requests.value = value;
+
   set isLoading(value) => _isLoading.value = value;
 
+  @override
   Future<void> onInit() async {
     super.onInit();
-    if (appController.token.isNotEmpty) getRequests();
+    if (appController.token.isNotEmpty) {
+      if(getUserRole == UserRoles.client) {
+        getRequests();
+      }
+
+    }
   }
 
   List<String> types = [

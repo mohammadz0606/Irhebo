@@ -12,6 +12,9 @@ import 'package:irhebo/presentation/widgets/app_logo.dart';
 import 'package:irhebo/presentation/widgets/gradient_icon.dart';
 import 'package:showcaseview/showcaseview.dart';
 
+import '../../../../../../app/app_functions.dart';
+import '../../../../../../app/enums.dart';
+
 class HomeAppBar extends GetWidget<HomeController>
     implements PreferredSizeWidget {
   // final bool hasBack;
@@ -33,7 +36,7 @@ class HomeAppBar extends GetWidget<HomeController>
           Padding(
             padding: EdgeInsets.only(
                 top: 17.4 * (w / 100), bottom: 2.48 * (w / 100)),
-            child: AppLogo(),
+            child: const AppLogo(),
           ),
           PositionedDirectional(
             start: 3.98 * (w / 100),
@@ -57,17 +60,17 @@ class HomeAppBar extends GetWidget<HomeController>
                             // onTap: () => Get.toNamed(AppRoutes.notifications),
                             borderRadius: BorderRadius.circular(50 * (w / 100)),
                             // onTap: () => Get.back(),
-                            child: GradientIcon(
+                            child: const GradientIcon(
                               icn: AppIcons.notification,
                             ),
                           ),
                           Obx(
                             () => controller.isLoading
-                                ? SizedBox.shrink()
+                                ? const SizedBox.shrink()
                                 : controller.appController.generalData
                                             ?.unreadNotifications ==
                                         0
-                                    ? SizedBox.shrink()
+                                    ? const SizedBox.shrink()
                                     : PositionedDirectional(
                                         start: -(1 * (w / 100)),
                                         top: -(1 * (w / 100)),
@@ -127,7 +130,7 @@ class HomeAppBar extends GetWidget<HomeController>
                             padding: EdgeInsets.all(2 * (w / 100)),
                             decoration: AppDecoration.getDecorationWithRadius(
                                 radius: 50, color: AppDarkColors.whatsappColor),
-                            child: AppIcon(path: AppIcons.whatsapp),
+                            child: const AppIcon(path: AppIcons.whatsapp),
                           )),
                     ),
                   ],
@@ -138,31 +141,35 @@ class HomeAppBar extends GetWidget<HomeController>
                       onTap: () => controller.openAddBottomSheet(),
                       borderRadius: BorderRadius.circular(50 * (w / 100)),
                       // onTap: () => Get.back(),
-                      child: GradientIcon(
+                      child: const GradientIcon(
                         icn: AppIcons.add,
                         svgColor: AppDarkColors.pureWhite,
                       ),
                     ),
-                    SizedBox(
-                      width: 1.49 * (w / 100),
-                    ),
-                    Showcase(
-                      targetBorderRadius: BorderRadius.circular(50),
-                      key: Get.find<AppController>().searchKey,
-                      description:
-                          "Search for any category or subcategory or service from here"
-                              .tr,
-                      child: InkWell(
-                        onTap: () => Get.toNamed(AppRoutes.search,
-                            arguments: {"fromSubcategories": false}),
-                        borderRadius: BorderRadius.circular(50 * (w / 100)),
-                        // onTap: () => Get.back(),
-                        child: GradientIcon(
-                          icn: AppIcons.searchIcon,
-                          svgColor: AppDarkColors.pureWhite,
+
+                    if(getUserRole == UserRoles.client)... {
+                      SizedBox(
+                        width: 1.49 * (w / 100),
+                      ),
+                      Showcase(
+                        targetBorderRadius: BorderRadius.circular(50),
+                        key: Get.find<AppController>().searchKey,
+                        description:
+                        "Search for any category or subcategory or service from here"
+                            .tr,
+                        child: InkWell(
+                          onTap: () => Get.toNamed(AppRoutes.search,
+                              arguments: {"fromSubcategories": false}),
+                          borderRadius: BorderRadius.circular(50 * (w / 100)),
+                          // onTap: () => Get.back(),
+                          child: const GradientIcon(
+                            icn: AppIcons.searchIcon,
+                            svgColor: AppDarkColors.pureWhite,
+                          ),
                         ),
                       ),
-                    ),
+                    }
+
                   ],
                 ),
               ],

@@ -17,6 +17,7 @@ class ServiceItem extends StatelessWidget {
   final void Function() onTapService;
   final void Function() onTapFreelancer;
   final bool home;
+
   const ServiceItem({
     super.key,
     required this.service,
@@ -50,7 +51,7 @@ class ServiceItem extends StatelessWidget {
             ),
             Positioned(
               bottom: 0,
-              child: Container(
+              child: SizedBox(
                 width: 57.46 * (w / 100),
                 height: 37.3 * (w / 100),
                 child: Container(
@@ -100,13 +101,14 @@ class ServiceItem extends StatelessWidget {
                             : Colors.black.withOpacity(0.2),
                       ),
                       Padding(
-                          padding: EdgeInsets.all(2.48 * (w / 100)),
-                          child: GestureDetector(
-                            onTap: () => onTapFreelancer(),
-                            child: FreelancerWidget(
-                              freelancerEntity: service?.user,
-                            ),
-                          ))
+                        padding: EdgeInsets.all(2.48 * (w / 100)),
+                        child: GestureDetector(
+                          onTap: () => onTapFreelancer(),
+                          child: FreelancerWidget(
+                            freelancerEntity: service?.user,
+                          ),
+                        ),
+                      )
                     ],
                   ),
                 ),

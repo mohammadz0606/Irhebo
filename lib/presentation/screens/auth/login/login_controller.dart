@@ -47,10 +47,19 @@ class LoginController extends GetxController {
         isLoading = false;
         appController.setAccessToken(r.data!.token ?? '');
         AppPreferences prefs = sl();
+
+        if (prefs.getString(key: AppPrefsKeys.USER_ROLE) != null) {
+          if (prefs.getString(key: AppPrefsKeys.USER_ROLE) !=
+              r.data?.user?.role) {
+            prefs.removeItem(AppPrefsKeys.SHOW_CASE_HOME);
+          }
+        }
+
         prefs.setString(
           key: AppPrefsKeys.USER_ROLE,
           value: r.data?.user?.role ?? '',
         );
+
         Get.offAllNamed(AppRoutes.bottomNavBar);
       });
     }

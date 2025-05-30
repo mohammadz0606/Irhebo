@@ -32,7 +32,7 @@ class CategoriesSection extends GetWidget<HomeController> {
                       SizedBox(
                         width: 1.99 * (w / 100),
                       ),
-                      for (int i = 0; i < 5; i++) CategoryItemShimmer()
+                      for (int i = 0; i < 5; i++) const CategoryItemShimmer()
                     ],
                   ),
                 )
