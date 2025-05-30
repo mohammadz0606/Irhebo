@@ -34,6 +34,8 @@ class _RegisterFreelancerScreenState extends State<RegisterFreelancerScreen> {
 
   File? avatar;
 
+  List<int> categoryIds = [];
+
   @override
   void initState() {
     searchController = Get.find<SearchControllerGetx>();
@@ -89,7 +91,15 @@ class _RegisterFreelancerScreenState extends State<RegisterFreelancerScreen> {
                           .toList(),
                       buttonText: 'Category Choices',
                       label: "Categories",
-                      onConfirm: (values) {},
+                      onConfirm: (values) {
+                        categoryIds = values
+                            .map(
+                              (e) => e?.id ?? 0,
+                            )
+                            .toList();
+
+                        setState(() {});
+                      },
                       //validators: AppValidators.languagesValidator,
                     );
                   },
@@ -144,12 +154,13 @@ class _RegisterFreelancerScreenState extends State<RegisterFreelancerScreen> {
                     return AppButton(
                       onPressed: () async {
                         if (avatar != null ||
-                            _biography.text.trim().isNotEmpty) {
+                            _biography.text.trim().isNotEmpty ||
+                            categoryIds.isEmpty) {
                           await provider.completeProfile(
                             data: CompleteProfileParam(
                               avatar: avatar!,
                               bio: _biography.text.trim(),
-                              categoryIds: [10],
+                              categoryIds: categoryIds,
                               descriptions: [],
                               files: [],
                             ),
