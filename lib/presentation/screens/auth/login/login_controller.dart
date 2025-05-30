@@ -8,6 +8,9 @@ import 'package:irhebo/app/router/routes.dart';
 import 'package:irhebo/domain/params/login_params.dart';
 import 'package:irhebo/domain/usecases/auth_usecases/login_use_case.dart';
 
+import '../../../../app/storage/app_prefs.dart';
+import '../../../../app/storage/app_prefs_keys.dart';
+
 class LoginController extends GetxController {
   final appController = Get.find<AppController>();
 
@@ -19,9 +22,11 @@ class LoginController extends GetxController {
   final RxBool _isLoading = (false).obs;
 
   bool get isVisibileLogin => _isVisibileLogin.value;
+
   bool get isLoading => _isLoading.value;
 
   set isVisibileLogin(value) => _isVisibileLogin.value = value;
+
   set isLoading(value) => _isLoading.value = value;
 
   onTapVisibile() {
@@ -40,7 +45,12 @@ class LoginController extends GetxController {
         isLoading = false;
       }, (r) {
         isLoading = false;
-        appController.setAccessToken(r.data!.token ?? "");
+        appController.setAccessToken(r.data!.token ?? '');
+        AppPreferences prefs = sl();
+        prefs.setString(
+          key: AppPrefsKeys.USER_ROLE,
+          value: r.data?.user?.role ?? '',
+        );
         Get.offAllNamed(AppRoutes.bottomNavBar);
       });
     }

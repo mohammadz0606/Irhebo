@@ -39,13 +39,13 @@ class _HomeScreenState extends State<HomeScreen> {
           ? null
           : AppLightColors.scaffoldColor,
       appBar: PreferredSize(
-          preferredSize: Size.fromHeight(20 * (w / 100)), child: HomeAppBar()),
+          preferredSize: Size.fromHeight(20 * (w / 100)), child: const HomeAppBar()),
       body: SmartRefresher(
         controller: controller.refreshController,
         onRefresh: controller.onRefreshList,
         enablePullDown: true,
         enablePullUp: true,
-        footer: CustomePaginagtionFooter(),
+        footer: const CustomePaginagtionFooter(),
         onLoading: controller.getFeaturedPortfolio,
         child: SingleChildScrollView(
           child: Column(
@@ -54,15 +54,15 @@ class _HomeScreenState extends State<HomeScreen> {
               Showcase(
                   key: Get.find<AppController>().categoriesKey,
                   description: "This is categories section".tr,
-                  child: CategoriesSection()),
+                  child: const CategoriesSection()),
               Showcase(
                   key: Get.find<AppController>().serviceKey,
                   description: "This is services section".tr,
-                  child: ServicesSection()),
+                  child: const ServicesSection()),
               Showcase(
                   key: Get.find<AppController>().porfolioKey,
                   description: "This is porfolio section".tr,
-                  child: PortfolioSection())
+                  child: const PortfolioSection())
             ],
           ),
         ),
@@ -71,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
           targetBorderRadius: BorderRadius.circular(50),
           key: Get.find<AppController>().botKey,
           description: "This is bot made for you".tr,
-          child: BotFloatingButton()),
+          child: const BotFloatingButton()),
       floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
     );
   }

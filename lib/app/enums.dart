@@ -57,3 +57,10 @@ enum ErrorCode {
   CACH_ERROR,
   BAD_REQUEST
 }
+
+
+enum UserRoles {
+  freelancer,
+  client,
+}
+

@@ -20,22 +20,20 @@ class RegisterScreen extends GetView<RegisterController> {
             Get.find<AppController>().darkMode ? null : Colors.white,
         appBar: PreferredSize(
             preferredSize: Size.fromHeight(27 * (w / 100)),
-            child: AuthAppBar()),
+            child: const AuthAppBar()),
         body: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 4.97 * (w / 100)),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                AuthHeadline(
-                  title: "Create an Account",
-                  subtitle: "Enter your details to create your account",
-                  bottomPadding: 8.95 * (w / 100),
-                ),
-                RegisterForm(),
-                RegisterButton()
-              ],
-            ),
+          padding: EdgeInsets.symmetric(horizontal: 4.97 * (w / 100)),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              AuthHeadline(
+                title: "Create an Account",
+                subtitle: "Enter your details to create your account",
+                bottomPadding: 8.95 * (w / 100),
+              ),
+              const RegisterForm(),
+              const RegisterButton()
+            ],
           ),
         ),
       ),

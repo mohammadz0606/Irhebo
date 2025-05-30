@@ -24,12 +24,12 @@ class AppNavigationBarContainer extends GetWidget<AppController> {
                   : AppLightColors.scaffoldColor2,
               border: Get.find<AppController>().darkMode
                   ? null
-                  : Border(top: BorderSide(color: AppLightColors.secondary))),
+                  : const Border(top: BorderSide(color: AppLightColors.secondary))),
           padding: EdgeInsets.symmetric(horizontal: 3.98 * (w / 100)),
           height: 8.7 * (h / 100),
           child: Row(
             children: [
-              Expanded(
+              const Expanded(
                 flex: 1,
                 child: AppNavigationBarItem(
                   index: 0,
@@ -41,27 +41,27 @@ class AppNavigationBarContainer extends GetWidget<AppController> {
                 child: Showcase(
                   key: Get.find<AppController>().chatKey,
                   description: "This is chats section".tr,
-                  child: AppNavigationBarItem(
+                  child: const AppNavigationBarItem(
                     index: 1,
                     imagePath: AppIcons.message,
                   ),
                 ),
               ),
-              Expanded(
+              const Expanded(
                 flex: 1,
                 child: AppNavigationBarItem(
                   index: 2,
                   imagePath: AppIcons.home,
                 ),
               ),
-              Expanded(
+              const Expanded(
                 flex: 1,
                 child: AppNavigationBarItem(
                   index: 3,
                   imagePath: AppIcons.heart,
                 ),
               ),
-              Expanded(
+              const Expanded(
                 flex: 1,
                 child: AppNavigationBarItem(
                   index: 4,

@@ -10,6 +10,10 @@ import 'package:irhebo/domain/params/verify_otp_params.dart';
 import 'package:irhebo/domain/usecases/auth_usecases/send_otp_use_case.dart';
 import 'package:irhebo/domain/usecases/auth_usecases/verify_otp_use_case.dart';
 
+import '../../../../app/storage/app_prefs.dart';
+import '../../../../app/storage/app_prefs_keys.dart';
+import '../../intro/splash_controller.dart';
+
 class VerificationController extends GetxController {
   final appController = Get.find<AppController>();
 
@@ -106,34 +110,40 @@ class VerificationController extends GetxController {
         prefix: appController.countryCode,
         code: pinPutController.text,
       ));
-      result!.fold((l) {
-        if (pinPutController.text != code) {
-          isValidOtp = false;
-        }
-        isLoadingVerify = false;
-      }, (r) {
-        if (pinPutController.text == code) {
-          isValidOtp = true;
-        }
-        isLoadingVerify = false;
-        if (isForget) {
-          Get.offAndToNamed(AppRoutes.createPassword,
-              arguments: {"phone": phone});
-        } else {
+      result!.fold(
+        (l) {
+          if (pinPutController.text != code) {
+            isValidOtp = false;
+          }
+          isLoadingVerify = false;
+        },
+        (r) {
+          if (pinPutController.text == code) {
+            isValidOtp = true;
+          }
+          isLoadingVerify = false;
+          if (isForget) {
+            Get.offAndToNamed(AppRoutes.createPassword,
+                arguments: {"phone": phone});
+          } else {
+            /// IMPLEMENT FREELANCER LOGIC
+            AppPreferences prefs = sl();
+            appController.setAccessToken(r.data!.token ?? "");
+            prefs.setString(
+              key: AppPrefsKeys.USER_ROLE,
+              value: r.data?.user?.role ?? '',
+            );
+            final splashController = Get.find<SplashController>();
 
-
-          /// IMPLEMENT FREELANCER LOGIC
-          appController.setAccessToken(r.data!.token ?? "");
-
-          /// SET USER RULE IN SHARE PREFERENCES
-
-          r.data?.user?.role;
-
-
-
-          Get.offAllNamed(AppRoutes.bottomNavBar);
-        }
-      });
+            if (splashController.selectedRoleIndex == 0) {
+              Get.offAllNamed(AppRoutes.bottomNavBar);
+            } else {
+              Get.back();
+              Get.off(AppRoutes.registerFreelancer);
+            }
+          }
+        },
+      );
     } else {
       AppSnackBar.openErrorSnackBar(
         message: "please enter 6 digits",

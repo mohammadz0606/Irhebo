@@ -200,4 +200,7 @@ Map<String, String> ar = {
   "Create Request": "إنشاء طلب",
   "Create Quotation": "إنشاء سعر",
   "Apply for Quotation": "طلب سعر",
+  "Finish up your profile": "أكمل إعداد ملفك الشخصي",
+  "Finish setting up your profile so others can find you and assign you to jobs!":
+  "أكمل إعداد ملفك الشخصي حتى يتمكن الآخرون من العثور عليك وتكليفك بالوظائف!"
 };

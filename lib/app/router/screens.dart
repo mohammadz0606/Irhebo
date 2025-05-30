@@ -55,6 +55,8 @@ import 'package:irhebo/presentation/screens/see_all/see_all_binding.dart';
 import 'package:irhebo/presentation/screens/ticket_details/ticket_details_binding.dart';
 import 'package:irhebo/presentation/screens/ticket_details/ticket_details_screen.dart';
 
+import '../../presentation/screens/auth/register/register_freelancer_screen.dart';
+
 class AppScreens {
   static List<GetPage> screens = <GetPage>[
     GetPage(
@@ -125,6 +127,10 @@ class AppScreens {
         name: AppRoutes.bottomNavBar,
         page: () => const BottomNavBarScreen(),
         binding: BottomNavBarBinding()),
+    GetPage(
+      name: AppRoutes.registerFreelancer,
+      page: () => const RegisterFreelancerScreen(),
+    ),
     GetPage(
         name: AppRoutes.seeAll,
         page: () => const SeeAllScreen(),

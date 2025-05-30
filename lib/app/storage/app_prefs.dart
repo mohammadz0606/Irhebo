@@ -23,6 +23,20 @@ class AppPreferences {
     await _sharedPreferences.setBool(key, value);
   }
 
+  Future<bool> setString({
+    required String key,
+    required String value,
+  }) async =>
+      // await _sharedPreferences.setString(key, json.encode(value));
+  await _sharedPreferences.setString(key, value);
+
+  String? getString({
+    required String key,
+  }) =>
+      //_sharedPreferences.getString(json.decode(key));
+  _sharedPreferences.getString(key);
+
+
   bool getBoolValue(String key) {
     return _sharedPreferences.getBool(key) ?? false;
   }
@@ -52,10 +66,10 @@ class AppPreferences {
     _sharedPreferences.remove(key);
   }
 
-  //userEntity
-  Future<void> setUserEntity(List<String> user) async {
-    _sharedPreferences.setStringList(AppPrefsKeys.USER_ENTITY, user);
-  }
+  // //userEntity
+  // Future<void> setUserEntity(List<String> user) async {
+  //   _sharedPreferences.setStringList(AppPrefsKeys.USER_ENTITY, user);
+  // }
 
   List<String> getUserEntity() {
     return _sharedPreferences.getStringList(AppPrefsKeys.USER_ENTITY) ?? [];

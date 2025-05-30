@@ -203,4 +203,7 @@ Map<String, String> en = {
   "Create Request": "Create Request",
   "Create Quotation": "Create Quotation",
   "Apply for Quotation": "Apply for Quotation",
+  "Finish up your profile": "Finish up your profile",
+  "Finish setting up your profile so others can find you and assign you to jobs!":
+      "Finish setting up your profile so others can find you and assign you to jobs!"
 };

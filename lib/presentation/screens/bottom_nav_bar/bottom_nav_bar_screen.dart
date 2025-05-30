@@ -21,7 +21,7 @@ class BottomNavBarScreen extends GetView<BottomNavBarController> {
         builder: (context) => Obx(
           () => Scaffold(
             body: controller.pages[controller.index],
-            bottomNavigationBar: AppNavigationBarContainer(),
+            bottomNavigationBar: const AppNavigationBarContainer(),
           ),
         ),
       ),

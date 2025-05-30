@@ -11,34 +11,31 @@ class AuthAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     var w = MediaQuery.of(context).size.width;
-    return Container(
-      // color: Colors.amber,
-      child: Stack(
-        alignment: AlignmentDirectional.topStart,
-        // clipBehavior: Clip.none,
-        children: [
-          Padding(
-            padding: EdgeInsets.only(
-                top: 17.4 * (w / 100), bottom: 12.43 * (w / 100)),
-            child: AppLogo(),
-          ),
-          Visibility(
-            visible: hasBack,
-            child: PositionedDirectional(
-              start: 3.98 * (w / 100),
-              top: 15.4 * (w / 100),
-              child: InkWell(
-                borderRadius: BorderRadius.circular(50 * (w / 100)),
-                onTap: () => Get.back(),
-                child: GradientIcon(
-                  icn: AppIcons.arrowLeft,
-                  matchTextDirection: true,
-                ),
+    return Stack(
+      alignment: AlignmentDirectional.topStart,
+      // clipBehavior: Clip.none,
+      children: [
+        Padding(
+          padding: EdgeInsets.only(
+              top: 17.4 * (w / 100), bottom: 12.43 * (w / 100)),
+          child: const AppLogo(),
+        ),
+        Visibility(
+          visible: hasBack,
+          child: PositionedDirectional(
+            start: 3.98 * (w / 100),
+            top: 15.4 * (w / 100),
+            child: InkWell(
+              borderRadius: BorderRadius.circular(50 * (w / 100)),
+              onTap: () => Get.back(),
+              child: const GradientIcon(
+                icn: AppIcons.arrowLeft,
+                matchTextDirection: true,
               ),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 

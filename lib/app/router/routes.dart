@@ -8,6 +8,7 @@ class AppRoutes {
   static const String language = "/language";
   static const String roles = "/roles";
   static const String bottomNavBar = "/bottom_nav_bar";
+  static const String registerFreelancer = "/register_freelancer";
   static const String versioning = "/versioning";
   static const String home = "/home";
 

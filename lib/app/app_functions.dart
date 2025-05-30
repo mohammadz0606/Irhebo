@@ -1,6 +1,10 @@
 // Helper function to format the date
 import 'package:intl/intl.dart';
 import 'package:irhebo/app/enums.dart';
+import 'package:irhebo/app/storage/app_prefs.dart';
+import 'package:irhebo/app/storage/app_prefs_keys.dart';
+
+import 'injection.dart';
 
 String formatDate(DateTime date) {
   DateTime now = DateTime.now();
@@ -66,5 +70,18 @@ TicketStatus getTicketStatusByLabel(String label) {
 
     default:
       return TicketStatus.Open;
+  }
+}
+
+UserRoles get getUserRole {
+  AppPreferences prefs = sl();
+  switch (prefs.getString(key: AppPrefsKeys.USER_ROLE)) {
+    case 'freelancer':
+      return UserRoles.freelancer;
+    case 'client':
+      return UserRoles.client;
+
+    default:
+      return UserRoles.client;
   }
 }
