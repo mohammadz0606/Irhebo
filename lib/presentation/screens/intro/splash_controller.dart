@@ -58,15 +58,16 @@ class SplashController extends GetxController {
 
   onChangeLanguage(int i) {
     selectedLangIndex = i;
-    // Get.toNamed(AppRoutes.steps);
-  }
-
-  onTapApply() {
     if (selectedLangIndex == 0) {
       appController.onChangeLanguage(AppLanguage.en.name);
     } else {
       appController.onChangeLanguage(AppLanguage.ar.name);
     }
+    // Get.toNamed(AppRoutes.steps);
+  }
+
+  onTapApply() {
+
     appController.setBoolValue(true, AppPrefsKeys.LANGUAGE_DIALOG);
     checkIfGoToSteps();
   }

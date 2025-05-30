@@ -87,10 +87,13 @@ class RegisterInfoButtons extends StatelessWidget {
           height: 2.98 * (w / 100),
         ),
         CustomDropdown<NewConfigModelDataCountries?>(
+
           itemBuilder: (context, item, isDisabled, isSelected) => DropdownItem(
+
             label: item?.title ?? "",
+
           ),
-          showSearchBox: false,
+          showSearchBox: true,
           label: "Country",
           hintText: "Select country",
           items: countries,
