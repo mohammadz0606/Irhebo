@@ -141,6 +141,7 @@ class AppTextField extends StatelessWidget {
                 onFieldSubmitted: onSubmit,
                 validator: onValidate,
                 maxLines: maxLines ?? 1,
+
                 // autocorrect: true,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 readOnly: readOnly!,

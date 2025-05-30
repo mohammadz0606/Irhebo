@@ -5,6 +5,7 @@ Map<String, String> en = {
   "Apply": "Apply",
   "What would you like to do": "What would you like to do?",
   "Choose your role in Irhebo": "Choose your role in Irhebo",
+  "Choose your role in FREECO":"Choose your role in FREECO",
   "Find Service": "Find Service",
   "Sell Service": "Sell Service",
   "Continue": "Continue",

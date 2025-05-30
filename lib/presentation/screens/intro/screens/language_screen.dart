@@ -31,20 +31,25 @@ class LanguageScreen extends GetWidget<SplashController> {
               title: "Select Language",
               subtitle: "Choose your preference language",
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                for (int i = 0; i < 2; i++)
-                  Obx(
-                    () => LanguageItemWidget(
-                      onTap: () => controller.onChangeLanguage(i),
-                      selected: i == controller.selectedLangIndex,
-                      title: i == 0 ? "English" : "العربية",
-                      icon: i == 0 ? AppIcons.usa : AppIcons.ksa,
-                      language: true,
+            Directionality(
+            textDirection: TextDirection.ltr,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  for (int i = 0; i < 2; i++)
+                    Obx(
+                      () => LanguageItemWidget(
+                        onTap: () {
+                          controller.onChangeLanguage(i);
+                        },
+                        selected: i == controller.selectedLangIndex,
+                        title: i == 0 ? "English" : "العربية",
+                        icon: i == 0 ? AppIcons.usa : AppIcons.ksa,
+                        language: true,
+                      ),
                     ),
-                  ),
-              ],
+                ],
+              ),
             ),
           ],
         ),
