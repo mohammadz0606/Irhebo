@@ -2,7 +2,6 @@ export 'package:flutter/material.dart';
 
 export 'app_controller.dart';
 
-
 export 'app_functions.dart';
 
 export 'app.dart';
@@ -31,5 +30,11 @@ export 'package:irhebo/presentation/widgets/background_image.dart';
 
 export 'package:irhebo/presentation/widgets/add_button.dart';
 
+export 'package:irhebo/app/resources/style/colors.dart';
+export 'package:irhebo/app/resources/style/decoration.dart';
+export 'package:irhebo/app/resources/style/text_style.dart';
+export 'package:irhebo/app/resources/style/theme.dart';
 
+export 'package:provider/provider.dart';
 
+export 'package:flutter_screenutil/flutter_screenutil.dart';

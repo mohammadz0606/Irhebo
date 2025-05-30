@@ -22,6 +22,7 @@ class AppButton extends StatelessWidget {
   final double? elevation;
   final Widget? child;
   final bool isLoading;
+
   const AppButton(
       {super.key,
       required this.onPressed,
@@ -68,7 +69,7 @@ class AppButton extends StatelessWidget {
               ),
               shadowColor: shadowColor),
           child: isLoading
-              ? CircularProgressIndicator(
+              ? const CircularProgressIndicator(
                   color: Colors.white,
                   strokeWidth: 2,
                 )

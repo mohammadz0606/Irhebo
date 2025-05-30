@@ -105,6 +105,10 @@ class AppDecoration {
     return BoxDecoration(
       borderRadius: BorderRadius.circular(radius ?? 24),
       color: color ?? Colors.transparent,
+      border: Border.all(
+        color: borderColor ?? Colors.transparent,
+        width: borderWidth ?? 1,
+      ),
     );
   }
 
@@ -120,6 +124,7 @@ class AppDecoration {
       color: color ?? Colors.white,
     );
   }
+
   // BoxShadow getShadow({Color? color}) {
   //   return BoxShadow(
   //       color: color ?? Theme.of(Get.context!).colorScheme.secondary,

@@ -128,7 +128,7 @@ class VerificationController extends GetxController {
           } else {
             /// IMPLEMENT FREELANCER LOGIC
             AppPreferences prefs = sl();
-            appController.setAccessToken(r.data!.token ?? "");
+            appController.setAccessToken(r.data!.token ?? '');
             prefs.setString(
               key: AppPrefsKeys.USER_ROLE,
               value: r.data?.user?.role ?? '',

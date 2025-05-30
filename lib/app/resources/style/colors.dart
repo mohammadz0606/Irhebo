@@ -99,12 +99,12 @@ class AppDarkColors {
   ];
 }
 
-OutlineInputBorder kOutlinedBorderWhite = OutlineInputBorder(
-  borderRadius: const BorderRadius.all(Radius.circular(14)),
+OutlineInputBorder kOutlinedBorderWhite = const OutlineInputBorder(
+  borderRadius: BorderRadius.all(Radius.circular(14)),
   borderSide: BorderSide(width: 0, color: Colors.transparent),
 );
 
-OutlineInputBorder searchFeild = OutlineInputBorder(
+OutlineInputBorder searchFeild = const OutlineInputBorder(
   borderRadius: BorderRadius.all(Radius.circular(500)),
   borderSide: BorderSide(
     width: 0,
@@ -112,17 +112,17 @@ OutlineInputBorder searchFeild = OutlineInputBorder(
   ),
 );
 
-OutlineInputBorder kOutlinedBorderBlack = OutlineInputBorder(
-  borderRadius: const BorderRadius.all(Radius.circular(14)),
+OutlineInputBorder kOutlinedBorderBlack = const OutlineInputBorder(
+  borderRadius: BorderRadius.all(Radius.circular(14)),
   borderSide: BorderSide(color: AppDarkColors.pureBlack),
 );
-OutlineInputBorder kOutlinedBorderRed = OutlineInputBorder(
-  borderRadius: const BorderRadius.all(Radius.circular(14)),
+OutlineInputBorder kOutlinedBorderRed = const OutlineInputBorder(
+  borderRadius: BorderRadius.all(Radius.circular(14)),
   borderSide: BorderSide(color: AppDarkColors.red),
 );
 
-OutlineInputBorder dropDownOutlinedBorder = OutlineInputBorder(
-  borderRadius: const BorderRadius.all(Radius.circular(14)),
+OutlineInputBorder dropDownOutlinedBorder = const OutlineInputBorder(
+  borderRadius: BorderRadius.all(Radius.circular(14)),
   borderSide: BorderSide(color: Colors.transparent, width: 0),
 );
 
@@ -153,13 +153,13 @@ BoxDecoration focusedPinputLightDecoration = BoxDecoration(
   // )
 );
 
-BorderRadiusDirectional senderRadius = BorderRadiusDirectional.only(
+BorderRadiusDirectional senderRadius = const BorderRadiusDirectional.only(
     topEnd: Radius.zero,
     topStart: Radius.circular(27),
     bottomEnd: Radius.circular(27),
     bottomStart: Radius.circular(27));
 
-BorderRadiusDirectional receiverRadius = BorderRadiusDirectional.only(
+BorderRadiusDirectional receiverRadius = const BorderRadiusDirectional.only(
     topEnd: Radius.circular(27),
     topStart: Radius.circular(27),
     bottomEnd: Radius.circular(27),

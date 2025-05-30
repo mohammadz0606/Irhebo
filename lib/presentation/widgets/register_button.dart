@@ -6,6 +6,7 @@ import 'package:irhebo/app/router/routes.dart';
 
 class RegisterButton extends StatelessWidget {
   final bool login;
+
   const RegisterButton({super.key, this.login = false});
 
   @override
@@ -27,10 +28,11 @@ class RegisterButton extends StatelessWidget {
                 TextSpan(
                   text: login ? "Register Now".tr : "Login".tr,
                   style: Get.theme.textTheme.labelLarge!.copyWith(
-                      color: Get.find<AppController>().darkMode
-                          ? AppDarkColors.greenText
-                          : AppLightColors.primaryColor,
-                      fontWeight: FontWeight.w600),
+                    color: Get.find<AppController>().darkMode
+                        ? AppDarkColors.greenText
+                        : AppLightColors.primaryColor,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ],
             ),
