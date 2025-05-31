@@ -71,7 +71,7 @@ Map<String, String> en = {
   "Wishlist": "Wishlist",
   "Settings": "Settings",
   "This is categories section": "This is categories section",
-  "This is request section" :"This is request section",
+  "This is request section": "This is request section",
   "This is services section": "This is services section",
   "This is quotation section": "This is quotation section",
   "This is porfolio section": "This is portfolio section",
@@ -217,10 +217,10 @@ Map<String, String> en = {
   "File is too large": "File is too large. Max allowed size is 3MB.",
   "Please fill all fields": "Please fill all fields",
   "Category Choices": "Choose a category",
-
-  "Create Service" :"Create Service",
-  "Add Portfolio" : "Add Portfolio",
-  "My Portfolio" : "My Portfolio",
-  "Crete Portfolio" : "Crete Portfolio",
-
+  "Create Service": "Create Service",
+  "Add Portfolio": "Add Portfolio",
+  "My Portfolio": "My Portfolio",
+  "Crete Portfolio": "Crete Portfolio",
+  "Create portfolio entries to showcase your work":
+      "Create portfolio entries to showcase your work",
 };
