@@ -220,5 +220,7 @@ Map<String, String> en = {
 
   "Create Service" :"Create Service",
   "Add Portfolio" : "Add Portfolio",
+  "My Portfolio" : "My Portfolio",
+  "Crete Portfolio" : "Crete Portfolio",
 
 };

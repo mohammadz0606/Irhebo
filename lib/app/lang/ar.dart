@@ -216,4 +216,6 @@ Map<String, String> ar = {
   "Category Choices": "اختر احد الفئات",
   "Create Service": "إنشاء خدمة",
   "Add Portfolio": "إضافة معرض أعمال",
+  "My Portfolio": "معرض أعمالي",
+  "Crete Portfolio": "إنشاء معرض اعمال",
 };

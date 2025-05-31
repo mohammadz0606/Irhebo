@@ -47,8 +47,9 @@ class _HomeScreenState extends State<HomeScreen> {
           ? null
           : AppLightColors.scaffoldColor,
       appBar: PreferredSize(
-          preferredSize: Size.fromHeight(20 * (w / 100)),
-          child: const HomeAppBar()),
+        preferredSize: Size.fromHeight(20 * (w / 100)),
+        child: const HomeAppBar(),
+      ),
       body: SmartRefresher(
         controller: controller.refreshController,
         onRefresh: controller.onRefreshList,

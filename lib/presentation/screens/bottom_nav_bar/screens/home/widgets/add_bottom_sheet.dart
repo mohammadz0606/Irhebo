@@ -3,6 +3,8 @@ import 'package:irhebo/presentation/screens/bottom_nav_bar/screens/home/home_con
 
 import 'package:irhebo/presentation/widgets/app_button.dart';
 
+import '../../../../../../app/router/routes.dart';
+
 class AddBottomSheet extends GetView<HomeController> {
   const AddBottomSheet({super.key});
 
@@ -42,7 +44,10 @@ class AddBottomSheet extends GetView<HomeController> {
                     backGroundColor: AppLightColors.greenContainer,
                   ),
                   AppButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Get.toNamed(AppRoutes.createPortfolio);
+                      //Navigator.pushNamed(context, AppRoutes.createPortfolio);
+                    },
                     title: "Add Portfolio",
                     backGroundColor: AppLightColors.greenContainer,
                   ),

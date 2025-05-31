@@ -54,7 +54,7 @@ class AppButton extends StatelessWidget {
               horizontal: horizontalMargin ?? 0.0,
               vertical: verticalMargin ?? 0.0),
       child: ElevatedButton(
-          onPressed: isLoading ? () {} : () => onPressed(),
+          onPressed: isLoading ? null : onPressed,
           style: ElevatedButton.styleFrom(
               elevation: elevation ?? 0,
               padding: EdgeInsets.zero,

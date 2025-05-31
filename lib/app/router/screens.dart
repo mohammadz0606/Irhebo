@@ -2,6 +2,7 @@ import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:irhebo/app/router/routes.dart';
 import 'package:irhebo/presentation/screens/faqs/faqs_binding.dart';
 import 'package:irhebo/presentation/screens/faqs/faqs_screen.dart';
+import 'package:irhebo/presentation/screens/portfolio/screens/my_portfolio.dart';
 import 'package:irhebo/presentation/screens/privacy_policy/privacy_policy_binding.dart';
 import 'package:irhebo/presentation/screens/privacy_policy/privacy_policy_screen.dart';
 import 'package:irhebo/presentation/screens/profile/profile_binding.dart';
@@ -56,6 +57,7 @@ import 'package:irhebo/presentation/screens/ticket_details/ticket_details_bindin
 import 'package:irhebo/presentation/screens/ticket_details/ticket_details_screen.dart';
 
 import '../../presentation/screens/auth/register/register_freelancer_screen.dart';
+import '../../presentation/screens/portfolio/screens/create_new_portfolio.dart';
 
 class AppScreens {
   static List<GetPage> screens = <GetPage>[
@@ -199,5 +201,19 @@ class AppScreens {
         name: AppRoutes.termsConditions,
         page: () => const TermsConditionsScreen(),
         binding: TermsConditionsBinding()),
+    GetPage(
+      name: AppRoutes.termsConditions,
+      page: () => const CreateNewPortfolioScreen(),
+    ),
+
+    GetPage(
+      name: AppRoutes.myPortfolio,
+      page: () => const MyPortfolioScreen(),
+    ),
+
+    GetPage(
+      name: AppRoutes.createPortfolio,
+      page: () => const CreateNewPortfolioScreen(),
+    ),
   ];
 }

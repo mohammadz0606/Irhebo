@@ -45,4 +45,9 @@ class AppRoutes {
   static const String quotationDetails = "/quotation_details";
   static const String quotations = "/quotations";
   static const String createQuotation = "/create_quotation";
+
+  static const String createPortfolio = "/create_portfolio";
+  static const String myPortfolio = "/my_portfolio";
+
+
 }

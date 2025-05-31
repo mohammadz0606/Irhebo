@@ -2,10 +2,10 @@ import 'package:irhebo/presentation/screens/bottom_nav_bar/screens/home/home_con
 import 'package:irhebo/presentation/screens/bottom_nav_bar/screens/home/widgets/freelancer/portfolio_for_freelancer_items.dart';
 
 import '../../../../../../../app/global_imports.dart';
+import '../../../../../../../app/router/routes.dart';
 import '../../../../../../widgets/app_title_with_action.dart';
 import '../../../../../../widgets/no_data.dart';
 import '../portfolio_shimmer.dart';
-import '../service_item_shimmer.dart';
 
 class PortfolioForFreelancer extends GetView<HomeController> {
   const PortfolioForFreelancer({super.key});
@@ -16,10 +16,10 @@ class PortfolioForFreelancer extends GetView<HomeController> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const AppTitleWithAction(
+         AppTitleWithAction(
           title: 'Portfolio',
           action: 'See All',
-          //  onTapAction: () => Get.toNamed(AppRoutes.search),
+          onTapAction: () => Get.toNamed(AppRoutes.myPortfolio),
         ),
         Obx(
           () => controller.isLoading
