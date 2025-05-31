@@ -4,6 +4,7 @@ Map<String, String> ar = {
   "Choose your preference language": "اختر لغتك المفضلة",
   "Apply": "تطبيق",
   "What would you like to do": "ماذا تريد أن تفعل؟",
+  "Another Files":"ملفات اخرى",
   "Choose your role in Irhebo": "اختر دورك في Irhebo",
   "Choose your role in FREECO": "اختر دورك في FREECO",
   "Find Service": "البحث عن خدمة",

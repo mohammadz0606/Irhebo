@@ -27,11 +27,16 @@ class RegisterFreelancerScreen extends StatefulWidget {
 class _RegisterFreelancerScreenState extends State<RegisterFreelancerScreen> {
   final TextEditingController _biography = TextEditingController();
   final TextEditingController _certificatesDesc = TextEditingController();
-  late final SearchControllerGetx searchController;
+  final TextEditingController _anotherFilesDesc = TextEditingController();
 
+  late final SearchControllerGetx searchController;
+bool isNeedToUploadOther = false;
   File? avatar;
 
   List<int> categoryIds = [];
+  List<File?> selectedFiles = [null];
+  List<TextEditingController> fileDescriptions = [TextEditingController()];
+
 
   @override
   void initState() {
@@ -44,6 +49,7 @@ class _RegisterFreelancerScreenState extends State<RegisterFreelancerScreen> {
   void dispose() {
     _biography.dispose();
     _certificatesDesc.dispose();
+    _anotherFilesDesc.dispose();
     super.dispose();
   }
 
@@ -108,6 +114,7 @@ class _RegisterFreelancerScreenState extends State<RegisterFreelancerScreen> {
                 ),
                 UploadFileWidget(
                   onFileSelected: (file) {
+
                     log('DONE PIK FILE ${file?.path}');
                   },
                 ),
@@ -130,7 +137,14 @@ class _RegisterFreelancerScreenState extends State<RegisterFreelancerScreen> {
                   style: Get.textTheme.headlineSmall,
                 ),
                 UploadFileWidget(
-                  onFileSelected: (file) {},
+                  onFileSelected: (file) {
+                    if(file !=null){
+                      selectedFiles[0] = file;
+
+                    }else{
+                      selectedFiles.removeAt(0);
+                    }
+                  },
                 ),
                 AppTextField(
                   controller: _certificatesDesc,
@@ -141,10 +155,66 @@ class _RegisterFreelancerScreenState extends State<RegisterFreelancerScreen> {
                   // onValidate: AppValidators.validateName,
                 ),
                 const SizedBox(height: 20),
-                AppTextButton(
-                  onPressed: () {},
-                  text: 'Upload another',
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Files'.tr,
+                      style: Get.textTheme.headlineSmall,
+                    ),
+                    ...List.generate(selectedFiles.length, (index) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'File ${index + 1}',
+                                style: Get.textTheme.titleMedium,
+                              ),
+                              IconButton(
+                                icon: Icon(Icons.delete, color: Colors.red),
+                                onPressed: () {
+                                  setState(() {
+                                    selectedFiles.removeAt(index);
+                                    fileDescriptions.removeAt(index);
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
+                          UploadFileWidget(
+                            onFileSelected: (file) {
+                              setState(() {
+                                selectedFiles[index] = file;
+                              });
+                            },
+                          ),
+                          AppTextField(
+                            controller: fileDescriptions[index],
+                            hint: "Description",
+                            textInputType: TextInputType.multiline,
+                            maxLines: 1,
+                            textInputAction: TextInputAction.newline,
+                          ),
+                          const SizedBox(height: 10),
+                        ],
+                      );
+                    }),
+
+                    AppTextButton(
+                      onPressed: () {
+                        setState(() {
+                          selectedFiles.add(null);
+                          fileDescriptions.add(TextEditingController());
+                        });
+                      },
+                      text: 'Upload another',
+                    ),
+                  ],
                 ),
+
                 const SizedBox(height: 30),
                 Consumer<CompleteProfileProvider>(
                   builder: (context, provider, _) {
@@ -152,14 +222,14 @@ class _RegisterFreelancerScreenState extends State<RegisterFreelancerScreen> {
                       onPressed: () async {
                         if (avatar != null ||
                             _biography.text.trim().isNotEmpty ||
-                            categoryIds.isEmpty) {
+                            categoryIds.isEmpty||selectedFiles.isNotEmpty||fileDescriptions.isNotEmpty) {
                           await provider.completeProfile(
                             data: CompleteProfileParam(
                               avatar: avatar!,
                               bio: _biography.text.trim(),
                               categoryIds: categoryIds,
-                              descriptions: [],
-                              files: [],
+                              descriptions: fileDescriptions.map((e){return e.text;}).toList(),
+                              files:selectedFiles as List<File>,
                             ),
                           );
                         } else {
