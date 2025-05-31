@@ -48,6 +48,8 @@ class AppRoutes {
 
   static const String createPortfolio = "/create_portfolio";
   static const String myPortfolio = "/my_portfolio";
+  static const String myServices = "/my_services";
+  static const String createService = "/create_service";
 
 
 }

@@ -228,4 +228,6 @@ Map<String, String> en = {
   "Related Services Choices": "Choose related services",
   "Cover" :"Cover Image",
   "Portfolio created successfully" :"Portfolio created successfully",
+
+  "My Services" : "My Services",
 };

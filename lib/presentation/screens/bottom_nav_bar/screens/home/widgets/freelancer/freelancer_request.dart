@@ -3,6 +3,7 @@ import 'package:irhebo/presentation/widgets/no_data.dart';
 import '../../../../../../../app/global_imports.dart';
 import '../../../../../../widgets/app_loading.dart';
 import '../../../../../../widgets/app_title_with_action.dart';
+import '../../../../bottom_nav_bar_controller.dart';
 import '../../home_controller.dart';
 import 'freelancer_request_item.dart';
 
@@ -15,10 +16,12 @@ class FreelancerRequest extends GetView<HomeController> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const AppTitleWithAction(
+         AppTitleWithAction(
           title: "Requests",
           action: "See All",
-          //  onTapAction: () => Get.toNamed(AppRoutes.search),
+           onTapAction: () {
+             Get.find<BottomNavBarController>().onChangeIndex(0);
+           },
         ),
         const SizedBox(height: 5),
         Obx(

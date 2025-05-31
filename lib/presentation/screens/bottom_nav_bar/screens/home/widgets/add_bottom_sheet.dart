@@ -39,9 +39,11 @@ class AddBottomSheet extends GetView<HomeController> {
                 ]
               : [
                   AppButton(
-                    onPressed: () {},
                     title: "Create Service",
                     backGroundColor: AppLightColors.greenContainer,
+                    onPressed: () {
+                      Get.toNamed(AppRoutes.createService);
+                    },
                   ),
                   AppButton(
                     onPressed: () {
