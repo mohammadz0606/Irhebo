@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:irhebo/domain/providers/upload_files.dart';
 
@@ -11,9 +12,11 @@ class UploadFileWidget extends StatefulWidget {
   const UploadFileWidget({
     super.key,
     required this.onFileSelected,
+    this.fileType = FileType.any,
   });
 
   final Function(File? file) onFileSelected;
+  final FileType fileType;
 
   @override
   State<UploadFileWidget> createState() => _UploadFileWidgetState();
@@ -67,7 +70,7 @@ class _UploadFileWidgetState extends State<UploadFileWidget> {
                         setState(() {});
                       }
 
-                      File? pickFile = await provider.pickFile();
+                      File? pickFile = await provider.pickFile(fileType: widget.fileType);
 
                       file = pickFile;
 

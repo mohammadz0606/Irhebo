@@ -8,9 +8,9 @@ import '../../app/global_imports.dart';
 class UploadFilesProvider extends ChangeNotifier {
   bool isLoadingPickFile = false;
 
-  Future<File?>? pickFile() async {
+  Future<File?>? pickFile({FileType fileType = FileType.any}) async {
     isLoadingPickFile = true;
-    final result = await FilePicker.platform.pickFiles();
+    final result = await FilePicker.platform.pickFiles(type: fileType);
     if (result != null && result.files.single.path != null) {
       File file = File(result.files.single.path!);
 
@@ -38,15 +38,16 @@ class UploadFilesProvider extends ChangeNotifier {
       for (var picked in result.files) {
         if (picked.path != null) {
           File file = File(picked.path!);
-          final fileSize = await file.length();
-          if (fileSize <= 3 * 1024 * 1024) {
-            validFiles.add(file);
-          } else {
-            log("File ${picked.name} is too large. Max allowed size is 3MB.");
-            AppSnackBar.openErrorSnackBar(
-              message: '${picked.name} - ${'File is too large'.tr}',
-            );
-          }
+          //final fileSize = await file.length();
+          validFiles.add(file);
+          // if (fileSize <= 3 * 1024 * 1024) {
+          //
+          // } else {
+          //   log("File ${picked.name} is too large. Max allowed size is 3MB.");
+          //   AppSnackBar.openErrorSnackBar(
+          //     message: '${picked.name} - ${'File is too large'.tr}',
+          //   );
+          // }
         }
         return validFiles;
       }

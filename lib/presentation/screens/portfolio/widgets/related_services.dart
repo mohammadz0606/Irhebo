@@ -50,7 +50,7 @@ class _RelatedServicesWidgetState extends State<RelatedServicesWidget> {
                 );
               },
             ).toList(),
-            buttonText: 'Related Services Choices',
+            buttonText: 'Related Services Choices'.tr,
             label: 'Related Services',
             titleStyle: Get.textTheme.labelMedium,
             showSelected: true,
