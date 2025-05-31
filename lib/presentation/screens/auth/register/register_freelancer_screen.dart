@@ -34,7 +34,7 @@ bool isNeedToUploadOther = false;
   File? avatar;
 
   List<int> categoryIds = [];
-  List<File?> selectedFiles = [null];
+  List<File?> selectedFiles = [];
   List<TextEditingController> fileDescriptions = [TextEditingController()];
 
 
@@ -114,7 +114,9 @@ bool isNeedToUploadOther = false;
                 ),
                 UploadFileWidget(
                   onFileSelected: (file) {
-
+                    if(file!=null){
+                      avatar = file;
+                    }
                     log('DONE PIK FILE ${file?.path}');
                   },
                 ),
@@ -187,7 +189,10 @@ bool isNeedToUploadOther = false;
                           UploadFileWidget(
                             onFileSelected: (file) {
                               setState(() {
-                                selectedFiles[index] = file;
+                                if(file!=null){
+                                  selectedFiles[index] = file;
+
+                                }
                               });
                             },
                           ),
@@ -206,6 +211,7 @@ bool isNeedToUploadOther = false;
                     AppTextButton(
                       onPressed: () {
                         setState(() {
+
                           selectedFiles.add(null);
                           fileDescriptions.add(TextEditingController());
                         });
@@ -229,7 +235,7 @@ bool isNeedToUploadOther = false;
                               bio: _biography.text.trim(),
                               categoryIds: categoryIds,
                               descriptions: fileDescriptions.map((e){return e.text;}).toList(),
-                              files:selectedFiles as List<File>,
+                              files: selectedFiles.whereType<File>().toList(),
                             ),
                           );
                         } else {
