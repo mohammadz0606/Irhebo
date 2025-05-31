@@ -73,6 +73,7 @@ Map<String, String> en = {
   "This is categories section": "This is categories section",
   "This is request section" :"This is request section",
   "This is services section": "This is services section",
+  "This is quotation section": "This is quotation section",
   "This is porfolio section": "This is portfolio section",
   "This is bot made for you": "This is bot made for you",
   "This is notifications center": "This is notifications center",

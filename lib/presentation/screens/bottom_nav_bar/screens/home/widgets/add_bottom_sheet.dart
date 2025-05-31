@@ -22,7 +22,7 @@ class AddBottomSheet extends GetView<HomeController> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           spacing: 4.97 * (w / 100),
-          children: getUserRole == UserRoles.client
+          children: getUserRole != UserRoles.freelancer
               ? [
                   AppButton(
                     onPressed: controller.onTapCreateSupportTicket,

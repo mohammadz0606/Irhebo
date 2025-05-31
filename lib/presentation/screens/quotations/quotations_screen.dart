@@ -12,10 +12,10 @@ class QuotationsScreen extends GetView<QuotationsController> {
   Widget build(BuildContext context) {
     // var w = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: NormalAppBar(
+      appBar: const NormalAppBar(
         title: "Quotations",
       ),
-      body: QuotationsList(),
+      body: const QuotationsList(),
       floatingActionButton: AddButton(
         onTap: controller.createQuotation,
       ),

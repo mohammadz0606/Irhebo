@@ -147,7 +147,7 @@ class HomeAppBar extends GetWidget<HomeController>
                       ),
                     ),
 
-                    if(getUserRole == UserRoles.client)... {
+                    if(getUserRole != UserRoles.freelancer)... {
                       SizedBox(
                         width: 1.49 * (w / 100),
                       ),

@@ -5,6 +5,7 @@ import 'package:irhebo/app/resources/style/colors.dart';
 import 'package:irhebo/presentation/screens/bottom_nav_bar/screens/home/home_controller.dart';
 import 'package:irhebo/presentation/screens/bottom_nav_bar/screens/home/widgets/categories_section.dart';
 import 'package:irhebo/presentation/screens/bottom_nav_bar/screens/home/widgets/custome_paginagtion_footer.dart';
+import 'package:irhebo/presentation/screens/bottom_nav_bar/screens/home/widgets/freelancer/freelancer_quotation.dart';
 import 'package:irhebo/presentation/screens/bottom_nav_bar/screens/home/widgets/freelancer/freelancer_request.dart';
 import 'package:irhebo/presentation/screens/bottom_nav_bar/screens/home/widgets/freelancer/freelancer_services.dart';
 import 'package:irhebo/presentation/screens/bottom_nav_bar/screens/home/widgets/freelancer/portfolio_for_freelancer.dart';
@@ -52,15 +53,15 @@ class _HomeScreenState extends State<HomeScreen> {
         controller: controller.refreshController,
         onRefresh: controller.onRefreshList,
         enablePullDown: true,
-        enablePullUp: getUserRole == UserRoles.client ? true : false,
+        enablePullUp: getUserRole != UserRoles.freelancer ? true : false,
         footer: const CustomePaginagtionFooter(),
-        onLoading: getUserRole == UserRoles.client
+        onLoading: getUserRole != UserRoles.freelancer
             ? controller.getFeaturedPortfolio
             : null,
         child: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
-            children: getUserRole == UserRoles.client
+            children: getUserRole != UserRoles.freelancer
                 ? [
                     Showcase(
                       key: Get.find<AppController>().categoriesKey,
@@ -94,6 +95,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       description: "This is porfolio section".tr,
                       child: const PortfolioForFreelancer(),
                     ),
+                    Showcase(
+                      key: Get.find<AppController>().quotationFreelancerKey,
+                      description: "This is quotation section".tr,
+                      child: const FreelancerQuotation(),
+                    ),
+                    const SizedBox(height: 50),
                   ],
           ),
         ),

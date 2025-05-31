@@ -70,6 +70,7 @@ class AppController extends GetxController {
   final serviceKey = GlobalKey();
   final porfolioKey = GlobalKey();
   final porfolioFreelancerKey = GlobalKey();
+  final quotationFreelancerKey = GlobalKey();
   final chatKey = GlobalKey();
   final notificationsKey = GlobalKey();
   final categoriesKey = GlobalKey();
@@ -91,6 +92,7 @@ class AppController extends GetxController {
         requestFreelancer,
         serviceFreelancer,
         porfolioFreelancerKey,
+        quotationFreelancerKey,
       ]);
     }
   }

@@ -20,7 +20,7 @@ class QuotationsList extends GetWidget<QuotationsController> {
       onRefresh: controller.onRefreshQuotationsList,
       enablePullDown: true,
       enablePullUp: true,
-      footer: CustomePaginagtionFooter(),
+      footer: const CustomePaginagtionFooter(),
       onLoading: controller.getQuotations,
       child: SingleChildScrollView(
         child: Obx(
@@ -42,7 +42,7 @@ class QuotationsList extends GetWidget<QuotationsController> {
                     ],
                   )
                 : controller.quotations.isEmpty
-                    ? NoData(
+                    ? const NoData(
                         forHome: false,
                       )
                     : Column(

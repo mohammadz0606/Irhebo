@@ -62,7 +62,7 @@ class HomeController extends GetxController {
     super.onInit();
 
     if (isClosed) return;
-    if (getUserRole == UserRoles.client) {
+    if (getUserRole == UserRoles.client || getUserRole == UserRoles.non) {
       await getHome();
       await getFeaturedPortfolio();
     } else {
@@ -121,7 +121,7 @@ class HomeController extends GetxController {
     isLoading = true;
     clearData();
 
-    if (getUserRole == UserRoles.client) {
+    if (getUserRole == UserRoles.client || getUserRole == UserRoles.non) {
       await getHome();
       await getFeaturedPortfolio();
     } else {
