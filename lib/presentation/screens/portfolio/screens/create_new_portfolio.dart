@@ -1,9 +1,12 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:irhebo/presentation/screens/auth/register/widgets/upload_file.dart';
 
 import '../../../../app/global_imports.dart';
+import '../../../../domain/params/new_params/freelanser/create_portfolio_param.dart';
+import '../../../../domain/providers/freelancer/freelancer_portfolio.dart';
 import '../../../widgets/app_button.dart';
 import '../../../widgets/app_text_field.dart';
 import '../../../widgets/normal_app_bar.dart';
@@ -21,6 +24,9 @@ class CreateNewPortfolioScreen extends StatefulWidget {
 class _CreateNewPortfolioScreenState extends State<CreateNewPortfolioScreen> {
   final TextEditingController _title = TextEditingController();
   final TextEditingController _desc = TextEditingController();
+  File? cove;
+  final List<File> media = [];
+  final List<int> services = [];
 
   @override
   void dispose() {
@@ -75,9 +81,12 @@ class _CreateNewPortfolioScreenState extends State<CreateNewPortfolioScreen> {
                       fileType: FileType.image,
                       onFileSelected: (file) {
                         log('DONE PIK FILE $file');
+
+                        cove = file;
+                        setState(() {});
                       },
                     ),
-                    const SizedBox(height: 25),
+                    // const SizedBox(height: 25),
                     Text(
                       'Title'.tr,
                       style: Get.textTheme.labelMedium,
@@ -102,8 +111,13 @@ class _CreateNewPortfolioScreenState extends State<CreateNewPortfolioScreen> {
                       textInputAction: TextInputAction.newline,
                     ),
                     const SizedBox(height: 25),
-                    const RelatedServicesWidget(),
-                    const SizedBox(height: 20),
+                    RelatedServicesWidget(
+                      onServicesSelected: (value) {
+                        services.addAll(value);
+                        setState(() {});
+                      },
+                    ),
+                    const SizedBox(height: 25),
                     Text(
                       'Upload Image'.tr,
                       style: Get.textTheme.labelMedium,
@@ -111,23 +125,45 @@ class _CreateNewPortfolioScreenState extends State<CreateNewPortfolioScreen> {
                     UploadMultipleFile(
                       onFilesSelected: (file) {
                         log('DONE PIK FILE ${file.length}');
+                        media.addAll(file);
+                        setState(() {});
                       },
                     ),
+                    const SizedBox(height: 5),
                   ],
                 ),
               ),
             ),
-            AppButton(
-              onPressed: () async {
-                /*
-                   AppSnackBar.openErrorSnackBar(
-                      message: 'Please fill all fields'.tr,
+            Consumer<FreelancerPortfolioProvider>(
+              builder: (context, provider, child) {
+                return AppButton(
+                  onPressed: () async {
+                    if (media.isEmpty ||
+                        cove == null ||
+                        _title.text.trim().isEmpty ||
+                        _desc.text.trim().isEmpty ||
+                        services.isEmpty) {
+                      AppSnackBar.openErrorSnackBar(
+                        message: 'Please fill all fields'.tr,
+                      );
+                      return;
+                    }
+
+                    await provider.createPortfolio(
+                      CreatePortfolioParam(
+                        cover: cove!,
+                        description: _desc.text,
+                        title: _title.text,
+                        services: services,
+                        media: media,
+                      ),
                     );
-                   */
+                  },
+                  title: "Save",
+                  isLoading: provider.isLoading,
+                  backGroundColor: AppLightColors.greenContainer,
+                );
               },
-              title: "Save",
-              isLoading: false,
-              backGroundColor: AppLightColors.greenContainer,
             ),
             const SizedBox(height: 10),
           ],

@@ -31,27 +31,31 @@ class UploadFilesProvider extends ChangeNotifier {
   Future<List<File>> pickMultipleFile() async {
     final result = await FilePicker.platform.pickFiles(
       allowMultiple: true,
-      type: FileType.image,
+      type: FileType.media,
     );
+
     List<File> validFiles = [];
+
+
     if (result != null && result.files.isNotEmpty) {
       for (var picked in result.files) {
         if (picked.path != null) {
           File file = File(picked.path!);
-          //final fileSize = await file.length();
-          validFiles.add(file);
-          // if (fileSize <= 3 * 1024 * 1024) {
-          //
-          // } else {
-          //   log("File ${picked.name} is too large. Max allowed size is 3MB.");
-          //   AppSnackBar.openErrorSnackBar(
-          //     message: '${picked.name} - ${'File is too large'.tr}',
-          //   );
-          // }
+
+          final fileSize = await file.length();
+
+          if (fileSize <= 3 * 1024 * 1024) {
+            validFiles.add(file);
+          } else {
+            log("File ${picked.name} is too large. Max allowed size is 3MB.");
+            AppSnackBar.openErrorSnackBar(
+              message: '${picked.name} - ${'File is too large'.tr}',
+            );
+          }
         }
-        return validFiles;
       }
     }
+
     return validFiles;
   }
 }

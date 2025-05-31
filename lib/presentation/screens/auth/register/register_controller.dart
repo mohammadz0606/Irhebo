@@ -19,7 +19,7 @@ import '../../../../app/network/end_points.dart';
 import '../../../../app/network/network.dart';
 import '../../../../app/snack_bar.dart';
 import '../../../../domain/models/general_model.dart';
-import '../../../../domain/models/new_models/general_model.dart';
+import '../../../../domain/models/new_models/general_data_model.dart';
 import '../../../../domain/models/new_models/new_config_model.dart';
 
 class RegisterController extends GetxController {
@@ -119,7 +119,7 @@ class RegisterController extends GetxController {
           return;
         }
 
-        NewGeneralModel generalModel = NewGeneralModel.fromJson(response.data);
+        NewGeneralDataModel generalModel = NewGeneralDataModel.fromJson(response.data);
 
         if (generalModel.status == true) {
           isLoading = false;
@@ -136,6 +136,7 @@ class RegisterController extends GetxController {
           );
         }
         isLoading = false;
+
       }
 
       // final result = await registerUseCase(RegisterParams(
@@ -192,7 +193,7 @@ class RegisterController extends GetxController {
         );
         return;
       }
-      NewGeneralModel generalModel = NewGeneralModel.fromJson(response.data);
+      NewGeneralDataModel generalModel = NewGeneralDataModel.fromJson(response.data);
       if (generalModel.status == true) {
         Get.toNamed(AppRoutes.verification, arguments: {
           "verify_type": VerifyScreenType.register,
