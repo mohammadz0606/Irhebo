@@ -84,15 +84,6 @@ class FreelancerHomeModelDataQuotations {
 }
 
 class FreelancerHomeModelDataPortfoliosUser {
-/*
-{
-  "id": 1,
-  "username": "Freelancer A",
-  "profession": "Software Developer",
-  "avatar": "https://irhebo-backend.smartedge.me/storage/avatars/1746131048_avatar.png"
-}
-*/
-
   int? id;
   String? username;
   String? profession;
@@ -114,14 +105,6 @@ class FreelancerHomeModelDataPortfoliosUser {
 }
 
 class FreelancerHomeModelDataPortfoliosCover {
-/*
-{
-  "id": 72,
-  "media_path": "https://irhebo-backend.smartedge.me/storage/portfolios/1746865858_1000020853.jpg",
-  "media_type": "image"
-}
-*/
-
   int? id;
   String? mediaPath;
   String? mediaType;
@@ -140,25 +123,6 @@ class FreelancerHomeModelDataPortfoliosCover {
 }
 
 class FreelancerHomeModelDataPortfolios {
-/*
-{
-  "id": 27,
-  "title": "hjiin",
-  "user_id": 1,
-  "cover": {
-    "id": 72,
-    "media_path": "https://irhebo-backend.smartedge.me/storage/portfolios/1746865858_1000020853.jpg",
-    "media_type": "image"
-  },
-  "user": {
-    "id": 1,
-    "username": "Freelancer A",
-    "profession": "Software Developer",
-    "avatar": "https://irhebo-backend.smartedge.me/storage/avatars/1746131048_avatar.png"
-  }
-}
-*/
-
   int? id;
   String? title;
   int? userId;
@@ -252,6 +216,7 @@ class FreelancerHomeModelData {
   List<FreelancerHomeModelDataServices?>? services;
   List<FreelancerHomeModelDataPortfolios?>? portfolios;
   List<FreelancerHomeModelDataQuotations?>? quotations;
+  List<FreelancerServiceModelRequests?>? requests;
 
   FreelancerHomeModelData({
     this.services,
@@ -276,6 +241,7 @@ class FreelancerHomeModelData {
       });
       portfolios = arr0;
     }
+
     if (json['quotations'] != null) {
       final v = json['quotations'];
       final arr0 = <FreelancerHomeModelDataQuotations>[];
@@ -284,5 +250,85 @@ class FreelancerHomeModelData {
       });
       quotations = arr0;
     }
+
+    if (json['requests'] != null) {
+      final v = json['requests'];
+      final arr0 = <FreelancerServiceModelRequests>[];
+      v.forEach((v) {
+        arr0.add(FreelancerServiceModelRequests.fromJson(v));
+      });
+      requests = arr0;
+    }
+
+  }
+}
+
+class FreelancerServiceModelRequests {
+  int? id;
+  String? title;
+  String? imageUrl;
+  String? orderNumber;
+  String? startDate;
+  String? endDate;
+  String? elapsedDays;
+  String? totalDays;
+  int? progressPercentage;
+  String? createdAt;
+  String? createdSince;
+  String? statusLabel;
+  String? statusKey;
+  bool? needAction;
+
+  FreelancerServiceModelRequests({
+    this.id,
+    this.title,
+    this.imageUrl,
+    this.orderNumber,
+    this.startDate,
+    this.endDate,
+    this.elapsedDays,
+    this.totalDays,
+    this.progressPercentage,
+    this.createdAt,
+    this.createdSince,
+    this.statusLabel,
+    this.statusKey,
+    this.needAction,
+  });
+
+  FreelancerServiceModelRequests.fromJson(Map<String, dynamic> json) {
+    id = json['id']?.toInt();
+    title = json['title']?.toString();
+    imageUrl = json['image_url']?.toString();
+    orderNumber = json['order_number']?.toString();
+    startDate = json['start_date']?.toString();
+    endDate = json['end_date']?.toString();
+    elapsedDays = json['elapsed_days']?.toString();
+    totalDays = json['total_days']?.toString();
+    progressPercentage = json['progress_percentage']?.toInt();
+    createdAt = json['created_at']?.toString();
+    createdSince = json['created_since']?.toString();
+    statusLabel = json['status_label']?.toString();
+    statusKey = json['status_key']?.toString();
+    needAction = json['need_action'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final data = <String, dynamic>{};
+    data['id'] = id;
+    data['title'] = title;
+    data['image_url'] = imageUrl;
+    data['order_number'] = orderNumber;
+    data['start_date'] = startDate;
+    data['end_date'] = endDate;
+    data['elapsed_days'] = elapsedDays;
+    data['total_days'] = totalDays;
+    data['progress_percentage'] = progressPercentage;
+    data['created_at'] = createdAt;
+    data['created_since'] = createdSince;
+    data['status_label'] = statusLabel;
+    data['status_key'] = statusKey;
+    data['need_action'] = needAction;
+    return data;
   }
 }

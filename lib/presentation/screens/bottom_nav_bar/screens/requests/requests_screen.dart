@@ -64,14 +64,15 @@ class RequestsScreen extends GetView<RequestsController> {
                           children: [
                             for (int i = 0; i < controller.requests.length; i++)
                               Visibility(
-                                  visible: controller.selectedTab ==
-                                          controller.requests[i].statusKey ||
-                                      controller.selectedTab == "all".tr,
-                                  child: RequestItem(
-                                    request: controller.requests[i],
-                                    nextButtonPressed: () =>
-                                        controller.navigateToRequestDetails(i),
-                                  )),
+                                visible: controller.selectedTab ==
+                                        controller.requests[i].statusKey ||
+                                    controller.selectedTab == "all".tr,
+                                child: RequestItem(
+                                  request: controller.requests[i],
+                                  nextButtonPressed: () =>
+                                      controller.navigateToRequestDetails(i),
+                                ),
+                              ),
                           ],
                         ),
                       ],
