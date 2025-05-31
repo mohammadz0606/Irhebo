@@ -28,14 +28,26 @@ class AppPreferences {
     required String value,
   }) async =>
       // await _sharedPreferences.setString(key, json.encode(value));
-  await _sharedPreferences.setString(key, value);
+      await _sharedPreferences.setString(key, value);
 
   String? getString({
     required String key,
   }) =>
       //_sharedPreferences.getString(json.decode(key));
-  _sharedPreferences.getString(key);
+      _sharedPreferences.getString(key);
 
+  Future<bool> setInt({
+    required String key,
+    required int value,
+  }) async =>
+      // await _sharedPreferences.setString(key, json.encode(value));
+      await _sharedPreferences.setInt(key, value);
+
+  int? getInt({
+    required String key,
+  }) =>
+      //_sharedPreferences.getString(json.decode(key));
+      _sharedPreferences.getInt(key);
 
   bool getBoolValue(String key) {
     return _sharedPreferences.getBool(key) ?? false;
@@ -50,7 +62,8 @@ class AppPreferences {
   }
 
   //access token
-  Future<void> setAccessToken(String accessToken) async {
+  Future<void> setAccessToken(String accessToken, int userId) async {
+    _sharedPreferences.setInt(AppPrefsKeys.USER_ID, userId);
     _sharedPreferences.setString(AppPrefsKeys.TOKEN, accessToken);
   }
 
@@ -59,6 +72,7 @@ class AppPreferences {
   }
 
   Future<void> removeAccessToken() async {
+    _sharedPreferences.remove(AppPrefsKeys.USER_ID);
     _sharedPreferences.remove(AppPrefsKeys.TOKEN);
   }
 

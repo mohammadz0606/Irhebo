@@ -218,5 +218,10 @@ Map<String, String> ar = {
   "Add Portfolio": "إضافة معرض أعمال",
   "My Portfolio": "معرض أعمالي",
   "Crete Portfolio": "إنشاء معرض اعمال",
-  "Create portfolio entries to showcase your work": "أنشئ عناصر في معرض الأعمال لعرض أعمالك"
+  "Create portfolio entries to showcase your work":
+      "أنشئ عناصر في معرض الأعمال لعرض أعمالك",
+  "Upload Image": "تحميل صورة",
+  "Related Services": "الخدمات ذات الصلة",
+  "Related Services Choices": "اختر الخدمات ذات الصلة"
+
 };

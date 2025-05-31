@@ -162,12 +162,11 @@ class AppController extends GetxController {
     prefs.getBoolValue(key);
   }
 
-  setAccessToken(
-    String value,
-  ) {
+  setAccessToken(String value, int userId) {
     token = value;
     prefs.setAccessToken(
       value,
+      userId,
     );
   }
 

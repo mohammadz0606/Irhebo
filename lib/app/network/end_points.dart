@@ -7,6 +7,7 @@ class AppEndpoints {
   static String logout = '$base_url/auth/logout';
   static String home = '$base_url/home';
   static String services = '$base_url/services/';
+  static String servicesByUser = '$base_url/services/get-by-user';
   static String wishlist = '$base_url/wishlist';
   static String filters = '$base_url/filters/';
   static String checkout = '$base_url/checkout/proceed';

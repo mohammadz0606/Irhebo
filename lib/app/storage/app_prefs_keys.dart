@@ -14,4 +14,5 @@ class AppPrefsKeys {
 
   static const String SHOW_CASE_HOME = "TUTORIAL_HOME_KEY";
   static const String USER_ROLE = "USER_ROLE";
+  static const String USER_ID = "USER_ID";
 }

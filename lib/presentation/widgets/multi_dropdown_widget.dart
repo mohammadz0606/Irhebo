@@ -14,6 +14,8 @@ class MultiCustomDropdown<T> extends StatelessWidget {
   final String buttonText;
   final String? Function(List<T?>?)? validators;
   final void Function(List<T?>) onConfirm;
+  final bool showSelected;
+  final TextStyle? titleStyle;
 
   const MultiCustomDropdown({
     super.key,
@@ -22,6 +24,8 @@ class MultiCustomDropdown<T> extends StatelessWidget {
     required this.buttonText,
     this.validators,
     required this.onConfirm,
+    this.showSelected = false,
+    this.titleStyle,
   });
 
   @override
@@ -55,8 +59,9 @@ class MultiCustomDropdown<T> extends StatelessWidget {
               fontSize: AppTextStyle.size14),
           title: Text(
             label?.tr ?? "",
-            style: Get.theme.textTheme.labelLarge!
-                .copyWith(fontWeight: FontWeight.w700),
+            style: titleStyle ??
+                Get.theme.textTheme.labelLarge!
+                    .copyWith(fontWeight: FontWeight.w700),
           ),
           buttonText: Text(
             buttonText,
@@ -67,15 +72,36 @@ class MultiCustomDropdown<T> extends StatelessWidget {
                 fontSize: AppTextStyle.size14),
           ),
           items: items,
-          chipDisplay: MultiSelectChipDisplay.none(),
+          // chipDisplay: MultiSelectChipDisplay.none(),
+          chipDisplay: showSelected
+              ? MultiSelectChipDisplay(
+                  scroll: true,
+                  chipColor: AppLightColors.switcher,
+                  textStyle: getRegularStyle(
+                    color: Colors.white,
+                    fontSize: AppTextStyle.size14,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  // icon: const Icon(
+                  //   Icons.close,
+                  //   color: Colors.white,
+                  //   size: 18,
+                  // ),
+                )
+              : MultiSelectChipDisplay.none(),
           itemsTextStyle: getRegularStyle(
               color: Get.find<AppController>().darkMode
                   ? AppDarkColors.pureWhite.withOpacity(0.5)
                   : Colors.black.withOpacity(0.5),
               fontSize: AppTextStyle.size14),
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(25), topRight: Radius.circular(25))),
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(25),
+              topRight: Radius.circular(25),
+            ),
+          ),
           searchable: true,
           validator: validators,
           onConfirm: onConfirm,

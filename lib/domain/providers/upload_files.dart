@@ -29,7 +29,10 @@ class UploadFilesProvider extends ChangeNotifier {
   }
 
   Future<List<File>> pickMultipleFile() async {
-    final result = await FilePicker.platform.pickFiles(allowMultiple: true);
+    final result = await FilePicker.platform.pickFiles(
+      allowMultiple: true,
+      type: FileType.image,
+    );
     List<File> validFiles = [];
     if (result != null && result.files.isNotEmpty) {
       for (var picked in result.files) {

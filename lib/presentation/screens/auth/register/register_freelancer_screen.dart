@@ -82,8 +82,8 @@ class _RegisterFreelancerScreenState extends State<RegisterFreelancerScreen> {
                     return MultiCustomDropdown<CategoryModel?>(
                       items: searchController.categories
                           .map(
-                            (language) => MultiSelectItem<CategoryModel?>(
-                                language, language.title ?? ''),
+                            (category) => MultiSelectItem<CategoryModel?>(
+                                category, category.title ?? ''),
                           )
                           .toList(),
                       buttonText: 'Category Choices',
