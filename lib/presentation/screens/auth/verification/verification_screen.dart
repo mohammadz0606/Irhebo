@@ -20,8 +20,9 @@ class VerificationScreen extends GetView<VerificationController> {
         backgroundColor:
             Get.find<AppController>().darkMode ? null : Colors.white,
         appBar: PreferredSize(
-            preferredSize: Size.fromHeight(27 * (w / 100)),
-            child: AuthAppBar()),
+          preferredSize: Size.fromHeight(27 * (w / 100)),
+          child: const AuthAppBar(),
+        ),
         body: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 4.97 * (w / 100)),
@@ -33,7 +34,7 @@ class VerificationScreen extends GetView<VerificationController> {
                   subtitle: "Enter your details to create your account",
                   bottomPadding: 12.18 * (w / 100),
                 ),
-                PinPutWidget(),
+                const PinPutWidget(),
               ],
             ),
           ),

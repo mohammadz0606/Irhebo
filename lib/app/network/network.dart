@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:get/get.dart' hide Response;
+import 'package:get/get.dart' hide Response, FormData;
 import 'package:talker_dio_logger/talker_dio_logger_interceptor.dart';
 import 'package:talker_dio_logger/talker_dio_logger_settings.dart';
 
@@ -50,7 +50,7 @@ final class Network {
   Future<Response> post({
     required String url,
     Map<String, dynamic>? query,
-    Map<String, dynamic>? data,
+    dynamic data,
     bool isUploadFile = false,
   }) async {
     Response response = await _dio.post(
@@ -62,6 +62,7 @@ final class Network {
 
     return response;
   }
+
 
   Future<Response> get({
     required String url,
@@ -77,6 +78,22 @@ final class Network {
       data: data,
       options: _buildOptions(isUploadFile: isUploadFile),
     );
+    return response;
+  }
+
+  Future<Response> delete({
+    required String url,
+    Map<String, dynamic>? query,
+    dynamic data,
+    bool isUploadFile = false,
+  }) async {
+    Response response = await _dio.delete(
+      url,
+      data: data,
+      queryParameters: query,
+      options: _buildOptions(isUploadFile: isUploadFile),
+    );
+
     return response;
   }
 

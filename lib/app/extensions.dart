@@ -17,6 +17,10 @@ extension FormatYearTitle on DateTime {
   String formatYear() {
     return DateFormat('yyyy', 'en').format(this);
   }
+
+  String get formatDateWithMonthName {
+    return DateFormat('MMM dd,yyyy').format(this);
+  }
 }
 
 extension Target on Object {
@@ -78,6 +82,24 @@ extension ColorExtension on String {
   }
 }
 
+extension OnString on String? {
+  DateTime get toDateTime {
+    try {
+      return DateFormat("EEE, MMM d, yyyy h:mm a").parse(this!);
+    } catch (e) {
+      return DateTime.now();
+    }
+  }
+
+  String get formatDateWithMonthName {
+    try {
+      final parsedDate = this?.toDateTime;
+      return DateFormat('MMM dd, yyyy').format(parsedDate!);
+    } catch (e) {
+      return "";
+    }
+  }
+}
 
 // extension NonNullString on String? {
 //   String orEmpty() {

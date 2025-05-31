@@ -2,19 +2,19 @@ import '../../../../app/global_imports.dart';
 import '../../../../app/router/routes.dart';
 import '../../../widgets/normal_app_bar.dart';
 
-class MyPortfolioScreen extends StatelessWidget {
-  const MyPortfolioScreen({super.key});
+class AllFreelancerServices extends StatelessWidget {
+  const AllFreelancerServices({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const NormalAppBar(
-        title: "My Portfolio",
+        title: "My Services",
       ),
       body: Container(),
       floatingActionButton: AddButton(
         onTap: () {
-          Get.toNamed(AppRoutes.createUpdatePortfolio);
+          Get.toNamed(AppRoutes.createService);
         },
       ),
     );

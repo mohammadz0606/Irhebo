@@ -224,7 +224,13 @@ Map<String, String> en = {
   "Crete Portfolio": "Crete Portfolio",
   "Create portfolio entries to showcase your work":
       "Create portfolio entries to showcase your work",
-  "Upload Image": "Upload Image",
-  "Related Services" :"Related Services",
-  "Related Services Choices": "Choose related services"
+  "Upload Image": "Upload Image/Video",
+  "Related Services": "Related Services",
+  "Related Services Choices": "Choose related services",
+  "Cover": "Cover Image",
+  "Portfolio created successfully": "Portfolio created successfully",
+  "Portfolio update successfully": "Portfolio update successfully",
+  "Portfolio delete successfully": "Portfolio delete successfully",
+  "My Services": "My Services",
+  "Update Portfolio": "Update Portfolio"
 };

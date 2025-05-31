@@ -1,5 +1,10 @@
+import 'dart:developer';
+
 import '../../../../../../../app/global_imports.dart';
+import '../../../../../../../app/router/routes.dart';
 import '../../../../../../../domain/models/new_models/freelancer/freelancer_home_model.dart';
+import '../../../../../../../domain/providers/freelancer/freelancer_portfolio.dart';
+import '../../../../../../widgets/app_dialog.dart';
 import '../../../../../../widgets/app_image.dart';
 import 'edit_or_delete.dart';
 
@@ -60,9 +65,33 @@ class PortfolioForFreelancerItems extends StatelessWidget {
           Positioned(
             top: 2.98 * (w / 100),
             right: 2.98 * (w / 100),
-            child: EditOrDelete(
-              id: data?.id ?? 0,
-              space: 19.2,
+            child: Consumer<FreelancerPortfolioProvider>(
+              builder: (context, provider, _) {
+                return EditOrDelete(
+                  id: data?.id ?? 0,
+                  space: 19.2,
+                  onEditTap: () {
+                    Get.toNamed(AppRoutes.createUpdatePortfolio, arguments: {
+                      'data': data,
+                    });
+                  },
+                  onDeleteTap: () async {
+                    await provider.deletePortfolio(
+                      onSuccess: () {
+                        log('DONE DELETE PORTFOLIO');
+                      },
+                      id: data?.id ?? 0,
+                    );
+                    // Get.dialog(
+                    //   barrierColor: Get.find<AppController>().darkMode
+                    //       ? AppDarkColors.darkContainer.withOpacity(0.3)
+                    //       : AppLightColors.shadow.withOpacity(0.3),
+                    //   useSafeArea: true,
+                    //   Column(),
+                    // );
+                  },
+                );
+              },
             ),
           ),
         ],

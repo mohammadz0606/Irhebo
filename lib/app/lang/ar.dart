@@ -221,8 +221,13 @@ Map<String, String> ar = {
   "Crete Portfolio": "إنشاء معرض اعمال",
   "Create portfolio entries to showcase your work":
       "أنشئ عناصر في معرض الأعمال لعرض أعمالك",
-  "Upload Image": "تحميل صورة",
+  "Upload Image": "تحميل صورة/فيديو",
   "Related Services": "الخدمات ذات الصلة",
-  "Related Services Choices": "اختر الخدمات ذات الصلة"
-
+  "Related Services Choices": "اختر الخدمات ذات الصلة",
+  "Cover": " صورة الغلاف",
+  "Portfolio created successfully": "تم إنشاء المعرض بنجاح",
+  "Portfolio update successfully": "تم تعديل المعرض بنجاح",
+  "Portfolio delete successfully": "تم حذف المعرض بنجاح",
+  "My Services": "خدماتي",
+  "Update Portfolio": "تحديث معرض الاعمال",
 };

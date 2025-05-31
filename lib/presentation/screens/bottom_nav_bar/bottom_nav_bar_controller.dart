@@ -40,7 +40,7 @@ class BottomNavBarController extends GetxController {
         barrierColor: Get.find<AppController>().darkMode
             ? AppDarkColors.darkContainer.withOpacity(0.3)
             : AppLightColors.shadow.withOpacity(0.3),
-        AppDialog(
+        const AppDialog(
           child: LoginRequiredDialog(),
         ),
       );

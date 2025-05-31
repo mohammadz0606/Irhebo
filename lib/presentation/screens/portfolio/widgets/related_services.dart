@@ -9,7 +9,12 @@ import '../../../../domain/models/new_models/freelancer/freelancer_service_model
 import '../../../../domain/params/new_params/freelanser/freelancer_service_param.dart';
 
 class RelatedServicesWidget extends StatefulWidget {
-  const RelatedServicesWidget({super.key});
+  const RelatedServicesWidget({
+    super.key,
+    required this.onServicesSelected,
+  });
+
+  final Function(List<int>) onServicesSelected;
 
   @override
   State<RelatedServicesWidget> createState() => _RelatedServicesWidgetState();
@@ -46,17 +51,24 @@ class _RelatedServicesWidgetState extends State<RelatedServicesWidget> {
                 return MultiSelectItem<FreelancerServiceModelDataServices?>(
                   e,
                   e?.title ?? '',
-
                 );
               },
             ).toList(),
-            buttonText: 'Related Services Choices',
+            buttonText: 'Related Services Choices'.tr,
             label: 'Related Services',
             titleStyle: Get.textTheme.labelMedium,
             showSelected: true,
             onConfirm: (value) {
               log('LEN SELECTED SERVICE ${value.length}');
+              List<int> ids = value
+                  .map(
+                    (e) => e?.id ?? 0,
+                  )
+                  .toList();
 
+              widget.onServicesSelected(ids);
+
+              setState(() {});
             },
           );
         }
