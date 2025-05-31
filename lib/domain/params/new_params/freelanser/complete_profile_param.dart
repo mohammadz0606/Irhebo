@@ -74,9 +74,12 @@ final class CompleteProfileParam {
     for (var id in categoryIds) {
       formDataFields.add(MapEntry("category_ids[]", id.toString()));
     }
-    for (var id in descriptions) {
-      formDataFields.add(MapEntry("description[]", id.toString()));
+    for (var description in descriptions) {
+      if (description.trim().isNotEmpty) {
+        formDataFields.add(MapEntry("description[]", description.trim()));
+      }
     }
+
 
     for (var file in multiFiles) {
       formDataFields.add(MapEntry("file[]", file));

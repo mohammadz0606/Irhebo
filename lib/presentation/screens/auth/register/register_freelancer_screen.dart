@@ -179,8 +179,8 @@ bool isNeedToUploadOther = false;
                                 icon: Icon(Icons.delete, color: Colors.red),
                                 onPressed: () {
                                   setState(() {
-                                    selectedFiles.removeAt(index);
-                                    fileDescriptions.removeAt(index);
+                                    selectedFiles.removeAt(index+1);
+                                    fileDescriptions.removeAt(index+1);
                                   });
                                 },
                               ),
@@ -190,14 +190,14 @@ bool isNeedToUploadOther = false;
                             onFileSelected: (file) {
                               setState(() {
                                 if(file!=null){
-                                  selectedFiles[index] = file;
+                                  selectedFiles[index+1] = file;
 
                                 }
                               });
                             },
                           ),
                           AppTextField(
-                            controller: fileDescriptions[index],
+                            controller: fileDescriptions[index+1],
                             hint: "Description",
                             textInputType: TextInputType.multiline,
                             maxLines: 1,

@@ -1,5 +1,7 @@
 import 'dart:developer';
 
+import 'package:irhebo/presentation/screens/bottom_nav_bar/screens/home/home_controller.dart';
+
 import '../../../../../../../app/global_imports.dart';
 import '../../../../../../../app/router/routes.dart';
 import '../../../../../../../domain/models/new_models/freelancer/freelancer_home_model.dart';
@@ -8,7 +10,7 @@ import '../../../../../../widgets/app_dialog.dart';
 import '../../../../../../widgets/app_image.dart';
 import 'edit_or_delete.dart';
 
-class PortfolioForFreelancerItems extends StatelessWidget {
+class PortfolioForFreelancerItems extends GetView<HomeController> {
   const PortfolioForFreelancerItems({
     super.key,
     required this.data,
@@ -76,8 +78,10 @@ class PortfolioForFreelancerItems extends StatelessWidget {
                     });
                   },
                   onDeleteTap: () async {
+
                     await provider.deletePortfolio(
                       onSuccess: () {
+                        controller.onRefreshList();
                         log('DONE DELETE PORTFOLIO');
                       },
                       id: data?.id ?? 0,
