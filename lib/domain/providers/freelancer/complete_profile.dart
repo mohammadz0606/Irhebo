@@ -4,11 +4,12 @@ import 'package:irhebo/domain/models/login_model.dart';
 
 import '../../../app/network/network.dart';
 import '../../../app/router/routes.dart';
+import '../../models/new_models/complete_profile.dart';
 import '../../params/new_params/freelanser/complete_profile_param.dart';
 
 class CompleteProfileProvider extends ChangeNotifier {
   bool isLoading = false;
-  final appController = Get.find<AppController>();
+
   completeProfile({required CompleteProfileParam data}) async {
     try {
       isLoading = true;
@@ -26,22 +27,17 @@ class CompleteProfileProvider extends ChangeNotifier {
         return;
       }
 
-      ////
-      LoginModel model = LoginModel.fromJson(response.data);
+      FreelancerServiceModel model =
+          FreelancerServiceModel.fromJson(response.data);
 
-      appController.setAccessToken(model.token ?? '',model.user?.id ?? 0);
       AppPreferences prefs = sl();
-
-
-
       prefs.setString(
         key: AppPrefsKeys.USER_ROLE,
-        value: model.user?.role ?? '',
+        value: model.data?.role ?? '',
       );
-
-      Get.offAllNamed(AppRoutes.bottomNavBar);
       isLoading = false;
       notifyListeners();
+      Get.offAllNamed(AppRoutes.bottomNavBar);
     } catch (error) {
       if (error is DioException) {
         AppSnackBar.openErrorSnackBar(
