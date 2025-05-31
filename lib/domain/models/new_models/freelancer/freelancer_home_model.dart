@@ -223,7 +223,6 @@ class FreelancerHomeModelData {
     this.portfolios,
     this.quotations,
   });
-
   FreelancerHomeModelData.fromJson(Map<String, dynamic> json) {
     if (json['services'] != null) {
       final v = json['services'];

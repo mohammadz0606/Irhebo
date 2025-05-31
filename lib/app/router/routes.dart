@@ -46,7 +46,7 @@ class AppRoutes {
   static const String quotations = "/quotations";
   static const String createQuotation = "/create_quotation";
 
-  static const String createPortfolio = "/create_portfolio";
+  static const String createUpdatePortfolio = "/create_portfolio";
   static const String myPortfolio = "/my_portfolio";
   static const String myServices = "/my_services";
   static const String createService = "/create_service";

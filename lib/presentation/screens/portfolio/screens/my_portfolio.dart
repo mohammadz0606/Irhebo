@@ -14,7 +14,7 @@ class MyPortfolioScreen extends StatelessWidget {
       body: Container(),
       floatingActionButton: AddButton(
         onTap: () {
-          Get.toNamed(AppRoutes.createPortfolio);
+          Get.toNamed(AppRoutes.createUpdatePortfolio);
         },
       ),
     );

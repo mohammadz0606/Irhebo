@@ -224,10 +224,12 @@ Map<String, String> en = {
   "Create portfolio entries to showcase your work":
       "Create portfolio entries to showcase your work",
   "Upload Image": "Upload Image/Video",
-  "Related Services" :"Related Services",
+  "Related Services": "Related Services",
   "Related Services Choices": "Choose related services",
-  "Cover" :"Cover Image",
-  "Portfolio created successfully" :"Portfolio created successfully",
-
-  "My Services" : "My Services",
+  "Cover": "Cover Image",
+  "Portfolio created successfully": "Portfolio created successfully",
+  "Portfolio update successfully": "Portfolio update successfully",
+  "Portfolio delete successfully": "Portfolio delete successfully",
+  "My Services": "My Services",
+  "Update Portfolio": "Update Portfolio"
 };

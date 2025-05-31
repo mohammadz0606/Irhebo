@@ -59,7 +59,7 @@ import 'package:irhebo/presentation/screens/ticket_details/ticket_details_screen
 import '../../presentation/screens/auth/register/register_freelancer_screen.dart';
 import '../../presentation/screens/freelancer_services/screens/all_freelancer_services.dart';
 import '../../presentation/screens/freelancer_services/screens/create_services.dart';
-import '../../presentation/screens/portfolio/screens/create_new_portfolio.dart';
+import '../../presentation/screens/portfolio/screens/create_new_update_portfolio.dart';
 
 class AppScreens {
   static List<GetPage> screens = <GetPage>[
@@ -205,7 +205,7 @@ class AppScreens {
         binding: TermsConditionsBinding()),
     GetPage(
       name: AppRoutes.termsConditions,
-      page: () => const CreateNewPortfolioScreen(),
+      page: () => const CreateNewUpdatePortfolioScreen(),
     ),
 
     GetPage(
@@ -214,8 +214,8 @@ class AppScreens {
     ),
 
     GetPage(
-      name: AppRoutes.createPortfolio,
-      page: () => const CreateNewPortfolioScreen(),
+      name: AppRoutes.createUpdatePortfolio,
+      page: () => const CreateNewUpdatePortfolioScreen(),
     ),
     GetPage(
       name: AppRoutes.myServices,

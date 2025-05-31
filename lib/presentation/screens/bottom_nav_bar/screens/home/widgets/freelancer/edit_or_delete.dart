@@ -1,5 +1,6 @@
 import '../../../../../../../app/global_imports.dart';
 import '../../../../../../../app/resources/images.dart';
+import '../../../../../../../app/router/routes.dart';
 import '../../../../../../widgets/decorated_icon.dart';
 
 class EditOrDelete extends StatelessWidget {
@@ -7,10 +8,14 @@ class EditOrDelete extends StatelessWidget {
     super.key,
     required this.id,
     this.space = 36,
+    this.onEditTap,
+    this.onDeleteTap,
   });
 
   final int id;
   final double space;
+  final Function()? onEditTap;
+  final Function()? onDeleteTap;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +24,7 @@ class EditOrDelete extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         GestureDetector(
-          onTap: () {},
+          onTap: onEditTap,
           child: DecoratedIcon(
             width: 8.2 * (w / 100),
             height: 8.2 * (w / 100),
@@ -33,7 +38,7 @@ class EditOrDelete extends StatelessWidget {
         ),
         SizedBox(width: space * (w / 100)),
         GestureDetector(
-          onTap: () {},
+          onTap: onDeleteTap,
           child: DecoratedIcon(
             width: 8.2 * (w / 100),
             height: 8.2 * (w / 100),

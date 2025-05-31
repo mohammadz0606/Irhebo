@@ -47,7 +47,7 @@ class AddBottomSheet extends GetView<HomeController> {
                   ),
                   AppButton(
                     onPressed: () {
-                      Get.toNamed(AppRoutes.createPortfolio);
+                      Get.toNamed(AppRoutes.createUpdatePortfolio);
                       //Navigator.pushNamed(context, AppRoutes.createPortfolio);
                     },
                     title: "Add Portfolio",

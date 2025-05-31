@@ -1,6 +1,10 @@
 // ignore_for_file: non_constant_identifier_names
 
+import '../injection.dart';
+import '../storage/app_prefs.dart';
+
 class AppEndpoints {
+  AppPreferences prefs = sl();
   static String base_url = 'https://irhebo-backend.smartedge.me/api/v1';
 
   static String login = '$base_url/login';
@@ -50,5 +54,10 @@ class AppEndpoints {
   static String completeProfile = '$base_url/users/complete-profile';
   static String homeFreelancer = '$base_url/home-freelancer';
   static String createPortfolio = '$base_url/portfolio/create';
+  static String getFreelancerProfile = '$base_url/users/freelancer-profile/';
+  static String getPortfolio = '$base_url/users/portfolio';
+  static String updatePortfolio = '$base_url/users/portfolio/update/';
+  static String deletePortfolio = '$base_url/portfolio/delete/';
 
+//{{dev_url}}/users/freelancer-profile/1?per_page=1&page=1
 }

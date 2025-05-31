@@ -6,11 +6,13 @@ import '../../../app/network/network.dart';
 import '../../params/new_params/freelanser/create_portfolio_param.dart';
 
 class FreelancerPortfolioProvider extends ChangeNotifier {
-  bool isLoading = false;
+  bool isLoadingCreate = false;
+  bool isLoadingUpdate = false;
+  bool isLoadingDelete = false;
 
   Future<void> createPortfolio(CreatePortfolioParam data) async {
     try {
-      isLoading = true;
+      isLoadingCreate = true;
       notifyListeners();
       final response = await Network().post(
         url: AppEndpoints.createPortfolio,
@@ -19,7 +21,7 @@ class FreelancerPortfolioProvider extends ChangeNotifier {
       );
       String errorMessage = await Network().handelError(response: response);
       if (errorMessage.isNotEmpty) {
-        isLoading = false;
+        isLoadingCreate = false;
         notifyListeners();
         AppSnackBar.openErrorSnackBar(
           message: errorMessage,
@@ -35,7 +37,7 @@ class FreelancerPortfolioProvider extends ChangeNotifier {
         );
       }
 
-      isLoading = false;
+      isLoadingCreate = false;
       notifyListeners();
     } catch (error) {
       if (error is DioException) {
@@ -47,7 +49,101 @@ class FreelancerPortfolioProvider extends ChangeNotifier {
           message: error.toString(),
         );
       }
-      isLoading = false;
+      isLoadingCreate = false;
+      notifyListeners();
+    }
+  }
+
+  Future<void> updatePortfolio(
+    CreatePortfolioParam data, {
+    required Function() onSuccess,
+    required int id,
+  }) async {
+    try {
+      isLoadingUpdate = true;
+      notifyListeners();
+      final response = await Network().post(
+        url: '${AppEndpoints.updatePortfolio}$id',
+        isUploadFile: true,
+        data: await data.toJson(),
+      );
+      String errorMessage = await Network().handelError(response: response);
+      if (errorMessage.isNotEmpty) {
+        isLoadingUpdate = false;
+        notifyListeners();
+        AppSnackBar.openErrorSnackBar(
+          message: errorMessage,
+        );
+        return;
+      }
+
+      NewGeneralModel newGeneralModel = NewGeneralModel.fromJson(response.data);
+      if (newGeneralModel.status ?? false) {
+        Get.back();
+        AppSnackBar.openSuccessSnackBar(
+          message: 'Portfolio update successfully'.tr,
+        );
+        onSuccess();
+      }
+
+      isLoadingUpdate = false;
+      notifyListeners();
+    } catch (error) {
+      if (error is DioException) {
+        AppSnackBar.openErrorSnackBar(
+          message: Network().handelDioException(error),
+        );
+      } else {
+        AppSnackBar.openErrorSnackBar(
+          message: error.toString(),
+        );
+      }
+      isLoadingUpdate = false;
+      notifyListeners();
+    }
+  }
+
+  Future<void> deletePortfolio({
+    required Function() onSuccess,
+    required int id,
+  }) async {
+    try {
+      isLoadingDelete = true;
+      notifyListeners();
+      final response = await Network().delete(
+        url: '${AppEndpoints.deletePortfolio}$id',
+      );
+      String errorMessage = await Network().handelError(response: response);
+      if (errorMessage.isNotEmpty) {
+        isLoadingDelete = false;
+        notifyListeners();
+        AppSnackBar.openErrorSnackBar(
+          message: errorMessage,
+        );
+        return;
+      }
+
+      NewGeneralModel newGeneralModel = NewGeneralModel.fromJson(response.data);
+      if (newGeneralModel.status ?? false) {
+        AppSnackBar.openSuccessSnackBar(
+          message: 'Portfolio delete successfully'.tr,
+        );
+        onSuccess();
+      }
+
+      isLoadingDelete = false;
+      notifyListeners();
+    } catch (error) {
+      if (error is DioException) {
+        AppSnackBar.openErrorSnackBar(
+          message: Network().handelDioException(error),
+        );
+      } else {
+        AppSnackBar.openErrorSnackBar(
+          message: error.toString(),
+        );
+      }
+      isLoadingDelete = false;
       notifyListeners();
     }
   }

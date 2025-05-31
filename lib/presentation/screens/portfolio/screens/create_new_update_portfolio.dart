@@ -5,6 +5,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:irhebo/presentation/screens/auth/register/widgets/upload_file.dart';
 
 import '../../../../app/global_imports.dart';
+import '../../../../domain/models/new_models/freelancer/freelancer_home_model.dart';
 import '../../../../domain/params/new_params/freelanser/create_portfolio_param.dart';
 import '../../../../domain/providers/freelancer/freelancer_portfolio.dart';
 import '../../../widgets/app_button.dart';
@@ -13,20 +14,22 @@ import '../../../widgets/normal_app_bar.dart';
 import '../widgets/related_services.dart';
 import '../widgets/upload_multiple_file.dart';
 
-class CreateNewPortfolioScreen extends StatefulWidget {
-  const CreateNewPortfolioScreen({super.key});
+class CreateNewUpdatePortfolioScreen extends StatefulWidget {
+  const CreateNewUpdatePortfolioScreen({super.key});
 
   @override
-  State<CreateNewPortfolioScreen> createState() =>
-      _CreateNewPortfolioScreenState();
+  State<CreateNewUpdatePortfolioScreen> createState() =>
+      _CreateNewUpdatePortfolioScreenState();
 }
 
-class _CreateNewPortfolioScreenState extends State<CreateNewPortfolioScreen> {
+class _CreateNewUpdatePortfolioScreenState
+    extends State<CreateNewUpdatePortfolioScreen> {
   final TextEditingController _title = TextEditingController();
   final TextEditingController _desc = TextEditingController();
   File? cove;
   final List<File> media = [];
   final List<int> services = [];
+  FreelancerHomeModelDataPortfolios? dataForEdit;
 
   @override
   void dispose() {
@@ -37,15 +40,28 @@ class _CreateNewPortfolioScreenState extends State<CreateNewPortfolioScreen> {
 
   @override
   void initState() {
+    _onLoadEditData();
     super.initState();
+  }
+
+  _onLoadEditData() {
+    if (Get.arguments?['data'] != null) {
+      dataForEdit = Get.arguments['data'];
+      _title.text = dataForEdit?.title ?? '';
+      // _desc.text = dataForEdit?.d ?? '';
+
+      setState(() {});
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     var w = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: const NormalAppBar(
-        title: "Crete Portfolio",
+      appBar: NormalAppBar(
+        title: Get.arguments?['data'] != null
+            ? "Update Portfolio"
+            : "Crete Portfolio",
       ),
       body: SafeArea(
         left: false,
@@ -160,7 +176,7 @@ class _CreateNewPortfolioScreenState extends State<CreateNewPortfolioScreen> {
                     );
                   },
                   title: "Save",
-                  isLoading: provider.isLoading,
+                  isLoading: provider.isLoadingCreate,
                   backGroundColor: AppLightColors.greenContainer,
                 );
               },

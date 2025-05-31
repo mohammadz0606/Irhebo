@@ -63,6 +63,7 @@ final class Network {
     return response;
   }
 
+
   Future<Response> get({
     required String url,
     Map<String, dynamic>? query,
@@ -77,6 +78,22 @@ final class Network {
       data: data,
       options: _buildOptions(isUploadFile: isUploadFile),
     );
+    return response;
+  }
+
+  Future<Response> delete({
+    required String url,
+    Map<String, dynamic>? query,
+    dynamic data,
+    bool isUploadFile = false,
+  }) async {
+    Response response = await _dio.delete(
+      url,
+      data: data,
+      queryParameters: query,
+      options: _buildOptions(isUploadFile: isUploadFile),
+    );
+
     return response;
   }
 

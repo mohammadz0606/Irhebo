@@ -225,5 +225,8 @@ Map<String, String> ar = {
   "Related Services Choices": "اختر الخدمات ذات الصلة",
   "Cover": " صورة الغلاف",
   "Portfolio created successfully": "تم إنشاء المعرض بنجاح",
+  "Portfolio update successfully": "تم تعديل المعرض بنجاح",
+  "Portfolio delete successfully": "تم حذف المعرض بنجاح",
   "My Services": "خدماتي",
+  "Update Portfolio": "تحديث معرض الاعمال",
 };
