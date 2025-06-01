@@ -134,14 +134,6 @@ class NewConfigModelDataLanguages {
 }
 
 class NewConfigModelDataCountries {
-/*
-{
-  "id": 1,
-  "title": "Afghanistan",
-  "flag": "https://flagcdn.com/w320/af.png"
-}
-*/
-
   int? id;
   String? title;
   String? flag;
@@ -197,38 +189,6 @@ class NewConfigModelDataProfessions {
 }
 
 class NewConfigModelData {
-/*
-{
-  "professions": [
-    {
-      "id": 1,
-      "title": "مطور برمجيات"
-    }
-  ],
-  "countries": [
-    {
-      "id": 1,
-      "title": "Afghanistan",
-      "flag": "https://flagcdn.com/w320/af.png"
-    }
-  ],
-  "languages": {
-    "data": [
-      {
-        "id": 43,
-        "title": "Afrikaans",
-        "flag": "https://flagcdn.com/w320/za.png"
-      }
-    ],
-    "levels": [
-      {
-        "key": "beginner",
-        "value": "مبتدئ"
-      }
-    ]
-  }
-}
-*/
 
   List<NewConfigModelDataProfessions?>? professions;
   List<NewConfigModelDataCountries?>? countries;

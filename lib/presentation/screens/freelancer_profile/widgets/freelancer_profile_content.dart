@@ -30,7 +30,7 @@ class FreelancerProfileContent extends GetWidget<FreelancerProfileController> {
               color: Get.find<AppController>().darkMode
                   ? AppDarkColors.darkScaffoldColor
                   : AppLightColors.scaffoldColor2,
-              borderRadius: BorderRadius.only(
+              borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(44), topRight: Radius.circular(44))),
           width: 100 * (w / 100),
           child: Column(
@@ -72,7 +72,7 @@ class FreelancerProfileContent extends GetWidget<FreelancerProfileController> {
                         ? Padding(
                             padding:
                                 EdgeInsets.symmetric(vertical: 30 * (w / 100)),
-                            child: NoData(),
+                            child: const NoData(),
                           )
                         : ReviewsSection(
                             freelancer: true,
@@ -88,7 +88,7 @@ class FreelancerProfileContent extends GetWidget<FreelancerProfileController> {
                         ? Padding(
                             padding:
                                 EdgeInsets.symmetric(vertical: 30 * (w / 100)),
-                            child: NoData(),
+                            child: const NoData(),
                           )
                         : Column(
                             children: [
@@ -112,7 +112,7 @@ class FreelancerProfileContent extends GetWidget<FreelancerProfileController> {
                         ? Padding(
                             padding:
                                 EdgeInsets.symmetric(vertical: 30 * (w / 100)),
-                            child: NoData(),
+                            child: const NoData(),
                           )
                         : FreelancerPortfolio(
                             portfolios: controller.portfolios,

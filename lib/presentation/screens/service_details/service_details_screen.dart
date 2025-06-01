@@ -32,7 +32,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
     return Scaffold(
       body: Obx(
         () => controller.isLoading
-            ? ServiceDetailsShimmer()
+            ? const ServiceDetailsShimmer()
             : SingleChildScrollView(
                 child: Stack(
                   children: [
@@ -44,7 +44,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
                           width: 100 * (w / 100),
                           height: 63.68 * (w / 100),
                         ),
-                        Container(
+                        SizedBox(
                           height: 36.32 * (w / 100),
                           width: 100.2 * (w / 100),
                         )
@@ -57,10 +57,10 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
                     ),
                     Padding(
                       padding: EdgeInsets.only(top: 53.48 * (w / 100)),
-                      child: FreelancerInfoContainer(),
+                      child: const FreelancerInfoContainer(),
                     ),
                     Positioned(
-                        top: 16.41 * (w / 100), child: ServiceDetailsAppBar()),
+                        top: 16.41 * (w / 100), child: const ServiceDetailsAppBar()),
                   ],
                 ),
               ),

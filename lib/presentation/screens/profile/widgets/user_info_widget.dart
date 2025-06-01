@@ -7,12 +7,14 @@ import 'package:irhebo/app/resources/style/colors.dart';
 import 'package:irhebo/app/resources/style/decoration.dart';
 import 'package:irhebo/app/router/routes.dart';
 import 'package:irhebo/domain/models/login_model.dart';
+
 // import 'package:irhebo/presentation/screens/auth/create_password/create_password_screen.dart';
 import 'package:irhebo/presentation/screens/bottom_nav_bar/screens/settings/widgets/user_info_row.dart';
 
 class UserInfoWidget extends StatelessWidget {
   final UserModel? user;
   final Function() goToUpdate;
+
   const UserInfoWidget({
     super.key,
     this.user,
@@ -45,13 +47,11 @@ class UserInfoWidget extends StatelessWidget {
                   title: "Profession", desciption: user?.profession ?? "-"),
               UserInfoRow(title: "Country", desciption: user?.country ?? ""),
               UserInfoRow(
-                  title: "Languages",
-                  desciption: user?.languages
-                      ?.map(
-                        (e) => e.title ?? "",
-                      )
-                      .toList()
-                      .toString()),
+                title: "Languages",
+                desciption: user?.languages
+                    ?.map((e) => e.title ?? "")
+                    .join(', ') ?? '',
+              ),
             ],
           ),
         ),
@@ -66,7 +66,7 @@ class UserInfoWidget extends StatelessWidget {
               vertical: 0.99 * (w / 100), horizontal: 3.73 * (w / 100)),
           child: InkWell(
             onTap: () => goToUpdate(),
-            child: UserInfoRow(
+            child: const UserInfoRow(
               title: "Edit Profile",
               update: true,
             ),
@@ -89,7 +89,7 @@ class UserInfoWidget extends StatelessWidget {
              */
             onTap: () => Get.toNamed(AppRoutes.createPassword,
                 arguments: {"type": PasswordScreenType.update_password}),
-            child: UserInfoRow(
+            child: const UserInfoRow(
               title: "Change Password",
               update: true,
             ),

@@ -18,30 +18,45 @@ class PortfolioSection extends StatelessWidget {
     var w = MediaQuery.of(context).size.width;
     return Column(
       children: [
-        AppTitleWithAction(title: "Portfolio", services: true),
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            children: [
-              for (int i = 0; i < portfolio!.length; i++)
-                Row(
-                  children: [
-                    PortfolioItem(
-                      portfoilo: portfolio![i],
-                      onTapItem: () => onTapPortfolio!(i),
-                    ),
-                    SizedBox(
-                      width: 3.98 * (w / 100),
-                    )
-                  ],
-                )
-            ],
+        const AppTitleWithAction(title: "Portfolio", services: true),
+        // SingleChildScrollView(
+        //   scrollDirection: Axis.horizontal,
+        // padding:  EdgeInsets.zero,
+        //   child: Row(
+        //     crossAxisAlignment: CrossAxisAlignment.end,
+        //     children: List.generate(portfolio!.length, (i) {
+        //       return Padding(
+        //         padding: EdgeInsets.only(right: i == portfolio!.length - 1 ? 0 : 16),
+        //         child: PortfolioItem(
+        //           portfoilo: portfolio![i],
+        //           onTapItem: () => onTapPortfolio!(i),
+        //         ),
+        //       );
+        //     }),
+        //   ),
+        // ),
+
+        SizedBox(
+          height: 210,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            padding: const EdgeInsets.only(left: 0, right: 16), // تأكد من left=0
+            itemCount: portfolio!.length,
+            itemBuilder: (context, i) {
+              return Padding(
+                padding: EdgeInsets.only(right: i == portfolio!.length - 1 ? 0 : 16),
+                child: PortfolioItem(
+                  portfoilo: portfolio![i],
+                  onTapItem: () => onTapPortfolio!(i),
+                ),
+              );
+            },
           ),
         ),
         SizedBox(
           height: 6.21 * (w / 100),
         ),
-        Divider(
+        const Divider(
           height: 1,
         )
       ],

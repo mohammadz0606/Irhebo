@@ -63,35 +63,38 @@ class ServiceItem extends StatelessWidget {
                       radius: 18),
                   child: Column(
                     children: [
-                      Padding(
-                        padding: EdgeInsets.all(2.48 * (w / 100)),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              service?.title ?? "",
-                              style: Get.theme.textTheme.labelMedium,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            SizedBox(
-                              height: 1.74 * (w / 100),
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                RatingStars(
-                                  count: service?.rating ?? 0,
-                                ),
-                                // RatingNumber(
-                                //   number: (service?.rating ?? 0).toString(),
-                                // ),
-                                PricingWidget(
-                                  number: service?.startServiceFrom ?? "",
-                                )
-                              ],
-                            )
-                          ],
+                      GestureDetector(
+                        onTap: () => onTapService(),
+                        child: Padding(
+                          padding: EdgeInsets.all(2.48 * (w / 100)),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                service?.title ?? "",
+                                style: Get.theme.textTheme.labelMedium,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              SizedBox(
+                                height: 1.74 * (w / 100),
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  RatingStars(
+                                    count: service?.rating ?? 0,
+                                  ),
+                                  // RatingNumber(
+                                  //   number: (service?.rating ?? 0).toString(),
+                                  // ),
+                                  PricingWidget(
+                                    number: service?.startServiceFrom ?? "",
+                                  )
+                                ],
+                              )
+                            ],
+                          ),
                         ),
                       ),
                       Divider(

@@ -27,7 +27,7 @@ final class Network {
 
   void init() {
     BaseOptions options =
-    BaseOptions(headers: {'ContentType': 'application/json'});
+        BaseOptions(headers: {'ContentType': 'application/json'});
     _dio = Dio(options);
 
     if (kDebugMode) {
@@ -62,7 +62,6 @@ final class Network {
 
     return response;
   }
-
 
   Future<Response> get({
     required String url,
@@ -105,17 +104,10 @@ final class Network {
           ? Headers.multipartFormDataContentType
           : 'application/json',
       'Accept': 'application/json',
-      'Accept-Language': Get
-          .find<AppController>()
-          .lang
-          .value
-          .languageCode,
-      'lang': Get
-          .find<AppController>()
-          .lang
-          .value
-          .languageCode,
+      'Accept-Language': Get.locale?.languageCode,
+      'lang': Get.find<AppController>().lang.value.languageCode,
       'Device-Type': Platform.isAndroid ? 'Android' : 'IOS',
+      'currency': 'usd',
     };
     AppPreferences prefs = sl();
     String token = prefs.getAccessToken();

@@ -105,7 +105,7 @@ class ProfileController extends GetxController {
       (element) => element?.id == (user?.countryObject?.id ?? 0),
     );
     gender = appController.genders.firstWhere(
-      (element) => element.name == (user?.gender?.toLowerCase()),
+      (element) => element.name == (user?.gender ?? ''),
     );
     selectedLanguages.refresh();
   }

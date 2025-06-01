@@ -7,6 +7,7 @@ import 'package:irhebo/presentation/widgets/dropdown_widget.dart';
 import 'package:irhebo/presentation/widgets/multi_dropdown_widget.dart';
 import 'package:multi_select_flutter/util/multi_select_item.dart';
 
+import '../../../../../app/global_imports.dart';
 import '../../../../../domain/models/new_models/new_config_model.dart';
 
 class RegisterInfoButtons extends StatelessWidget {
@@ -45,7 +46,9 @@ class RegisterInfoButtons extends StatelessWidget {
         ),
         CustomDropdown<GenderEntity>(
           itemBuilder: (context, item, isDisabled, isSelected) => DropdownItem(
-            label: item.name ?? "",
+            label: Get.locale?.languageCode == 'ar'
+                ? item.nameAr ?? ''
+                : item.name ?? "",
           ),
           label: "Gender",
           showSearchBox: false,
@@ -53,7 +56,14 @@ class RegisterInfoButtons extends StatelessWidget {
           items: genders,
           onChanged: onChangedGender,
           validator: AppValidators.validateGender,
-          itemToString: (value) => value!.name.toString(),
+          itemToString: (value) {
+            if(Get.locale?.languageCode == 'ar') {
+              return value!.nameAr.toString();
+            } else {
+              return value!.name.toString();
+            }
+
+          },
         ),
         SizedBox(
           height: 2.98 * (w / 100),
@@ -94,7 +104,7 @@ class RegisterInfoButtons extends StatelessWidget {
           ),
           showSearchBox: true,
           label: "Country",
-          hintText: "Select country",
+          hintText: "Select Country",
           items: countries,
           onChanged: onChangedCountry,
           validator: AppValidators.validateCountry,

@@ -24,7 +24,7 @@ typedef FutureEitherOrWithToken<T> = Future<Either<BaseErrorModel, T>> Function(
 abstract class BaseRepository {
   Future<Either<BaseErrorModel, T>> checkNetwork<T>(FutureEitherOr<T> body);
 
-  // Future<Either<Failure, void>> getUser();
+// Future<Either<Failure, void>> getUser();
 }
 
 /// [BaseRepositoryImpl] is the implementation of the [BaseRepository] interface
@@ -119,7 +119,8 @@ class GetOptions {
             language ?? Get.find<AppController>().lang.value.languageCode,
         'lang': language ?? Get.find<AppController>().lang.value.languageCode,
         // 'currency': Get.find<AppController>().currency,
-        'Device-Type': Platform.isAndroid ? 'Android' : 'IOS'
+        'Device-Type': Platform.isAndroid ? 'Android' : 'IOS',
+        'currency': 'usd',
       };
       options.validateStatus = (status) => status! < 500;
     } else {
@@ -127,11 +128,12 @@ class GetOptions {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
         'Accept-Language':
-            language ?? Get.find<AppController>().lang.value.languageCode,
-        'lang': language ?? Get.find<AppController>().lang.value.languageCode,
+            language ?? Get.locale?.languageCode,
+        'lang': language ?? Get.locale?.languageCode,
         // 'applicationToken': applicationTokenModel?.applicationToken,
         // 'currency': Get.find<AppController>().currency,
-        'Device-Type': Platform.isAndroid ? 'Android' : 'IOS'
+        'Device-Type': Platform.isAndroid ? 'Android' : 'IOS',
+        'currency'  :'usd',
       };
       options.validateStatus = (status) => status! < 500;
     }

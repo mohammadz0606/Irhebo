@@ -21,12 +21,14 @@ class FreelancerInfoContainer extends GetWidget<ServiceDetailsController> {
     var w = MediaQuery.of(context).size.width;
     return Container(
       padding: EdgeInsets.symmetric(
-          vertical: 4.47 * (w / 100), horizontal: 3.98 * (w / 100)),
+        vertical: 4.47 * (w / 100),
+        horizontal: 3.98 * (w / 100),
+      ),
       decoration: BoxDecoration(
           color: Get.find<AppController>().darkMode
               ? AppDarkColors.darkScaffoldColor
               : AppLightColors.scaffoldColor2,
-          borderRadius: BorderRadius.only(
+          borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(44), topRight: Radius.circular(44))),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -40,7 +42,7 @@ class FreelancerInfoContainer extends GetWidget<ServiceDetailsController> {
               onTapFreelancer: controller.onTapFreelancerFromInfo,
             ),
           ),
-          Divider(
+          const Divider(
             height: 1,
           ),
           if (controller.serviceDetails.service?.description != null)
@@ -49,7 +51,7 @@ class FreelancerInfoContainer extends GetWidget<ServiceDetailsController> {
             ),
           Padding(
             padding: EdgeInsets.symmetric(vertical: 2.48 * (w / 100)),
-            child: Divider(
+            child: const Divider(
               height: 1,
             ),
           ),
@@ -80,7 +82,7 @@ class FreelancerInfoContainer extends GetWidget<ServiceDetailsController> {
               ),
             ),
           if (controller.serviceDetails.recommended!.isNotEmpty) ...[
-            AppTitleWithAction(
+            const AppTitleWithAction(
               title: "Recommended",
               services: true,
             ),

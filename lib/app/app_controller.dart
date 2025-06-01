@@ -50,8 +50,8 @@ class AppController extends GetxController {
   List<NewConfigModelDataLanguagesData?> languages = [];
 
   List<GenderEntity> genders = [
-    GenderEntity("1", "male"),
-    GenderEntity("2", "female"),
+    GenderEntity("1", "Male","ذكر"),
+    GenderEntity("2", "Female","انثى"),
   ];
 
   @override

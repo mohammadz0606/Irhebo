@@ -38,25 +38,27 @@ class PortfolioItem extends StatelessWidget {
                   radius: 25,
                 ),
           Positioned(
-              bottom: 0,
-              child: BottomShadowWidget(
-                width: freelancer ? 42 * (w / 100) : 39.3 * (w / 100),
-                height: 15.92 * (w / 100),
-                child: Align(
-                    alignment: Alignment.bottomLeft,
-                    child: Padding(
-                      padding: EdgeInsets.all(2.98 * (w / 100)),
-                      child: Text(
-                        portfoilo.title ?? "",
-                        style: Get.theme.textTheme.labelLarge!.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: Get.find<AppController>().darkMode
-                                ? null
-                                : Colors.white),
-                        maxLines: 2,
-                      ),
-                    )),
-              ))
+            bottom: 0,
+            child: BottomShadowWidget(
+              width: freelancer ? 42 * (w / 100) : 39.3 * (w / 100),
+             height: 15.92 * (w / 100),
+              child: Align(
+                alignment: Alignment.bottomLeft,
+                child: Padding(
+                  padding: EdgeInsets.all(2.98 * (w / 100)),
+                  child: Text(
+                    portfoilo.title ?? "",
+                    style: Get.theme.textTheme.labelLarge!.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: Get.find<AppController>().darkMode
+                            ? null
+                            : Colors.white),
+                    maxLines: 2,
+                  ),
+                ),
+              ),
+            ),
+          )
         ],
       ),
     );

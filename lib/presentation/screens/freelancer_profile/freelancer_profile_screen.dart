@@ -28,11 +28,11 @@ class FreelancerProfileScreen extends GetView<FreelancerProfileController> {
             onRefresh: controller.onRefreshList,
             enablePullDown: true,
             enablePullUp: true,
-            footer: CustomePaginagtionFooter(),
+            footer: const CustomePaginagtionFooter(),
             onLoading: controller.getFreelancerProfile,
             child: SingleChildScrollView(
               child: controller.isLoading
-                  ? FreelancerProfileShimmer()
+                  ? const FreelancerProfileShimmer()
                   : Container(
                       color: Get.find<AppController>().darkMode
                           ? AppDarkColors.darkCover
@@ -40,8 +40,8 @@ class FreelancerProfileScreen extends GetView<FreelancerProfileController> {
                       child: Stack(
                         alignment: Alignment.topCenter,
                         children: [
-                          FreelancerBackground(),
-                          FreelancerProfileContent(),
+                          const FreelancerBackground(),
+                          const FreelancerProfileContent(),
                           Padding(
                             padding: EdgeInsets.only(top: 35.27 * (w / 100)),
                             child: AppImage(

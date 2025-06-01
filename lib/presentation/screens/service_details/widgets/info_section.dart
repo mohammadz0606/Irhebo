@@ -15,6 +15,7 @@ class InfoSection extends StatelessWidget {
   final Function() onTapFreelancer;
   final Function() onLikeService;
   final Function() onTapChat;
+
   const InfoSection({
     super.key,
     required this.service,
@@ -131,6 +132,9 @@ class InfoSection extends StatelessWidget {
                   service?.startServiceFrom ?? "",
                   style: Get.theme.textTheme.displaySmall!.copyWith(
                     fontSize: AppTextStyle.size20,
+                    color: Get.find<AppController>().darkMode
+                        ? AppDarkColors.pureWhite
+                        : AppLightColors.primaryColor,
                   ),
                 ),
                 SizedBox(
@@ -139,9 +143,12 @@ class InfoSection extends StatelessWidget {
                 Text(
                   "Start".tr,
                   style: Get.theme.textTheme.displaySmall!.copyWith(
-                      fontSize: AppTextStyle.size17,
-                      fontWeight: FontWeight.w500,
-                      color: AppDarkColors.darkPrimary.withOpacity(0.7)),
+                    fontSize: AppTextStyle.size17,
+                    fontWeight: FontWeight.w500,
+                    color: Get.find<AppController>().darkMode
+                        ? AppDarkColors.pureWhite
+                        : AppLightColors.primaryColor,
+                  ),
                 ),
               ],
             ),

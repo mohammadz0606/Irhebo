@@ -13,7 +13,7 @@ class ProfileScreen extends GetView<ProfileController> {
   Widget build(BuildContext context) {
     var w = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: NormalAppBar(
+      appBar: const NormalAppBar(
         title: "Profile",
       ),
       body: SingleChildScrollView(
@@ -24,7 +24,7 @@ class ProfileScreen extends GetView<ProfileController> {
                 padding: EdgeInsets.symmetric(
                     vertical: 1 * (w / 100), horizontal: 4.47 * (w / 100)),
                 child: controller.isLoading
-                    ? ProfileShimmer()
+                    ? const ProfileShimmer()
                     : Column(
                         children: [
                           Column(
