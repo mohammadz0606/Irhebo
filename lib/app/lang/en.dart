@@ -141,6 +141,8 @@ Map<String, String> en = {
   "Save": "Save",
   "Username": "Username",
   "Update Request": "Update Request",
+  "Confirm Request": "Confirm Request",
+
   "Edit Profile": "Edit Profile",
   "Change Password": "Change Password",
   "Update Profile": "Update Profile",

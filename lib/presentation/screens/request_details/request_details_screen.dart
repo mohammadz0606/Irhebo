@@ -27,7 +27,7 @@ class RequestDetailsScreen extends GetView<RequestDetailsController> {
               bottom: 3.98 * (w / 100)),
           child: SingleChildScrollView(
             child: controller.isLoading
-                ? RequestDetailsShimmer()
+                ? const RequestDetailsShimmer()
                 : Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -54,8 +54,8 @@ class RequestDetailsScreen extends GetView<RequestDetailsController> {
           ),
         ),
         bottomNavigationBar: controller.isLoading
-            ? RequestBottomButtonsShimmer()
-            : RequestDetailsBottomBar(),
+            ? const RequestBottomButtonsShimmer()
+            : const RequestDetailsBottomBar(),
       ),
     );
   }

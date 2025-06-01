@@ -11,6 +11,8 @@ Map<String, String> ar = {
   "Sell Service": "بيع خدمة",
   "Continue": "متابعة",
   "Update Request": "تحديث الطلب",
+  "Confirm Request": "قبول الطلب",
+
   "Add Update": "إضافة تحديث",
   "Keep the job poster updated by adding comments, progress updates, and attachments":
       "ابقَ على اطلاع مع ناشر الوظيفة من خلال إضافة التعليقات وتحديثات التقدم والمرفقات",
