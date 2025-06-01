@@ -20,8 +20,9 @@ class LoginScreen extends GetView<LoginController> {
         backgroundColor:
             Get.find<AppController>().darkMode ? null : Colors.white,
         appBar: PreferredSize(
-            preferredSize: Size.fromHeight(27 * (w / 100)),
-            child: AuthAppBar()),
+          preferredSize: Size.fromHeight(27 * (w / 100)),
+          child: const AuthAppBar(),
+        ),
         body: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 4.97 * (w / 100)),
@@ -33,8 +34,8 @@ class LoginScreen extends GetView<LoginController> {
                   subtitle: "Enter your details to access your account",
                   bottomPadding: 8.95 * (w / 100),
                 ),
-                LoginForm(),
-                SocialSection()
+                const LoginForm(),
+                const SocialSection()
               ],
             ),
           ),

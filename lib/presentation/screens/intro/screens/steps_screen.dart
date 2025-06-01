@@ -13,20 +13,20 @@ class StepsScreen extends GetWidget<SplashController> {
   Widget build(BuildContext context) {
     // var w = MediaQuery.of(context).size.width;
     return Scaffold(
-        backgroundColor:
-            Get.find<AppController>().darkMode ? null : Colors.white,
-        body: Obx(
-          () => Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              controller.isLoadingSteps
-                  ? StepsPageViewShimmer()
-                  : StepsPageView(
-                      steps: controller.steps,
-                    )
-            ],
-          ),
+      backgroundColor: Get.find<AppController>().darkMode ? null : Colors.white,
+      body: Obx(
+        () => Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            controller.isLoadingSteps
+                ? const StepsPageViewShimmer()
+                : StepsPageView(
+                    steps: controller.steps,
+                  )
+          ],
         ),
-        bottomNavigationBar: StepsBottomBar());
+      ),
+      bottomNavigationBar: const StepsBottomBar(),
+    );
   }
 }

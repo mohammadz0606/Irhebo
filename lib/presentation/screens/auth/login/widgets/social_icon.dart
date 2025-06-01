@@ -15,18 +15,20 @@ class SocialIcon extends StatelessWidget {
     return InkWell(
       onTap: () => onTap(),
       child: Container(
-        width: 40.79 * (w / 100),
+        width: double.infinity,
         height: 11.19 * (w / 100),
         clipBehavior: Clip.antiAliasWithSaveLayer,
+        alignment: Alignment.center,
         decoration: AppDecoration.getContainerWithBorder(
             color: linkedin ? AppDarkColors.linkedin : null,
             borderColor: linkedin ? null : AppDarkColors.borderColor),
         child: AppIcon(
-          width: 6.46 * (w / 100),
-          height: 6.46 * (w / 100),
+          //width: 6.46 * (w / 100),
+          height: 20 * (w / 100),
           padding: EdgeInsets.symmetric(
               vertical: 2.48 * (w / 100), horizontal: 16.9 * (w / 100)),
-          path: linkedin ? AppImages.linkedin : AppImages.google,
+         // path: linkedin ? AppImages.linkedin : AppImages.google,
+          path:AppImages.google,
           isSvg: false,
         ),
       ),

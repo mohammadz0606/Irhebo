@@ -20,7 +20,7 @@ class RolesScreen extends GetWidget<SplashController> {
       backgroundColor: Get.find<AppController>().darkMode ? null : Colors.white,
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(27 * (w / 100)),
-          child: AuthAppBar(
+          child: const AuthAppBar(
             hasBack: false,
           )),
       body: Padding(
@@ -30,7 +30,7 @@ class RolesScreen extends GetWidget<SplashController> {
           children: [
             AuthHeadline(
               title: "What would you like to do",
-              subtitle: "Choose your role in FREECO",
+              subtitle: "Choose your role in ${Get.find<AppController>().generalData?.platformTitle ?? ""}",
               bottomPadding: 8.2 * (w / 100),
             ),
             Row(

@@ -29,22 +29,23 @@ class SocialSection extends StatelessWidget {
         SizedBox(
           height: 2.48 * (w / 100),
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SocialIcon(
-              onTap: () => {},
-            ),
-            SizedBox(
-              width: 5.47 * (w / 100),
-            ),
-            SocialIcon(
-              onTap: () => {},
-              linkedin: false,
-            ),
-          ],
+        SocialIcon(
+          onTap: () => {},
+          linkedin: false,
         ),
-        RegisterButton(
+        // Row(
+        //   mainAxisAlignment: MainAxisAlignment.center,
+        //   children: [
+        //     SocialIcon(
+        //       onTap: () => {},
+        //     ),
+        //     SizedBox(
+        //       width: 5.47 * (w / 100),
+        //     ),
+        //
+        //   ],
+        // ),
+        const RegisterButton(
           login: true,
         )
       ],

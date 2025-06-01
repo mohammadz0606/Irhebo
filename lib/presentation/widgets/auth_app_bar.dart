@@ -6,6 +6,7 @@ import 'package:irhebo/presentation/widgets/gradient_icon.dart';
 
 class AuthAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool hasBack;
+
   const AuthAppBar({super.key, this.hasBack = true});
 
   @override
@@ -17,7 +18,9 @@ class AuthAppBar extends StatelessWidget implements PreferredSizeWidget {
       children: [
         Padding(
           padding: EdgeInsets.only(
-              top: 17.4 * (w / 100), bottom: 12.43 * (w / 100)),
+            top: 17.4 * (w / 100),
+            bottom: 12.43 * (w / 100),
+          ),
           child: const AppLogo(),
         ),
         Visibility(
