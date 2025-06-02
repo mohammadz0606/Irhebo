@@ -1,12 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:irhebo/app/global_imports.dart';
 import 'package:irhebo/app/resources/images.dart';
 import 'package:irhebo/domain/models/freelancer_details_model.dart';
 import 'package:irhebo/presentation/screens/freelancer_profile/widgets/about_info_row.dart';
-import 'package:irhebo/presentation/widgets/app_button.dart';
 
-import 'package:url_launcher/url_launcher.dart';
 
 import '../../../widgets/open_file_items.dart';
 
