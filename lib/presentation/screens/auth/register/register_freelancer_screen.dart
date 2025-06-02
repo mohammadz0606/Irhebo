@@ -28,13 +28,14 @@ class _RegisterFreelancerScreenState extends State<RegisterFreelancerScreen> {
   final TextEditingController _biography = TextEditingController();
   final TextEditingController _certificatesDesc = TextEditingController();
   final TextEditingController _anotherFilesDesc = TextEditingController();
+  File? certificateFile;
 
   late final SearchControllerGetx searchController;
 bool isNeedToUploadOther = false;
   File? avatar;
 
   List<int> categoryIds = [];
-  List<File?> selectedFiles = [];
+  List<File?> selectedFiles = [null];
   List<TextEditingController> fileDescriptions = [TextEditingController()];
 
 
@@ -140,14 +141,12 @@ bool isNeedToUploadOther = false;
                 ),
                 UploadFileWidget(
                   onFileSelected: (file) {
-                    if(file !=null){
-                      selectedFiles[0] = file;
-
-                    }else{
-                      selectedFiles.removeAt(0);
-                    }
+                    setState(() {
+                      certificateFile = file;
+                    });
                   },
                 ),
+
                 AppTextField(
                   controller: _certificatesDesc,
                   hint: "Description",
@@ -164,54 +163,52 @@ bool isNeedToUploadOther = false;
                       'Files'.tr,
                       style: Get.textTheme.headlineSmall,
                     ),
-                    ...List.generate(selectedFiles.length, (index) {
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'File ${index + 1}',
-                                style: Get.textTheme.titleMedium,
-                              ),
-                              IconButton(
-                                icon: Icon(Icons.delete, color: Colors.red),
-                                onPressed: () {
-                                  setState(() {
-                                    selectedFiles.removeAt(index+1);
-                                    fileDescriptions.removeAt(index+1);
-                                  });
-                                },
-                              ),
-                            ],
-                          ),
-                          UploadFileWidget(
-                            onFileSelected: (file) {
-                              setState(() {
-                                if(file!=null){
-                                  selectedFiles[index+1] = file;
-
-                                }
-                              });
-                            },
-                          ),
-                          AppTextField(
-                            controller: fileDescriptions[index+1],
-                            hint: "Description",
-                            textInputType: TextInputType.multiline,
-                            maxLines: 1,
-                            textInputAction: TextInputAction.newline,
-                          ),
-                          const SizedBox(height: 10),
-                        ],
-                      );
-                    }),
-
+                    if (selectedFiles.isNotEmpty)
+                      ...List.generate(selectedFiles.length, (index) {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'File ${index + 1}',
+                                  style: Get.textTheme.titleMedium,
+                                ),
+                                IconButton(
+                                  icon: Icon(Icons.delete, color: Colors.red),
+                                  onPressed: () {
+                                    setState(() {
+                                      selectedFiles.removeAt(index);
+                                      fileDescriptions.removeAt(index);
+                                    });
+                                  },
+                                ),
+                              ],
+                            ),
+                            UploadFileWidget(
+                              onFileSelected: (file) {
+                                setState(() {
+                                  if (file != null) {
+                                    selectedFiles[index] = file;
+                                  }
+                                });
+                              },
+                            ),
+                            AppTextField(
+                              controller: fileDescriptions[index],
+                              hint: "Description",
+                              textInputType: TextInputType.multiline,
+                              maxLines: 1,
+                              textInputAction: TextInputAction.newline,
+                            ),
+                            const SizedBox(height: 10),
+                          ],
+                        );
+                      }),
                     AppTextButton(
                       onPressed: () {
                         setState(() {
-
                           selectedFiles.add(null);
                           fileDescriptions.add(TextEditingController());
                         });
@@ -221,6 +218,7 @@ bool isNeedToUploadOther = false;
                   ],
                 ),
 
+
                 const SizedBox(height: 30),
                 Consumer<CompleteProfileProvider>(
                   builder: (context, provider, _) {
@@ -228,14 +226,23 @@ bool isNeedToUploadOther = false;
                       onPressed: () async {
                         if (avatar != null ||
                             _biography.text.trim().isNotEmpty ||
-                            categoryIds.isEmpty||selectedFiles.isNotEmpty||fileDescriptions.isNotEmpty) {
+                            categoryIds.isEmpty || certificateFile != null || selectedFiles.isNotEmpty || fileDescriptions.isNotEmpty) {
+                          List<File> allFiles = [];
+                          if (certificateFile != null) {
+                            allFiles.add(certificateFile!);
+                          }
+                          allFiles.addAll(selectedFiles.whereType<File>());
+
                           await provider.completeProfile(
                             data: CompleteProfileParam(
                               avatar: avatar!,
                               bio: _biography.text.trim(),
                               categoryIds: categoryIds,
-                              descriptions: fileDescriptions.map((e){return e.text;}).toList(),
-                              files: selectedFiles.whereType<File>().toList(),
+                              descriptions: [
+                                _certificatesDesc.text,
+                                ...fileDescriptions.map((e) => e.text),
+                              ],
+                              files: allFiles,
                             ),
                           );
                         } else {
@@ -244,6 +251,8 @@ bool isNeedToUploadOther = false;
                           );
                         }
                       },
+
+
                       title: "Confirm",
                       isLoading: provider.isLoading,
                     );

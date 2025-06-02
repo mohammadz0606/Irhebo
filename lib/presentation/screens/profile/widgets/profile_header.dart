@@ -51,8 +51,11 @@ class ProfileHeader extends StatelessWidget {
                       height: 24.8 * (w / 100),
                       radius: 100,
                     ),
-              InkWell(
-                onTap: () => pickPicture(),
+              loading?SizedBox(height:20,width:20,child: CircularProgressIndicator()):InkWell(
+                onTap: () {
+                  pickPicture();
+                  updatePicture();
+                },
                 borderRadius: BorderRadius.circular(50 * (w / 100)),
                 child: GradientIcon(
                   gradient: false,
@@ -81,23 +84,7 @@ class ProfileHeader extends StatelessWidget {
               SizedBox(
                 height: 2.98 * (w / 100),
               ),
-              loading
-                  ? CircularProgressIndicator()
-                  : GestureDetector(
-                      onTap: () => updatePicture(),
-                      child: Container(
-                        decoration: AppDecoration.getDecorationWithRadius(
-                            color: AppDarkColors.greenContainer,
-                            borderColor: AppDarkColors.primaryColor),
-                        padding: EdgeInsets.symmetric(
-                            vertical: 1 * (w / 100), horizontal: 5 * (w / 100)),
-                        child: Text(
-                          "Save".tr,
-                          style: Get.theme.textTheme.labelSmall!
-                              .copyWith(color: Colors.white),
-                        ),
-                      ),
-                    ),
+
             ],
           ),
         ],
