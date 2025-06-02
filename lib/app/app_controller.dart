@@ -80,20 +80,20 @@ class AppController extends GetxController {
   showCaseView(context) {
     bool showcaseHomeKey = getBoolValue(AppPrefsKeys.SHOW_CASE_HOME);
     if (!showcaseHomeKey) {
-      ShowCaseWidget.of(context).startShowCase([
-        chatKey,
-        botKey,
-        searchKey,
-        whatsappKey,
-        notificationsKey,
-        categoriesKey,
-        serviceKey,
-        porfolioKey,
-        requestFreelancer,
-        serviceFreelancer,
-        porfolioFreelancerKey,
-        quotationFreelancerKey,
-      ]);
+      // ShowCaseWidget.of(context).startShowCase([
+      //   chatKey,
+      //   botKey,
+      //   searchKey,
+      //   whatsappKey,
+      //   notificationsKey,
+      //   categoriesKey,
+      //   serviceKey,
+      //   porfolioKey,
+      //   requestFreelancer,
+      //   serviceFreelancer,
+      //   porfolioFreelancerKey,
+      //   quotationFreelancerKey,
+      // ]);
     }
   }
 
