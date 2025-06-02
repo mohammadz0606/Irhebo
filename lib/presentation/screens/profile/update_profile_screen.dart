@@ -52,6 +52,7 @@ class UpdateProfileScreen extends GetWidget<ProfileController> {
                       label: "Phone Number",
                       hint: "05***********",
                       isPhone: true,
+                      enabled: false,
                     ),
                     Obx(
                       () => RegisterInfoButtons(
@@ -68,6 +69,10 @@ class UpdateProfileScreen extends GetWidget<ProfileController> {
                             : controller.selectedLanguages.length >= 2
                                 ? "${controller.selectedLanguages[0]?.title ?? ""} ${controller.selectedLanguages[1]?.title ?? ""}.."
                                 : "Select Language".tr,
+                        selectedLanguages: controller.selectedLanguages,
+                        initCountry: controller.country,
+                        initProfessions: controller.profession,
+                        initGender: controller.gender,
                       ),
                     ),
                   ],

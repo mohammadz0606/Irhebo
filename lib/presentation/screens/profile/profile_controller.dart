@@ -26,11 +26,15 @@ class ProfileController extends GetxController {
   final RxString _imagePath = "".obs;
 
   bool get isLoading => _isLoading.value;
+
   bool get isLoadingUpdate => _isLoadingUpdate.value;
+
   String get imagePath => _imagePath.value;
 
   set isLoading(value) => _isLoading.value = value;
+
   set isLoadingUpdate(value) => _isLoadingUpdate.value = value;
+
   set imagePath(value) => _imagePath.value = value;
 
   final GlobalKey<FormState> updateProfileKey = GlobalKey<FormState>();
@@ -40,7 +44,8 @@ class ProfileController extends GetxController {
   GenderEntity? gender;
   NewConfigModelDataCountries? country;
   NewConfigModelDataProfessions? profession;
-  RxList<NewConfigModelDataLanguagesData?> selectedLanguages = <NewConfigModelDataLanguagesData?>[].obs;
+  RxList<NewConfigModelDataLanguagesData?> selectedLanguages =
+      <NewConfigModelDataLanguagesData?>[].obs;
 
   UserModel? user;
   dio.MultipartFile? imageProfile;
@@ -154,7 +159,9 @@ class ProfileController extends GetxController {
 
   goToUpdate() {
     initFieldsValues();
-    Get.to(() => UpdateProfileScreen());
+    Get.to(
+      () => const UpdateProfileScreen(),
+    );
   }
 
   getMyProfile() async {

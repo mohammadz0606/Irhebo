@@ -115,9 +115,8 @@ class GetOptions {
             : 'application/json',
         'Accept': 'application/json',
         'Authorization': 'Bearer $accessToken',
-        'Accept-Language':
-            language ?? Get.find<AppController>().lang.value.languageCode,
-        'lang': language ?? Get.find<AppController>().lang.value.languageCode,
+        'Accept-Language': Get.find<AppController>().lang.value.languageCode,
+        'lang': Get.find<AppController>().lang.value.languageCode,
         // 'currency': Get.find<AppController>().currency,
         'Device-Type': Platform.isAndroid ? 'Android' : 'IOS',
         'currency': 'usd',
@@ -127,13 +126,12 @@ class GetOptions {
       options.headers = {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'Accept-Language':
-            language ?? Get.locale?.languageCode,
+        'Accept-Language': language ?? Get.locale?.languageCode,
         'lang': language ?? Get.locale?.languageCode,
         // 'applicationToken': applicationTokenModel?.applicationToken,
         // 'currency': Get.find<AppController>().currency,
         'Device-Type': Platform.isAndroid ? 'Android' : 'IOS',
-        'currency'  :'usd',
+        'currency': 'usd',
       };
       options.validateStatus = (status) => status! < 500;
     }

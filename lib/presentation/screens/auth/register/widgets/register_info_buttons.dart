@@ -22,6 +22,13 @@ class RegisterInfoButtons extends StatelessWidget {
   final void Function(List<NewConfigModelDataLanguagesData?>)
       onConfirmLanguages;
 
+  //----
+
+  final NewConfigModelDataCountries? initCountry;
+  final NewConfigModelDataProfessions? initProfessions;
+  final GenderEntity? initGender;
+  final List<NewConfigModelDataLanguagesData?>? selectedLanguages;
+
   const RegisterInfoButtons({
     super.key,
     required this.languagesHint,
@@ -33,6 +40,10 @@ class RegisterInfoButtons extends StatelessWidget {
     required this.onChangedProfession,
     required this.onChangedCountry,
     required this.onConfirmLanguages,
+    this.initCountry,
+    this.initProfessions,
+    this.initGender,
+    this.selectedLanguages,
   });
 
   @override
@@ -54,15 +65,15 @@ class RegisterInfoButtons extends StatelessWidget {
           showSearchBox: false,
           hintText: "Select Gender",
           items: genders,
+          value: initGender,
           onChanged: onChangedGender,
           validator: AppValidators.validateGender,
           itemToString: (value) {
-            if(Get.locale?.languageCode == 'ar') {
+            if (Get.locale?.languageCode == 'ar') {
               return value!.nameAr.toString();
             } else {
               return value!.name.toString();
             }
-
           },
         ),
         SizedBox(
@@ -76,6 +87,7 @@ class RegisterInfoButtons extends StatelessWidget {
               .toList(),
           buttonText: languagesHint,
           label: "Languages",
+          initialValue: selectedLanguages,
           onConfirm: (values) {
             onConfirmLanguages(values);
           },
@@ -91,6 +103,7 @@ class RegisterInfoButtons extends StatelessWidget {
           label: "Profession",
           hintText: "Select Profession",
           items: professions,
+          value: initProfessions,
           onChanged: onChangedProfession,
           validator: AppValidators.validateProfession,
           itemToString: (value) => value!.title.toString(),
@@ -107,6 +120,7 @@ class RegisterInfoButtons extends StatelessWidget {
           hintText: "Select Country",
           items: countries,
           onChanged: onChangedCountry,
+          value: initCountry,
           validator: AppValidators.validateCountry,
           itemToString: (value) => value!.title.toString(),
         ),

@@ -75,7 +75,9 @@ class PortfolioSection extends GetWidget<HomeController> {
                                         radius: 18,
                                       ),
                                 const Positioned(
-                                    bottom: 0, child: BottomShadowWidget())
+                                  bottom: 0,
+                                  child: BottomShadowWidget(),
+                                )
                               ],
                             ),
                           );

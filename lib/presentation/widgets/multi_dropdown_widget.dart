@@ -16,6 +16,7 @@ class MultiCustomDropdown<T> extends StatelessWidget {
   final void Function(List<T?>) onConfirm;
   final bool showSelected;
   final TextStyle? titleStyle;
+  final List<T?>? initialValue;
 
   const MultiCustomDropdown({
     super.key,
@@ -26,6 +27,7 @@ class MultiCustomDropdown<T> extends StatelessWidget {
     required this.onConfirm,
     this.showSelected = false,
     this.titleStyle,
+    this.initialValue,
   });
 
   @override
@@ -46,6 +48,7 @@ class MultiCustomDropdown<T> extends StatelessWidget {
         ],
         MultiSelectBottomSheetField<T?>(
           initialChildSize: 0.5,
+          initialValue: initialValue ?? [],
           backgroundColor: Get.find<AppController>().darkMode
               ? AppDarkColors.darkScaffoldColor
               : Colors.white,

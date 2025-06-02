@@ -22,7 +22,9 @@ class ProfileScreen extends GetView<ProfileController> {
             Obx(
               () => Padding(
                 padding: EdgeInsets.symmetric(
-                    vertical: 1 * (w / 100), horizontal: 4.47 * (w / 100)),
+                  vertical: 1 * (w / 100),
+                  horizontal: 4.47 * (w / 100),
+                ),
                 child: controller.isLoading
                     ? const ProfileShimmer()
                     : Column(

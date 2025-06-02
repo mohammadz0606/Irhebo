@@ -20,15 +20,15 @@ class BottomShadowWidget extends StatelessWidget {
     var w = MediaQuery.of(context).size.width;
     return Container(
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(
+          borderRadius: const BorderRadius.only(
               bottomLeft: Radius.circular(18),
               bottomRight: Radius.circular(18)),
           gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: [
-                Color(0xff212121).withOpacity(0.0),
-                Color(0xff212121).withOpacity(
+                const Color(0xff212121).withOpacity(0.0),
+                const Color(0xff212121).withOpacity(
                     Get.find<AppController>().darkMode ? 0.9 : 0.7),
               ])),
       height: height ?? 11.69 * (w / 100),
