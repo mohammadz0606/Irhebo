@@ -44,6 +44,7 @@ class FreelancerModel {
   String? country;
   String? avatar;
   String? role;
+  String? bio;
   String? description;
   String? status;
   List<DataModel>? languages;
@@ -59,6 +60,7 @@ class FreelancerModel {
     this.country,
     this.avatar,
     this.role,
+    this.bio,
     this.description,
     this.status,
     this.languages,

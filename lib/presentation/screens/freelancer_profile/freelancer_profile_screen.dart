@@ -54,11 +54,12 @@ class FreelancerProfileScreen extends GetView<FreelancerProfileController> {
                             ),
                           ),
                           Positioned(
-                              top: 16.41 * (w / 100),
-                              child: ServiceDetailsAppBar(
-                                profile: true,
-                                onTapChat: controller.onTapChat,
-                              )),
+                            top: 16.41 * (w / 100),
+                            child: ServiceDetailsAppBar(
+                              profile: true,
+                              onTapChat: controller.onTapChat,
+                            ),
+                          ),
                         ],
                       ),
                     ),

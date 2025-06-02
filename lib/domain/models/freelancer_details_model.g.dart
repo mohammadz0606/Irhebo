@@ -50,6 +50,7 @@ FreelancerModel _$FreelancerModelFromJson(Map<String, dynamic> json) =>
       role: json['role'] as String?,
       description: json['description'] as String?,
       status: json['status'] as String?,
+      bio: json['bio'] as String?,
       languages: (json['languages'] as List<dynamic>?)
           ?.map((e) => DataModel.fromJson(e as Map<String, dynamic>))
           .toList(),

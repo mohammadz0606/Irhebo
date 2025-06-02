@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:irhebo/app/global_imports.dart';
 import 'package:irhebo/app/resources/images.dart';
 import 'package:irhebo/app/resources/style/text_style.dart';
 import 'package:irhebo/domain/models/freelancer_details_model.dart';
@@ -7,6 +8,7 @@ import 'package:irhebo/presentation/screens/freelancer_profile/widgets/about_inf
 
 class FreelancerAbout extends StatelessWidget {
   final FreelancerModel? freelancer;
+
   const FreelancerAbout({super.key, required this.freelancer});
 
   @override
@@ -14,16 +16,26 @@ class FreelancerAbout extends StatelessWidget {
     var w = MediaQuery.of(context).size.width;
     return Column(
       children: [
-        Text(freelancer?.description ?? "",
-            style: Get.theme.textTheme.bodyMedium!.copyWith(
-              fontSize: AppTextStyle.size16,
-            )),
+        // Text(
+        //   freelancer?. description?? "",
+        //   style: Get.theme.textTheme.bodyMedium?.copyWith(
+        //     fontSize: AppTextStyle.size16,
+        //     color: AppLightColors.green,
+        //   ),
+        // ),
+        // SizedBox(
+        //   height: 2.48 * (w / 100),
+        // ),
+        AboutInfoRow(
+         //icon: AppIcons.user,
+          info: freelancer?.bio ?? "",
+        ),
         SizedBox(
           height: 2.48 * (w / 100),
         ),
         AboutInfoRow(
           icon: AppIcons.user,
-          info: freelancer?.status ?? "",
+          info: freelancer?.gender ?? "",
         ),
         SizedBox(
           height: 2.48 * (w / 100),
@@ -49,13 +61,13 @@ class FreelancerAbout extends StatelessWidget {
         SizedBox(
           height: 2.48 * (w / 100),
         ),
-        AboutInfoRow(
-          icon: AppIcons.projects,
-          info: freelancer?.status ?? "",
-        ),
-        SizedBox(
-          height: 2.48 * (w / 100),
-        ),
+        // AboutInfoRow(
+        //   icon: AppIcons.projects,
+        //   info: freelancer?.status ?? "",
+        // ),
+        // SizedBox(
+        //   height: 2.48 * (w / 100),
+        // ),
         AboutInfoRow(
           icon: AppIcons.language,
           info: freelancer?.languages
@@ -65,6 +77,11 @@ class FreelancerAbout extends StatelessWidget {
                   .toString() ??
               "",
         ),
+
+        /// TODO: IMPLEMENT SHOW CERTIFICATE
+        /*
+
+         */
       ],
     );
   }
