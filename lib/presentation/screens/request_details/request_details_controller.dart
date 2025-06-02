@@ -20,6 +20,10 @@ import 'package:irhebo/presentation/screens/request_details/widgets/update_reque
 import 'package:irhebo/presentation/widgets/app_bottom_sheet.dart';
 import 'package:irhebo/presentation/widgets/app_dialog.dart';
 
+import '../../../app/network/end_points.dart';
+import '../../../app/network/network.dart';
+import '../../../app/snack_bar.dart';
+
 class RequestDetailsController extends GetxController {
   final GlobalKey<FormState> reviewKey = GlobalKey<FormState>();
   final GlobalKey<FormState> updateRequestKey = GlobalKey<FormState>();
@@ -33,15 +37,23 @@ class RequestDetailsController extends GetxController {
   final Rx<RequestModel> _request = RequestModel().obs;
 
   int get currentRate => _currentRate.value;
+
   bool get isLoading => _isLoading.value;
+
   bool get isLoadingUpdate => _isLoadingUpdate.value;
+
   bool get isLoadingReview => _isLoadingReview.value;
+
   RequestModel get request => _request.value;
 
   set currentRate(value) => _currentRate.value = value;
+
   set isLoading(value) => _isLoading.value = value;
+
   set isLoadingUpdate(value) => _isLoadingUpdate.value = value;
+
   set isLoadingReview(value) => _isLoadingReview.value = value;
+
   set request(value) => _request.value = value;
 
   RxList<String?> selectedFilePath = <String?>[].obs;
@@ -187,6 +199,7 @@ class RequestDetailsController extends GetxController {
   }
 
   getRequestDetails() async {
+    //RequestModel
     isLoading = true;
     GetRequestDetailsUseCase getRequestDetailsUseCase = sl();
     final result = await getRequestDetailsUseCase(id);
@@ -197,6 +210,38 @@ class RequestDetailsController extends GetxController {
       _request.refresh();
       isLoading = false;
     });
+
+    // try {
+    //   final response = await Network().get(
+    //     url: '${AppEndpoints.requestDetails}$id',
+    //   );
+    //
+    //   String errorMessage = await Network().handelError(response: response);
+    //
+    //   if (errorMessage.isNotEmpty) {
+    //     isLoading = false;
+    //     AppSnackBar.openErrorSnackBar(
+    //       message: errorMessage,
+    //     );
+    //     return;
+    //   }
+    //   RequestModel requestModel = RequestModel.fromJson(response.data);
+    //   request = requestModel;
+    //   _request.refresh();
+    //   isLoading = false;
+    // } catch (error) {
+    //   if (error is dio.DioException) {
+    //     AppSnackBar.openErrorSnackBar(
+    //       message: Network().handelDioException(error),
+    //     );
+    //   } else {
+    //     AppSnackBar.openErrorSnackBar(
+    //       message: error.toString(),
+    //     );
+    //   }
+    //
+    //   isLoading = false;
+    // }
   }
 
   updateRequest() async {

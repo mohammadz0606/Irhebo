@@ -41,9 +41,9 @@ class RequestDetailsScreen extends GetView<RequestDetailsController> {
                           SizedBox(
                             height: 4.47 * (w / 100),
                           ),
-                          PlanInfo(
-                            plan: controller.request.plan,
-                          ),
+                          // PlanInfo(
+                          //   plan: controller.request.plan,
+                          // ),
                           SizedBox(
                             height: 7.96 * (w / 100),
                           ),

@@ -81,17 +81,38 @@ class LogModel {
   @JsonKey(name: 'created_at')
   String? createdAt;
   UserModel? user;
+  List<AttachmentModel>? attachments;
   LogModel({
     this.id,
     this.requestId,
     this.action,
     this.createdAt,
     this.user,
+    this.attachments
   });
 
   factory LogModel.fromJson(Map<String, dynamic> json) {
+
     return _$LogModelFromJson(json);
   }
 
   Map<String, dynamic> toJson() => _$LogModelToJson(this);
+}
+
+@JsonSerializable()
+class AttachmentModel {
+  int? id;
+
+  @JsonKey(name: 'media_path')
+  String? mediaPath;
+
+  @JsonKey(name: 'media_type')
+  String? mediaType;
+
+  AttachmentModel({this.id, this.mediaPath, this.mediaType});
+
+  factory AttachmentModel.fromJson(Map<String, dynamic> json) =>
+      _$AttachmentModelFromJson(json);
+
+  Map<String, dynamic> toJson() => _$AttachmentModelToJson(this);
 }

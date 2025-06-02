@@ -3,7 +3,6 @@ import 'package:irhebo/app/resources/images.dart';
 import 'package:irhebo/domain/models/freelancer_details_model.dart';
 import 'package:irhebo/presentation/screens/freelancer_profile/widgets/about_info_row.dart';
 
-
 import '../../../widgets/open_file_items.dart';
 
 class FreelancerAbout extends StatelessWidget {

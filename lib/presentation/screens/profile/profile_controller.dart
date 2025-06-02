@@ -88,7 +88,7 @@ class ProfileController extends GetxController {
             (element) => element?.id ?? 0,
           )
           .toList(),
-      gender: gender?.name ?? "",
+      gender: gender?.name?.toLowerCase() ?? "",
       username: userName.text,
     ));
     result!.fold((l) {

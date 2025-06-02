@@ -69,6 +69,11 @@ LogModel _$LogModelFromJson(Map<String, dynamic> json) => LogModel(
       user: json['user'] == null
           ? null
           : UserModel.fromJson(json['user'] as Map<String, dynamic>),
+      attachments: json['attachments'] == null
+          ? null
+          : (json['attachments'] as List)
+          .map((e) => AttachmentModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$LogModelToJson(LogModel instance) => <String, dynamic>{
@@ -77,4 +82,18 @@ Map<String, dynamic> _$LogModelToJson(LogModel instance) => <String, dynamic>{
       'action': instance.action,
       'created_at': instance.createdAt,
       'user': instance.user,
+    };
+
+AttachmentModel _$AttachmentModelFromJson(Map<String, dynamic> json) =>
+    AttachmentModel(
+          id: json['id'] as int?,
+          mediaPath: json['media_path'] as String?,
+          mediaType: json['media_type'] as String?,
+    );
+
+Map<String, dynamic> _$AttachmentModelToJson(AttachmentModel instance) =>
+    <String, dynamic>{
+          'id': instance.id,
+          'media_path': instance.mediaPath,
+          'media_type': instance.mediaType,
     };

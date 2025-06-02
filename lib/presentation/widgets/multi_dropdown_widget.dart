@@ -46,70 +46,138 @@ class MultiCustomDropdown<T> extends StatelessWidget {
             height: 2.48 * (w / 100),
           ),
         ],
-        MultiSelectBottomSheetField<T?>(
-          initialChildSize: 0.5,
-          initialValue: initialValue ?? [],
-          backgroundColor: Get.find<AppController>().darkMode
-              ? AppDarkColors.darkScaffoldColor
-              : Colors.white,
-          barrierColor: Get.find<AppController>().darkMode
-              ? AppDarkColors.darkContainer.withOpacity(0.3)
-              : AppLightColors.shadow.withOpacity(0.3),
-          selectedItemsTextStyle: getRegularStyle(
-              color: Get.find<AppController>().darkMode
-                  ? AppDarkColors.pureWhite.withOpacity(0.5)
-                  : Colors.black.withOpacity(0.5),
-              fontSize: AppTextStyle.size14),
-          title: Text(
-            label?.tr ?? "",
-            style: titleStyle ??
-                Get.theme.textTheme.labelLarge!
-                    .copyWith(fontWeight: FontWeight.w700),
-          ),
-          buttonText: Text(
-            buttonText,
-            style: getRegularStyle(
+        if(initialValue != null) ... {
+          MultiSelectBottomSheetField<T?>(
+            initialChildSize: 0.5,
+            initialValue: initialValue!,
+            backgroundColor: Get.find<AppController>().darkMode
+                ? AppDarkColors.darkScaffoldColor
+                : Colors.white,
+            barrierColor: Get.find<AppController>().darkMode
+                ? AppDarkColors.darkContainer.withOpacity(0.3)
+                : AppLightColors.shadow.withOpacity(0.3),
+            selectedItemsTextStyle: getRegularStyle(
                 color: Get.find<AppController>().darkMode
                     ? AppDarkColors.pureWhite.withOpacity(0.5)
                     : Colors.black.withOpacity(0.5),
                 fontSize: AppTextStyle.size14),
-          ),
-          items: items,
-          // chipDisplay: MultiSelectChipDisplay.none(),
-          chipDisplay: showSelected
-              ? MultiSelectChipDisplay(
-                  scroll: true,
-                  chipColor: AppLightColors.switcher,
-                  textStyle: getRegularStyle(
-                    color: Colors.white,
-                    fontSize: AppTextStyle.size14,
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  // icon: const Icon(
-                  //   Icons.close,
-                  //   color: Colors.white,
-                  //   size: 18,
-                  // ),
-                )
-              : MultiSelectChipDisplay.none(),
-          itemsTextStyle: getRegularStyle(
-              color: Get.find<AppController>().darkMode
-                  ? AppDarkColors.pureWhite.withOpacity(0.5)
-                  : Colors.black.withOpacity(0.5),
-              fontSize: AppTextStyle.size14),
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(25),
-              topRight: Radius.circular(25),
+            title: Text(
+              label?.tr ?? "",
+              style: titleStyle ??
+                  Get.theme.textTheme.labelLarge!
+                      .copyWith(fontWeight: FontWeight.w700),
             ),
+            buttonText: Text(
+              buttonText,
+              style: getRegularStyle(
+                  color: Get.find<AppController>().darkMode
+                      ? AppDarkColors.pureWhite.withOpacity(0.5)
+                      : Colors.black.withOpacity(0.5),
+                  fontSize: AppTextStyle.size14),
+            ),
+            items: items,
+            // chipDisplay: MultiSelectChipDisplay.none(),
+            chipDisplay: showSelected
+                ? MultiSelectChipDisplay(
+              scroll: true,
+              chipColor: AppLightColors.switcher,
+              textStyle: getRegularStyle(
+                color: Colors.white,
+                fontSize: AppTextStyle.size14,
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+              // icon: const Icon(
+              //   Icons.close,
+              //   color: Colors.white,
+              //   size: 18,
+              // ),
+            )
+                : MultiSelectChipDisplay.none(),
+            itemsTextStyle: getRegularStyle(
+                color: Get.find<AppController>().darkMode
+                    ? AppDarkColors.pureWhite.withOpacity(0.5)
+                    : Colors.black.withOpacity(0.5),
+                fontSize: AppTextStyle.size14),
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(25),
+                topRight: Radius.circular(25),
+              ),
+            ),
+            searchable: true,
+            validator: validators,
+            onConfirm: onConfirm,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
           ),
-          searchable: true,
-          validator: validators,
-          onConfirm: onConfirm,
-          autovalidateMode: AutovalidateMode.onUserInteraction,
-        ),
+        } else ...{
+          MultiSelectBottomSheetField<T?>(
+            initialChildSize: 0.5,
+
+            backgroundColor: Get.find<AppController>().darkMode
+                ? AppDarkColors.darkScaffoldColor
+                : Colors.white,
+            barrierColor: Get.find<AppController>().darkMode
+                ? AppDarkColors.darkContainer.withOpacity(0.3)
+                : AppLightColors.shadow.withOpacity(0.3),
+            selectedItemsTextStyle: getRegularStyle(
+                color: Get.find<AppController>().darkMode
+                    ? AppDarkColors.pureWhite.withOpacity(0.5)
+                    : Colors.black.withOpacity(0.5),
+                fontSize: AppTextStyle.size14),
+            title: Text(
+              label?.tr ?? "",
+              style: titleStyle ??
+                  Get.theme.textTheme.labelLarge!
+                      .copyWith(fontWeight: FontWeight.w700),
+            ),
+            buttonText: Text(
+              buttonText,
+              style: getRegularStyle(
+                  color: Get.find<AppController>().darkMode
+                      ? AppDarkColors.pureWhite.withOpacity(0.5)
+                      : Colors.black.withOpacity(0.5),
+                  fontSize: AppTextStyle.size14),
+            ),
+            items: items,
+            // chipDisplay: MultiSelectChipDisplay.none(),
+            chipDisplay: showSelected
+                ? MultiSelectChipDisplay(
+              scroll: true,
+              chipColor: AppLightColors.switcher,
+              textStyle: getRegularStyle(
+                color: Colors.white,
+                fontSize: AppTextStyle.size14,
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+              // icon: const Icon(
+              //   Icons.close,
+              //   color: Colors.white,
+              //   size: 18,
+              // ),
+            )
+                : MultiSelectChipDisplay.none(),
+            itemsTextStyle: getRegularStyle(
+                color: Get.find<AppController>().darkMode
+                    ? AppDarkColors.pureWhite.withOpacity(0.5)
+                    : Colors.black.withOpacity(0.5),
+                fontSize: AppTextStyle.size14),
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(25),
+                topRight: Radius.circular(25),
+              ),
+            ),
+            searchable: true,
+            validator: validators,
+            onConfirm: onConfirm,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+          ),
+        },
+
       ],
     );
   }
