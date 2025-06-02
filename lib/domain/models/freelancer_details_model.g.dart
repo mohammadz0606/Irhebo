@@ -54,6 +54,9 @@ FreelancerModel _$FreelancerModelFromJson(Map<String, dynamic> json) =>
       languages: (json['languages'] as List<dynamic>?)
           ?.map((e) => DataModel.fromJson(e as Map<String, dynamic>))
           .toList(),
+      certificates: (json['certificates'] as List<dynamic>?)
+          ?.map((e) => CertificateModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$FreelancerModelToJson(FreelancerModel instance) =>
@@ -83,6 +86,15 @@ PaginationModel _$PaginationModelFromJson(Map<String, dynamic> json) =>
           ? null
           : MetaModel.fromJson(json['meta'] as Map<String, dynamic>),
     );
+
+CertificateModel _$CertificateModelFromJson(Map<String, dynamic> json) {
+  return CertificateModel(
+    id: json['id'] as int?,
+    fileName: json['file_name'] as String?,
+    filePath: json['file_path'] as String?,
+    description: json['description'] as String?,
+  );
+}
 
 Map<String, dynamic> _$PaginationModelToJson(PaginationModel instance) =>
     <String, dynamic>{

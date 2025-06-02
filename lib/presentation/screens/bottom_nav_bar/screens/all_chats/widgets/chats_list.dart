@@ -17,7 +17,7 @@ class ChatsList extends GetWidget<AllChatsController> {
     return Obx(
       () => controller.isLoading
           ? Column(
-              children: [for (int i = 0; i < 8; i++) ChatsShimmer()],
+              children: [for (int i = 0; i < 8; i++) const ChatsShimmer()],
             )
           : Column(
               children: [

@@ -30,6 +30,10 @@ class FreelancerDetailsModel {
   Map<String, dynamic> toJson() => _$FreelancerDetailsModelToJson(this);
 }
 
+
+
+
+
 @JsonSerializable()
 class FreelancerModel {
   int? id;
@@ -48,6 +52,8 @@ class FreelancerModel {
   String? description;
   String? status;
   List<DataModel>? languages;
+  List<CertificateModel>? certificates;
+
   FreelancerModel({
     this.id,
     this.name,
@@ -64,6 +70,8 @@ class FreelancerModel {
     this.description,
     this.status,
     this.languages,
+    this.certificates,
+
   });
 
   factory FreelancerModel.fromJson(Map<String, dynamic> json) {
@@ -72,6 +80,31 @@ class FreelancerModel {
 
   Map<String, dynamic> toJson() => _$FreelancerModelToJson(this);
 }
+
+
+
+@JsonSerializable()
+class CertificateModel {
+  int? id;
+  @JsonKey(name: 'file_name')
+  String? fileName;
+  @JsonKey(name: 'file_path')
+  String? filePath;
+  String? description;
+
+  CertificateModel({
+    this.id,
+    this.fileName,
+    this.filePath,
+    this.description,
+  });
+
+  factory CertificateModel.fromJson(Map<String, dynamic> json) =>
+      _$CertificateModelFromJson(json);
+
+  //Map<String, dynamic> toJson() => _$CertificateModelToJson(this);
+}
+
 
 @JsonSerializable()
 class PaginationModel {

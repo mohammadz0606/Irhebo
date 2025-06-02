@@ -4,7 +4,7 @@ Map<String, String> ar = {
   "Choose your preference language": "اختر لغتك المفضلة",
   "Apply": "تطبيق",
   "What would you like to do": "ماذا تريد أن تفعل؟",
-  "Another Files":"ملفات اخرى",
+  "Another Files": "ملفات اخرى",
   "Choose your role in Irhebo": "اختر دورك في Irhebo",
   "Choose your role in FREECO": "اختر دورك في FREECO",
   "Find Service": "البحث عن خدمة",
@@ -12,7 +12,6 @@ Map<String, String> ar = {
   "Continue": "متابعة",
   "Update Request": "تحديث الطلب",
   "Confirm Request": "قبول الطلب",
-
   "Add Update": "إضافة تحديث",
   "Keep the job poster updated by adding comments, progress updates, and attachments":
       "ابقَ على اطلاع مع ناشر الوظيفة من خلال إضافة التعليقات وتحديثات التقدم والمرفقات",
@@ -232,4 +231,6 @@ Map<String, String> ar = {
   "Portfolio delete successfully": "تم حذف المعرض بنجاح",
   "My Services": "خدماتي",
   "Update Portfolio": "تحديث معرض الاعمال",
+  "File not found": "الملف غير موجود",
+  "Cannot open the file": "لايمكن فتح الملف"
 };

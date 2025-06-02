@@ -31,8 +31,8 @@ class AllChatsScreen extends GetView<AllChatsController> {
                 isChat: true,
               ),
             ),
-            ChatsFiltersList(),
-            ChatsList()
+            const ChatsFiltersList(),
+            const ChatsList()
           ],
         ),
       ),

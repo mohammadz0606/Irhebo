@@ -7,7 +7,7 @@ Map<String, String> en = {
   "Choose your role in Irhebo": "Choose your role in Irhebo",
   "Choose your role in FREECO": "Choose your role in FREECO",
   "Find Service": "Find Service",
-  "Another Files":"Another Files",
+  "Another Files": "Another Files",
   "Sell Service": "Sell Service",
   "Continue": "Continue",
   "Skip": "Skip",
@@ -142,7 +142,6 @@ Map<String, String> en = {
   "Username": "Username",
   "Update Request": "Update Request",
   "Confirm Request": "Confirm Request",
-
   "Edit Profile": "Edit Profile",
   "Change Password": "Change Password",
   "Update Profile": "Update Profile",
@@ -234,5 +233,8 @@ Map<String, String> en = {
   "Portfolio update successfully": "Portfolio update successfully",
   "Portfolio delete successfully": "Portfolio delete successfully",
   "My Services": "My Services",
-  "Update Portfolio": "Update Portfolio"
+  "Update Portfolio": "Update Portfolio",
+  "File not found": "File not found",
+  "Cannot open the file": "Cannot open the file"
+
 };
