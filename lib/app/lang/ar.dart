@@ -234,4 +234,8 @@ Map<String, String> ar = {
   "File not found": "الملف غير موجود",
   "Cannot open the file": "لايمكن فتح الملف",
   "Attachments": "المرفقات",
+  "Delete Confirmation": "تأكيد الحذف",
+  "Are you sure you want to delete this item?": "هل أنت متأكد من حذف العنصر؟",
+  "Yes": "نعم",
+  "No": "لا",
 };

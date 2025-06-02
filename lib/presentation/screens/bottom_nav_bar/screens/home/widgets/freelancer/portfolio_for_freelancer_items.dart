@@ -78,21 +78,38 @@ class PortfolioForFreelancerItems extends GetView<HomeController> {
                     });
                   },
                   onDeleteTap: () async {
-
-                    await provider.deletePortfolio(
-                      onSuccess: () {
-                        controller.onRefreshList();
-                        log('DONE DELETE PORTFOLIO');
-                      },
-                      id: data?.id ?? 0,
-                    );
-                    // Get.dialog(
-                    //   barrierColor: Get.find<AppController>().darkMode
-                    //       ? AppDarkColors.darkContainer.withOpacity(0.3)
-                    //       : AppLightColors.shadow.withOpacity(0.3),
-                    //   useSafeArea: true,
-                    //   Column(),
+                    // await provider.deletePortfolio(
+                    //   onSuccess: () {
+                    //     controller.onRefreshList();
+                    //     log('DONE DELETE PORTFOLIO');
+                    //   },
+                    //   id: data?.id ?? 0,
                     // );
+                    // Get.defaultDialog();
+
+                    Get.defaultDialog(
+                      title: 'Delete Confirmation'.tr,
+                      middleText:
+                          "Are you sure you want to delete this item?".tr,
+                      textConfirm: "Yes".tr,
+                      textCancel: "No".tr,
+                      confirmTextColor: Colors.white,
+                      buttonColor: Colors.red,
+                      cancelTextColor: Colors.white,
+                      onConfirm: () async {
+                        await provider.deletePortfolio(
+                          onSuccess: () {
+                            controller.onRefreshList();
+                            log('DONE DELETE PORTFOLIO');
+                          },
+                          id: data?.id ?? 0,
+                        );
+                        Get.back();
+                      },
+                      onCancel: () {
+                        Get.back();
+                      },
+                    );
                   },
                 );
               },
@@ -103,3 +120,10 @@ class PortfolioForFreelancerItems extends GetView<HomeController> {
     );
   }
 }
+// Get.dialog(
+//   barrierColor: Get.find<AppController>().darkMode
+//       ? AppDarkColors.darkContainer.withOpacity(0.3)
+//       : AppLightColors.shadow.withOpacity(0.3),
+//   useSafeArea: true,
+//   Column(),
+// );

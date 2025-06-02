@@ -237,5 +237,9 @@ Map<String, String> en = {
   "File not found": "File not found",
   "Cannot open the file": "Cannot open the file",
   "Attachments" : "Attachments",
+  "Delete Confirmation" : "Delete Confirmation",
+  "Are you sure you want to delete this item?" :"Are you sure you want to delete this item?",
+  "Yes" : "Yes",
+  "No" : "No"
 
 };
