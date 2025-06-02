@@ -104,7 +104,7 @@ class RegisterController extends GetxController {
                 (element) => element?.id ?? 0,
               )
               .toList(),
-          gender: gender?.name ?? '');
+          gender: gender?.name?.toLowerCase() ?? '');
 
       try {
         final response = await Network()
