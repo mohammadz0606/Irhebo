@@ -5,6 +5,7 @@ Map<String, String> ar = {
   "Apply": "تطبيق",
   "What would you like to do": "ماذا تريد أن تفعل؟",
   "Another Files": "ملفات اخرى",
+  "Upgrade to Freelancer":"الترقية الى مقدم خدمة",
   "Choose your role in Irhebo": "اختر دورك في Irhebo",
   "Choose your role in FREECO": "اختر دورك في FREECO",
   "Find Service": "البحث عن خدمة",

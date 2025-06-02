@@ -106,11 +106,12 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
-      floatingActionButton: Showcase(
+      floatingActionButton:(getUserRole != UserRoles.freelancer)?Showcase(
+
           targetBorderRadius: BorderRadius.circular(50),
           key: Get.find<AppController>().botKey,
           description: "This is bot made for you".tr,
-          child: const BotFloatingButton()),
+          child: const BotFloatingButton()):null,
       floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
     );
   }

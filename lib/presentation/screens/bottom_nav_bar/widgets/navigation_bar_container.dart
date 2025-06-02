@@ -8,6 +8,9 @@ import 'package:irhebo/app/resources/style/colors.dart';
 import 'package:irhebo/presentation/screens/bottom_nav_bar/widgets/navigation_bar_item.dart';
 import 'package:showcaseview/showcaseview.dart';
 
+import '../../../../app/app_functions.dart';
+import '../../../../app/enums.dart';
+
 class AppNavigationBarContainer extends GetWidget<AppController> {
   const AppNavigationBarContainer({super.key});
 
@@ -28,7 +31,7 @@ class AppNavigationBarContainer extends GetWidget<AppController> {
           padding: EdgeInsets.symmetric(horizontal: 3.98 * (w / 100)),
           height: 8.7 * (h / 100),
           child: Row(
-            children: [
+            children: (getUserRole != UserRoles.freelancer)?  [
               const Expanded(
                 flex: 1,
                 child: AppNavigationBarItem(
@@ -54,13 +57,14 @@ class AppNavigationBarContainer extends GetWidget<AppController> {
                   imagePath: AppIcons.home,
                 ),
               ),
-              const Expanded(
+              (getUserRole != UserRoles.freelancer)?const
+              Expanded(
                 flex: 1,
                 child: AppNavigationBarItem(
                   index: 3,
                   imagePath: AppIcons.heart,
                 ),
-              ),
+              ):SizedBox.shrink(),
               const Expanded(
                 flex: 1,
                 child: AppNavigationBarItem(
@@ -68,7 +72,53 @@ class AppNavigationBarContainer extends GetWidget<AppController> {
                   imagePath: AppIcons.settings,
                 ),
               ),
-            ],
+            ]:
+
+            [
+            const Expanded(
+              flex: 1,
+              child: AppNavigationBarItem(
+                index: 2,
+                imagePath: AppIcons.home,
+              ),
+            ),
+            Expanded(
+              flex: 1,
+              child: Showcase(
+                key: Get.find<AppController>().chatKey,
+                description: "This is chats section".tr,
+                child: const AppNavigationBarItem(
+                  index: 1,
+                  imagePath: AppIcons.message,
+                ),
+              ),
+            ),
+            const Expanded(
+              flex: 1,
+              child: AppNavigationBarItem(
+                index: 0,
+                imagePath: AppIcons.requests,
+              ),
+            ),
+
+
+            (getUserRole != UserRoles.freelancer)?const
+            Expanded(
+              flex: 1,
+              child: AppNavigationBarItem(
+                index: 3,
+                imagePath: AppIcons.heart,
+              ),
+            ):SizedBox.shrink(),
+            const Expanded(
+              flex: 1,
+              child: AppNavigationBarItem(
+                index: 4,
+                imagePath: AppIcons.settings,
+              ),
+            ),
+            ]
+            ,
           )),
     );
   }

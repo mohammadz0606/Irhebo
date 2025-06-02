@@ -11,6 +11,10 @@ import 'package:irhebo/domain/models/login_model.dart';
 // import 'package:irhebo/presentation/screens/auth/create_password/create_password_screen.dart';
 import 'package:irhebo/presentation/screens/bottom_nav_bar/screens/settings/widgets/user_info_row.dart';
 
+import '../../../../app/app_functions.dart';
+import '../../auth/register/register_freelancer_screen.dart';
+import '../../search/search_controller.dart';
+
 class UserInfoWidget extends StatelessWidget {
   final UserModel? user;
   final Function() goToUpdate;
@@ -91,6 +95,33 @@ class UserInfoWidget extends StatelessWidget {
                 arguments: {"type": PasswordScreenType.update_password}),
             child: const UserInfoRow(
               title: "Change Password",
+              update: true,
+            ),
+          ),
+        ),
+        if(getUserRole == UserRoles.client)
+        Container(
+          decoration: AppDecoration.getDecorationWithRadius(
+              color: Get.find<AppController>().darkMode
+                  ? AppDarkColors.darkContainer2
+                  : Colors.white,
+              radius: 14),
+          margin: EdgeInsets.symmetric(vertical: 2.48 * (w / 100)),
+          padding: EdgeInsets.symmetric(
+              vertical: 0.99 * (w / 100), horizontal: 3.73 * (w / 100)),
+          child: InkWell(
+            /*
+            if you navigate using Get.to(() => CreatePasswordScreen())
+            instead of Get.toNamed(AppRoutes.createPassword),
+            the binding will not be applied.
+             */
+            onTap: () {
+              Get.put(SearchControllerGetx());
+
+Navigator.of(context).push(MaterialPageRoute(builder: (context)=>RegisterFreelancerScreen()));
+            },
+            child: const UserInfoRow(
+              title: "Upgrade to Freelancer",
               update: true,
             ),
           ),
