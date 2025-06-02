@@ -232,5 +232,6 @@ Map<String, String> ar = {
   "My Services": "خدماتي",
   "Update Portfolio": "تحديث معرض الاعمال",
   "File not found": "الملف غير موجود",
-  "Cannot open the file": "لايمكن فتح الملف"
+  "Cannot open the file": "لايمكن فتح الملف",
+  "Attachments": "المرفقات",
 };

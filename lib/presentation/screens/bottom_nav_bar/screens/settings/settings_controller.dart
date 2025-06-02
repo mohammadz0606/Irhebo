@@ -54,7 +54,7 @@ class SettingsController extends GetxController {
   void openLanguageBottomSheet() {
     if (Get.context != null && Get.context!.mounted) {
       Get.bottomSheet(
-        AppBottomSheet(title: "Languages", child: LanguageBottomSheet()),
+        const AppBottomSheet(title: "Languages", child: LanguageBottomSheet()),
         backgroundColor: Get.find<AppController>().darkMode
             ? AppDarkColors.darkScaffoldColor
             : AppLightColors.pureWhite,
@@ -70,7 +70,7 @@ class SettingsController extends GetxController {
   void openLogoutBottomSheet() {
     if (Get.context != null && Get.context!.mounted) {
       Get.bottomSheet(
-        AppBottomSheet(title: "Logout", child: LogoutBottomSheet()),
+        const AppBottomSheet(title: "Logout", child: LogoutBottomSheet()),
         backgroundColor: Get.find<AppController>().darkMode
             ? AppDarkColors.darkScaffoldColor
             : AppLightColors.pureWhite,
@@ -123,7 +123,7 @@ class SettingsController extends GetxController {
       barrierColor: Get.find<AppController>().darkMode
           ? AppDarkColors.darkContainer.withOpacity(0.3)
           : AppLightColors.shadow.withOpacity(0.3),
-      AppDialog(
+      const AppDialog(
         child: LoginRequiredDialog(),
       ),
     );

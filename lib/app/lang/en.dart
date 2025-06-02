@@ -235,6 +235,7 @@ Map<String, String> en = {
   "My Services": "My Services",
   "Update Portfolio": "Update Portfolio",
   "File not found": "File not found",
-  "Cannot open the file": "Cannot open the file"
+  "Cannot open the file": "Cannot open the file",
+  "Attachments" : "Attachments",
 
 };

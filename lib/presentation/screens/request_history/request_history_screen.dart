@@ -21,7 +21,7 @@ class RequestHistoryScreen extends GetView<RequestHistoryController> {
       ),
       body: SingleChildScrollView(
         child: controller.groupedLogs.isEmpty
-            ? NoData(
+            ? const NoData(
                 forHome: false,
               )
             : Column(
