@@ -7,6 +7,8 @@ import 'package:irhebo/domain/models/quotation_model.dart';
 import 'package:irhebo/presentation/screens/quotation_details/widgets/quotation_attribute_row.dart';
 import 'package:irhebo/presentation/screens/quotation_details/widgets/quotation_details_user_info_row.dart';
 
+import '../../../widgets/app_image.dart';
+
 class QuotationDetailsWidget extends StatelessWidget {
   final QuotationModel quotation;
 
@@ -114,6 +116,81 @@ class QuotationDetailsWidget extends StatelessWidget {
           //     ),
           //   ],
           // )
+          const Divider(),
+          SizedBox(
+            height: 5.97 * (w / 100),
+          ),
+          Text(
+            'Commits'.tr,
+            style: Get.theme.textTheme.labelMedium,
+          ),
+          SizedBox(
+            height: 5.97 * (w / 100),
+          ),
+          ListView.separated(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: quotation.comments?.length ?? 0,
+            itemBuilder: (context, index) {
+              var data = quotation.comments?[index];
+             return Column(
+               crossAxisAlignment: CrossAxisAlignment.start,
+               children: [
+                 Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          AppImage(
+                            imageUrl: data?.user?.avatar ?? "",
+                            width: 7.46 * (w / 100),
+                            height: 7.46 * (w / 100),
+                            radius: 25,
+                          ),
+                          SizedBox(
+                            width: 2.73 * (w / 100),
+                          ),
+                          Text(
+                            data?.user?.username ?? "",
+                            style: Get.theme.textTheme.labelMedium!
+                                .copyWith(fontWeight: FontWeight.w700),
+                            // maxLines: 1,
+                            // overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
+                      ),
+                      Text(
+                        quotation.createdAt ?? "",
+                        style: Get.theme.textTheme.labelMedium!
+                            .copyWith(fontWeight: FontWeight.w700),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+
+
+                    ],
+                  ),
+                 const SizedBox(height: 15),
+                 Text(
+                   data?.comment ?? "",
+                   style: Get.theme.textTheme.labelMedium!
+                       .copyWith(fontWeight: FontWeight.w700),
+                   maxLines: 1,
+                   overflow: TextOverflow.ellipsis,
+                 ),
+               ],
+             );
+            },
+            separatorBuilder: (context, index) {
+              return const Column(
+                children: [
+                  SizedBox(height: 10),
+                  Divider(),
+                  SizedBox(height: 10),
+                ],
+              );
+            },
+          ),
         ],
       ),
     );

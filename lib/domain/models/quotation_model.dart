@@ -38,6 +38,8 @@ class QuotationModel {
   String? createdAt;
   @JsonKey(name: 'updated_at')
   String? updatedAt;
+  @JsonKey(name: 'comments')
+  List<QuotationCommentModel>? comments;
 
   QuotationModel({
     this.id,
@@ -50,6 +52,7 @@ class QuotationModel {
     this.user,
     this.createdAt,
     this.updatedAt,
+    this.comments,
   });
 
   factory QuotationModel.fromJson(Map<String, dynamic> json) {

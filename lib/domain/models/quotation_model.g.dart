@@ -26,19 +26,22 @@ Map<String, dynamic> _$PaginatedQuotationsModelToJson(
 
 QuotationModel _$QuotationModelFromJson(Map<String, dynamic> json) =>
     QuotationModel(
-      id: (json['id'] as num?)?.toInt(),
-      title: json['title'] as String?,
-      description: json['description'] as String?,
-      price: json['price'] as String?,
-      deliveryDay: (json['delivery_day'] as num?)?.toInt(),
-      revisions: (json['revisions'] as num?)?.toInt(),
-      sourceFile: json['source_file'] as bool?,
-      user: json['user'] == null
-          ? null
-          : UserModel.fromJson(json['user'] as Map<String, dynamic>),
-      createdAt: json['created_at'] as String?,
-      updatedAt: json['updated_at'] as String?,
-    );
+        id: (json['id'] as num?)?.toInt(),
+        title: json['title'] as String?,
+        description: json['description'] as String?,
+        price: json['price'] as String?,
+        deliveryDay: (json['delivery_day'] as num?)?.toInt(),
+        revisions: (json['revisions'] as num?)?.toInt(),
+        sourceFile: json['source_file'] as bool?,
+        user: json['user'] == null
+            ? null
+            : UserModel.fromJson(json['user'] as Map<String, dynamic>),
+        createdAt: json['created_at'] as String?,
+        updatedAt: json['updated_at'] as String?,
+        comments: (json['comments'] as List<dynamic>?)
+            ?.map((e) =>
+                QuotationCommentModel.fromJson(e as Map<String, dynamic>))
+            .toList());
 
 Map<String, dynamic> _$QuotationModelToJson(QuotationModel instance) =>
     <String, dynamic>{

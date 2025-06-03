@@ -17,14 +17,16 @@ class RequestDetailsScreen extends GetView<RequestDetailsController> {
     return Obx(
       () => Scaffold(
         appBar: NormalAppBar(
-            title: controller.title.toString(),
-            onTapBack: controller.onTapBack,
-            onTapHistory: controller.onTapHistory),
+          title: controller.title.toString(),
+          onTapBack: controller.onTapBack,
+          onTapHistory: controller.onTapHistory,
+        ),
         body: Padding(
           padding: EdgeInsets.only(
-              right: 3.98 * (w / 100),
-              left: 3.98 * (w / 100),
-              bottom: 3.98 * (w / 100)),
+            right: 3.98 * (w / 100),
+            left: 3.98 * (w / 100),
+            bottom: 3.98 * (w / 100),
+          ),
           child: SingleChildScrollView(
             child: controller.isLoading
                 ? const RequestDetailsShimmer()
