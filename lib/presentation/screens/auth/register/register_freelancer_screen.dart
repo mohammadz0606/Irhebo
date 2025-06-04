@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:irhebo/presentation/screens/auth/register/widgets/upload_file.dart';
 import 'package:multi_select_flutter/util/multi_select_item.dart';
 
@@ -113,6 +114,7 @@ class _RegisterFreelancerScreenState extends State<RegisterFreelancerScreen> {
                   style: Get.textTheme.headlineSmall,
                 ),
                 UploadFileWidget(
+                  fileType: FileType.image,
                   onFileSelected: (file) {
                     if (file != null) {
                       avatar = file;
@@ -139,6 +141,7 @@ class _RegisterFreelancerScreenState extends State<RegisterFreelancerScreen> {
                   style: Get.textTheme.headlineSmall,
                 ),
                 UploadFileWidget(
+                  fileType: FileType.image,
                   onFileSelected: (file) {
                     setState(() {
                       certificateFile = file;

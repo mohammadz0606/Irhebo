@@ -3,12 +3,47 @@ import 'package:irhebo/domain/models/new_models/general_model.dart';
 
 import '../../../app/global_imports.dart';
 import '../../../app/network/network.dart';
+import '../../models/new_models/freelancer/portfolio_list_model.dart';
 import '../../params/new_params/freelanser/create_portfolio_param.dart';
+import '../../params/pagination_params.dart';
 
 class FreelancerPortfolioProvider extends ChangeNotifier {
   bool isLoadingCreate = false;
   bool isLoadingUpdate = false;
   bool isLoadingDelete = false;
+  bool isLoadingGet = false;
+
+  int pageNumber = 1;
+  List<PortfolioListModelDataPortfolios> portfolioList = [];
+
+  Future<void> getPortfolioList() async {
+    try {
+      if (pageNumber == 1) {
+        portfolioList.clear();
+      }
+      PaginationParams paginationParams =
+          PaginationParams(page: pageNumber, perPage: AppConstants.PAGE_LENGTH);
+
+      AppPreferences prefs = sl();
+
+      final response = await Network().get(
+        url: AppEndpoints.getPortfolio,
+      );
+
+    } catch (error) {
+      if (error is DioException) {
+        AppSnackBar.openErrorSnackBar(
+          message: Network().handelDioException(error),
+        );
+      } else {
+        AppSnackBar.openErrorSnackBar(
+          message: error.toString(),
+        );
+      }
+      isLoadingGet = false;
+      notifyListeners();
+    }
+  }
 
   Future<void> createPortfolio(CreatePortfolioParam data) async {
     try {

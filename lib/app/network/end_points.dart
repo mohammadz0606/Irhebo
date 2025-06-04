@@ -56,7 +56,8 @@ class AppEndpoints {
   static String homeFreelancer = '$base_url/home-freelancer';
   static String createPortfolio = '$base_url/portfolio/create';
   static String getFreelancerProfile = '$base_url/users/freelancer-profile/';
-  static String getPortfolio = '$base_url/users/portfolio';
+  static String getPortfolioUser = '$base_url/users/portfolio';
+  static String getPortfolio = '$base_url/portfolio';
   static String updatePortfolio = '$base_url/users/portfolio/update/';
   static String deletePortfolio = '$base_url/portfolio/delete/';
 
