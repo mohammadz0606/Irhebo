@@ -65,7 +65,44 @@ class RequestDetailsBottomBar extends GetWidget<RequestDetailsController> {
         if (getUserRole == UserRoles.freelancer &&
             controller.request.statusKey == 'pending') ...{
           AppButton(
-            onPressed: () {},
+            isLoading: controller.isLoadingConfirmRequest,
+            onPressed: () {
+              showAdaptiveDialog(
+                context: Get.context!,
+                barrierDismissible: false,
+                builder: (_) {
+                  return AlertDialog.adaptive(
+                    title: Text('Confirmation Request'.tr),
+                    content: Text(
+                      "Are you sure you want to confirm this request?".tr,
+                    ),
+                    actions: [
+                      TextButton(
+                        onPressed: () async {
+                          Navigator.of(Get.context!).pop();
+                          await controller.confirmRequest();
+                        },
+                        child: Text(
+                          "Yes".tr,
+                          style: const TextStyle(color: AppLightColors.primaryColor),
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(Get.context!).pop();
+                        },
+                        child: Text(
+                          "No".tr,
+                          style: const TextStyle(color: Colors.red),
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              );
+
+
+            },
             title: "Confirm Request",
           ),
           SizedBox(height: 2 * (w / 100)),

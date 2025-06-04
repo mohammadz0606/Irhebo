@@ -242,7 +242,10 @@ Map<String, String> ar = {
   "No": "لا",
   "Quotation created successfully": "تم إنشاء العرض بنجاح",
   "Verify Account": "تأكيد الحساب",
-  "Attach your ID or passport to verify the account": "قم بارفاق هويتك او جواز سفر من اجل توثيق الحساب",
-  "Account verified successfully": "تم التحقق من الحساب بنجاح"
-
+  "Attach your ID or passport to verify the account":
+      "قم بارفاق هويتك او جواز سفر من اجل توثيق الحساب",
+  "Account verified successfully": ".تم التحقق من الحساب بنجاح",
+  "The operation was successful": ".تمت العملية بنجاح",
+  "Are you sure you want to confirm this request?":
+      "هل أنت متأكد أنك تريد تأكيد هذا الطلب؟"
 };

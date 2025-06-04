@@ -82,16 +82,16 @@ class PortfolioForFreelancerItems extends GetView<HomeController> {
                     onEditTap: () {
                       Get.toNamed(AppRoutes.createUpdatePortfolio, arguments: {
                         'data': data,
-                        'id' : data?.id ?? 0,
+                        'id': data?.id ?? 0,
                         'title': data?.title,
                       });
                     },
                     onDeleteTap: () async {
-                      showDialog(
+                      showAdaptiveDialog(
                         context: Get.context!,
                         barrierDismissible: false,
                         builder: (_) {
-                          return AlertDialog(
+                          return AlertDialog.adaptive(
                             title: Text('Delete Confirmation'.tr),
                             content: Text(
                               "Are you sure you want to delete this item?".tr,
@@ -118,7 +118,12 @@ class PortfolioForFreelancerItems extends GetView<HomeController> {
                                 onPressed: () {
                                   Navigator.of(Get.context!).pop();
                                 },
-                                child: Text("No".tr),
+                                child: Text(
+                                  "No".tr,
+                                  style: const TextStyle(
+                                    color: AppLightColors.greenText,
+                                  ),
+                                ),
                               ),
                             ],
                           );

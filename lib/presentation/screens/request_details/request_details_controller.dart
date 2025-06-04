@@ -9,6 +9,7 @@ import 'package:irhebo/app/app_controller.dart';
 import 'package:irhebo/app/injection.dart';
 import 'package:irhebo/app/resources/style/colors.dart';
 import 'package:irhebo/app/router/routes.dart';
+import 'package:irhebo/domain/models/new_models/general_model.dart';
 import 'package:irhebo/domain/models/request_model.dart';
 import 'package:irhebo/domain/params/rate_params.dart';
 import 'package:irhebo/domain/params/update_request_params.dart';
@@ -23,6 +24,7 @@ import 'package:irhebo/presentation/widgets/app_dialog.dart';
 import '../../../app/network/end_points.dart';
 import '../../../app/network/network.dart';
 import '../../../app/snack_bar.dart';
+import '../bottom_nav_bar/screens/home/home_controller.dart';
 
 class RequestDetailsController extends GetxController {
   final GlobalKey<FormState> reviewKey = GlobalKey<FormState>();
@@ -34,6 +36,8 @@ class RequestDetailsController extends GetxController {
   final RxBool _isLoading = false.obs;
   final RxBool _isLoadingUpdate = false.obs;
   final RxBool _isLoadingReview = false.obs;
+  final RxBool _isLoadingConfirmRequest = false.obs;
+
   final Rx<RequestModel> _request = RequestModel().obs;
 
   int get currentRate => _currentRate.value;
@@ -43,6 +47,8 @@ class RequestDetailsController extends GetxController {
   bool get isLoadingUpdate => _isLoadingUpdate.value;
 
   bool get isLoadingReview => _isLoadingReview.value;
+
+  bool get isLoadingConfirmRequest => _isLoadingConfirmRequest.value;
 
   RequestModel get request => _request.value;
 
@@ -85,6 +91,60 @@ class RequestDetailsController extends GetxController {
     if (Get.arguments != null) {
       id = Get.arguments["id"] ?? 0;
       title = Get.arguments["title"] ?? "";
+    }
+  }
+
+  updateRequest() async {
+    isLoadingUpdate = true;
+    UpdateRequestUseCase updateRequestUseCase = sl();
+    final result = await updateRequestUseCase(UpdateRequestParams(
+      action: commentController.text,
+      status: selectedStatus.value,
+      requestId: request.id,
+      attachments: atthach,
+    ));
+    result!.fold((l) {
+      isLoadingUpdate = false;
+    }, (r) {
+      clearData();
+      isLoadingUpdate = false;
+      Get.back();
+      getRequestDetails();
+    });
+  }
+
+  confirmRequest() async {
+    try {
+      _isLoadingConfirmRequest.value = true;
+      final response = await Network().post(
+        url: '${AppEndpoints.confirmRequest}$id',
+      );
+      String errorMessage = await Network().handelError(response: response);
+      if (errorMessage.isNotEmpty) {
+        _isLoadingConfirmRequest.value = false;
+        AppSnackBar.openErrorSnackBar(message: errorMessage);
+      }
+
+      NewGeneralModel generalModel = NewGeneralModel.fromJson(response.data);
+      if (generalModel.status ?? false) {
+        _isLoadingConfirmRequest.value = false;
+        AppSnackBar.openSuccessSnackBar(
+          message: 'The operation was successful'.tr,
+        );
+        getRequestDetails();
+       // Get.find<HomeController>().getFeaturedPortfolio();
+      }
+    } catch (error) {
+      if (error is dio.DioException) {
+        AppSnackBar.openErrorSnackBar(
+          message: Network().handelDioException(error),
+        );
+      } else {
+        AppSnackBar.openErrorSnackBar(
+          message: error.toString(),
+        );
+      }
+      _isLoadingConfirmRequest.value = false;
     }
   }
 
@@ -242,24 +302,6 @@ class RequestDetailsController extends GetxController {
     //
     //   isLoading = false;
     // }
-  }
-
-  updateRequest() async {
-    isLoadingUpdate = true;
-    UpdateRequestUseCase updateRequestUseCase = sl();
-    final result = await updateRequestUseCase(UpdateRequestParams(
-        action: commentController.text,
-        status: selectedStatus.value,
-        requestId: request.id,
-        attachments: atthach));
-    result!.fold((l) {
-      isLoadingUpdate = false;
-    }, (r) {
-      clearData();
-      isLoadingUpdate = false;
-      Get.back();
-      getRequestDetails();
-    });
   }
 
   onRate(int i) {
