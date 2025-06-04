@@ -29,8 +29,8 @@ class QuotationsController extends GetxController {
   }
 
   onRefreshQuotationsList() async {
-    pageNumber = 1;
-    quotations.clear();
+      pageNumber = 1;
+      quotations.clear();
     isLoading = true;
     await getQuotations();
     refreshController.refreshCompleted();
