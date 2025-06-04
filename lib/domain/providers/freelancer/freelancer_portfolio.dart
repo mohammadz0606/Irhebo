@@ -4,6 +4,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import '../../../app/global_imports.dart';
 import '../../../app/network/network.dart';
+import '../../models/config_model.dart';
 import '../../models/new_models/freelancer/portfolio_list_model.dart';
 import '../../params/new_params/freelanser/create_portfolio_param.dart';
 import '../../params/pagination_params.dart';
@@ -13,9 +14,12 @@ class FreelancerPortfolioProvider extends ChangeNotifier {
   bool isLoadingUpdate = false;
   bool isLoadingDelete = false;
   bool isLoadingGet = false;
+  bool isLoadingDetails = false;
 
   int pageNumber = 1;
   List<PortfolioListModelDataPortfolios> portfolioList = [];
+  DataModel? portfolio;
+
   RefreshController refreshController =
       RefreshController(initialRefresh: false);
 
@@ -219,6 +223,48 @@ class FreelancerPortfolioProvider extends ChangeNotifier {
         );
       }
       isLoadingDelete = false;
+      notifyListeners();
+    }
+  }
+
+  getPortfolioDetails(int id, {required Function() onSuccess}) async {
+    try {
+      isLoadingDetails = true;
+      if (portfolio != null) {
+        portfolio = null;
+      }
+      notifyListeners();
+
+      final response = await Network().get(
+        url: '${AppEndpoints.portfolioDetails}$id',
+      );
+
+      String errorMessage = await Network().handelError(response: response);
+      if (errorMessage.isNotEmpty) {
+        isLoadingDelete = false;
+        notifyListeners();
+        AppSnackBar.openErrorSnackBar(
+          message: errorMessage,
+        );
+        return;
+      }
+
+      DataModel dataModel = DataModel.fromJson(response.data);
+      portfolio = dataModel;
+      onSuccess();
+      isLoadingDetails = false;
+      notifyListeners();
+    } catch (error) {
+      if (error is DioException) {
+        AppSnackBar.openErrorSnackBar(
+          message: Network().handelDioException(error),
+        );
+      } else {
+        AppSnackBar.openErrorSnackBar(
+          message: error.toString(),
+        );
+      }
+      isLoadingDetails = false;
       notifyListeners();
     }
   }
