@@ -1,9 +1,11 @@
 import '../../../../../../../app/global_imports.dart';
+import '../../../../../../../app/router/routes.dart';
 import '../../../../../../widgets/app_loading.dart';
 import '../../../../../../widgets/app_title_with_action.dart';
 import '../../../../../../widgets/no_data.dart';
 import '../../../../../quotations/widgets/new_quotation_widget.dart';
 import '../../../../../quotations/widgets/quotation_widget.dart';
+import '../../../../bottom_nav_bar_controller.dart';
 import '../../home_controller.dart';
 
 class FreelancerQuotation extends GetView<HomeController> {
@@ -15,10 +17,12 @@ class FreelancerQuotation extends GetView<HomeController> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const AppTitleWithAction(
+        AppTitleWithAction(
           title: 'Quotations',
           action: 'See All',
-          //  onTapAction: () => Get.toNamed(AppRoutes.search),
+          onTapAction: () {
+            Get.toNamed(AppRoutes.quotations);
+          },
         ),
         Obx(
           () => controller.isLoading
