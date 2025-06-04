@@ -134,7 +134,6 @@ class FreelancerPortfolioProvider extends ChangeNotifier {
 
   Future<void> updatePortfolio(
     CreatePortfolioParam data, {
-    //required Function() onSuccess,
     required int id,
   }) async {
     try {
