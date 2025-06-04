@@ -1,11 +1,14 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:dio/dio.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:path/path.dart';
 import 'package:file_picker/file_picker.dart';
 
 import '../../app/global_imports.dart';
 
-class UploadFilesProvider extends ChangeNotifier {
+class FilesManagerProvider extends ChangeNotifier {
   bool isLoadingPickFile = false;
 
   Future<File?>? pickFile({FileType fileType = FileType.any}) async {
@@ -36,7 +39,6 @@ class UploadFilesProvider extends ChangeNotifier {
 
     List<File> validFiles = [];
 
-
     if (result != null && result.files.isNotEmpty) {
       for (var picked in result.files) {
         if (picked.path != null) {
@@ -57,5 +59,21 @@ class UploadFilesProvider extends ChangeNotifier {
     }
 
     return validFiles;
+  }
+
+  Future<File> urlToFile(String imageUrl) async {
+    final Directory tempDir = await getTemporaryDirectory();
+
+    final String fileName = basename(imageUrl);
+
+    final File file = File('${tempDir.path}/$fileName');
+
+    final response = await Dio().get<List<int>>(
+      imageUrl,
+      options: Options(responseType: ResponseType.bytes),
+    );
+    await file.writeAsBytes(response.data!);
+
+    return file;
   }
 }

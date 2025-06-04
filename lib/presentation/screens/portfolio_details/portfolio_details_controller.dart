@@ -12,6 +12,9 @@ class PortfolioDetailsController extends GetxController {
   // ignore: invalid_use_of_protected_member
   bool get isLoading => _isLoading.value;
 
+  RxBool get isLoadingRx => _isLoading;
+
+
   set isLoading(value) => _isLoading.value = value;
 
   int id = 0;
@@ -21,7 +24,6 @@ class PortfolioDetailsController extends GetxController {
   @override
   onInit() async {
     super.onInit();
-
     receiveParameters();
     if (isClosed) return;
     getPortfolioDetails();

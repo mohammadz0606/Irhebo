@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
+import 'package:irhebo/domain/providers/files_manager.dart';
 import 'package:irhebo/presentation/screens/auth/register/widgets/upload_file.dart';
 
 import '../../../../app/global_imports.dart';
@@ -11,6 +12,7 @@ import '../../../../domain/providers/freelancer/freelancer_portfolio.dart';
 import '../../../widgets/app_button.dart';
 import '../../../widgets/app_text_field.dart';
 import '../../../widgets/normal_app_bar.dart';
+import '../../portfolio_details/portfolio_details_controller.dart';
 import '../widgets/related_services.dart';
 import '../widgets/upload_multiple_file.dart';
 
@@ -30,6 +32,8 @@ class _CreateNewUpdatePortfolioScreenState
   final List<File> media = [];
   final List<int> services = [];
   FreelancerHomeModelDataPortfolios? dataForEdit;
+  late PortfolioDetailsController portfolioController;
+  late FilesManagerProvider filesManagerProvider;
 
   @override
   void dispose() {
@@ -38,153 +42,182 @@ class _CreateNewUpdatePortfolioScreenState
     super.dispose();
   }
 
+  //dataForEdit = Get.arguments['data'];
+  // _title.text = dataForEdit?.title ?? '';
   @override
   void initState() {
-    _onLoadEditData();
+    portfolioController = Get.put(PortfolioDetailsController());
+    filesManagerProvider =
+        Provider.of<FilesManagerProvider>(context, listen: false);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _onLoadEditData();
+    });
     super.initState();
   }
 
   _onLoadEditData() {
-    if (Get.arguments?['data'] != null) {
-      dataForEdit = Get.arguments['data'];
-      _title.text = dataForEdit?.title ?? '';
-      // _desc.text = dataForEdit?.d ?? '';
 
-      setState(() {});
+    if (Get.arguments?['data'] != null) {
+
+      portfolioController.receiveParameters();
+      portfolioController.getPortfolioDetails();
+
+      ever<bool>(portfolioController.isLoadingRx, (isLoading) async {
+        if (!isLoading && portfolioController.portfolio != null) {
+          _title.text = portfolioController.portfolio?.title ?? '';
+          _desc.text = portfolioController.portfolio?.description ?? '';
+          cove = await filesManagerProvider.urlToFile(
+              portfolioController.portfolio?.cover?.mediaPath ?? '');
+          setState(() {});
+        }
+      });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    var w = MediaQuery.of(context).size.width;
+    var w = MediaQuery
+        .of(context)
+        .size
+        .width;
     return Scaffold(
       appBar: NormalAppBar(
         title: Get.arguments?['data'] != null
             ? "Update Portfolio"
             : "Crete Portfolio",
       ),
-      body: SafeArea(
-        left: false,
-        top: false,
-        right: false,
-        bottom: true,
-        child: Column(
-          children: [
-            Expanded(
-              child: SingleChildScrollView(
-                padding: EdgeInsets.only(
-                  top: 4.97 * (w / 100),
-                  left: 4.97 * (w / 100),
-                  right: 4.97 * (w / 100),
-                  bottom: 20,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      width: double.infinity,
-                      child: Text(
-                        'Create portfolio entries to showcase your work'.tr,
-                        style: Get.textTheme.titleMedium,
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    Text(
-                      'Cover'.tr,
-                      style: Get.textTheme.labelMedium,
-                    ),
-                    UploadFileWidget(
-                      fileType: FileType.image,
-                      onFileSelected: (file) {
-                        log('DONE PIK FILE $file');
+      body: Obx(() {
 
-                        cove = file;
-                        setState(() {});
-                      },
-                    ),
-                    // const SizedBox(height: 25),
-                    Text(
-                      'Title'.tr,
-                      style: Get.textTheme.labelMedium,
-                    ),
-                    const SizedBox(height: 20),
-                    AppTextField(
-                      controller: _title,
-                      hint: "Enter request title",
-                      textInputType: TextInputType.text,
-                      // onValidate: AppValidators.validateName,
-                    ),
-                    const SizedBox(height: 25),
-                    Text(
-                      'Description'.tr,
-                      style: Get.textTheme.labelMedium,
-                    ),
-                    const SizedBox(height: 20),
-                    AppTextField(
-                      controller: _desc,
-                      textInputType: TextInputType.multiline,
-                      maxLines: 2,
-                      textInputAction: TextInputAction.newline,
-                    ),
-                    const SizedBox(height: 25),
-                    RelatedServicesWidget(
-                      onServicesSelected: (value) {
-                        services.addAll(value);
-                        setState(() {});
-                      },
-                    ),
-                    const SizedBox(height: 25),
-                    Text(
-                      'Upload Image'.tr,
-                      style: Get.textTheme.labelMedium,
-                    ),
-                    UploadMultipleFile(
-                      onFilesSelected: (file) {
-                        log('DONE PIK FILE ${file.length}');
-                        media.addAll(file);
-                        setState(() {});
-                      },
-                    ),
-                    const SizedBox(height: 5),
-                  ],
+          if (portfolioController.isLoading && Get.arguments?['data'] != null) {
+            return const Center(child: CircularProgressIndicator());
+          }
+
+
+
+        return SafeArea(
+          left: false,
+          top: false,
+          right: false,
+          bottom: true,
+          child: Column(
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  padding: EdgeInsets.only(
+                    top: 4.97 * (w / 100),
+                    left: 4.97 * (w / 100),
+                    right: 4.97 * (w / 100),
+                    bottom: 20,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        width: double.infinity,
+                        child: Text(
+                          'Create portfolio entries to showcase your work'.tr,
+                          style: Get.textTheme.titleMedium,
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      Text(
+                        'Cover'.tr,
+                        style: Get.textTheme.labelMedium,
+                      ),
+                      UploadFileWidget(
+                        fileType: FileType.image,
+                        onFileSelected: (file) {
+                          log('DONE PIK FILE $file');
+                          cove = file;
+                          setState(() {});
+                        },
+                      ),
+                      Text(
+                        'Title'.tr,
+                        style: Get.textTheme.labelMedium,
+                      ),
+                      const SizedBox(height: 20),
+                      AppTextField(
+                        controller: _title,
+                        hint: "Enter request title",
+                        textInputType: TextInputType.text,
+                      ),
+                      const SizedBox(height: 25),
+                      Text(
+                        'Description'.tr,
+                        style: Get.textTheme.labelMedium,
+                      ),
+                      const SizedBox(height: 20),
+                      AppTextField(
+                        controller: _desc,
+                        textInputType: TextInputType.multiline,
+                        maxLines: 2,
+                        textInputAction: TextInputAction.newline,
+                      ),
+                      const SizedBox(height: 25),
+                      RelatedServicesWidget(
+                        onServicesSelected: (value) {
+                          services.addAll(value);
+                          setState(() {});
+                        },
+                      ),
+                      const SizedBox(height: 25),
+                      Text(
+                        'Upload Image'.tr,
+                        style: Get.textTheme.labelMedium,
+                      ),
+                      UploadMultipleFile(
+                        onFilesSelected: (file) {
+                          log('DONE PIK FILE ${file.length}');
+                          media.addAll(file);
+                          setState(() {});
+                        },
+                      ),
+                      const SizedBox(height: 5),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            Consumer<FreelancerPortfolioProvider>(
-              builder: (context, provider, child) {
-                return AppButton(
-                  onPressed: () async {
-                    if (media.isEmpty ||
-                        cove == null ||
-                        _title.text.trim().isEmpty ||
-                        _desc.text.trim().isEmpty ||
-                        services.isEmpty) {
-                      AppSnackBar.openErrorSnackBar(
-                        message: 'Please fill all fields'.tr,
-                      );
-                      return;
-                    }
+              Consumer<FreelancerPortfolioProvider>(
+                builder: (context, provider, child) {
+                  return AppButton(
+                    onPressed: () async {
+                      if (media.isEmpty ||
+                          cove == null ||
+                          _title.text
+                              .trim()
+                              .isEmpty ||
+                          _desc.text
+                              .trim()
+                              .isEmpty ||
+                          services.isEmpty) {
+                        AppSnackBar.openErrorSnackBar(
+                          message: 'Please fill all fields'.tr,
+                        );
+                        return;
+                      }
 
-                    await provider.createPortfolio(
-                      CreatePortfolioParam(
-                        cover: cove!,
-                        description: _desc.text,
-                        title: _title.text,
-                        services: services,
-                        media: media,
-                      ),
-                    );
-                  },
-                  title: "Save",
-                  isLoading: provider.isLoadingCreate,
-                  backGroundColor: AppLightColors.greenContainer,
-                );
-              },
-            ),
-            const SizedBox(height: 10),
-          ],
-        ),
-      ),
+                      await provider.createPortfolio(
+                        CreatePortfolioParam(
+                          cover: cove!,
+                          description: _desc.text,
+                          title: _title.text,
+                          services: services,
+                          media: media,
+                        ),
+                      );
+                    },
+                    title: "Save",
+                    isLoading: provider.isLoadingCreate,
+                    backGroundColor: AppLightColors.greenContainer,
+                  );
+                },
+              ),
+              const SizedBox(height: 10),
+            ],
+          ),
+        );
+      }),
     );
   }
 }

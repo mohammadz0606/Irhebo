@@ -53,9 +53,9 @@ class FreelancerPortfolioProvider extends ChangeNotifier {
       portfolioList.addAll(
         portfolioListModel.data?.portfolios ?? [],
       );
-      if(portfolioListModel.data?.portfolios?.isEmpty == true) {
+      if (portfolioListModel.data?.portfolios?.isEmpty == true) {
         refreshController.loadNoData();
-      } else{
+      } else {
         refreshController.loadComplete();
       }
       isLoadingGet = false;
@@ -75,8 +75,6 @@ class FreelancerPortfolioProvider extends ChangeNotifier {
     }
   }
 
-
-
   Future<void> onRefreshList() async {
     pageNumber = 1;
     portfolioList.clear();
@@ -84,8 +82,6 @@ class FreelancerPortfolioProvider extends ChangeNotifier {
     refreshController.refreshCompleted();
     refreshController.refreshToIdle();
   }
-
-
 
   Future<void> createPortfolio(CreatePortfolioParam data) async {
     try {
@@ -112,6 +108,7 @@ class FreelancerPortfolioProvider extends ChangeNotifier {
         AppSnackBar.openSuccessSnackBar(
           message: 'Portfolio created successfully'.tr,
         );
+        await onRefreshList();
       }
 
       isLoadingCreate = false;
@@ -133,7 +130,7 @@ class FreelancerPortfolioProvider extends ChangeNotifier {
 
   Future<void> updatePortfolio(
     CreatePortfolioParam data, {
-    required Function() onSuccess,
+    //required Function() onSuccess,
     required int id,
   }) async {
     try {
@@ -160,7 +157,8 @@ class FreelancerPortfolioProvider extends ChangeNotifier {
         AppSnackBar.openSuccessSnackBar(
           message: 'Portfolio update successfully'.tr,
         );
-        onSuccess();
+        await onRefreshList();
+        //onSuccess();
       }
 
       isLoadingUpdate = false;

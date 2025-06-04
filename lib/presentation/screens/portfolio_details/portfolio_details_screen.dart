@@ -21,7 +21,7 @@ class PortfolioDetailsScreen extends GetView<PortfolioDetailsController> {
           child: Padding(
             padding: EdgeInsets.all(5.97 * (w / 100)),
             child: controller.isLoading
-                ? PortfolioDetailsShimmer()
+                ? const PortfolioDetailsShimmer()
                 : Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -35,7 +35,7 @@ class PortfolioDetailsScreen extends GetView<PortfolioDetailsController> {
                       SizedBox(
                         height: 3 * (w / 100),
                       ),
-                      PortfolioMedia()
+                      const PortfolioMedia()
                     ],
                   ),
           ),

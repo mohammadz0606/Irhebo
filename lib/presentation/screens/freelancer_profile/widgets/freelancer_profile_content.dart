@@ -27,11 +27,14 @@ class FreelancerProfileContent extends GetWidget<FreelancerProfileController> {
           padding: EdgeInsets.symmetric(
               vertical: 4.47 * (w / 100), horizontal: 3.98 * (w / 100)),
           decoration: BoxDecoration(
-              color: Get.find<AppController>().darkMode
-                  ? AppDarkColors.darkScaffoldColor
-                  : AppLightColors.scaffoldColor2,
-              borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(44), topRight: Radius.circular(44))),
+            color: Get.find<AppController>().darkMode
+                ? AppDarkColors.darkScaffoldColor
+                : AppLightColors.scaffoldColor2,
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(44),
+              topRight: Radius.circular(44),
+            ),
+          ),
           width: 100 * (w / 100),
           child: Column(
             children: [

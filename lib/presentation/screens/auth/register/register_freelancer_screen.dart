@@ -141,7 +141,6 @@ class _RegisterFreelancerScreenState extends State<RegisterFreelancerScreen> {
                   style: Get.textTheme.headlineSmall,
                 ),
                 UploadFileWidget(
-                  fileType: FileType.image,
                   onFileSelected: (file) {
                     setState(() {
                       certificateFile = file;

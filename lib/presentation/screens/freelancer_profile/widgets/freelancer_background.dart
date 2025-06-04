@@ -16,7 +16,7 @@ class FreelancerBackground extends StatelessWidget {
           height: 63.68 * (w / 100),
           isSvg: false,
         ),
-        Container(
+        SizedBox(
           height: 36.32 * (w / 100),
           width: 100.2 * (w / 100),
         )

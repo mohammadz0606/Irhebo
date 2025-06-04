@@ -2,7 +2,7 @@ import 'dart:io';
 
 import '../../../../app/global_imports.dart';
 import '../../../../app/resources/images.dart';
-import '../../../../domain/providers/upload_files.dart';
+import '../../../../domain/providers/files_manager.dart';
 import '../../../widgets/app_icon.dart';
 
 class UploadMultipleFile extends StatefulWidget {
@@ -37,7 +37,7 @@ class _UploadMultipleFileState extends State<UploadMultipleFile> {
                 : AppLightColors.unSelected,
             radius: 20.r,
           ),
-          child: Consumer<UploadFilesProvider>(
+          child: Consumer<FilesManagerProvider>(
             builder: (context, provider, child) {
               return IconButton(
                 onPressed: () async {

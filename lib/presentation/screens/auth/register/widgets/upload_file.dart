@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:irhebo/domain/providers/upload_files.dart';
+import 'package:irhebo/domain/providers/files_manager.dart';
 
 import '../../../../../app/global_imports.dart';
 import '../../../../../app/resources/images.dart';
@@ -55,7 +55,7 @@ class _UploadFileWidgetState extends State<UploadFileWidget> {
           radius: 20.r,
         ),
         alignment: Alignment.center,
-        child: Consumer<UploadFilesProvider>(
+        child: Consumer<FilesManagerProvider>(
           builder: (context, provider, _) {
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
