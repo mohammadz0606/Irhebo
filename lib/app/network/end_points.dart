@@ -60,6 +60,7 @@ class AppEndpoints {
   static String getPortfolio = '$base_url/portfolio';
   static String updatePortfolio = '$base_url/users/portfolio/update/';
   static String deletePortfolio = '$base_url/portfolio/delete/';
+  static String verifyAccount = '$base_url/users/verify';
 
 //{{dev_url}}/users/freelancer-profile/1?per_page=1&page=1
 }

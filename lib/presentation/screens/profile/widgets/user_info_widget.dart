@@ -128,6 +128,7 @@ class UserInfoWidget extends StatelessWidget {
             child: InkWell(
               onTap: () {
                 Get.put(SearchControllerGetx());
+                Get.toNamed(AppRoutes.vrificationFreelancerScreen);
               },
               child: const UserInfoRow(
                 title: "Verify Account",

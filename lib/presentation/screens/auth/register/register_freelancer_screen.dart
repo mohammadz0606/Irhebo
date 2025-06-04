@@ -62,8 +62,9 @@ class _RegisterFreelancerScreenState extends State<RegisterFreelancerScreen> {
         backgroundColor:
             Get.find<AppController>().darkMode ? null : Colors.white,
         appBar: PreferredSize(
-            preferredSize: Size.fromHeight(27 * (w / 100)),
-            child: const AuthAppBar()),
+          preferredSize: Size.fromHeight(27 * (w / 100)),
+          child: const AuthAppBar(),
+        ),
         body: SafeArea(
           left: false,
           top: false,

@@ -1,5 +1,6 @@
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:irhebo/app/router/routes.dart';
+import 'package:irhebo/presentation/screens/auth/verification/verification_freelancer.dart';
 import 'package:irhebo/presentation/screens/faqs/faqs_binding.dart';
 import 'package:irhebo/presentation/screens/faqs/faqs_screen.dart';
 import 'package:irhebo/presentation/screens/portfolio/screens/my_portfolio.dart';
@@ -225,6 +226,10 @@ class AppScreens {
     GetPage(
       name: AppRoutes.createService,
       page: () => const CreateServicesScreen(),
+    ),
+    GetPage(
+      name: AppRoutes.vrificationFreelancerScreen,
+      page: () => const VerificationFreelancerScreen(),
     ),
   ];
 }

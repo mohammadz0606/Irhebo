@@ -102,7 +102,7 @@ final class Network {
     final headers = <String, dynamic>{
       'Content-Type': isUploadFile
           ? Headers.multipartFormDataContentType
-          : 'application/json',
+          : Headers.jsonContentType,
       'Accept': 'application/json',
       'Accept-Language': Get.locale?.languageCode,
       'lang': Get.find<AppController>().lang.value.languageCode,

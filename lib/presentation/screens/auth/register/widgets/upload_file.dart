@@ -37,6 +37,7 @@ class _UploadFileWidgetState extends State<UploadFileWidget> {
               padding: EdgeInsets.zero,
               onPressed: () {
                 file = null;
+                widget.onFileSelected(file);
                 setState(() {});
               },
               icon: const Icon(CupertinoIcons.delete),
@@ -67,6 +68,7 @@ class _UploadFileWidgetState extends State<UploadFileWidget> {
                     onPressed: () async {
                       if (file != null) {
                         file = null;
+                        widget.onFileSelected(file);
                         setState(() {});
                       }
 

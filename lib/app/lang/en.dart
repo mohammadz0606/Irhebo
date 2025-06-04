@@ -14,7 +14,7 @@ Map<String, String> en = {
   "Skip": "Skip",
   "Login to your account": "Login to your account",
   "Enter your details to access your account":
-      "Enter your details to access your account",
+  "Enter your details to access your account",
   "Phone Number": "Phone Number",
   "05***********": "05***********",
   "Password": "Password",
@@ -27,7 +27,7 @@ Map<String, String> en = {
   "Register Now": "Register Now",
   "Create an Account": "Create an Account",
   "Enter your details to create your account":
-      "Enter your details to create your account",
+  "Enter your details to create your account",
   "Email": "Email",
   "Enter your email": "Enter your email",
   "User Name": "User Name",
@@ -49,7 +49,7 @@ Map<String, String> en = {
   "Country": "Country",
   "Verify your phone number": "Verify your phone number",
   "Enter your phone number to reset password":
-      "Enter your phone number to reset password",
+  "Enter your phone number to reset password",
   "Send Code": "Send Code",
   "Verify": "Verify",
   "enter valid otp": "enter valid otp",
@@ -57,7 +57,7 @@ Map<String, String> en = {
   "Resend Code": "Resend Code",
   "Create a new Password": "Create a new Password",
   "New password must be differnt from current password":
-      "New password must be differnt from current password",
+  "New password must be differnt from current password",
   "Current Password": "Current Password",
   "New Password": "New Password",
   "Confirm New Password": "Confirm New Password",
@@ -80,9 +80,9 @@ Map<String, String> en = {
   "This is bot made for you": "This is bot made for you",
   "This is notifications center": "This is notifications center",
   "This is for you to contact us on whatsapp":
-      "This is for you to contact us on whatsapp",
+  "This is for you to contact us on whatsapp",
   "Search for any category or subcategory or service from here":
-      "Search for any category or subcategory or service from here",
+  "Search for any category or subcategory or service from here",
   "Popular Categories": "Popular Categories",
   "See All": "See All",
   "Recommended": "Recommended",
@@ -150,7 +150,7 @@ Map<String, String> en = {
   "Update": "Update",
   "Add Update": "Add Update",
   "Keep the job poster updated by adding comments, progress updates, and attachments":
-      "Keep the job poster updated by adding comments, progress updates, and attachments",
+  "Keep the job poster updated by adding comments, progress updates, and attachments",
   "Status": "Status",
   "Change Status": "Change Status",
   "Comments": "Comments",
@@ -186,7 +186,7 @@ Map<String, String> en = {
   "File": "File",
   "Ticket Submitted": "Ticket Submitted!",
   "Please wait a minute, our awesome helperm will be with you shortly":
-      "Please wait a minute, our awesome helperm will be with you shortly!",
+  "Please wait a minute, our awesome helperm will be with you shortly!",
   "Got it, thanks": "Got it, thanks!",
   "Title": "Title",
   "Enter request title": "Enter request title",
@@ -212,7 +212,7 @@ Map<String, String> en = {
   "Apply for Quotation": "Apply for Quotation",
   "Finish up your profile": "Finish up your profile",
   "Finish setting up your profile so others can find you and assign you to jobs!":
-      "Finish setting up your profile so others can find you and assign you to jobs!",
+  "Finish setting up your profile so others can find you and assign you to jobs!",
   "Avatar": "Avatar",
   "Biography": "Biography",
   "Certificates": "Certificates",
@@ -226,7 +226,7 @@ Map<String, String> en = {
   "My Portfolio": "My Portfolio",
   "Crete Portfolio": "Crete Portfolio",
   "Create portfolio entries to showcase your work":
-      "Create portfolio entries to showcase your work",
+  "Create portfolio entries to showcase your work",
   "Upload Image": "Upload Image/Video",
   "Related Services": "Related Services",
   "Related Services Choices": "Choose related services",
@@ -241,9 +241,11 @@ Map<String, String> en = {
   "Attachments": "Attachments",
   "Delete Confirmation": "Delete Confirmation",
   "Are you sure you want to delete this item?":
-      "Are you sure you want to delete this item?",
+  "Are you sure you want to delete this item?",
   "Yes": "Yes",
   "No": "No",
   "Quotation created successfully": "Quotation created successfully",
-  "Verify Account": "Verify Account"
+  "Verify Account": "Verify Account",
+  "Attach your ID or passport to verify the account": "Attach your ID or passport to verify the account.",
+  "Account verified successfully" : "Account verified successfully"
 };
