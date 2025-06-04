@@ -227,7 +227,7 @@ class FreelancerPortfolioProvider extends ChangeNotifier {
     }
   }
 
-  getPortfolioDetails(int id, {required Function() onSuccess}) async {
+  Future<void> getPortfolioDetails(int id) async {
     try {
       isLoadingDetails = true;
       if (portfolio != null) {
@@ -251,7 +251,6 @@ class FreelancerPortfolioProvider extends ChangeNotifier {
 
       DataModel dataModel = DataModel.fromJson(response.data);
       portfolio = dataModel;
-      onSuccess();
       isLoadingDetails = false;
       notifyListeners();
     } catch (error) {
