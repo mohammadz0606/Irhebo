@@ -26,6 +26,7 @@ class AppEndpoints {
   static String tickets = '$base_url/tickets/';
   static String applyFilter = '$base_url/filters/apply';
   static String quotations = '$base_url/quotations/get-by-user-id';
+  static String quotationsForFreelance = '$base_url/quotations';
   static String quotationDetails = '$base_url/quotations/details/';
   static String createQuotationComment = '$base_url/quotations/create-comment';
   static String quotationCommentList = '$base_url/quotations/comment-list/';

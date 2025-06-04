@@ -2,9 +2,11 @@ import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart' as dio;
+import 'package:irhebo/app/app_functions.dart';
 import 'package:irhebo/app/base/base_models/base_error_model.dart';
 import 'package:irhebo/app/base/base_models/base_response_model.dart';
 import 'package:irhebo/app/base/base_remote_data_source.dart';
+import 'package:irhebo/app/enums.dart';
 import 'package:irhebo/app/network/end_points.dart';
 import 'package:irhebo/app/resources/logger_colors.dart';
 import 'package:irhebo/domain/models/faq_model.dart';
@@ -22,6 +24,7 @@ import 'package:irhebo/domain/params/update_profile_params.dart';
 
 abstract class SettingRemoteDataSource extends BaseRemoteDataSourceImpl {
   SettingRemoteDataSource({required super.dio});
+
   Future<Either<BaseErrorModel, BaseResponseModel<UserModel>>> getMyProfile();
 
   Future<Either<BaseErrorModel, BaseResponseModel<PaginatedNotificationsModel>>>
@@ -76,6 +79,7 @@ abstract class SettingRemoteDataSource extends BaseRemoteDataSourceImpl {
 class SettingRemoteDataSourceImp extends BaseRemoteDataSourceImpl
     implements SettingRemoteDataSource {
   SettingRemoteDataSourceImp({required super.dio});
+
   @override
   Future<Either<BaseErrorModel, BaseResponseModel<UserModel>>>
       getMyProfile() async {
@@ -129,7 +133,9 @@ class SettingRemoteDataSourceImp extends BaseRemoteDataSourceImpl
       getQuotations(PaginationParams params) async {
     try {
       final response = await performGetRequest<PaginatedQuotationsModel>(
-        endpoint: AppEndpoints.quotations,
+        endpoint: getUserRole == UserRoles.freelancer
+            ? AppEndpoints.quotationsForFreelance
+            : AppEndpoints.quotations,
         params: params.toJson(),
         fromJson: PaginatedQuotationsModel.fromJson,
       );

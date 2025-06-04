@@ -48,12 +48,9 @@ class FreelancerQuotation extends GetView<HomeController> {
                                         ?.quotations?.length ??
                                     0);
                             i++)
-                          GestureDetector(
-                            onTap: () {},
-                            child: NewQuotationWidget(
-                              data: controller
-                                  .freelancerHomeModel!.data!.quotations![i],
-                            ),
+                          NewQuotationWidget(
+                            data: controller
+                                .freelancerHomeModel!.data!.quotations![i],
                           )
                       ],
                     ),
