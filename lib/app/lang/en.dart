@@ -8,7 +8,7 @@ Map<String, String> en = {
   "Choose your role in FREECO": "Choose your role in FREECO",
   "Find Service": "Find Service",
   "Another Files": "Another Files",
-  "Upgrade to Freelancer":"Upgrade to Freelancer",
+  "Upgrade to Freelancer": "Upgrade to Freelancer",
   "Sell Service": "Sell Service",
   "Continue": "Continue",
   "Skip": "Skip",
@@ -238,11 +238,12 @@ Map<String, String> en = {
   "Update Portfolio": "Update Portfolio",
   "File not found": "File not found",
   "Cannot open the file": "Cannot open the file",
-  "Attachments" : "Attachments",
-  "Delete Confirmation" : "Delete Confirmation",
-  "Are you sure you want to delete this item?" :"Are you sure you want to delete this item?",
-  "Yes" : "Yes",
-  "No" : "No",
-  "Quotation created successfully" : "Quotation created successfully",
-
+  "Attachments": "Attachments",
+  "Delete Confirmation": "Delete Confirmation",
+  "Are you sure you want to delete this item?":
+      "Are you sure you want to delete this item?",
+  "Yes": "Yes",
+  "No": "No",
+  "Quotation created successfully": "Quotation created successfully",
+  "Verify Account": "Verify Account"
 };

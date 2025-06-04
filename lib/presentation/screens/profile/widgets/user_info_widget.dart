@@ -12,17 +12,22 @@ import 'package:irhebo/domain/models/login_model.dart';
 import 'package:irhebo/presentation/screens/bottom_nav_bar/screens/settings/widgets/user_info_row.dart';
 
 import '../../../../app/app_functions.dart';
+import '../../../../domain/models/new_models/freelancer/freelancer_user.dart';
+import '../../../widgets/app_bottom_sheet.dart';
+import '../../../widgets/open_file_items.dart';
 import '../../auth/register/register_freelancer_screen.dart';
 import '../../search/search_controller.dart';
 
 class UserInfoWidget extends StatelessWidget {
   final UserModel? user;
+  final UserFreelancerModelData? userFreelancerModelData;
   final Function() goToUpdate;
 
   const UserInfoWidget({
     super.key,
     this.user,
     required this.goToUpdate,
+    this.userFreelancerModelData,
   });
 
   @override
@@ -40,7 +45,13 @@ class UserInfoWidget extends StatelessWidget {
           padding: EdgeInsets.symmetric(
               vertical: 0.99 * (w / 100), horizontal: 3.73 * (w / 100)),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              if (userFreelancerModelData != null)
+                Text(
+                  userFreelancerModelData!.freelancer!.bio ?? "",
+                  style: Get.theme.textTheme.labelSmall,
+                ),
               UserInfoRow(title: "Email", desciption: user?.email ?? ""),
               UserInfoRow(title: "Username", desciption: user?.name ?? ""),
               UserInfoRow(
@@ -52,13 +63,78 @@ class UserInfoWidget extends StatelessWidget {
               UserInfoRow(title: "Country", desciption: user?.country ?? ""),
               UserInfoRow(
                 title: "Languages",
-                desciption: user?.languages
-                    ?.map((e) => e.title ?? "")
-                    .join(', ') ?? '',
+                desciption:
+                    user?.languages?.map((e) => e.title ?? "").join(', ') ?? '',
               ),
+              if (userFreelancerModelData != null)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Certificates'.tr,
+                      style: Get.theme.textTheme.labelSmall,
+                    ),
+                    IconButton(
+                      padding: EdgeInsets.zero,
+                      onPressed: () {
+                        Get.bottomSheet(
+                          AppBottomSheet(
+                            title: "Certificates",
+                            child: ListView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: userFreelancerModelData
+                                      ?.freelancer?.certificates?.length ??
+                                  0,
+                              itemBuilder: (context, index) {
+                                return OpenFileItems(
+                                  pathUrl: userFreelancerModelData?.freelancer
+                                      ?.certificates?[index].filePath,
+                                  fileName: userFreelancerModelData?.freelancer
+                                          ?.certificates?[index].fileName ??
+                                      '',
+                                );
+                              },
+                            ),
+                          ),
+                          backgroundColor: Get.find<AppController>().darkMode
+                              ? AppDarkColors.darkScaffoldColor
+                              : AppLightColors.pureWhite,
+                          barrierColor: Get.find<AppController>().darkMode
+                              ? AppDarkColors.darkContainer.withOpacity(0.3)
+                              : AppLightColors.shadow.withOpacity(0.3),
+                          elevation: 0,
+                          isScrollControlled: false,
+                        );
+                      },
+                      icon: const Icon(Icons.attachment),
+                    ),
+                  ],
+                ),
             ],
           ),
         ),
+        if (getUserRole == UserRoles.freelancer &&
+            userFreelancerModelData?.freelancer?.status == 'unverified')
+          Container(
+            decoration: AppDecoration.getDecorationWithRadius(
+                color: Get.find<AppController>().darkMode
+                    ? AppDarkColors.darkContainer2
+                    : Colors.white,
+                radius: 14),
+            margin: EdgeInsets.symmetric(vertical: 2.48 * (w / 100)),
+            padding: EdgeInsets.symmetric(
+                vertical: 0.99 * (w / 100), horizontal: 3.73 * (w / 100)),
+            child: InkWell(
+              onTap: () {
+                Get.put(SearchControllerGetx());
+              },
+              child: const UserInfoRow(
+                title: "Verify Account",
+                update: true,
+              ),
+            ),
+          ),
         Container(
           decoration: AppDecoration.getDecorationWithRadius(
               color: Get.find<AppController>().darkMode
@@ -86,11 +162,6 @@ class UserInfoWidget extends StatelessWidget {
           padding: EdgeInsets.symmetric(
               vertical: 0.99 * (w / 100), horizontal: 3.73 * (w / 100)),
           child: InkWell(
-            /*
-            if you navigate using Get.to(() => CreatePasswordScreen())
-            instead of Get.toNamed(AppRoutes.createPassword),
-            the binding will not be applied.
-             */
             onTap: () => Get.toNamed(AppRoutes.createPassword,
                 arguments: {"type": PasswordScreenType.update_password}),
             child: const UserInfoRow(
@@ -99,33 +170,36 @@ class UserInfoWidget extends StatelessWidget {
             ),
           ),
         ),
-        if(getUserRole == UserRoles.client)
-        Container(
-          decoration: AppDecoration.getDecorationWithRadius(
-              color: Get.find<AppController>().darkMode
-                  ? AppDarkColors.darkContainer2
-                  : Colors.white,
-              radius: 14),
-          margin: EdgeInsets.symmetric(vertical: 2.48 * (w / 100)),
-          padding: EdgeInsets.symmetric(
-              vertical: 0.99 * (w / 100), horizontal: 3.73 * (w / 100)),
-          child: InkWell(
-            /*
+        if (getUserRole == UserRoles.client)
+          Container(
+            decoration: AppDecoration.getDecorationWithRadius(
+                color: Get.find<AppController>().darkMode
+                    ? AppDarkColors.darkContainer2
+                    : Colors.white,
+                radius: 14),
+            margin: EdgeInsets.symmetric(vertical: 2.48 * (w / 100)),
+            padding: EdgeInsets.symmetric(
+                vertical: 0.99 * (w / 100), horizontal: 3.73 * (w / 100)),
+            child: InkWell(
+              /*
             if you navigate using Get.to(() => CreatePasswordScreen())
             instead of Get.toNamed(AppRoutes.createPassword),
             the binding will not be applied.
              */
-            onTap: () {
-              Get.put(SearchControllerGetx());
-
-Navigator.of(context).push(MaterialPageRoute(builder: (context)=>RegisterFreelancerScreen()));
-            },
-            child: const UserInfoRow(
-              title: "Upgrade to Freelancer",
-              update: true,
+              onTap: () {
+                Get.put(SearchControllerGetx());
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const RegisterFreelancerScreen(),
+                  ),
+                );
+              },
+              child: const UserInfoRow(
+                title: "Upgrade to Freelancer",
+                update: true,
+              ),
             ),
           ),
-        )
       ],
     );
   }

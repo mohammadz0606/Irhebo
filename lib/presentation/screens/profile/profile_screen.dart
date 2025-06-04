@@ -41,6 +41,8 @@ class ProfileScreen extends GetView<ProfileController> {
                               ),
                               UserInfoWidget(
                                 user: controller.user,
+                                userFreelancerModelData:
+                                    controller.userFreelancerModelData,
                                 goToUpdate: controller.goToUpdate,
                               ),
                             ],
@@ -53,5 +55,7 @@ class ProfileScreen extends GetView<ProfileController> {
         ),
       ),
     );
+
   }
+
 }

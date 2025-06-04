@@ -240,5 +240,5 @@ Map<String, String> ar = {
   "Are you sure you want to delete this item?": "هل أنت متأكد من حذف العنصر؟",
   "Yes": "نعم",
   "No": "لا",
-  "Quotation created successfully": "تم إنشاء العرض بنجاح"
-};
+  "Quotation created successfully": "تم إنشاء العرض بنجاح",
+  "Verify Account": "تأكيد الحساب"};

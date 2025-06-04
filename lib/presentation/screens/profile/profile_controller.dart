@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:irhebo/app/app_controller.dart';
+import 'package:irhebo/app/global_imports.dart';
 import 'package:irhebo/app/injection.dart';
 import 'package:irhebo/domain/entities/gender_entity.dart';
 import 'package:irhebo/domain/models/config_model.dart';
@@ -16,6 +17,10 @@ import 'package:irhebo/domain/usecases/setting_usecase/update_profile_picture_us
 import 'package:irhebo/domain/usecases/setting_usecase/update_profile_use_case.dart';
 import 'package:irhebo/presentation/screens/profile/update_profile_screen.dart';
 
+import '../../../app/network/end_points.dart';
+import '../../../app/network/network.dart';
+import '../../../app/snack_bar.dart';
+import '../../../domain/models/new_models/freelancer/freelancer_user.dart';
 import '../../../domain/models/new_models/new_config_model.dart';
 
 class ProfileController extends GetxController {
@@ -48,13 +53,83 @@ class ProfileController extends GetxController {
       <NewConfigModelDataLanguagesData?>[].obs;
 
   UserModel? user;
+  UserFreelancerModelData? userFreelancerModelData;
+
   dio.MultipartFile? imageProfile;
   late Uint8List? imageBytes;
 
   @override
   onInit() async {
     super.onInit();
-    await getMyProfile();
+    if (getUserRole == UserRoles.freelancer) {
+      await getFreelancerProfile();
+    } else {
+      await getMyProfile();
+    }
+  }
+
+  getFreelancerProfile() async {
+    try {
+      isLoading = true;
+      if (userFreelancerModelData != null || user != null) {
+        userFreelancerModelData = null;
+        user = null;
+      }
+      final response = await Network().get(
+        url: AppEndpoints.getFreelancerProfile,
+      );
+      String errorMessage = await Network().handelError(response: response);
+      if (errorMessage.isNotEmpty) {
+        isLoading = false;
+        AppSnackBar.openErrorSnackBar(message: errorMessage);
+      }
+
+      UserFreelancerModel freelancerProfileModel =
+          UserFreelancerModel.fromJson(response.data);
+
+      if (freelancerProfileModel.status ?? false) {
+        userFreelancerModelData = freelancerProfileModel.data;
+        user = UserModel(
+          avatar: userFreelancerModelData?.freelancer?.avatar,
+          country: userFreelancerModelData?.freelancer?.country,
+          email: userFreelancerModelData?.freelancer?.email,
+          fullPhone: userFreelancerModelData?.freelancer?.fullPhone,
+          gender: userFreelancerModelData?.freelancer?.gender,
+          id: userFreelancerModelData?.freelancer?.id,
+          languages: userFreelancerModelData?.freelancer?.languages,
+          name: userFreelancerModelData?.freelancer?.name,
+          phone: userFreelancerModelData?.freelancer?.phone,
+          prefix: userFreelancerModelData?.freelancer?.prefix,
+          profession: userFreelancerModelData?.freelancer?.profession,
+          role: userFreelancerModelData?.freelancer?.role,
+        );
+      }
+      isLoading = false;
+    } catch (error) {
+      if (error is dio.DioException) {
+        AppSnackBar.openErrorSnackBar(
+          message: Network().handelDioException(error),
+        );
+      } else {
+        AppSnackBar.openErrorSnackBar(
+          message: error.toString(),
+        );
+      }
+      isLoading = false;
+    }
+  }
+
+  getMyProfile() async {
+    isLoading = true;
+    user = null;
+    GetMyProfileUseCase getMyProfileUseCase = sl();
+    final result = await getMyProfileUseCase(());
+    result!.fold((l) {
+      isLoading = false;
+    }, (r) {
+      user = r.data;
+      isLoading = false;
+    });
   }
 
   onSelectGender(GenderEntity? val) {
@@ -162,17 +237,5 @@ class ProfileController extends GetxController {
     Get.to(
       () => const UpdateProfileScreen(),
     );
-  }
-
-  getMyProfile() async {
-    isLoading = true;
-    GetMyProfileUseCase getMyProfileUseCase = sl();
-    final result = await getMyProfileUseCase(());
-    result!.fold((l) {
-      isLoading = false;
-    }, (r) {
-      user = r.data;
-      isLoading = false;
-    });
   }
 }
