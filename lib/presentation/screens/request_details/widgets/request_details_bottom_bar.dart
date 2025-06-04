@@ -68,6 +68,7 @@ class RequestDetailsBottomBar extends GetWidget<RequestDetailsController> {
             onPressed: () {},
             title: "Confirm Request",
           ),
+          SizedBox(height: 2 * (w / 100)),
         },
 
         // Remaining action buttons

@@ -55,7 +55,7 @@ class RequestsController extends GetxController {
 
   getRequests() async {
     isLoading = true;
-    GetRequestsUseCase getRequestsUseCase = sl();
+   // GetRequestsUseCase getRequestsUseCase = sl();
 
     try {
       final response = await Network().get(
