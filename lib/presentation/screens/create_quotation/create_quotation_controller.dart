@@ -1,11 +1,16 @@
 import 'dart:developer';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:irhebo/app/global_imports.dart';
 import 'package:irhebo/app/injection.dart';
 import 'package:irhebo/app/resources/style/colors.dart';
+import 'package:irhebo/domain/models/home_model.dart';
 import 'package:irhebo/domain/params/create_quotation_params.dart';
 import 'package:irhebo/domain/usecases/setting_usecase/create_quotation_use_case.dart';
+
+import '../search/search_controller.dart';
 
 class CreateQuotationController extends GetxController {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -15,45 +20,61 @@ class CreateQuotationController extends GetxController {
   TextEditingController priceController = TextEditingController();
   TextEditingController deliveryDayController = TextEditingController();
   TextEditingController revisionsController = TextEditingController();
+  Rx<CategoryModel?> categoryModel = Rx<CategoryModel?>(null);
+  Rx<SubcategoryModel?> subcategoryModel = Rx<SubcategoryModel?>(null);
 
   final RxBool _isLoading = false.obs;
   final RxBool _checked = false.obs;
 
   bool get isLoading => _isLoading.value;
+
   bool get checked => _checked.value;
 
   set isLoading(value) => _isLoading.value = value;
+
   set checked(value) => _checked.value = value;
 
   DateTime? selectedDate;
-  // String selectedDateValue
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
+  // String selectedDateValue
 
   onTapBack() {
     Get.back();
   }
 
-  createQuotation() async {
+
+  @override
+  void onInit() {
+    clearData();
+    super.onInit();
+  }
+
+
+   createQuotation() async {
     if (formKey.currentState!.validate()) {
+      if (categoryModel.value == null || subcategoryModel.value == null) {
+        AppSnackBar.openErrorSnackBar(message: 'Please fill all fields'.tr);
+        return;
+      }
+
       isLoading = true;
       CreateQuotationUseCase createQuotationUseCase = sl();
-      final result = await createQuotationUseCase(CreateQuotationParams(
+      final result = await createQuotationUseCase(
+        CreateQuotationParams(
           title: titleController.text,
           description: descriptionController.text,
-          deliveryDay: DateTime.parse(deliveryDayController.text)
-              .difference(DateTime.now())
-              .inDays,
+          deliveryDay: int.tryParse(deliveryDayController.text),
           price: double.tryParse(priceController.text),
           revisions: int.tryParse(revisionsController.text),
-          sourceFile: checked));
+          sourceFile: checked,
+          subCategoryId: subcategoryModel.value?.id,
+        ),
+      );
       result!.fold((l) {
         isLoading = false;
       }, (r) {
-        clearData();
+        onTapBack();
+        AppSnackBar.openSuccessSnackBar(message: 'Quotation created successfully'.tr);
         isLoading = false;
       });
     }
@@ -67,10 +88,26 @@ class CreateQuotationController extends GetxController {
     revisionsController.text = "";
     selectedDate = null;
     checked = false;
+    categoryModel.value = null;
+    subcategoryModel.value = null;
   }
 
   onChangeCheck(bool? value) {
     checked = value;
+  }
+
+  onChangeCategory(CategoryModel? value) async {
+    categoryModel.value = value;
+    subcategoryModel.value = null;
+
+    if (value != null) {
+      await Get.find<SearchControllerGetx>().getSubcategories(value.id!);
+      update();
+    }
+  }
+
+  onChangeSubcategory(SubcategoryModel? value) {
+    subcategoryModel.value = value;
   }
 
   Future<void> openDateTimePicker(BuildContext context) async {

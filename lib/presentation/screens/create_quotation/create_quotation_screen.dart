@@ -17,7 +17,7 @@ class CreateQuotationScreen extends GetView<CreateQuotationController> {
         title: 'Create Quotation',
         color: Get.find<AppController>().darkMode ? null : Colors.white,
       ),
-      body: SingleChildScrollView(child: CreateQuotationForm()),
+      body: const SingleChildScrollView(child: CreateQuotationForm()),
       bottomNavigationBar: Obx(
         () => AppButton(
           isLoading: controller.isLoading,

@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:irhebo/app/app_controller.dart';
 import 'package:irhebo/app/resources/style/colors.dart';
 import 'package:irhebo/app/resources/validators.dart';
 import 'package:irhebo/presentation/screens/create_quotation/create_quotation_controller.dart';
 import 'package:irhebo/presentation/widgets/app_text_field.dart';
+import 'package:multi_select_flutter/util/multi_select_item.dart';
+
+import '../../../../domain/models/home_model.dart';
+import '../../../widgets/dropdown_item.dart';
+import '../../../widgets/dropdown_widget.dart';
+import '../../../widgets/multi_dropdown_widget.dart';
+import '../../search/search_controller.dart';
 
 class CreateQuotationForm extends GetWidget<CreateQuotationController> {
   const CreateQuotationForm({
@@ -22,6 +30,53 @@ class CreateQuotationForm extends GetWidget<CreateQuotationController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Obx(
+                () {
+                  return Column(
+                    children: [
+                      CustomDropdown<CategoryModel?>(
+                        itemBuilder: (context, item, isDisabled, isSelected) =>
+                            DropdownItem(
+                          label: item?.title ?? "",
+                        ),
+                        showSearchBox: true,
+                        label: "Categories",
+                        hintText: "Category Choices",
+                        items: Get.find<SearchControllerGetx>().categories,
+                        onChanged: controller.onChangeCategory,
+                        value: controller.categoryModel.value,
+                        itemToString: (value) => value?.title ?? "",
+                      ),
+                      SizedBox(height: 2.98 * (w / 100)),
+
+                      // Subcategories
+                      if (controller.categoryModel.value != null)
+                        Get.find<SearchControllerGetx>().isLoadingSubcategory
+                            ? const Center(
+                                child: CircularProgressIndicator.adaptive())
+                            : CustomDropdown<SubcategoryModel?>(
+                                itemBuilder:
+                                    (context, item, isDisabled, isSelected) =>
+                                        DropdownItem(
+                                  label: item?.title ?? "",
+                                ),
+                                showSearchBox: true,
+                                label: "Sub Categories",
+                                hintText: "Category Choices",
+                                items: Get.find<SearchControllerGetx>()
+                                    .subcategories
+                                    .toList(),
+                                onChanged: controller.onChangeSubcategory,
+                                value: controller.subcategoryModel.value,
+                                itemToString: (value) => value?.title ?? "",
+                              ),
+                    ],
+                  );
+                },
+              ),
+              SizedBox(
+                height: 2.98 * (w / 100),
+              ),
               AppTextField(
                 controller: controller.titleController,
                 label: 'Title',
@@ -53,15 +108,19 @@ class CreateQuotationForm extends GetWidget<CreateQuotationController> {
               ),
               AppTextField(
                 controller: controller.deliveryDayController,
-                readOnly: true,
+                //readOnly: true,
                 label: 'Delivery Day',
                 hint: 'Select delivery day',
                 onValidate: AppValidators.validateField,
-                onTap: () => controller.openDateTimePicker(context),
-                suffixIcon: Icon(
-                  Icons.calendar_month,
-                  color: AppDarkColors.green,
-                ),
+                textInputType: TextInputType.number,
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                ],
+                //onTap: () => controller.openDateTimePicker(context),
+                // suffixIcon: const Icon(
+                //   Icons.calendar_month,
+                //   color: AppDarkColors.green,
+                // ),
               ),
               SizedBox(
                 height: 2.98 * (w / 100),
@@ -92,11 +151,14 @@ class CreateQuotationForm extends GetWidget<CreateQuotationController> {
                   SizedBox(
                     width: 3 * (w / 100),
                   ),
-                  Text('Source file'.tr,
-                      style: Get.theme.textTheme.bodySmall!.copyWith(
-                          color: Get.find<AppController>().darkMode
-                              ? Colors.white
-                              : Colors.black)),
+                  Text(
+                    'Source file'.tr,
+                    style: Get.theme.textTheme.bodySmall!.copyWith(
+                      color: Get.find<AppController>().darkMode
+                          ? Colors.white
+                          : Colors.black,
+                    ),
+                  ),
                 ],
               ),
             ],

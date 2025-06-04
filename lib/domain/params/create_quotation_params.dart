@@ -5,14 +5,17 @@ class CreateQuotationParams {
   int? deliveryDay;
   int? revisions;
   bool? sourceFile;
+  int? subCategoryId;
 
-  CreateQuotationParams(
-      {this.title,
-      this.description,
-      this.price,
-      this.deliveryDay,
-      this.revisions,
-      this.sourceFile});
+  CreateQuotationParams({
+    this.title,
+    this.description,
+    this.price,
+    this.deliveryDay,
+    this.revisions,
+    this.sourceFile,
+    this.subCategoryId,
+  });
 
   CreateQuotationParams.fromJson(Map<String, dynamic> json) {
     title = json['title'];
@@ -21,6 +24,7 @@ class CreateQuotationParams {
     deliveryDay = json['delivery_day'];
     revisions = json['revisions'];
     sourceFile = json['source_file'];
+    subCategoryId = json['sub_category_id'];
   }
 
   Map<String, dynamic> toJson() {
@@ -31,6 +35,8 @@ class CreateQuotationParams {
       if (revisions != null) 'revisions': revisions,
       if (deliveryDay != null) 'delivery_day': deliveryDay,
       if (sourceFile != null) 'source_file': sourceFile,
+      'currency' : 'used',
+      'sub_category_id' : subCategoryId,
     };
   }
 }

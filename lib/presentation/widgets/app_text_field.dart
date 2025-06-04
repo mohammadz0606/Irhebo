@@ -1,5 +1,6 @@
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:irhebo/app/app_controller.dart';
 import 'package:irhebo/app/resources/images.dart';
@@ -46,6 +47,7 @@ class AppTextField extends StatelessWidget {
   final Widget? prefixIcon;
   final Widget? prefix;
   final TextInputAction? textInputAction;
+  final List<TextInputFormatter>? inputFormatters;
 
   const AppTextField({
     super.key,
@@ -86,6 +88,7 @@ class AppTextField extends StatelessWidget {
     this.prefix,
     this.fillColor,
     this.textInputAction,
+    this.inputFormatters,
   });
 
   @override
@@ -128,6 +131,7 @@ class AppTextField extends StatelessWidget {
             child: SizedBox(
               // height: (1 * w) / 6.66,
               child: TextFormField(
+                inputFormatters: inputFormatters,
                 onTapOutside: (event) => onTapOutside != null
                     ? onTapOutside!()
                     : FocusScope.of(context).unfocus(),

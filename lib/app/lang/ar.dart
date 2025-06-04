@@ -115,6 +115,7 @@ Map<String, String> ar = {
   "Notificaations": "الإشعارات",
   "Search here": "ابحث هنا..",
   "Categories": "الفئات",
+  "Sub Categories": "الفئات الفرعية",
   "Filter": "فلتر",
   "Select": "اختر",
   "Budget": "الميزانية",
@@ -239,4 +240,5 @@ Map<String, String> ar = {
   "Are you sure you want to delete this item?": "هل أنت متأكد من حذف العنصر؟",
   "Yes": "نعم",
   "No": "لا",
+  "Quotation created successfully": "تم إنشاء العرض بنجاح"
 };

@@ -49,7 +49,7 @@ class SearchControllerGetx extends GetxController {
   final RxList<FilterModel> _ratingFilters = <FilterModel>[].obs;
   final RxList<FilterModel> _rangeFilters = <FilterModel>[].obs;
 
-  RxInt _pageNumber = 1.obs;
+  final RxInt _pageNumber = 1.obs;
   final RxInt _pageIndex = 0.obs;
   final RxInt _selectedType = (0).obs;
   final RxString _appBarTitle = "".obs;
@@ -58,9 +58,9 @@ class SearchControllerGetx extends GetxController {
   final RxBool _isLoadingTag = false.obs;
   final RxBool _isLoadingSubcategory = false.obs;
   final RxBool _isLoadingService = false.obs;
-  RxDouble _selectedMin = 1.0.obs;
-  RxDouble _selectedMax = 499.0.obs;
-  RangeValues sliderRange = RangeValues(0, 500);
+  final RxDouble _selectedMin = 1.0.obs;
+  final RxDouble _selectedMax = 499.0.obs;
+  RangeValues sliderRange = const RangeValues(0, 500);
   final RxList<ServiceModel> _services = <ServiceModel>[].obs;
   final RxList<TagModel> _tags = <TagModel>[].obs;
 
@@ -295,7 +295,7 @@ class SearchControllerGetx extends GetxController {
   }
 
   onTapService(int i) {
-    Get.to(() => ServiceDetailsScreen(), arguments: {"id": services[i].id});
+    Get.to(() => const ServiceDetailsScreen(), arguments: {"id": services[i].id});
     // preventDuplicates: false,
   }
 
@@ -348,7 +348,7 @@ class SearchControllerGetx extends GetxController {
 
     if (Get.context != null && Get.context!.mounted) {
       Get.bottomSheet(
-        FilterBottomSheet(),
+        const FilterBottomSheet(),
         backgroundColor: Get.find<AppController>().darkMode
             ? AppDarkColors.darkScaffoldColor
             : AppLightColors.pureWhite,
@@ -579,7 +579,7 @@ class SearchControllerGetx extends GetxController {
       barrierColor: Get.find<AppController>().darkMode
           ? AppDarkColors.darkContainer.withOpacity(0.3)
           : AppLightColors.shadow.withOpacity(0.3),
-      AppDialog(
+      const AppDialog(
         child: LoginRequiredDialog(),
       ),
     );
@@ -588,7 +588,7 @@ class SearchControllerGetx extends GetxController {
   applyFilter() async {
     isLoadingService = true;
     services.clear();
-    await Future.delayed(Duration(seconds: 4));
+    await Future.delayed(const Duration(seconds: 4));
     // await onRefreshList();
     Get.back();
 

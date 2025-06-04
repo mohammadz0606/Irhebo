@@ -107,6 +107,7 @@ Map<String, String> en = {
   "Notificaations": "Notificaations",
   "Search here": "Search here..",
   "Categories": "Categories",
+  "Sub Categories": "Sub Categories",
   "Filter": "Filter",
   "Select": "Select",
   "Budget": "Budget",
@@ -241,6 +242,7 @@ Map<String, String> en = {
   "Delete Confirmation" : "Delete Confirmation",
   "Are you sure you want to delete this item?" :"Are you sure you want to delete this item?",
   "Yes" : "Yes",
-  "No" : "No"
+  "No" : "No",
+  "Quotation created successfully" : "Quotation created successfully",
 
 };

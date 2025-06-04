@@ -121,7 +121,7 @@ class QuotationDetailsWidget extends StatelessWidget {
             height: 5.97 * (w / 100),
           ),
           Text(
-            'Commits'.tr,
+            'Comments'.tr,
             style: Get.theme.textTheme.labelMedium,
           ),
           SizedBox(

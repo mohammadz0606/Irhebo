@@ -31,13 +31,12 @@ class _RegisterFreelancerScreenState extends State<RegisterFreelancerScreen> {
   File? certificateFile;
 
   late final SearchControllerGetx searchController;
-bool isNeedToUploadOther = false;
+  bool isNeedToUploadOther = false;
   File? avatar;
 
   List<int> categoryIds = [];
   List<File?> selectedFiles = [null];
   List<TextEditingController> fileDescriptions = [TextEditingController()];
-
 
   @override
   void initState() {
@@ -115,7 +114,7 @@ bool isNeedToUploadOther = false;
                 ),
                 UploadFileWidget(
                   onFileSelected: (file) {
-                    if(file!=null){
+                    if (file != null) {
                       avatar = file;
                     }
                     log('DONE PIK FILE ${file?.path}');
@@ -146,7 +145,6 @@ bool isNeedToUploadOther = false;
                     });
                   },
                 ),
-
                 AppTextField(
                   controller: _certificatesDesc,
                   hint: "Description",
@@ -176,7 +174,8 @@ bool isNeedToUploadOther = false;
                                   style: Get.textTheme.titleMedium,
                                 ),
                                 IconButton(
-                                  icon: Icon(Icons.delete, color: Colors.red),
+                                  icon: const Icon(Icons.delete,
+                                      color: Colors.red),
                                   onPressed: () {
                                     setState(() {
                                       selectedFiles.removeAt(index);
@@ -217,8 +216,6 @@ bool isNeedToUploadOther = false;
                     ),
                   ],
                 ),
-
-
                 const SizedBox(height: 30),
                 Consumer<CompleteProfileProvider>(
                   builder: (context, provider, _) {
@@ -226,7 +223,10 @@ bool isNeedToUploadOther = false;
                       onPressed: () async {
                         if (avatar != null ||
                             _biography.text.trim().isNotEmpty ||
-                            categoryIds.isEmpty || certificateFile != null || selectedFiles.isNotEmpty || fileDescriptions.isNotEmpty) {
+                            categoryIds.isEmpty ||
+                            certificateFile != null ||
+                            selectedFiles.isNotEmpty ||
+                            fileDescriptions.isNotEmpty) {
                           List<File> allFiles = [];
                           if (certificateFile != null) {
                             allFiles.add(certificateFile!);
@@ -251,8 +251,6 @@ bool isNeedToUploadOther = false;
                           );
                         }
                       },
-
-
                       title: "Confirm",
                       isLoading: provider.isLoading,
                     );
