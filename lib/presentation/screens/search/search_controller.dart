@@ -1,11 +1,14 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:irhebo/app/app_controller.dart';
 import 'package:irhebo/app/constants.dart';
+import 'package:irhebo/app/global_imports.dart';
 import 'package:irhebo/app/injection.dart';
+import 'package:irhebo/app/network/network.dart';
 import 'package:irhebo/app/resources/style/colors.dart';
 import 'package:irhebo/app/snack_bar.dart';
 import 'package:irhebo/domain/models/home_model.dart';
@@ -166,7 +169,6 @@ class SearchControllerGetx extends GetxController {
   RangeValues deliveryDayRange = const RangeValues(1, 180);
   RxBool sourceFile = false.obs;
 
-
   void onChangeSourceFile(bool? value) {
     sourceFile.value = value ?? false;
   }
@@ -183,6 +185,73 @@ class SearchControllerGetx extends GetxController {
     deliveryDayRange = values;
   }
 
+  resetFilter() async {
+    Navigator.pop(Get.context!);
+    searchFilterController.clear();
+    priceRange = const RangeValues(1, 1000);
+    revisionsRange = const RangeValues(1, 10);
+    deliveryDayRange = const RangeValues(1, 180);
+    sourceFile.value = false;
+    await getPaginatedServicesById();
+  }
+
+  applyFilter() async {
+    try {
+      isLoadingService = true;
+      services.clear();
+      AppPreferences pref = sl();
+      final response = await Network().post(
+        url: AppEndpoints.applyFilter,
+        data: {
+          'currency': pref.getString(key: AppPrefsKeys.CURRENCY) ?? 'USD',
+          'search': searchController.text.trim(),
+          'filters': [
+            {
+              "filter_type": "price", // price
+              "min": priceRange.start.toInt(),
+              "max": priceRange.end.toInt(),
+            },
+            {
+              "filter_type": "revisions", // price
+              "min": revisionsRange.start.toInt(),
+              "max": revisionsRange.end.toInt(),
+            },
+            {
+              "filter_type": "delivery_days", // price
+              "min": deliveryDayRange.start.toInt(),
+              "max": deliveryDayRange.end.toInt(),
+            },
+            {
+              "source_files": sourceFile.value,
+            }
+          ],
+        },
+      );
+      String errorMessage = await Network().handelError(response: response);
+      if (errorMessage.isNotEmpty) {
+        isLoadingService = false;
+        AppSnackBar.openErrorSnackBar(message: errorMessage);
+        return;
+      }
+
+      services = (response.data['data'] as List<dynamic>?)
+          ?.map((e) => ServiceModel.fromJson(e as Map<String, dynamic>))
+          .toList();
+      isLoadingService = false;
+    } catch (error) {
+      if (error is DioException) {
+        AppSnackBar.openErrorSnackBar(
+          message: Network().handelDioException(error),
+        );
+      } else {
+        AppSnackBar.openErrorSnackBar(
+          message: error.toString(),
+        );
+      }
+
+      isLoadingService = false;
+    }
+  }
 
   @override
   Future<void> onInit() async {
@@ -616,22 +685,6 @@ class SearchControllerGetx extends GetxController {
     });
   }
 
-  resetFilter() {
-    checkboxFilters.forEach(
-      (element) => element.checked = false,
-    );
-    _checkboxFilters.refresh();
-    ratingFilters.forEach(
-      (element) => element.rateValue = 0,
-    );
-    _ratingFilters.refresh();
-    numbers.forEach(
-      (element) => element.clear(),
-    );
-    selectedDropdownItems.clear();
-    selectedMultiDropdownItems.clear();
-  }
-
   clearFilterData() {
     checkboxFilters.clear();
     ratingFilters.clear();
@@ -652,15 +705,5 @@ class SearchControllerGetx extends GetxController {
         child: LoginRequiredDialog(),
       ),
     );
-  }
-
-  applyFilter() async {
-    isLoadingService = true;
-    services.clear();
-    await Future.delayed(const Duration(seconds: 4));
-    // await onRefreshList();
-    //Get.back();
-
-    isLoadingService = false;
   }
 }

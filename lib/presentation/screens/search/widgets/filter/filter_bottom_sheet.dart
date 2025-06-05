@@ -125,7 +125,10 @@ class FilterBottomSheet extends GetView<sr.SearchControllerGetx> {
                 ),
                 Obx(
                   () => AppButton(
-                    onPressed: controller.applyFilter,
+                    onPressed: () async{
+                      Navigator.pop(context);
+                      await controller.applyFilter();
+                    },
                     isLoading: controller.isLoadingService,
                     title: "Apply Filter",
                     width: 40.29 * (w / 100),
