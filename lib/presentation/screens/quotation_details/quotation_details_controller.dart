@@ -10,6 +10,8 @@ import '../../../app/network/network.dart';
 import '../../../app/snack_bar.dart';
 
 class QuotationDetailsController extends GetxController {
+  final RxInt loadingCommentId = RxInt(0);
+
   final RxBool _isLoading = false.obs;
   final RxBool _isLoadingApproveQuotation = false.obs;
 
@@ -53,11 +55,12 @@ class QuotationDetailsController extends GetxController {
     });
   }
 
-  approveQuotation() async {
+  approveQuotation({required int commentId}) async {
     try {
       _isLoadingApproveQuotation.value = true;
+      loadingCommentId.value = commentId;
       final response = await Network().post(
-        url: '${AppEndpoints.approveQuotation}$id',
+        url: '${AppEndpoints.approveQuotation}$commentId',
       );
       String errorMessage = await Network().handelError(response: response);
       if (errorMessage.isNotEmpty) {
