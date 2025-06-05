@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:irhebo/app/app_controller.dart';
 import 'package:irhebo/app/resources/style/colors.dart';
@@ -194,16 +195,21 @@ class QuotationDetailsWidget extends GetView<QuotationDetailsController> {
                   const SizedBox(height: 15),
                   Obx(
                     () {
-                      return AppButton(
-                        width: 230,
-                        isLoading: controller.isLoadingApproveQuotation &&
-                            controller.loadingCommentId.value == data?.id,
-                        title: 'Approve Quotation',
-                        onPressed: () async {
-                          await controller.approveQuotation(
-                            commentId: data?.id ?? 0,
-                          );
-                        },
+                      return Align(
+                        alignment: Alignment.centerRight,
+                        child: AppButton(
+                          padding: EdgeInsets.zero,
+                          hieght: 20.w,
+                          width: 150.w,
+                          isLoading: controller.isLoadingApproveQuotation &&
+                              controller.loadingCommentId.value == data?.id,
+                          title: 'Approve Quotation',
+                          onPressed: () async {
+                            await controller.approveQuotation(
+                              commentId: data?.id ?? 0,
+                            );
+                          },
+                        ),
                       );
                     },
                   ),
