@@ -260,4 +260,5 @@ Map<String, String> en = {
   "Times" : "Times",
   "Confirm Delivery" : "Confirm Delivery",
   "in_progress" : "In Progress",
+  "Quotation Applied Successfully" : "Quotation Applied Successfully"
 };

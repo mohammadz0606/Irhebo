@@ -1,5 +1,5 @@
 class CreateCommentParams {
-  String? quotationId;
+  int? quotationId;
   String? comment;
 
   CreateCommentParams({

@@ -251,11 +251,10 @@ Map<String, String> ar = {
   "Approve Quotation": "الموافقة على العرض",
   "Quotation Approved Successfully": "تمت الموافقة على العرض بنجاح",
   "Currency": "العملة",
-  "Currencies" :"العملات",
-  "Search" : "البحث",
-  "Times" : "مرات",
-  "Confirm Delivery" : "تأكيد التسليم",
-  "in_progress" : "قيد التنفيذ",
-
-
+  "Currencies": "العملات",
+  "Search": "البحث",
+  "Times": "مرات",
+  "Confirm Delivery": "تأكيد التسليم",
+  "in_progress": "قيد التنفيذ",
+  "Quotation Applied Successfully": "م تطبيق عرض السعر بنجاح"
 };

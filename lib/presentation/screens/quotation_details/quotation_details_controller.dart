@@ -9,12 +9,15 @@ import 'package:irhebo/presentation/screens/quotations/quotations_controller.dar
 import '../../../app/network/end_points.dart';
 import '../../../app/network/network.dart';
 import '../../../app/snack_bar.dart';
+import '../../../domain/params/create_comment_params.dart';
+import '../../../domain/usecases/setting_usecase/create_quotation_comment_use_case.dart';
 
 class QuotationDetailsController extends GetxController {
   final RxInt loadingCommentId = RxInt(0);
 
   final RxBool _isLoading = false.obs;
   final RxBool _isLoadingApproveQuotation = false.obs;
+  final RxBool isLoadingApplyQuotation = false.obs;
 
   bool get isLoading => _isLoading.value;
 
@@ -93,5 +96,29 @@ class QuotationDetailsController extends GetxController {
       }
       _isLoadingApproveQuotation.value = false;
     }
+  }
+
+  applyQuotation() async {
+    isLoadingApplyQuotation.value = true;
+    CreateQuotationCommentUseCase createQuotationCommentUseCase = sl();
+    final result = await createQuotationCommentUseCase(
+      CreateCommentParams(
+        comment: '',
+        quotationId: id,
+      ),
+    );
+
+    result!.fold(
+      (l) {
+        isLoadingApplyQuotation.value = false;
+      },
+      (r) async {
+        await getQutationDetailsDetails();
+        isLoadingApplyQuotation.value = false;
+        AppSnackBar.openSuccessSnackBar(
+          message: 'Quotation Applied Successfully'.tr,
+        );
+      },
+    );
   }
 }

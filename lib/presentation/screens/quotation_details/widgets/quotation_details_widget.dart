@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:irhebo/app/app_controller.dart';
 import 'package:irhebo/app/app_functions.dart';
 import 'package:irhebo/app/enums.dart';
+import 'package:irhebo/app/global_imports.dart';
 import 'package:irhebo/app/resources/style/colors.dart';
 import 'package:irhebo/app/resources/style/decoration.dart';
 import 'package:irhebo/domain/models/quotation_model.dart';
@@ -26,6 +27,7 @@ class QuotationDetailsWidget extends GetView<QuotationDetailsController> {
   @override
   Widget build(BuildContext context) {
     var w = MediaQuery.of(context).size.width;
+
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -104,11 +106,12 @@ class QuotationDetailsWidget extends GetView<QuotationDetailsController> {
                     SizedBox(
                       width: 3 * (w / 100),
                     ),
-                    Text("Source file".tr,
+                    Text('Source file'.tr,
                         style: Get.theme.textTheme.bodySmall?.copyWith(
-                            color: Get.find<AppController>().darkMode
-                                ? Colors.white
-                                : Colors.black)),
+                          color: Get.find<AppController>().darkMode
+                              ? Colors.white
+                              : Colors.black,
+                        )),
                   ],
                 ),
                 SizedBox(
@@ -125,111 +128,74 @@ class QuotationDetailsWidget extends GetView<QuotationDetailsController> {
                 //     ),
                 //   ],
                 // )
-                const Divider(),
-                SizedBox(
-                  height: 5.97 * (w / 100),
-                ),
-                if(getUserRole == UserRoles.freelancer)
-                Text(
-                  'Comments'.tr,
-                  style: Get.theme.textTheme.labelMedium,
-                ),
+
+                if (getUserRole != UserRoles.freelancer) ...{
+                  const Divider(),
+                  SizedBox(
+                    height: 5.97 * (w / 100),
+                  ),
+                  Text(
+                    'Comments'.tr,
+                    style: Get.theme.textTheme.labelMedium,
+                  ),
+                } else ...{
+                  if (quotation.comments?.isNotEmpty == true) ...{
+                    if (quotation.comments?.any(
+                          (element) =>
+                              element.user?.id ==
+                              AppPreferences(
+                                sl(),
+                              ).getInt(key: AppPrefsKeys.USER_ID),
+                        ) ==
+                        true) ...{
+                      _buildCommentData(
+                        quotation.comments?.firstWhere(
+                          (element) =>
+                              element.user?.id ==
+                              AppPreferences(
+                                sl(),
+                              ).getInt(key: AppPrefsKeys.USER_ID),
+                        ),
+                      ),
+                    } else ...{
+                      AppButton(
+                        title: 'Apply for Quotation',
+                        onPressed: () {},
+                      ),
+                    }
+                  } else ...{
+                    AppButton(
+                      title: 'Apply for Quotation',
+                      backGroundColor: AppLightColors.greenContainer,
+                      onPressed: () {},
+                    ),
+                  }
+                },
               ],
             ),
           ),
           SizedBox(
             height: 5.97 * (w / 100),
           ),
-          if(getUserRole == UserRoles.freelancer)
-          ListView.separated(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: quotation.comments?.length ?? 0,
-            itemBuilder: (context, index) {
-              var data = quotation.comments?[index];
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      Get.toNamed(AppRoutes.freelancerProfile,
-                          arguments: {"id": data?.user?.id ?? 0});
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            AppImage(
-                              imageUrl: data?.user?.avatar ?? "",
-                              width: 7.46 * (w / 100),
-                              height: 7.46 * (w / 100),
-                              radius: 25,
-                            ),
-                            SizedBox(
-                              width: 2.73 * (w / 100),
-                            ),
-                            Text(
-                              data?.user?.username ?? "",
-                              style: Get.theme.textTheme.labelMedium!
-                                  .copyWith(fontWeight: FontWeight.w700),
-                              // maxLines: 1,
-                              // overflow: TextOverflow.ellipsis,
-                            ),
-                          ],
-                        ),
-                        Text(
-                          quotation.createdAt ?? "",
-                          style: Get.theme.textTheme.labelMedium!
-                              .copyWith(fontWeight: FontWeight.w700),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 15),
-                  Text(
-                    data?.comment ?? "",
-                    style: Get.theme.textTheme.labelMedium!
-                        .copyWith(fontWeight: FontWeight.w700),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  const SizedBox(height: 15),
-                  Obx(
-                    () {
-                      return Align(
-                        alignment: Alignment.centerRight,
-                        child: AppButton(
-                          padding: EdgeInsets.zero,
-                          hieght: 20.w,
-                          width: 150.w,
-                          isLoading: controller.isLoadingApproveQuotation &&
-                              controller.loadingCommentId.value == data?.id,
-                          title: 'Approve Quotation',
-                          onPressed: () async {
-                            await controller.approveQuotation(
-                              commentId: data?.id ?? 0,
-                            );
-                          },
-                        ),
-                      );
-                    },
-                  ),
-                ],
-              );
-            },
-            separatorBuilder: (context, index) {
-              return const Column(
-                children: [
-                  SizedBox(height: 10),
-                  Divider(),
-                  SizedBox(height: 10),
-                ],
-              );
-            },
-          ),
+          if (getUserRole != UserRoles.freelancer)
+            ListView.separated(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: quotation.comments?.length ?? 0,
+              itemBuilder: (context, index) {
+                var data = quotation.comments?[index];
+                return _buildCommentData(data);
+              },
+              separatorBuilder: (context, index) {
+                return const Column(
+                  children: [
+                    SizedBox(height: 10),
+                    Divider(),
+                    SizedBox(height: 10),
+                  ],
+                );
+              },
+            ),
           //const Spacer(),
           // Obx(() {
           //   return AppButton(
@@ -243,6 +209,82 @@ class QuotationDetailsWidget extends GetView<QuotationDetailsController> {
           //const SizedBox(height: 5),
         ],
       ),
+    );
+  }
+
+  Column _buildCommentData(QuotationCommentModel? data) {
+    var w = MediaQuery.of(Get.context!).size.width;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        GestureDetector(
+          onTap: () {
+            Get.toNamed(AppRoutes.freelancerProfile,
+                arguments: {"id": data?.user?.id ?? 0});
+          },
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  AppImage(
+                    imageUrl: data?.user?.avatar ?? "",
+                    width: 7.46 * (w / 100),
+                    height: 7.46 * (w / 100),
+                    radius: 25,
+                  ),
+                  SizedBox(
+                    width: 2.73 * (w / 100),
+                  ),
+                  Text(
+                    data?.user?.username ?? "",
+                    style: Get.theme.textTheme.labelMedium!
+                        .copyWith(fontWeight: FontWeight.w700),
+                    // maxLines: 1,
+                    // overflow: TextOverflow.ellipsis,
+                  ),
+                ],
+              ),
+              Text(
+                quotation.createdAt ?? "",
+                style: Get.theme.textTheme.labelMedium!
+                    .copyWith(fontWeight: FontWeight.w700),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 15),
+        Text(
+          data?.comment ?? "",
+          style: Get.theme.textTheme.labelMedium!
+              .copyWith(fontWeight: FontWeight.w700),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
+        const SizedBox(height: 15),
+        Obx(
+          () {
+            return Align(
+              alignment: Alignment.centerRight,
+              child: AppButton(
+                padding: EdgeInsets.zero,
+                hieght: 21,
+                width: 151,
+                isLoading: controller.isLoadingApproveQuotation &&
+                    controller.loadingCommentId.value == data?.id,
+                title: 'Approve Quotation',
+                onPressed: () async {
+                  await controller.approveQuotation(
+                    commentId: data?.id ?? 0,
+                  );
+                },
+              ),
+            );
+          },
+        ),
+      ],
     );
   }
 }
