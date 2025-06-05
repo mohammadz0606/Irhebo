@@ -20,7 +20,7 @@ class SubCategoryPageViewItem extends GetWidget<sr.SearchControllerGetx> {
           children: [
             // AppTitleWithAction(title: "Select Sub Category"),
             controller.isLoadingSubcategory
-                ? SearchSubcategoryShimmer()
+                ? const SearchSubcategoryShimmer()
                 : Padding(
                     padding: EdgeInsets.symmetric(horizontal: 3.98 * (w / 100)),
                     child: Column(

@@ -50,7 +50,6 @@ class CurrencyProvider extends ChangeNotifier {
     }
   }
 
-
   onChangeCurrency(String value) async {
     log('MY VALUE IS A $value');
     await AppPreferences(sl()).setString(
@@ -59,5 +58,13 @@ class CurrencyProvider extends ChangeNotifier {
     );
     Get.offAllNamed(AppRoutes.splash);
     notifyListeners();
+  }
+
+  CurrencyModelData? get getCurrentCurrency {
+    String currency =
+        AppPreferences(sl()).getString(key: AppPrefsKeys.CURRENCY) ?? 'USD';
+
+    return currencyModel?.data
+        ?.firstWhere((element) => element.code == currency);
   }
 }

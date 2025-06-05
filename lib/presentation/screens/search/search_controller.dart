@@ -40,6 +40,7 @@ class SearchControllerGetx extends GetxController {
   final RxList<CategoryModel> _categories = <CategoryModel>[].obs;
   final RxList<SubcategoryModel> _subcategories = <SubcategoryModel>[].obs;
   final RxList<FilterModel> _multiDropDownButtonsFilters = <FilterModel>[].obs;
+
   // final RxList<FilterModel> _dropDownButtonsFilters = <FilterModel>[].obs;
   final RxList<CategoryModel> _filteredCategories = <CategoryModel>[].obs;
   final RxList<SubcategoryModel> _filteredSubcategories =
@@ -65,51 +66,88 @@ class SearchControllerGetx extends GetxController {
   final RxList<TagModel> _tags = <TagModel>[].obs;
 
   int get pageNumber => _pageNumber.value;
+
   int get selectedType => _selectedType.value;
+
   String get appBarTitle => _appBarTitle.value;
+
   int get pageIndex => _pageIndex.value;
+
   bool get isLoadingCategory => _isLoadingCategory.value;
+
   bool get isLoadingFilters => _isLoadingFilters.value;
+
   bool get isLoadingTag => _isLoadingTag.value;
+
   bool get isLoadingSubcategory => _isLoadingSubcategory.value;
+
   bool get isLoadingService => _isLoadingService.value;
+
   List<ServiceModel> get services => _services;
+
   List<FilterModel> get multiDropDownButtonsFilters =>
       _multiDropDownButtonsFilters;
+
   // List<FilterModel> get dropDownButtonsFilters => _dropDownButtonsFilters;
   List<FilterModel> get checkboxFilters => _checkboxFilters;
+
   List<FilterModel> get rangeFilters => _rangeFilters;
+
   List<FilterModel> get ratingFilters => _ratingFilters;
+
   List<TagModel> get tags => _tags;
+
   double get selectedMin => _selectedMin.value;
+
   double get selectedMax => _selectedMax.value;
+
   List<CategoryModel> get categories => _filteredCategories;
+
   List<SubcategoryModel> get subcategories => _filteredSubcategories;
 
   set pageNumber(value) => _pageNumber.value = value;
+
   set categories(value) => _categories.value = value;
+
   set subcategories(value) => _subcategories.value = value;
+
   set selectedMin(value) => _selectedMin.value = value;
+
   set selectedMax(value) => _selectedMax.value = value;
+
   set selectedType(value) => _selectedType.value = value;
+
   set appBarTitle(value) => _appBarTitle.value = value;
+
   set pageIndex(value) => _pageIndex.value = value;
+
   set isLoadingCategory(value) => _isLoadingCategory.value = value;
+
   set isLoadingFilters(value) => _isLoadingFilters.value = value;
+
   set isLoadingTag(value) => _isLoadingTag.value = value;
+
   set isLoadingSubcategory(value) => _isLoadingSubcategory.value = value;
+
   set isLoadingService(value) => _isLoadingService.value = value;
+
   set services(value) => _services.value = value;
+
   set multiDropDownButtonsFilters(value) =>
       _multiDropDownButtonsFilters.value = value;
+
   // set dropDownButtonsFilters(value) => _dropDownButtonsFilters.value = value;
   set checkboxFilters(value) => _checkboxFilters.value = value;
+
   set rangeFilters(value) => _rangeFilters.value = value;
+
   set ratingFilters(value) => _ratingFilters.value = value;
+
   set tags(value) => _tags.value = value;
 
   List<FilterModel> numbersFilters = [];
   List<FilterModel> dropDownButtonsFilters = [];
+
   // List<SubcategoryModel> subcategories = [];
   String subccategoryTitle = "";
   bool fromCategories = false;
@@ -120,10 +158,40 @@ class SearchControllerGetx extends GetxController {
 
   var selectedDropdownItems = <int, FilterOptionModel?>{}.obs;
 
+  /// NEW VALUES
+
+  TextEditingController searchFilterController = TextEditingController();
+  RangeValues priceRange = const RangeValues(1, 1000);
+  RangeValues revisionsRange = const RangeValues(1, 10);
+  RangeValues deliveryDayRange = const RangeValues(1, 180);
+  RxBool sourceFile = false.obs;
+
+
+  void onChangeSourceFile(bool? value) {
+    sourceFile.value = value ?? false;
+  }
+
+  onChangePriceRange(RangeValues values) {
+    priceRange = values;
+  }
+
+  onChangeRevisionsRange(RangeValues values) {
+    revisionsRange = values;
+  }
+
+  onChangeDeliveryDayRange(RangeValues values) {
+    deliveryDayRange = values;
+  }
+
+
   @override
   Future<void> onInit() async {
     super.onInit();
-
+    searchFilterController.clear();
+    priceRange = const RangeValues(1, 1000);
+    revisionsRange = const RangeValues(1, 10);
+    deliveryDayRange = const RangeValues(1, 180);
+    sourceFile.value = false;
     receiveParams();
 
     if (fromCategories == true) {
@@ -295,7 +363,8 @@ class SearchControllerGetx extends GetxController {
   }
 
   onTapService(int i) {
-    Get.to(() => const ServiceDetailsScreen(), arguments: {"id": services[i].id});
+    Get.to(() => const ServiceDetailsScreen(),
+        arguments: {"id": services[i].id});
     // preventDuplicates: false,
   }
 
@@ -590,7 +659,7 @@ class SearchControllerGetx extends GetxController {
     services.clear();
     await Future.delayed(const Duration(seconds: 4));
     // await onRefreshList();
-    Get.back();
+    //Get.back();
 
     isLoadingService = false;
   }

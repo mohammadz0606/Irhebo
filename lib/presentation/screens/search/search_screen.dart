@@ -22,8 +22,9 @@ class SearchScreen extends GetView<sr.SearchControllerGetx> {
             onTapBack: controller.onTapBack,
             onTapHelp: controller.pageIndex == 1
                 ? () => {
-                      Get.toNamed(AppRoutes.faqs,
-                          arguments: {"category_id": controller.categoryId})
+                      Get.toNamed(AppRoutes.faqs, arguments: {
+                        "category_id": controller.categoryId,
+                      })
                     }
                 : null,
             onTapFilter:

@@ -256,4 +256,6 @@ Map<String, String> en = {
   'Quotation Approved Successfully': "Quotation Approved Successfully",
   "Currency": "Currency",
   "Currencies": "Currencies",
+  "Search" : "Search",
+  "Times" : "Times"
 };

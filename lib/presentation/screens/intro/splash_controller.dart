@@ -4,10 +4,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:irhebo/app/app_controller.dart';
 import 'package:irhebo/app/enums.dart';
+import 'package:irhebo/app/global_imports.dart';
 import 'package:irhebo/app/injection.dart';
 import 'package:irhebo/app/router/routes.dart';
 import 'package:irhebo/app/storage/app_prefs_keys.dart';
 import 'package:irhebo/domain/models/slider_model.dart';
+import 'package:irhebo/domain/providers/currency.dart';
 import 'package:irhebo/domain/usecases/intro_usecases/get_steps_use_case.dart';
 import 'package:irhebo/presentation/screens/intro/screens/language_screen.dart';
 import 'package:irhebo/presentation/screens/intro/screens/roles_screen.dart';
@@ -24,11 +26,15 @@ class SplashController extends GetxController {
   List<SliderModel> steps = [];
 
   int get pageIndex => _pageIndex.value;
+
   bool get isLoadingSteps => _isLoadingSteps.value;
+
   int get selectedRoleIndex => _selectedRoleIndex.value;
 
   set pageIndex(value) => _pageIndex.value = value;
+
   set isLoadingSteps(value) => _isLoadingSteps.value = value;
+
   set selectedRoleIndex(value) => _selectedRoleIndex.value = value;
 
   @override
@@ -38,10 +44,11 @@ class SplashController extends GetxController {
       await appController.getGeneral();
       if (!(Get.find<AppController>()
           .getBoolValue(AppPrefsKeys.LANGUAGE_DIALOG))) {
-        Get.to(() => LanguageScreen());
+        Get.to(() => const LanguageScreen());
       } else {
         checkIfGoToSteps();
       }
+      await Provider.of<CurrencyProvider>(Get.context!,listen: false).getCurrencies();
     });
   }
 
@@ -67,7 +74,6 @@ class SplashController extends GetxController {
   }
 
   onTapApply() {
-
     appController.setBoolValue(true, AppPrefsKeys.LANGUAGE_DIALOG);
     checkIfGoToSteps();
   }

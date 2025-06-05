@@ -22,7 +22,7 @@ class ServicePageViewItem extends GetWidget<sr.SearchControllerGetx> {
       () => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ServicesFiltersSection(),
+          const ServicesFiltersSection(),
           SizedBox(
             height: 2.23 * (w / 100),
           ),
@@ -32,18 +32,18 @@ class ServicePageViewItem extends GetWidget<sr.SearchControllerGetx> {
               onRefresh: controller.onRefreshList,
               enablePullDown: true,
               enablePullUp: true,
-              footer: CustomePaginagtionFooter(),
+              footer: const CustomePaginagtionFooter(),
               onLoading: controller.onLoadingServices,
               child: SingleChildScrollView(
                 child: Column(
                   children: [
                     controller.isLoadingService
-                        ? SearchServiceShimmer()
+                        ? const SearchServiceShimmer()
                         : controller.services.isEmpty
                             ? Padding(
                                 padding: EdgeInsets.symmetric(
                                     vertical: 50 * (w / 100)),
-                                child: NoData(
+                                child: const NoData(
                                   forHome: true,
                                 ),
                               )
