@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 
 import '../../../app/global_imports.dart';
@@ -21,6 +23,9 @@ class ServiceProvider extends ChangeNotifier {
   final TextEditingController titleController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
 
+  File? cover;
+  List<File> media = [];
+
   bool isLoadingCategory = false;
   bool isLoadingSubcategory = false;
   bool isLoadingTags = false;
@@ -41,6 +46,17 @@ class ServiceProvider extends ChangeNotifier {
   final List<PlanModelData?> plan = [PlanModelData()];
   final List<CurrencyModelData?> selectedCurrency = [CurrencyModelData()];
   final List<bool> sourceFile = [false];
+
+
+  onChangeCover(File? value) {
+    cover = value;
+    notifyListeners();
+  }
+
+  onChangeMedia(List<File> value) {
+    media = value;
+    notifyListeners();
+  }
 
   onChangeSourceFile(bool? value) {
     sourceFile[planListUIndex] = value ?? false;

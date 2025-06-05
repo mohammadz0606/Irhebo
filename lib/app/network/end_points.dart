@@ -66,4 +66,5 @@ class AppEndpoints {
   static String currencies = '$base_url/currencies';
   static String tags = '$base_url/tags';
   static String plans = '$base_url/shared/plans';
+  static String createService = '$base_url/services/create';
 }

@@ -35,9 +35,6 @@ class _CreateServicesScreenState extends State<CreateServicesScreen> {
     super.initState();
   }
 
-  List<File> media = [];
-  File? cover;
-
   @override
   Widget build(BuildContext context) {
     var w = MediaQuery.of(context).size.width;
@@ -111,7 +108,7 @@ class _CreateServicesScreenState extends State<CreateServicesScreen> {
                     style: Get.textTheme.headlineSmall,
                   ),
                   const SizedBox(height: 10),
-                   AppTextField(
+                  AppTextField(
                     controller: provider.titleController,
                     hint: "Enter request title",
                     textInputType: TextInputType.text,
@@ -126,7 +123,7 @@ class _CreateServicesScreenState extends State<CreateServicesScreen> {
                     style: Get.textTheme.headlineSmall,
                   ),
                   const SizedBox(height: 10),
-                   AppTextField(
+                  AppTextField(
                     hint: "Description",
                     controller: provider.descriptionController,
                     textInputType: TextInputType.multiline,
@@ -143,12 +140,7 @@ class _CreateServicesScreenState extends State<CreateServicesScreen> {
                   //const SizedBox(height: 10),
                   UploadFileWidget(
                     fileType: FileType.image,
-                    onFileSelected: (file) {
-                      if (file != null) {
-                        cover = file;
-                      }
-                      log('DONE PIK FILE ${file?.path}');
-                    },
+                    onFileSelected: provider.onChangeCover,
                   ),
 
                   Text(
@@ -156,9 +148,7 @@ class _CreateServicesScreenState extends State<CreateServicesScreen> {
                     style: Get.textTheme.headlineSmall,
                   ),
                   UploadMultipleFile(
-                    onFilesSelected: (file) {
-                      media = file;
-                    },
+                    onFilesSelected: provider.onChangeMedia,
                   ),
                   const SizedBox(height: 20),
 
