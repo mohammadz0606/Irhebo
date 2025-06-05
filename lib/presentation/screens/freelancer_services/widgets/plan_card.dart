@@ -70,7 +70,7 @@ class _PlanCardState extends State<PlanCard> {
                       hintText: "Plans Choices",
                       items: provider.planList ?? [],
                       onChanged: provider.onChangePlan,
-                      value: provider.plan,
+                      value: provider.plan[widget.currentIndex ?? 0],
                       itemToString: (value) => value?.title ?? "",
                     ),
                   const SizedBox(height: 20),
@@ -132,7 +132,7 @@ class _PlanCardState extends State<PlanCard> {
                       style: Get.theme.textTheme.bodyMedium,
                     ),
                     dense: true,
-                    value: provider.sourceFile,
+                    value: provider.sourceFile[widget.currentIndex ?? 0],
                     onChanged: provider.onChangeSourceFile,
                   )
                 ],
@@ -195,7 +195,7 @@ class _PlanCardState extends State<PlanCard> {
       width: double.infinity,
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(14)),
       child: DropdownSearch<CurrencyModelData>(
-        selectedItem: provider.selectedCurrency,
+        selectedItem: provider.selectedCurrency[widget.currentIndex ?? 0],
         onChanged: provider.onSelectedCurrency,
         validator: null,
         compareFn: (item1, item2) => item1.id == item2.id,

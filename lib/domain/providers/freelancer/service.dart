@@ -38,12 +38,12 @@ class ServiceProvider extends ChangeNotifier {
   final List<TextEditingController> revisionController = [
     TextEditingController()
   ];
-  PlanModelData? plan;
-  CurrencyModelData? selectedCurrency;
-  bool sourceFile = false;
+  final List<PlanModelData?> plan = [PlanModelData()];
+  final List<CurrencyModelData?> selectedCurrency = [CurrencyModelData()];
+  final List<bool> sourceFile = [false];
 
   onChangeSourceFile(bool? value) {
-    sourceFile = value ?? false;
+    sourceFile[planListUIndex] = value ?? false;
     notifyListeners();
   }
 
@@ -59,12 +59,12 @@ class ServiceProvider extends ChangeNotifier {
   }
 
   onChangePlan(PlanModelData? value) {
-    plan = value;
+    plan[planListUIndex] = value;
     notifyListeners();
   }
 
   onSelectedCurrency(CurrencyModelData? value) {
-    selectedCurrency = value;
+    selectedCurrency[planListUIndex] = value;
     notifyListeners();
   }
 
@@ -137,8 +137,8 @@ class ServiceProvider extends ChangeNotifier {
     try {
       planList?.clear();
       isLoadingPlan = true;
-      if (selectedCurrency != null) {
-        selectedCurrency = null;
+      if (selectedCurrency[planListUIndex] != null) {
+        selectedCurrency[planListUIndex] = null;
       }
       notifyListeners();
       final response = await Network().get(
@@ -177,6 +177,9 @@ class ServiceProvider extends ChangeNotifier {
     priceController.add(TextEditingController());
     deliveryDayController.add(TextEditingController());
     revisionController.add(TextEditingController());
+    plan.add(PlanModelData());
+    selectedCurrency.add(CurrencyModelData());
+    sourceFile.add(false);
     notifyListeners();
   }
 
@@ -187,6 +190,9 @@ class ServiceProvider extends ChangeNotifier {
       priceController.removeAt(index);
       deliveryDayController.removeAt(index);
       revisionController.removeAt(index);
+      plan.removeAt(index);
+      selectedCurrency.removeAt(index);
+      sourceFile.removeAt(index);
       notifyListeners();
     }
   }
