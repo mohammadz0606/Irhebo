@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:irhebo/app/resources/style/colors.dart';
 
 class AppButton extends StatelessWidget {
-  final Function() onPressed;
+  final Function()? onPressed;
   final String? title;
   final EdgeInsetsGeometry? padding;
   final double? horizontalMargin;

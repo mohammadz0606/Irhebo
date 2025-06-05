@@ -256,5 +256,12 @@ Map<String, String> ar = {
   "Times": "مرات",
   "Confirm Delivery": "تأكيد التسليم",
   "in_progress": "قيد التنفيذ",
-  "Quotation Applied Successfully": "م تطبيق عرض السعر بنجاح"
+  "Quotation Applied Successfully": "تم تطبيق عرض السعر بنجاح",
+  "Add Service details": "أضف تفاصيل الخدمة",
+  "Cover Photo": "صورة الغلاف",
+  "Media": "وسائط",
+  "Tags": "الوسوم",
+  "Next": "التالي",
+  "Tags Choices" : "خيارات الوسوم",
+
 };

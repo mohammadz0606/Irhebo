@@ -42,15 +42,13 @@ class CreateQuotationController extends GetxController {
     Get.back();
   }
 
-
   @override
   void onInit() {
     clearData();
     super.onInit();
   }
 
-
-   createQuotation() async {
+  createQuotation() async {
     if (formKey.currentState!.validate()) {
       if (categoryModel.value == null || subcategoryModel.value == null) {
         AppSnackBar.openErrorSnackBar(message: 'Please fill all fields'.tr);
@@ -74,7 +72,8 @@ class CreateQuotationController extends GetxController {
         isLoading = false;
       }, (r) {
         onTapBack();
-        AppSnackBar.openSuccessSnackBar(message: 'Quotation created successfully'.tr);
+        AppSnackBar.openSuccessSnackBar(
+            message: 'Quotation created successfully'.tr);
         isLoading = false;
       });
     }

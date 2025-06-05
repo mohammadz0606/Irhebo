@@ -51,6 +51,7 @@ class AppRoutes {
   static const String myServices = "/my_services";
   static const String createService = "/create_service";
   static const String vrificationFreelancerScreen = "/vrificationFreelancerScreen";
+  static const String createPlan = "/create_plan";
 
 
 }

@@ -64,4 +64,5 @@ class AppEndpoints {
   static String confirmRequest = '$base_url/requests/confirm-request/';
   static String approveQuotation = '$base_url/quotations/approve-quotation/';
   static String currencies = '$base_url/currencies';
+  static String tags = '$base_url/tags';
 }

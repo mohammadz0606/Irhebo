@@ -59,6 +59,7 @@ import 'package:irhebo/presentation/screens/ticket_details/ticket_details_screen
 
 import '../../presentation/screens/auth/register/register_freelancer_screen.dart';
 import '../../presentation/screens/freelancer_services/screens/all_freelancer_services.dart';
+import '../../presentation/screens/freelancer_services/screens/create_plan.dart';
 import '../../presentation/screens/freelancer_services/screens/create_services.dart';
 import '../../presentation/screens/portfolio/screens/create_new_update_portfolio.dart';
 
@@ -230,6 +231,10 @@ class AppScreens {
     GetPage(
       name: AppRoutes.vrificationFreelancerScreen,
       page: () => const VerificationFreelancerScreen(),
+    ),
+    GetPage(
+      name: AppRoutes.createPlan,
+      page: () => const CreatePlanScreen(),
     ),
   ];
 }
