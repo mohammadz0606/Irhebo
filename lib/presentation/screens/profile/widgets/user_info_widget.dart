@@ -146,7 +146,7 @@ class UserInfoWidget extends StatelessWidget {
           padding: EdgeInsets.symmetric(
               vertical: 0.99 * (w / 100), horizontal: 3.73 * (w / 100)),
           child: InkWell(
-            onTap: () => goToUpdate(),
+            onTap: goToUpdate,
             child: const UserInfoRow(
               title: "Edit Profile",
               update: true,

@@ -13,7 +13,11 @@ import 'package:irhebo/presentation/widgets/dropdown_widget.dart';
 class UpdateRequestDialog extends GetWidget<RequestDetailsController> {
   const UpdateRequestDialog({
     super.key,
+    required this.status,
   });
+
+  final String status;
+
   @override
   Widget build(BuildContext context) {
     var w = MediaQuery.of(context).size.width;
@@ -42,19 +46,19 @@ class UpdateRequestDialog extends GetWidget<RequestDetailsController> {
               SizedBox(
                 height: 5.9 * (w / 100),
               ),
-              CustomDropdown<String>(
-                itemBuilder: (context, item, isDisabled, isSelected) =>
-                    DropdownItem(
-                  label: item,
-                ),
-                showSearchBox: false,
-                label: "Status",
-                hintText: "Change Status",
-                items: controller.types,
-                onChanged: controller.onChangeStatus,
-                validator: AppValidators.validateStatus,
-                itemToString: (value) => value!.toString(),
-              ),
+              // CustomDropdown<String>(
+              //   itemBuilder: (context, item, isDisabled, isSelected) =>
+              //       DropdownItem(
+              //     label: item,
+              //   ),
+              //   showSearchBox: false,
+              //   label: "Status",
+              //   hintText: "Change Status",
+              //   items: controller.types,
+              //   onChanged: controller.onChangeStatus,
+              //   validator: AppValidators.validateStatus,
+              //   itemToString: (value) => value!.toString(),
+              // ),
               SizedBox(
                 height: 5.9 * (w / 100),
               ),
@@ -90,7 +94,9 @@ class UpdateRequestDialog extends GetWidget<RequestDetailsController> {
                   width: 76.11 * (w / 100),
                   isLoading: controller.isLoadingUpdate,
                   backGroundColor: AppDarkColors.greenContainer,
-                  onPressed: controller.onUpadteRequest,
+                  onPressed: () async {
+                    await controller.onUpadteRequest(status: status);
+                  },
                   title: "Add Update",
                 ),
               )

@@ -115,7 +115,7 @@ class FreelancerRequestItemNew extends GetView<RequestsController> {
                   ],
                 ),
                 if (data?.statusKey == "confirmed" ||
-                    data?.statusKey == "inـprogress")
+                    data?.statusKey == "in_progress")
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
@@ -133,12 +133,12 @@ class FreelancerRequestItemNew extends GetView<RequestsController> {
                             Get.find<AppController>().darkMode
                                 ? AppDarkColors.green
                                 : AppLightColors.primaryColor
-                                    .withValues(alpha: 0.8),
+                                .withValues(alpha: 0.8),
                           ),
                         ),
                       ),
                       if (data?.statusKey == "confirmed" ||
-                          data?.statusKey == "inـprogress")
+                          data?.statusKey == "in_progress")
                         Text(
                           "${data?.elapsedDays}/${data?.totalDays}${"Days".tr}",
                           style: Get.theme.textTheme.labelSmall,

@@ -22,7 +22,8 @@ class RequestDetailsBottomBar extends GetWidget<RequestDetailsController> {
           Obx(() {
             final request = controller.request;
             if (request.statusKey == 'completed' &&
-                request.isReviewed == false) {
+                request.isReviewed == false &&
+                getUserRole == UserRoles.client) {
               return Column(
                 children: [
                   AppButton(
@@ -61,58 +62,78 @@ class RequestDetailsBottomBar extends GetWidget<RequestDetailsController> {
               return const SizedBox();
             }
           }),
-
         if (getUserRole == UserRoles.freelancer &&
             controller.request.statusKey == 'pending') ...{
-          AppButton(
-            isLoading: controller.isLoadingConfirmRequest,
-            onPressed: () {
-              showAdaptiveDialog(
-                context: Get.context!,
-                barrierDismissible: false,
-                builder: (_) {
-                  return AlertDialog.adaptive(
-                    title: Text('Confirmation Request'.tr),
-                    content: Text(
-                      "Are you sure you want to confirm this request?".tr,
-                    ),
-                    actions: [
-                      TextButton(
-                        onPressed: () async {
-                          Navigator.of(Get.context!).pop();
-                          await controller.confirmRequest();
-                        },
-                        child: Text(
-                          "Yes".tr,
-                          style: const TextStyle(color: AppLightColors.primaryColor),
+          Obx(
+            () {
+              return AppButton(
+                isLoading: controller.isLoadingConfirmRequest,
+                onPressed: () {
+                  showAdaptiveDialog(
+                    context: Get.context!,
+                    barrierDismissible: false,
+                    builder: (_) {
+                      return AlertDialog.adaptive(
+                        title: Text('Confirmation Request'.tr),
+                        content: Text(
+                          "Are you sure you want to confirm this request?".tr,
                         ),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(Get.context!).pop();
-                        },
-                        child: Text(
-                          "No".tr,
-                          style: const TextStyle(color: Colors.red),
-                        ),
-                      ),
-                    ],
+                        actions: [
+                          TextButton(
+                            onPressed: () async {
+                              Navigator.of(Get.context!).pop();
+                              // await controller.confirmRequest();
+                              controller.openUpdateRequestDialog(
+                                  status: 'in_progress');
+                            },
+                            child: Text(
+                              "Yes".tr,
+                              style: const TextStyle(
+                                  color: AppLightColors.primaryColor),
+                            ),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(Get.context!).pop();
+                            },
+                            child: Text(
+                              "No".tr,
+                              style: const TextStyle(color: Colors.red),
+                            ),
+                          ),
+                        ],
+                      );
+                    },
                   );
                 },
+                title: "Confirm Request",
               );
-
-
             },
-            title: "Confirm Request",
           ),
-          SizedBox(height: 2 * (w / 100)),
-        },
-
-        // Remaining action buttons
-        AppButton(
-          onPressed: controller.openUpdateRequestDialog,
-          title: "Update Request",
-        ),
+        } else if (getUserRole == UserRoles.client &&
+            controller.request.statusKey == 'completed')
+          Obx(
+            () {
+              return AppButton(
+                onPressed: () async {
+                  await controller.openUpdateRequestDialog(status: 'confirmed');
+                },
+                title: "Confirm Delivery",
+              );
+            },
+          ),
+        SizedBox(height: 2 * (w / 100)),
+        if (controller.request.statusKey == 'in_progress')
+          Obx(
+            () {
+              return AppButton(
+                onPressed: () {
+                  controller.openUpdateRequestDialog(status: 'in_progress');
+                },
+                title: "Update Request",
+              );
+            },
+          ),
         SizedBox(height: 2 * (w / 100)),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 5.9 * (w / 100)),

@@ -73,7 +73,7 @@ class AppDarkColors {
   // };
 
   static const Map<String, Color> statusColor = {
-    "inprogress": inProgress,
+    "in_progress": inProgress,
     "completed": completed,
     "cancelled": canceled,
     "pending": pending,

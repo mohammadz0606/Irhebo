@@ -94,12 +94,12 @@ class RequestDetailsController extends GetxController {
     }
   }
 
-  updateRequest() async {
+  updateRequest({required String status}) async {
     isLoadingUpdate = true;
     UpdateRequestUseCase updateRequestUseCase = sl();
     final result = await updateRequestUseCase(UpdateRequestParams(
       action: commentController.text,
-      status: selectedStatus.value,
+      status: status,
       requestId: request.id,
       attachments: atthach,
     ));
@@ -132,7 +132,7 @@ class RequestDetailsController extends GetxController {
           message: 'The operation was successful'.tr,
         );
         getRequestDetails();
-       // Get.find<HomeController>().getFeaturedPortfolio();
+        // Get.find<HomeController>().getFeaturedPortfolio();
       }
     } catch (error) {
       if (error is dio.DioException) {
@@ -225,9 +225,9 @@ class RequestDetailsController extends GetxController {
     imageBytes.clear();
   }
 
-  onUpadteRequest() {
+  onUpadteRequest({required String status}) {
     if (updateRequestKey.currentState!.validate()) {
-      updateRequest();
+      updateRequest(status: status);
     }
   }
 
@@ -245,7 +245,7 @@ class RequestDetailsController extends GetxController {
   void openReviewBottomSheet() {
     if (Get.context != null && Get.context!.mounted) {
       Get.bottomSheet(
-        AppBottomSheet(title: "Rate", child: AddRateBottomSheet()),
+        const AppBottomSheet(title: "Rate", child: AddRateBottomSheet()),
         backgroundColor: Get.find<AppController>().darkMode
             ? AppDarkColors.darkScaffoldColor
             : AppLightColors.pureWhite,
@@ -314,13 +314,13 @@ class RequestDetailsController extends GetxController {
     }
   }
 
-  openUpdateRequestDialog() {
+  openUpdateRequestDialog({required String status}) {
     Get.dialog(
       barrierColor: Get.find<AppController>().darkMode
           ? AppDarkColors.darkContainer.withOpacity(0.3)
           : AppLightColors.shadow.withOpacity(0.3),
       AppDialog(
-        child: UpdateRequestDialog(),
+        child: UpdateRequestDialog(status: status),
       ),
     );
   }

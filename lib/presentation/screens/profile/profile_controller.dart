@@ -188,8 +188,8 @@ class ProfileController extends GetxController {
       (element) => element.name == (user?.gender ?? ''),
     );
     selectedLanguages.clear();
-    selectedLanguages.addAll(appController.languages
-        .where((lang) => user?.languages?.any((uLang) => uLang.id == lang?.id) ?? false));
+    selectedLanguages.addAll(appController.languages.where((lang) =>
+        user?.languages?.any((uLang) => uLang.id == lang?.id) ?? false));
     // for (LanguageModel element in user?.languages ?? []) {
     //   final matched = appController.languages.firstWhereOrNull((lang) => lang?.id == element.id);
     //   if (matched != null) selectedLanguages.add(matched);
@@ -238,13 +238,16 @@ class ProfileController extends GetxController {
     });
   }
 
-  goToUpdate() {
-    initFieldsValues();
-    Get.to(
+  goToUpdate() async {
+    await Get.to(
       () => UpdateProfileScreen(
         user: user,
         isUpdate: true,
       ),
+    )?.then(
+      (value) {
+        initFieldsValues();
+      },
     );
   }
 }

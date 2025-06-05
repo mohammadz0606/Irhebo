@@ -257,5 +257,7 @@ Map<String, String> en = {
   "Currency": "Currency",
   "Currencies": "Currencies",
   "Search" : "Search",
-  "Times" : "Times"
+  "Times" : "Times",
+  "Confirm Delivery" : "Confirm Delivery",
+  "in_progress" : "In Progress",
 };

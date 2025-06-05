@@ -253,6 +253,9 @@ Map<String, String> ar = {
   "Currency": "العملة",
   "Currencies" :"العملات",
   "Search" : "البحث",
-  "Times" : "مرات"
+  "Times" : "مرات",
+  "Confirm Delivery" : "تأكيد التسليم",
+  "in_progress" : "قيد التنفيذ",
+
 
 };

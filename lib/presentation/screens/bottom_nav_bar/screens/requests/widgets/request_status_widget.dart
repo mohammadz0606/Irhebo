@@ -17,7 +17,7 @@ class RequestStatusWidget extends StatelessWidget {
       ),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
-          color: AppDarkColors.statusColor[status]!.withOpacity(0.2)),
+          color: AppDarkColors.statusColor[status]?.withOpacity(0.2)),
       child: Text(
         status.tr,
         style: Get.theme.textTheme.labelMedium!

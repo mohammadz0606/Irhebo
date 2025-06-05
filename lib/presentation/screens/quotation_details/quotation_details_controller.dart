@@ -4,6 +4,7 @@ import 'package:irhebo/app/injection.dart';
 import 'package:irhebo/domain/models/new_models/general_model.dart';
 import 'package:irhebo/domain/models/quotation_model.dart';
 import 'package:irhebo/domain/usecases/setting_usecase/get_quotation_details_use_case.dart';
+import 'package:irhebo/presentation/screens/quotations/quotations_controller.dart';
 
 import '../../../app/network/end_points.dart';
 import '../../../app/network/network.dart';
@@ -39,7 +40,7 @@ class QuotationDetailsController extends GetxController {
     }
   }
 
-  onTapBack() async{
+  onTapBack() async {
     Get.back();
     await getQutationDetailsDetails();
   }
@@ -74,10 +75,11 @@ class QuotationDetailsController extends GetxController {
 
       if (generalModel.status ?? false) {
         await getQutationDetailsDetails();
+        await Get.find<QuotationsController>().onRefreshQuotationsList();
         onTapBack();
-        AppSnackBar.openSuccessSnackBar(message: 'Quotation Approved Successfully'.tr);
+        AppSnackBar.openSuccessSnackBar(
+            message: 'Quotation Approved Successfully'.tr);
         _isLoadingApproveQuotation.value = false;
-
       }
     } catch (error) {
       if (error is DioException) {

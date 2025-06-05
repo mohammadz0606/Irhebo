@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:irhebo/app/app_controller.dart';
+import 'package:irhebo/app/app_functions.dart';
+import 'package:irhebo/app/enums.dart';
 import 'package:irhebo/app/resources/style/colors.dart';
 import 'package:irhebo/app/resources/style/decoration.dart';
 import 'package:irhebo/domain/models/quotation_model.dart';
@@ -103,7 +105,7 @@ class QuotationDetailsWidget extends GetView<QuotationDetailsController> {
                       width: 3 * (w / 100),
                     ),
                     Text("Source file".tr,
-                        style: Get.theme.textTheme.bodySmall!.copyWith(
+                        style: Get.theme.textTheme.bodySmall?.copyWith(
                             color: Get.find<AppController>().darkMode
                                 ? Colors.white
                                 : Colors.black)),
@@ -127,6 +129,7 @@ class QuotationDetailsWidget extends GetView<QuotationDetailsController> {
                 SizedBox(
                   height: 5.97 * (w / 100),
                 ),
+                if(getUserRole == UserRoles.freelancer)
                 Text(
                   'Comments'.tr,
                   style: Get.theme.textTheme.labelMedium,
@@ -137,6 +140,7 @@ class QuotationDetailsWidget extends GetView<QuotationDetailsController> {
           SizedBox(
             height: 5.97 * (w / 100),
           ),
+          if(getUserRole == UserRoles.freelancer)
           ListView.separated(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
