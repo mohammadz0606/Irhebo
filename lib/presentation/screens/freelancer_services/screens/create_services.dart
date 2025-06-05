@@ -17,7 +17,6 @@ import '../../../widgets/multi_dropdown_widget.dart';
 import '../../../widgets/normal_app_bar.dart';
 import '../../auth/register/widgets/upload_file.dart';
 import '../../portfolio/widgets/upload_multiple_file.dart';
-import '../../search/search_controller.dart';
 
 class CreateServicesScreen extends StatefulWidget {
   const CreateServicesScreen({super.key});
@@ -112,8 +111,8 @@ class _CreateServicesScreenState extends State<CreateServicesScreen> {
                     style: Get.textTheme.headlineSmall,
                   ),
                   const SizedBox(height: 10),
-                  const AppTextField(
-                    //controller: _biography,
+                   AppTextField(
+                    controller: provider.titleController,
                     hint: "Enter request title",
                     textInputType: TextInputType.text,
                     maxLines: 1,
@@ -127,8 +126,9 @@ class _CreateServicesScreenState extends State<CreateServicesScreen> {
                     style: Get.textTheme.headlineSmall,
                   ),
                   const SizedBox(height: 10),
-                  const AppTextField(
+                   AppTextField(
                     hint: "Description",
+                    controller: provider.descriptionController,
                     textInputType: TextInputType.multiline,
                     maxLines: 4,
                     textInputAction: TextInputAction.newline,

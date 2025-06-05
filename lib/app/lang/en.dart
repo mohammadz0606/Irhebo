@@ -104,7 +104,7 @@ Map<String, String> en = {
   "Download Contract": "Download Contract",
   "write your comment": "write your comment",
   "Rate": "Rate",
-  "Notificaations": "Notificaations",
+  "Notificaations": "Notifications",
   "Search here": "Search here..",
   "Categories": "Categories",
   "Sub Categories": "Sub Categories",
@@ -266,5 +266,9 @@ Map<String, String> en = {
   "Media": "Media",
   "Tags": "Tags",
   "Next": "Next",
-  "Tags Choices" : "Tags Choices",
+  "Tags Choices": "Tags Choices",
+  "Create and customize your plans": "Create and customize your plans",
+  "Plans Choices": "Plans Choices",
+  "Enter Price": "Enter Price",
+  "Upload another plan": "+ Upload another plan"
 };

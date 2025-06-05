@@ -3,6 +3,8 @@ import 'package:dio/dio.dart';
 import '../../../app/global_imports.dart';
 import '../../../app/network/network.dart';
 import '../../models/home_model.dart';
+import '../../models/new_models/currency_model.dart';
+import '../../models/new_models/plan_model.dart';
 import '../../models/new_models/tags_model.dart';
 import '../../usecases/home_usecases/get_categories_use_case.dart';
 import '../../usecases/home_usecases/get_subcategories_use_case.dart';
@@ -13,13 +15,29 @@ class ServiceProvider extends ChangeNotifier {
   SubcategoryModel? subcategoryModel;
   List<SubcategoryModel>? subcategories;
   List<TagsModelData?>? tagsList;
+  List<PlanModelData?>? planList;
 
-  final TextEditingController title = TextEditingController();
-  final TextEditingController description = TextEditingController();
+  final TextEditingController titleController = TextEditingController();
+  final TextEditingController descriptionController = TextEditingController();
 
   bool isLoadingCategory = false;
   bool isLoadingSubcategory = false;
   bool isLoadingTags = false;
+  bool isLoadingPlan = false;
+
+  ///LIST
+
+  final TextEditingController priceController = TextEditingController();
+  final TextEditingController deliveryDayController = TextEditingController();
+  final TextEditingController revisionController = TextEditingController();
+  PlanModelData? plan;
+  CurrencyModelData? selectedCurrency;
+  bool sourceFile = false;
+
+  onChangeSourceFile(bool? value) {
+    sourceFile = value ?? false;
+    notifyListeners();
+  }
 
   onChangeCategory(CategoryModel? value) {
     categoryModel = value;
@@ -29,6 +47,16 @@ class ServiceProvider extends ChangeNotifier {
 
   onChangeSubcategory(SubcategoryModel? value) {
     subcategoryModel = value;
+    notifyListeners();
+  }
+
+  onChangePlan(PlanModelData? value) {
+    plan = value;
+    notifyListeners();
+  }
+
+  onSelectedCurrency(CurrencyModelData? value) {
+    selectedCurrency = value;
     notifyListeners();
   }
 
@@ -93,6 +121,44 @@ class ServiceProvider extends ChangeNotifier {
         );
       }
       isLoadingTags = false;
+      notifyListeners();
+    }
+  }
+
+  getPlans() async {
+    try {
+      planList?.clear();
+      isLoadingPlan = true;
+      if (selectedCurrency != null) {
+        selectedCurrency = null;
+      }
+      notifyListeners();
+      final response = await Network().get(
+        url: AppEndpoints.plans,
+      );
+
+      String errorMessage = await Network().handelError(response: response);
+      if (errorMessage.isNotEmpty) {
+        isLoadingTags = false;
+        notifyListeners();
+        AppSnackBar.openErrorSnackBar(message: errorMessage);
+        return;
+      }
+      PlanModel pansModel = PlanModel.fromJson(response.data);
+      planList = pansModel.data;
+      isLoadingPlan = false;
+      notifyListeners();
+    } catch (error) {
+      if (error is DioException) {
+        AppSnackBar.openErrorSnackBar(
+          message: Network().handelDioException(error),
+        );
+      } else {
+        AppSnackBar.openErrorSnackBar(
+          message: error.toString(),
+        );
+      }
+      isLoadingPlan = false;
       notifyListeners();
     }
   }

@@ -65,4 +65,5 @@ class AppEndpoints {
   static String approveQuotation = '$base_url/quotations/approve-quotation/';
   static String currencies = '$base_url/currencies';
   static String tags = '$base_url/tags';
+  static String plans = '$base_url/shared/plans';
 }

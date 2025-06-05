@@ -263,5 +263,13 @@ Map<String, String> ar = {
   "Tags": "الوسوم",
   "Next": "التالي",
   "Tags Choices" : "خيارات الوسوم",
+  "Create and customize your plans": "أنشئ وخصص خططك",
+  "Plans Choices" : "خيارات الخطط",
+  "Enter Price" : "ادخل السعر",
+  "Upload another plan": "+ تحميل خطة أخرى"
+
+
+
+
 
 };
