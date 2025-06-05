@@ -4,8 +4,12 @@ import 'package:irhebo/app/app_controller.dart';
 import 'package:irhebo/app/router/routes.dart';
 import 'package:irhebo/presentation/screens/bottom_nav_bar/bottom_nav_bar_controller.dart';
 import 'package:irhebo/presentation/screens/bottom_nav_bar/screens/settings/settings_controller.dart';
+import 'package:irhebo/presentation/screens/bottom_nav_bar/screens/settings/widgets/currency_data.dart';
 import 'package:irhebo/presentation/screens/bottom_nav_bar/screens/settings/widgets/settings_row.dart';
 import 'package:irhebo/presentation/widgets/normal_app_bar.dart';
+
+import '../../../../../app/resources/style/colors.dart';
+import '../../../../widgets/app_bottom_sheet.dart';
 
 class SettingsScreen extends GetView<SettingsController> {
   const SettingsScreen({super.key});
@@ -22,7 +26,7 @@ class SettingsScreen extends GetView<SettingsController> {
           onTapBack: () => Get.find<BottomNavBarController>().onWillPop(false),
         ),
         body: Obx(
-          () => Padding(
+          () => SingleChildScrollView(
             padding: EdgeInsets.symmetric(horizontal: 3.98 * (w / 100)),
             child: Column(
               children: [
@@ -48,6 +52,25 @@ class SettingsScreen extends GetView<SettingsController> {
                   title: "Dark Mode",
                   onChange: controller.onToggleMode,
                   value: controller.appController.darkMode,
+                ),
+                SettingsRow(
+                  title: "Currency",
+                  onTap: () {
+                    Get.bottomSheet(
+                      const AppBottomSheet(
+                        title: "Currencies",
+                        child: CurrencyData(),
+                      ),
+                      backgroundColor: Get.find<AppController>().darkMode
+                          ? AppDarkColors.darkScaffoldColor
+                          : AppLightColors.pureWhite,
+                      barrierColor: Get.find<AppController>().darkMode
+                          ? AppDarkColors.darkContainer.withOpacity(0.3)
+                          : AppLightColors.shadow.withOpacity(0.3),
+                      elevation: 0,
+                      isScrollControlled: false,
+                    );
+                  },
                 ),
                 SettingsRow(
                   title: "Language",

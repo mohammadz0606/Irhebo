@@ -1,3 +1,7 @@
+import '../../app/injection.dart';
+import '../../app/storage/app_prefs.dart';
+import '../../app/storage/app_prefs_keys.dart' show AppPrefsKeys;
+
 class CreateQuotationParams {
   String? title;
   String? description;
@@ -35,7 +39,7 @@ class CreateQuotationParams {
       if (revisions != null) 'revisions': revisions,
       if (deliveryDay != null) 'delivery_day': deliveryDay,
       if (sourceFile != null) 'source_file': sourceFile,
-      'currency' : 'used',
+      'currency' : AppPreferences(sl()).getString(key: AppPrefsKeys.CURRENCY) ?? 'USD',
       'sub_category_id' : subCategoryId,
     };
   }

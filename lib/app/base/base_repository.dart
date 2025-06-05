@@ -15,6 +15,7 @@ import 'package:irhebo/app/snack_bar.dart';
 import 'package:irhebo/app/storage/app_prefs.dart';
 
 import '../network/network_info.dart';
+import '../storage/app_prefs_keys.dart';
 
 typedef FutureEitherOr<T> = Future<Either<BaseErrorModel, T>> Function();
 typedef FutureEitherOrWithToken<T> = Future<Either<BaseErrorModel, T>> Function(
@@ -119,7 +120,7 @@ class GetOptions {
         'lang': Get.find<AppController>().lang.value.languageCode,
         // 'currency': Get.find<AppController>().currency,
         'Device-Type': Platform.isAndroid ? 'Android' : 'IOS',
-        'currency': 'usd',
+        'currency': AppPreferences(sl()).getString(key: AppPrefsKeys.CURRENCY) ?? 'USD',
       };
       options.validateStatus = (status) => status! < 500;
     } else {
@@ -131,7 +132,7 @@ class GetOptions {
         // 'applicationToken': applicationTokenModel?.applicationToken,
         // 'currency': Get.find<AppController>().currency,
         'Device-Type': Platform.isAndroid ? 'Android' : 'IOS',
-        'currency': 'usd',
+        'currency': AppPreferences(sl()).getString(key: AppPrefsKeys.CURRENCY) ?? 'USD',
       };
       options.validateStatus = (status) => status! < 500;
     }

@@ -39,8 +39,9 @@ class QuotationDetailsController extends GetxController {
     }
   }
 
-  onTapBack() {
+  onTapBack() async{
     Get.back();
+    await getQutationDetailsDetails();
   }
 
   getQutationDetailsDetails() async {

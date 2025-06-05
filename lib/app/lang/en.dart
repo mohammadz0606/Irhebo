@@ -253,5 +253,7 @@ Map<String, String> en = {
   "Are you sure you want to confirm this request?":
       "Are you sure you want to confirm this request?",
   "Approve Quotation": "Approve Quotation",
-  'Quotation Approved Successfully': "Quotation Approved Successfully"
+  'Quotation Approved Successfully': "Quotation Approved Successfully",
+  "Currency": "Currency",
+  "Currencies": "Currencies",
 };

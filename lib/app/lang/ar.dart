@@ -249,5 +249,7 @@ Map<String, String> ar = {
   "Are you sure you want to confirm this request?":
       "هل أنت متأكد أنك تريد تأكيد هذا الطلب؟",
   "Approve Quotation": "الموافقة على العرض",
-  "Quotation Approved Successfully": "تمت الموافقة على العرض بنجاح"
+  "Quotation Approved Successfully": "تمت الموافقة على العرض بنجاح",
+  "Currency": "العملة",
+  "Currencies" :"العملات"
 };

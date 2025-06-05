@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:irhebo/app/global_imports.dart' hide MultipartFile, FormData;
-import 'package:irhebo/domain/models/login_model.dart';
 import 'package:irhebo/domain/models/new_models/general_model.dart';
 
 import '../../../app/network/network.dart';

@@ -11,6 +11,7 @@ import '../enums.dart';
 import '../error/error_handler.dart';
 import '../injection.dart';
 import '../storage/app_prefs.dart';
+import '../storage/app_prefs_keys.dart';
 
 final class Network {
   /// Singleton class
@@ -107,7 +108,7 @@ final class Network {
       'Accept-Language': Get.locale?.languageCode,
       'lang': Get.find<AppController>().lang.value.languageCode,
       'Device-Type': Platform.isAndroid ? 'Android' : 'IOS',
-      'currency': 'usd',
+      'currency': AppPreferences(sl()).getString(key: AppPrefsKeys.CURRENCY) ?? 'USD',
     };
     AppPreferences prefs = sl();
     String token = prefs.getAccessToken();

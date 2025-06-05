@@ -14,7 +14,7 @@ class QuotationDetailsScreen extends GetView<QuotationDetailsController> {
     return Scaffold(
       appBar: NormalAppBar(
         title: controller.title,
-        // onTapBack: controller.onTapBack,
+        onTapBack: controller.onTapBack,
         // onTapHistory: () => Get.toNamed(AppRoutes.requestHistory),
       ),
       body: Obx(
