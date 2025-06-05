@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:irhebo/app/resources/style/colors.dart';
 import 'package:irhebo/app/resources/style/text_style.dart';
 
@@ -89,6 +90,10 @@ final darkTheme = ThemeData(
       backgroundColor: AppDarkColors.darkScaffoldColor,
       elevation: 0,
       scrolledUnderElevation: 0,
+      systemOverlayStyle: const SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        statusBarIconBrightness: Brightness.light, // default for dark theme
+      ),
       surfaceTintColor: AppDarkColors.darkContainer,
       foregroundColor: AppDarkColors.pureWhite.withOpacity(0.5),
       // shadowColor: Colors.transparent,
@@ -297,6 +302,10 @@ final lightTheme = ThemeData(
             borderSide: BorderSide.none)),
     appBarTheme: AppBarTheme(
       centerTitle: false,
+      systemOverlayStyle: const SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        statusBarIconBrightness: Brightness.dark, // default for light theme
+      ),
       backgroundColor: AppLightColors.scaffoldColor2,
       elevation: 0,
       scrolledUnderElevation: 0,
@@ -333,7 +342,6 @@ final lightTheme = ThemeData(
         ),
       ),
     ),
-
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
         foregroundColor: AppDarkColors.darkScaffoldColor,
@@ -346,7 +354,6 @@ final lightTheme = ThemeData(
         ),
       ),
     ),
-
     dividerTheme: const DividerThemeData(
         color: AppLightColors.dividerColor, thickness: 1, space: 1),
     dividerColor: AppLightColors.dividerColor,
