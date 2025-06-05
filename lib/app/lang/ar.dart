@@ -247,5 +247,7 @@ Map<String, String> ar = {
   "Account verified successfully": ".تم التحقق من الحساب بنجاح",
   "The operation was successful": ".تمت العملية بنجاح",
   "Are you sure you want to confirm this request?":
-      "هل أنت متأكد أنك تريد تأكيد هذا الطلب؟"
+      "هل أنت متأكد أنك تريد تأكيد هذا الطلب؟",
+  "Approve Quotation": "الموافقة على العرض",
+  "Quotation Approved Successfully": "تمت الموافقة على العرض بنجاح"
 };

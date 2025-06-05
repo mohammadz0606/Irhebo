@@ -250,5 +250,8 @@ Map<String, String> en = {
       "Attach your ID or passport to verify the account.",
   "Account verified successfully": "Account verified successfully",
   "The operation was successful": "The operation was successful.",
-  "Are you sure you want to confirm this request?" : "Are you sure you want to confirm this request?"
+  "Are you sure you want to confirm this request?":
+      "Are you sure you want to confirm this request?",
+  "Approve Quotation": "Approve Quotation",
+  'Quotation Approved Successfully': "Quotation Approved Successfully"
 };

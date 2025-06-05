@@ -62,4 +62,5 @@ class AppEndpoints {
   static String deletePortfolio = '$base_url/portfolio/delete/';
   static String verifyAccount = '$base_url/users/verify';
   static String confirmRequest = '$base_url/requests/confirm-request/';
+  static String approveQuotation = '$base_url/quotations/approve-quotation/';
 }

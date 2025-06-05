@@ -19,17 +19,18 @@ class QuotationDetailsScreen extends GetView<QuotationDetailsController> {
       ),
       body: Obx(
         () => Padding(
-            padding: EdgeInsets.symmetric(
-                vertical: 7.21 * (w / 100), horizontal: 4.47 * (w / 100)),
-            child: controller.isLoading
-                ? AppLoading(
-                    height: 101.24 * (w / 100),
-                    width: w,
-                    radius: 18,
-                  )
-                : QuotationDetailsWidget(
-                    quotation: controller.quotation!,
-                  )),
+          padding: EdgeInsets.symmetric(
+              vertical: 7.21 * (w / 100), horizontal: 4.47 * (w / 100)),
+          child: controller.isLoading
+              ? AppLoading(
+                  height: 101.24 * (w / 100),
+                  width: w,
+                  radius: 18,
+                )
+              : QuotationDetailsWidget(
+                  quotation: controller.quotation!,
+                ),
+        ),
       ),
     );
   }

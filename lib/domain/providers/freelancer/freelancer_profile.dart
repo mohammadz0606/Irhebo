@@ -25,6 +25,7 @@ class FreelancerProfileProvider extends ChangeNotifier {
         isLoading = false;
         notifyListeners();
         AppSnackBar.openErrorSnackBar(message: errorMessage);
+        return;
       }
 
       UserFreelancerModel freelancerProfileModel =
