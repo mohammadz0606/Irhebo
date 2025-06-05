@@ -114,7 +114,6 @@ class MultiCustomDropdown<T> extends StatelessWidget {
         } else ...{
           MultiSelectBottomSheetField<T?>(
             initialChildSize: 0.5,
-
             backgroundColor: Get.find<AppController>().darkMode
                 ? AppDarkColors.darkScaffoldColor
                 : Colors.white,

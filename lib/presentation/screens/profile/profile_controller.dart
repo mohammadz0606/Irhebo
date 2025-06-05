@@ -187,7 +187,13 @@ class ProfileController extends GetxController {
     gender = appController.genders.firstWhere(
       (element) => element.name == (user?.gender ?? ''),
     );
-    selectedLanguages.refresh();
+    selectedLanguages.clear();
+    selectedLanguages.addAll(appController.languages
+        .where((lang) => user?.languages?.any((uLang) => uLang.id == lang?.id) ?? false));
+    // for (LanguageModel element in user?.languages ?? []) {
+    //   final matched = appController.languages.firstWhereOrNull((lang) => lang?.id == element.id);
+    //   if (matched != null) selectedLanguages.add(matched);
+    // }
   }
 
   updateProfileButton({bool forPicture = false}) {
@@ -235,7 +241,10 @@ class ProfileController extends GetxController {
   goToUpdate() {
     initFieldsValues();
     Get.to(
-      () => const UpdateProfileScreen(),
+      () => UpdateProfileScreen(
+        user: user,
+        isUpdate: true,
+      ),
     );
   }
 }

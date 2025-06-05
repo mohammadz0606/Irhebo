@@ -43,6 +43,8 @@ class _RegisterFreelancerScreenState extends State<RegisterFreelancerScreen> {
   void initState() {
     searchController = Get.find<SearchControllerGetx>();
     searchController.getCategories();
+    selectedFiles = [null];
+    fileDescriptions = [TextEditingController()];
     super.initState();
   }
 
@@ -160,54 +162,54 @@ class _RegisterFreelancerScreenState extends State<RegisterFreelancerScreen> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'Files'.tr,
-                      style: Get.textTheme.headlineSmall,
-                    ),
+                    // Text(
+                    //   'Files'.tr,
+                    //   style: Get.textTheme.headlineSmall,
+                    // ),
                     if (selectedFiles.isNotEmpty)
                       ...List.generate(selectedFiles.length, (index) {
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        return Row(
                           children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'File ${index + 1}',
-                                  style: Get.textTheme.titleMedium,
-                                ),
-                                IconButton(
-                                  icon: const Icon(Icons.delete,
-                                      color: Colors.red),
-                                  onPressed: () {
-                                    setState(() {
-                                      selectedFiles.removeAt(index);
-                                      fileDescriptions.removeAt(index);
-                                    });
-                                  },
-                                ),
-                              ],
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  UploadFileWidget(
+                                    onFileSelected: (file) {
+                                      setState(() {
+                                        if (file != null) {
+                                          selectedFiles[index] = file;
+                                        }
+                                      });
+                                    },
+                                  ),
+                                  AppTextField(
+                                    controller: fileDescriptions[index],
+                                    hint: "Description",
+                                    textInputType: TextInputType.multiline,
+                                    maxLines: 1,
+                                    textInputAction: TextInputAction.newline,
+                                  ),
+                                  const SizedBox(height: 10),
+                                ],
+                              ),
                             ),
-                            UploadFileWidget(
-                              onFileSelected: (file) {
+                            IconButton(
+                              icon: const Icon(Icons.delete,
+                                  color: Colors.red),
+                              onPressed: () {
                                 setState(() {
-                                  if (file != null) {
-                                    selectedFiles[index] = file;
-                                  }
+                                  selectedFiles.removeAt(index);
+                                  fileDescriptions.removeAt(index);
                                 });
                               },
                             ),
-                            AppTextField(
-                              controller: fileDescriptions[index],
-                              hint: "Description",
-                              textInputType: TextInputType.multiline,
-                              maxLines: 1,
-                              textInputAction: TextInputAction.newline,
-                            ),
-                            const SizedBox(height: 10),
                           ],
                         );
                       }),
+
+
+
                     AppTextButton(
                       onPressed: () {
                         setState(() {

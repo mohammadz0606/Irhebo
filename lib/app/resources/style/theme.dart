@@ -47,44 +47,46 @@ final darkTheme = ThemeData(
       headlineSmall: getBoldStyle(
           color: AppDarkColors.pureWhite, fontSize: AppTextStyle.size20),
       titleLarge: getMediumStyle(
-          color: AppDarkColors.pureWhite.withOpacity(0.5),
-          fontSize: AppTextStyle.size18),
+          color: AppDarkColors.pureWhite, fontSize: AppTextStyle.size18),
       titleMedium: getMediumStyle(
-          color: AppDarkColors.pureWhite.withOpacity(0.5),
-          fontSize: AppTextStyle.size16),
-      titleSmall: getMediumStyle(
-          color: AppDarkColors.pureWhite.withOpacity(0.5),
-          fontSize: AppTextStyle.size14),
-      bodyLarge: getRegularStyle(
-          color: AppDarkColors.pureWhite.withOpacity(0.5),
-          fontSize: AppTextStyle.size18),
-      bodyMedium: getRegularStyle(
-          color: AppDarkColors.pureWhite.withOpacity(0.5),
-          fontSize: AppTextStyle.size16),
-      bodySmall: getRegularStyle(
-          color: AppDarkColors.pureWhite.withOpacity(0.5),
-          fontSize: AppTextStyle.size14),
-      labelLarge: getMediumStyle(
           color: AppDarkColors.pureWhite, fontSize: AppTextStyle.size16),
-      labelMedium: getMediumStyle(
+      titleSmall: getMediumStyle(
           color: AppDarkColors.pureWhite, fontSize: AppTextStyle.size14),
+      bodyLarge: getRegularStyle(
+          color: AppDarkColors.pureWhite, fontSize: AppTextStyle.size18),
+      bodyMedium: getRegularStyle(
+          color: AppDarkColors.pureWhite, fontSize: AppTextStyle.size16),
+      bodySmall: getRegularStyle(
+          color: AppDarkColors.pureWhite, fontSize: AppTextStyle.size14),
+      labelLarge: getMediumStyle(
+        color: AppDarkColors.pureWhite,
+        fontSize: AppTextStyle.size16,
+      ),
+      labelMedium: getMediumStyle(
+        color: AppDarkColors.pureWhite,
+        fontSize: AppTextStyle.size14,
+      ),
       labelSmall: getMediumStyle(
-          color: AppDarkColors.pureWhite, fontSize: AppTextStyle.size12),
+        color: AppDarkColors.pureWhite,
+        fontSize: AppTextStyle.size12,
+      ),
     ),
     //
     popupMenuTheme: PopupMenuThemeData(
-        color: AppDarkColors.darkContainer,
-        labelTextStyle: WidgetStateProperty.all(TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.w600,
-            fontSize: AppTextStyle.size14)),
-        textStyle: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.w600,
-            fontSize: AppTextStyle.size14),
-        shape: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(24),
-            borderSide: BorderSide.none)),
+      color: AppDarkColors.darkContainer,
+      labelTextStyle: WidgetStateProperty.all(TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.w600,
+          fontSize: AppTextStyle.size14)),
+      textStyle: TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.w600,
+          fontSize: AppTextStyle.size14),
+      shape: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(24),
+        borderSide: BorderSide.none,
+      ),
+    ),
     appBarTheme: AppBarTheme(
       centerTitle: false,
       backgroundColor: AppDarkColors.darkScaffoldColor,

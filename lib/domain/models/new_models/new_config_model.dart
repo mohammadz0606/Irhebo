@@ -67,6 +67,14 @@ class NewConfigModelDataLanguagesData {
     this.flag,
   });
 
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+          other is NewConfigModelDataLanguagesData && runtimeType == other.runtimeType && id == other.id;
+
+  @override
+  int get hashCode => id.hashCode;
+
   NewConfigModelDataLanguagesData.fromJson(Map<String, dynamic> json) {
     id = json['id']?.toInt();
     title = json['title']?.toString();

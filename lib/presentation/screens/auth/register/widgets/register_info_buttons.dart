@@ -88,6 +88,7 @@ class RegisterInfoButtons extends StatelessWidget {
           buttonText: languagesHint,
           label: "Languages",
           initialValue: selectedLanguages,
+          showSelected: selectedLanguages?.isNotEmpty == true,
           onConfirm: (values) {
             onConfirmLanguages(values);
           },

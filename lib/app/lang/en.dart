@@ -8,7 +8,7 @@ Map<String, String> en = {
   "Choose your role in FREECO": "Choose your role in FREECO",
   "Find Service": "Find Service",
   "Another Files": "Another Files",
-  "Upgrade to Freelancer": "Upgrade to Freelancer",
+  "Upgrade to Freelancer": "Become a Freelancer",
   "Sell Service": "Sell Service",
   "Continue": "Continue",
   "Skip": "Skip",

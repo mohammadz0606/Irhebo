@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:irhebo/app/app_controller.dart';
+import 'package:irhebo/domain/models/login_model.dart';
 import 'package:irhebo/presentation/screens/auth/register/widgets/register_info_buttons.dart';
 import 'package:irhebo/presentation/screens/profile/profile_controller.dart';
 
@@ -9,7 +10,14 @@ import 'package:irhebo/presentation/widgets/app_text_field.dart';
 import 'package:irhebo/presentation/widgets/normal_app_bar.dart';
 
 class UpdateProfileScreen extends GetWidget<ProfileController> {
-  const UpdateProfileScreen({super.key});
+  const UpdateProfileScreen({
+    super.key,
+    this.user,
+    this.isUpdate = false,
+  });
+
+  final UserModel? user;
+  final bool isUpdate;
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +39,18 @@ class UpdateProfileScreen extends GetWidget<ProfileController> {
                 child: Column(
                   children: [
                     AppTextField(
+                      controller: controller.phone,
+                      initialSelection: controller.appController.countryCode,
+                      label: "Phone Number",
+                      hint: "05***********",
+                      isPhone: true,
+                      enabled: false,
+                    ),
+                    SizedBox(
+                      height: 2.98 * (w / 100),
+                    ),
+
+                    AppTextField(
                       controller: controller.email,
                       label: "Email",
                       hint: "Enter your email",
@@ -43,17 +63,7 @@ class UpdateProfileScreen extends GetWidget<ProfileController> {
                       label: "User Name",
                       hint: "Enter your username",
                     ),
-                    SizedBox(
-                      height: 2.98 * (w / 100),
-                    ),
-                    AppTextField(
-                      controller: controller.phone,
-                      initialSelection: controller.appController.countryCode,
-                      label: "Phone Number",
-                      hint: "05***********",
-                      isPhone: true,
-                      enabled: false,
-                    ),
+
                     Obx(
                       () => RegisterInfoButtons(
                         countries: controller.appController.countries,
@@ -69,6 +79,7 @@ class UpdateProfileScreen extends GetWidget<ProfileController> {
                             : controller.selectedLanguages.length >= 2
                                 ? "${controller.selectedLanguages[0]?.title ?? ""} ${controller.selectedLanguages[1]?.title ?? ""}.."
                                 : "Select Language".tr,
+
                         selectedLanguages: controller.selectedLanguages,
                         initCountry: controller.country,
                         initProfessions: controller.profession,

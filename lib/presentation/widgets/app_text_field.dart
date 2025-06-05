@@ -152,8 +152,8 @@ class AppTextField extends StatelessWidget {
                 controller: controller,
                 style: getRegularStyle(
                     color: Get.find<AppController>().darkMode
-                        ? AppDarkColors.pureWhite.withOpacity(0.5)
-                        : Colors.black.withOpacity(0.5),
+                        ? AppDarkColors.pureWhite
+                        : Colors.black,
                     fontSize: AppTextStyle.size16),
                 cursorColor: Get.find<AppController>().darkMode
                     ? AppDarkColors.pureWhite.withOpacity(0.5)
