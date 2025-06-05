@@ -36,15 +36,14 @@ class _RegisterFreelancerScreenState extends State<RegisterFreelancerScreen> {
   File? avatar;
 
   List<int> categoryIds = [];
-  List<File?> selectedFiles = [null];
-  List<TextEditingController> fileDescriptions = [TextEditingController()];
+  List<File?> selectedFiles = [];
+  List<TextEditingController> fileDescriptions = [];
 
   @override
   void initState() {
     searchController = Get.find<SearchControllerGetx>();
     searchController.getCategories();
-    selectedFiles = [null];
-    fileDescriptions = [TextEditingController()];
+
     super.initState();
   }
 
@@ -146,7 +145,14 @@ class _RegisterFreelancerScreenState extends State<RegisterFreelancerScreen> {
                 UploadFileWidget(
                   onFileSelected: (file) {
                     setState(() {
+                      if(certificateFile != null) {
+                        selectedFiles.remove(certificateFile);
+                        certificateFile = null;
+                      }
                       certificateFile = file;
+                      if (certificateFile != null) {
+                        selectedFiles.add(certificateFile!);
+                      }
                     });
                   },
                 ),
@@ -195,8 +201,7 @@ class _RegisterFreelancerScreenState extends State<RegisterFreelancerScreen> {
                               ),
                             ),
                             IconButton(
-                              icon: const Icon(Icons.delete,
-                                  color: Colors.red),
+                              icon: const Icon(Icons.delete, color: Colors.red),
                               onPressed: () {
                                 setState(() {
                                   selectedFiles.removeAt(index);
@@ -207,8 +212,6 @@ class _RegisterFreelancerScreenState extends State<RegisterFreelancerScreen> {
                           ],
                         );
                       }),
-
-
 
                     AppTextButton(
                       onPressed: () {
@@ -233,9 +236,6 @@ class _RegisterFreelancerScreenState extends State<RegisterFreelancerScreen> {
                             selectedFiles.isNotEmpty ||
                             fileDescriptions.isNotEmpty) {
                           List<File> allFiles = [];
-                          if (certificateFile != null) {
-                            allFiles.add(certificateFile!);
-                          }
                           allFiles.addAll(selectedFiles.whereType<File>());
 
                           await provider.completeProfile(
