@@ -13,7 +13,12 @@ import '../../../widgets/dropdown_item.dart';
 import '../../../widgets/dropdown_widget.dart';
 
 class PlanCard extends StatefulWidget {
-  const PlanCard({super.key});
+  const PlanCard({
+    super.key,
+    this.currentIndex,
+  });
+
+  final int? currentIndex;
 
   @override
   State<PlanCard> createState() => _PlanCardState();
@@ -31,103 +36,126 @@ class _PlanCardState extends State<PlanCard> {
   @override
   Widget build(BuildContext context) {
     var w = MediaQuery.of(context).size.width;
-    return Container(
-      padding: EdgeInsets.symmetric(
-        vertical: 8.2 * (w / 100),
-        horizontal: 3.48 * (w / 100),
-      ),
-      width: w,
-      margin: const EdgeInsets.symmetric(horizontal: 10),
-      decoration: AppDecoration.getDecorationWithRadius(
-        radius: 8 * (w / 100),
-        color: Get.find<AppController>().darkMode
-            ? AppDarkColors.fillColor
-            : Colors.white,
-      ),
-      child: Consumer<ServiceProvider>(
-        builder: (context, provider, child) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              if (provider.isLoadingPlan)
-                const Center(child: CircularProgressIndicator.adaptive())
-              else
-                CustomDropdown<PlanModelData?>(
-                  itemBuilder: (context, item, isDisabled, isSelected) =>
-                      DropdownItem(
-                    label: item?.title ?? "",
-                  ),
-                  showSearchBox: true,
-                  label: "Plans",
-                  hintText: "Plans Choices",
-                  items: provider.planList ?? [],
-                  onChanged: provider.onChangePlan,
-                  value: provider.plan,
-                  itemToString: (value) => value?.title ?? "",
-                ),
-              const SizedBox(height: 20),
-              Text(
-                'Price'.tr,
-                style: Get.textTheme.headlineSmall,
+    return Consumer<ServiceProvider>(
+      builder: (context, provider, child) {
+        return Stack(
+          alignment: Alignment.topRight,
+          children: [
+            Container(
+              padding: EdgeInsets.symmetric(
+                vertical: 8.2 * (w / 100),
+                horizontal: 3.48 * (w / 100),
               ),
-              const SizedBox(height: 10),
-              Row(
-                spacing: 10,
+              width: w,
+              margin: const EdgeInsets.symmetric(horizontal: 10),
+              decoration: AppDecoration.getDecorationWithRadius(
+                radius: 8 * (w / 100),
+                color: Get.find<AppController>().darkMode
+                    ? AppDarkColors.fillColor
+                    : Colors.white,
+              ),
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Expanded(
-                    child: AppTextField(
-                      controller: provider.priceController,
-                      hint: 'Enter Price',
-                      textInputType:
-                          const TextInputType.numberWithOptions(decimal: true),
-                      inputFormatters: [
-                        FilteringTextInputFormatter.allow(
-                            RegExp(r'^\d*\.?\d{0,2}')),
-                      ],
-                      textInputAction: TextInputAction.done,
+                  if (provider.isLoadingPlan)
+                    const Center(child: CircularProgressIndicator.adaptive())
+                  else
+                    CustomDropdown<PlanModelData?>(
+                      itemBuilder: (context, item, isDisabled, isSelected) =>
+                          DropdownItem(
+                        label: item?.title ?? "",
+                      ),
+                      showSearchBox: true,
+                      label: "Plans",
+                      hintText: "Plans Choices",
+                      items: provider.planList ?? [],
+                      onChanged: provider.onChangePlan,
+                      value: provider.plan,
+                      itemToString: (value) => value?.title ?? "",
                     ),
+                  const SizedBox(height: 20),
+                  Text(
+                    'Price'.tr,
+                    style: Get.textTheme.headlineSmall,
                   ),
-                  Consumer<CurrencyProvider>(
-                    builder: (context, currencyProvider, child) {
-                      return Expanded(
-                        child: _buildCurrencyDropDown(
-                          provider,
-                          w,
-                          currencyProvider,
+                  const SizedBox(height: 10),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    spacing: 10,
+                    children: [
+                      Expanded(
+                        child: AppTextField(
+                          controller: provider
+                              .priceController[widget.currentIndex ?? 0],
+                          hint: 'Enter Price',
+                          textInputType: const TextInputType.numberWithOptions(
+                              decimal: true),
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(
+                                RegExp(r'^\d*\.?\d{0,2}')),
+                          ],
+                          textInputAction: TextInputAction.done,
                         ),
-                      );
-                    },
+                      ),
+                      Consumer<CurrencyProvider>(
+                        builder: (context, currencyProvider, child) {
+                          return Expanded(
+                            child: _buildCurrencyDropDown(
+                              provider,
+                              w,
+                              currencyProvider,
+                            ),
+                          );
+                        },
+                      ),
+                    ],
                   ),
+                  const SizedBox(height: 30),
+                  _buildRowField(
+                    title: 'Delivery Day',
+                    controller: provider
+                        .deliveryDayController[widget.currentIndex ?? 0],
+                  ),
+                  const SizedBox(height: 15),
+                  _buildRowField(
+                    title: 'Revisions',
+                    controller:
+                        provider.revisionController[widget.currentIndex ?? 0],
+                  ),
+                  const SizedBox(height: 15),
+                  CheckboxListTile(
+                    controlAffinity: ListTileControlAffinity.leading,
+                    contentPadding: EdgeInsets.zero,
+                    title: Text(
+                      'Source file'.tr,
+                      style: Get.theme.textTheme.bodyMedium,
+                    ),
+                    dense: true,
+                    value: provider.sourceFile,
+                    onChanged: provider.onChangeSourceFile,
+                  )
                 ],
               ),
-              const SizedBox(height: 30),
-              _buildRowField(
-                title: 'Delivery Day',
-                controller: provider.deliveryDayController,
-              ),
-              const SizedBox(height: 15),
-              _buildRowField(
-                title: 'Revisions',
-                controller: provider.revisionController,
-              ),
-              const SizedBox(height: 15),
-              CheckboxListTile(
-                controlAffinity: ListTileControlAffinity.leading,
-                contentPadding: EdgeInsets.zero,
-                title: Text(
-                  'Source file'.tr,
-                  style: Get.theme.textTheme.bodyMedium,
+            ),
+            if (widget.currentIndex != null && widget.currentIndex != 0)
+              Positioned(
+                top: 0,
+                right: 0,
+                child: GestureDetector(
+                  onTap: () =>
+                      provider.removePlanAtIndex(widget.currentIndex ?? 1),
+                  child: const AppIcon(
+                    path: AppIcons.delete,
+                    color: AppDarkColors.red,
+                    height: 30,
+                    width: 20,
+                  ),
                 ),
-                dense: true,
-                value: provider.sourceFile,
-                onChanged: provider.onChangeSourceFile,
-              )
-            ],
-          );
-        },
-      ),
+              ),
+          ],
+        );
+      },
     );
   }
 

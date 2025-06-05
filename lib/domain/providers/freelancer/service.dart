@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 
 import '../../../app/global_imports.dart';
 import '../../../app/network/network.dart';
+import '../../../presentation/screens/freelancer_services/widgets/plan_card.dart';
 import '../../models/home_model.dart';
 import '../../models/new_models/currency_model.dart';
 import '../../models/new_models/plan_model.dart';
@@ -27,9 +28,16 @@ class ServiceProvider extends ChangeNotifier {
 
   ///LIST
 
-  final TextEditingController priceController = TextEditingController();
-  final TextEditingController deliveryDayController = TextEditingController();
-  final TextEditingController revisionController = TextEditingController();
+  int planListUIndex = 0;
+  final List<PlanCard> listOfPlans = [const PlanCard()];
+
+  final List<TextEditingController> priceController = [TextEditingController()];
+  final List<TextEditingController> deliveryDayController = [
+    TextEditingController()
+  ];
+  final List<TextEditingController> revisionController = [
+    TextEditingController()
+  ];
   PlanModelData? plan;
   CurrencyModelData? selectedCurrency;
   bool sourceFile = false;
@@ -159,6 +167,26 @@ class ServiceProvider extends ChangeNotifier {
         );
       }
       isLoadingPlan = false;
+      notifyListeners();
+    }
+  }
+
+  allPlanListUIndex() {
+    planListUIndex = planListUIndex + 1;
+    listOfPlans.add(const PlanCard());
+    priceController.add(TextEditingController());
+    deliveryDayController.add(TextEditingController());
+    revisionController.add(TextEditingController());
+    notifyListeners();
+  }
+
+  removePlanAtIndex(int index) {
+    if (index >= 0 && index < listOfPlans.length) {
+      listOfPlans.removeAt(index);
+      planListUIndex = listOfPlans.length - 1;
+      priceController.removeAt(index);
+      deliveryDayController.removeAt(index);
+      revisionController.removeAt(index);
       notifyListeners();
     }
   }

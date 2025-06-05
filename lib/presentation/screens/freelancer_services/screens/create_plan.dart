@@ -4,14 +4,9 @@ import '../../../widgets/app_text_button.dart';
 import '../../../widgets/normal_app_bar.dart';
 import '../widgets/plan_card.dart';
 
-class CreatePlanScreen extends StatefulWidget {
+class CreatePlanScreen extends StatelessWidget {
   const CreatePlanScreen({super.key});
 
-  @override
-  State<CreatePlanScreen> createState() => _CreatePlanScreenState();
-}
-
-class _CreatePlanScreenState extends State<CreatePlanScreen> {
   @override
   Widget build(BuildContext context) {
     var w = MediaQuery.of(context).size.width;
@@ -41,11 +36,22 @@ class _CreatePlanScreenState extends State<CreatePlanScreen> {
                     style: Get.textTheme.titleMedium,
                   ),
                   const SizedBox(height: 25),
-                  const PlanCard(),
-
+                  ListView.separated(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: provider.listOfPlans.length,
+                    itemBuilder: (context, index) {
+                      return PlanCard(currentIndex: index);
+                    },
+                    separatorBuilder: (context, index) {
+                      return const SizedBox(height: 25);
+                    },
+                  ),
                   const SizedBox(height: 30),
                   AppTextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      provider.allPlanListUIndex();
+                    },
                     text: 'Upload another plan',
                   ),
                 ],
