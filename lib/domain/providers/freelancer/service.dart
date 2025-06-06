@@ -9,6 +9,7 @@ import '../../models/home_model.dart';
 import '../../models/new_models/currency_model.dart';
 import '../../models/new_models/plan_model.dart';
 import '../../models/new_models/tags_model.dart';
+import '../../params/new_params/freelanser/create_service_param.dart';
 import '../../usecases/home_usecases/get_categories_use_case.dart';
 import '../../usecases/home_usecases/get_subcategories_use_case.dart';
 
@@ -19,6 +20,7 @@ class ServiceProvider extends ChangeNotifier {
   List<SubcategoryModel>? subcategories;
   List<TagsModelData?>? tagsList;
   List<PlanModelData?>? planList;
+  List<int> tagsId = [];
 
   final TextEditingController titleController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
@@ -47,6 +49,71 @@ class ServiceProvider extends ChangeNotifier {
   final List<CurrencyModelData?> selectedCurrency = [CurrencyModelData()];
   final List<bool> sourceFile = [false];
 
+  bool isLoadingWithCreate = false;
+
+  createNewService() async {
+    try {
+      isLoadingWithCreate = true;
+      notifyListeners();
+      final error = validateServiceData(
+        titleController: titleController,
+        descriptionController: descriptionController,
+        deliveryDayController: deliveryDayController,
+        priceController: priceController,
+        revisionController: revisionController,
+        plan: plan,
+        cover: cover,
+        media: media,
+        subcategoryModel: subcategoryModel,
+      );
+
+      if (error != null) {
+        AppSnackBar.openErrorSnackBar(message: error);
+        isLoadingWithCreate = false;
+        notifyListeners();
+        return;
+      }
+
+      var data = CreateServiceParam(
+        title: titleController.text,
+        cover: cover!,
+        deliveryDays:
+            deliveryDayController.map((e) => int.parse(e.text)).toList(),
+        description: descriptionController.text,
+        media: media,
+        planId: plan.map((e) => e?.id ?? 0).toList(),
+        price: priceController.map((e) => double.parse(e.text)).toList(),
+        revision: revisionController.map((e) => int.parse(e.text)).toList(),
+        sourceFile: sourceFile,
+        supCategoryId: subcategoryModel?.id ?? 0,
+        tags: tagsId,
+      );
+
+      final response = await Network().post(
+        isUploadFile: true,
+        data: await data.toJson(),
+        url: AppEndpoints.createService,
+      );
+      String errorMessage = await Network().handelError(response: response);
+      if (errorMessage.isNotEmpty) {
+        isLoadingWithCreate = false;
+        notifyListeners();
+        AppSnackBar.openErrorSnackBar(message: errorMessage);
+        return;
+      }
+    } catch (error) {
+      if (error is DioException) {
+        AppSnackBar.openErrorSnackBar(
+          message: Network().handelDioException(error),
+        );
+      } else {
+        AppSnackBar.openErrorSnackBar(
+          message: error.toString(),
+        );
+      }
+      isLoadingWithCreate = false;
+    }
+  }
 
   onChangeCover(File? value) {
     cover = value;
@@ -81,6 +148,11 @@ class ServiceProvider extends ChangeNotifier {
 
   onSelectedCurrency(CurrencyModelData? value) {
     selectedCurrency[planListUIndex] = value;
+    notifyListeners();
+  }
+
+  onChangeTags(List<TagsModelData?> value) {
+    tagsId = value.map((e) => e?.id ?? 0).toList();
     notifyListeners();
   }
 
@@ -211,5 +283,46 @@ class ServiceProvider extends ChangeNotifier {
       sourceFile.removeAt(index);
       notifyListeners();
     }
+  }
+
+  String? validateServiceData({
+    required TextEditingController titleController,
+    required TextEditingController descriptionController,
+    required List<TextEditingController> deliveryDayController,
+    required List<TextEditingController> priceController,
+    required List<TextEditingController> revisionController,
+    required List<PlanModelData?> plan,
+    required File? cover,
+    required List<File> media,
+    required SubcategoryModel? subcategoryModel,
+  }) {
+    if (titleController.text.trim().isEmpty) return "Title is required.";
+    if (descriptionController.text.trim().isEmpty) {
+      return "Description is required.";
+    }
+    if (cover == null) return "Cover photo is required.";
+    if (subcategoryModel == null || subcategoryModel.id == 0) {
+      return "Subcategory is required.";
+    }
+    if (plan.isEmpty || plan.any((e) => e == null)) {
+      return "At least one plan must be selected.";
+    }
+
+    if (deliveryDayController
+        .any((c) => c.text.isEmpty || int.tryParse(c.text) == null)) {
+      return "Please enter valid delivery days.";
+    }
+
+    if (priceController
+        .any((c) => c.text.isEmpty || double.tryParse(c.text) == null)) {
+      return "Please enter valid prices.";
+    }
+
+    if (revisionController
+        .any((c) => c.text.isEmpty || int.tryParse(c.text) == null)) {
+      return "Please enter valid revision numbers.";
+    }
+
+    return null;
   }
 }

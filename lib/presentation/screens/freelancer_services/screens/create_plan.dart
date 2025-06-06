@@ -1,5 +1,6 @@
 import '../../../../app/global_imports.dart';
 import '../../../../domain/providers/freelancer/service.dart';
+import '../../../widgets/app_button.dart';
 import '../../../widgets/app_text_button.dart';
 import '../../../widgets/normal_app_bar.dart';
 import '../widgets/plan_card.dart';
@@ -53,6 +54,15 @@ class CreatePlanScreen extends StatelessWidget {
                       provider.allPlanListUIndex();
                     },
                     text: 'Upload another plan',
+                  ),
+                  const SizedBox(height: 50),
+                  AppButton(
+                    isLoading: provider.isLoadingWithCreate,
+                    title: 'Submit',
+                    backGroundColor: AppLightColors.greenContainer,
+                    onPressed: () async {
+                      await provider.createNewService();
+                    },
                   ),
                 ],
               ),

@@ -2,6 +2,10 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 
+import '../../../../app/injection.dart';
+import '../../../../app/storage/app_prefs.dart';
+import '../../../../app/storage/app_prefs_keys.dart';
+
 final class CreateServiceParam {
   final int supCategoryId;
   final String title;
@@ -13,8 +17,9 @@ final class CreateServiceParam {
   final List<int> deliveryDays;
   final List<bool> sourceFile;
   final List<int> revision;
+  final List<int> tags;
 
-  const CreateServiceParam({
+  const CreateServiceParam( {
     required this.supCategoryId,
     required this.title,
     required this.description,
@@ -25,6 +30,7 @@ final class CreateServiceParam {
     required this.deliveryDays,
     required this.sourceFile,
     required this.revision,
+    required this.tags,
   });
 
   Future<FormData> toJson() async {
@@ -42,19 +48,27 @@ final class CreateServiceParam {
     formDataFields.add(MapEntry("title", title.trim()));
     formDataFields.add(MapEntry("description", description.trim()));
     formDataFields.add(MapEntry(
-      "avatar",
+      "cover",
       await MultipartFile.fromFile(cover.path, filename: coverFileName),
     ));
 
+
+    AppPreferences preferences = sl();
+    formDataFields.add(MapEntry("currency", preferences.getString(key: AppPrefsKeys.CURRENCY) ?? 'USD'));
+
     for (int i = 0; i < multiFiles.length; i++) {
       formDataFields.add(MapEntry("media[$i]", multiFiles[i]));
+    }
+
+    for (int i = 0; i < tags.length; i++) {
+      formDataFields.add(MapEntry("tags[$i]", tags[i]));
     }
     for (int i = 0; i < planId.length; i++) {
       formDataFields.add(MapEntry("plans[$i][plan_id]", planId[i]));
 
       ///---
       formDataFields
-          .add(MapEntry("plans[$i][feature][0][price][title]", 'Price'));
+          .add(MapEntry("plans[$i][feature][0][title]", 'Price'));
       formDataFields.add(MapEntry("plans[$i][feature][0][type]", 'price'));
       formDataFields.add(MapEntry("plans[$i][feature][0][value]", price[i]));
 

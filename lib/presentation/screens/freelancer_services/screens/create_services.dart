@@ -168,28 +168,15 @@ class _CreateServicesScreenState extends State<CreateServicesScreen> {
                       label: 'Tags',
                       titleStyle: Get.textTheme.labelMedium,
                       showSelected: true,
-                      onConfirm: (value) {
-                        log('LEN SELECTED SERVICE ${value.length}');
-                        List<int> ids = value
-                            .map(
-                              (e) => e?.id ?? 0,
-                            )
-                            .toList();
-
-                        //widget.onServicesSelected(ids);
-                      },
+                      onConfirm: provider.onChangeTags,
                     ),
                   const SizedBox(height: 25),
                   AppButton(
                     title: 'Next',
                     backGroundColor: AppLightColors.greenContainer,
-                    onPressed: provider.categoryModel == null ||
-                            provider.subcategoryModel == null ||
-                            provider.tagsList == null
-                        ? () {
-                            Get.toNamed(AppRoutes.createPlan);
-                          }
-                        : null,
+                    onPressed: () {
+                      Get.toNamed(AppRoutes.createPlan);
+                    },
                   ),
                 ],
               ),
