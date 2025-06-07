@@ -56,15 +56,10 @@ class ServiceProvider extends ChangeNotifier {
       isLoadingWithCreate = true;
       notifyListeners();
       final error = validateServiceData(
-        titleController: titleController,
-        descriptionController: descriptionController,
         deliveryDayController: deliveryDayController,
         priceController: priceController,
         revisionController: revisionController,
         plan: plan,
-        cover: cover,
-        media: media,
-        subcategoryModel: subcategoryModel,
       );
 
       if (error != null) {
@@ -286,24 +281,11 @@ class ServiceProvider extends ChangeNotifier {
   }
 
   String? validateServiceData({
-    required TextEditingController titleController,
-    required TextEditingController descriptionController,
     required List<TextEditingController> deliveryDayController,
     required List<TextEditingController> priceController,
     required List<TextEditingController> revisionController,
     required List<PlanModelData?> plan,
-    required File? cover,
-    required List<File> media,
-    required SubcategoryModel? subcategoryModel,
   }) {
-    if (titleController.text.trim().isEmpty) return "Title is required.";
-    if (descriptionController.text.trim().isEmpty) {
-      return "Description is required.";
-    }
-    if (cover == null) return "Cover photo is required.";
-    if (subcategoryModel == null || subcategoryModel.id == 0) {
-      return "Subcategory is required.";
-    }
     if (plan.isEmpty || plan.any((e) => e == null)) {
       return "At least one plan must be selected.";
     }

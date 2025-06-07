@@ -18,6 +18,7 @@ final class CreateServiceParam {
   final List<bool> sourceFile;
   final List<int> revision;
   final List<int> tags;
+  //final List<String> currencies;
 
   const CreateServiceParam( {
     required this.supCategoryId,
@@ -31,6 +32,7 @@ final class CreateServiceParam {
     required this.sourceFile,
     required this.revision,
     required this.tags,
+   // required this.currencies
   });
 
   Future<FormData> toJson() async {

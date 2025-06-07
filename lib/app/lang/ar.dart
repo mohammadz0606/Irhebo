@@ -262,14 +262,13 @@ Map<String, String> ar = {
   "Media": "وسائط",
   "Tags": "الوسوم",
   "Next": "التالي",
-  "Tags Choices" : "خيارات الوسوم",
+  "Tags Choices": "خيارات الوسوم",
   "Create and customize your plans": "أنشئ وخصص خططك",
-  "Plans Choices" : "خيارات الخطط",
-  "Enter Price" : "ادخل السعر",
-  "Upload another plan": "+ تحميل خطة أخرى"
-
-
-
-
-
+  "Plans Choices": "خيارات الخطط",
+  "Enter Price": "ادخل السعر",
+  "Upload another plan": "+ تحميل خطة أخرى",
+  "Stand out from the crowd!": "كن مميزًا عن الآخرين!",
+  "Tell the client why you’re the best choice. Highlight your experience, skills, and what makes you stand out.":
+      "أخبر العميل لماذا أنت الخيار الأفضل. أبرز خبراتك، مهاراتك، وما يجعلك مميزًا.",
+  "Type your comment or question here": "اكتب تعليقك أو سؤالك هنا"
 };

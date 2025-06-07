@@ -98,12 +98,12 @@ class QuotationDetailsController extends GetxController {
     }
   }
 
-  applyQuotation() async {
+  applyQuotation({required String comment}) async {
     isLoadingApplyQuotation.value = true;
     CreateQuotationCommentUseCase createQuotationCommentUseCase = sl();
     final result = await createQuotationCommentUseCase(
       CreateCommentParams(
-        comment: '',
+        comment: comment,
         quotationId: id,
       ),
     );
@@ -115,6 +115,7 @@ class QuotationDetailsController extends GetxController {
       (r) async {
         await getQutationDetailsDetails();
         isLoadingApplyQuotation.value = false;
+        Get.back();
         AppSnackBar.openSuccessSnackBar(
           message: 'Quotation Applied Successfully'.tr,
         );

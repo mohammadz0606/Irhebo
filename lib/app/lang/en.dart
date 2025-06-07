@@ -270,5 +270,11 @@ Map<String, String> en = {
   "Create and customize your plans": "Create and customize your plans",
   "Plans Choices": "Plans Choices",
   "Enter Price": "Enter Price",
-  "Upload another plan": "+ Upload another plan"
+  "Upload another plan": "+ Upload another plan",
+
+
+  "Stand out from the crowd!": "Stand out from the crowd!",
+  "Tell the client why you’re the best choice. Highlight your experience, skills, and what makes you stand out.":
+      "Tell the client why you’re the best choice. Highlight your experience, skills, and what makes you stand out.",
+  "Type your comment or question here" : "Type your comment or question here",
 };

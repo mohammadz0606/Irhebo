@@ -14,6 +14,7 @@ import 'package:irhebo/presentation/widgets/app_button.dart';
 
 import '../../../../app/router/routes.dart';
 import '../../../widgets/app_image.dart';
+import '../../../widgets/app_text_field.dart';
 import '../quotation_details_controller.dart';
 
 class QuotationDetailsWidget extends GetView<QuotationDetailsController> {
@@ -158,16 +159,31 @@ class QuotationDetailsWidget extends GetView<QuotationDetailsController> {
                         ),
                       ),
                     } else ...{
-                      AppButton(
-                        title: 'Apply for Quotation',
-                        onPressed: () {},
+                      Obx(
+                        () {
+                          return AppButton(
+                            title: 'Apply for Quotation',
+                            backGroundColor: AppLightColors.greenContainer,
+                            isLoading: controller.isLoadingApplyQuotation.value,
+                            onPressed: () {
+                              showStandOutDialog(context);
+                            },
+                          );
+                        },
                       ),
                     }
                   } else ...{
-                    AppButton(
-                      title: 'Apply for Quotation',
-                      backGroundColor: AppLightColors.greenContainer,
-                      onPressed: () {},
+                    Obx(
+                      () {
+                        return AppButton(
+                          title: 'Apply for Quotation',
+                          backGroundColor: AppLightColors.greenContainer,
+                          isLoading: controller.isLoadingApplyQuotation.value,
+                          onPressed: () {
+                            showStandOutDialog(context);
+                          },
+                        );
+                      },
                     ),
                   }
                 },
@@ -285,6 +301,66 @@ class QuotationDetailsWidget extends GetView<QuotationDetailsController> {
           },
         ),
       ],
+    );
+  }
+
+  Future<void> showStandOutDialog(BuildContext context) async {
+    final TextEditingController commentController = TextEditingController();
+
+    return await Get.defaultDialog(
+      backgroundColor:
+          Get.find<AppController>().darkMode ? Colors.black : Colors.white,
+      titlePadding: const EdgeInsets.only(top: 20),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      title: '',
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            "Stand out from the crowd!".tr,
+            style: Get.textTheme.titleLarge?.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 20),
+          const Icon(
+            Icons.emoji_events_outlined,
+            color: Colors.green,
+            size: 60,
+          ),
+          const SizedBox(height: 20),
+          Text(
+            "Tell the client why you’re the best choice. Highlight your experience, skills, and what makes you stand out.".tr,
+            style: Get.textTheme.bodyMedium?.copyWith(
+              height: 1.5,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 25),
+          AppTextField(
+            controller: commentController,
+            hint: "Type your comment or question here".tr,
+            textInputType: TextInputType.multiline,
+            maxLines: 4,
+          ),
+          const SizedBox(height: 25),
+          Obx(
+            () {
+              return AppButton(
+                title: "Submit",
+                isLoading: controller.isLoadingApplyQuotation.value,
+                onPressed: () async {
+                  final comment = commentController.text.trim();
+                  if (comment.isNotEmpty) {
+                    await controller.applyQuotation(comment: comment);
+                  }
+                },
+              );
+            },
+          )
+        ],
+      ),
     );
   }
 }
