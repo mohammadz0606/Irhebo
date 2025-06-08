@@ -6,6 +6,7 @@ import '../../../app/global_imports.dart';
 import '../../../app/network/network.dart';
 import '../../models/config_model.dart';
 import '../../models/new_models/freelancer/portfolio_list_model.dart';
+import '../../models/new_models/new_portfolio_details_model.dart';
 import '../../params/new_params/freelanser/create_portfolio_param.dart';
 import '../../params/pagination_params.dart';
 
@@ -18,10 +19,56 @@ class FreelancerPortfolioProvider extends ChangeNotifier {
 
   int pageNumber = 1;
   List<PortfolioListModelDataPortfolios> portfolioList = [];
-  DataModel? portfolio;
+
+  //DataModel? portfolio;
 
   RefreshController refreshController =
       RefreshController(initialRefresh: false);
+
+  Future<void> getPortfolioDetails(
+    int id,
+    Function(NewPortfolioDetailsModelData? data) onSuccess,
+  ) async {
+    try {
+      isLoadingDetails = true;
+      notifyListeners();
+
+      final response = await Network().get(
+        url: '${AppEndpoints.portfolioDetails}$id',
+      );
+
+      String errorMessage = await Network().handelError(response: response);
+      if (errorMessage.isNotEmpty) {
+        isLoadingDelete = false;
+        notifyListeners();
+        AppSnackBar.openErrorSnackBar(
+          message: errorMessage,
+        );
+        return;
+      }
+
+      NewPortfolioDetailsModel dataModel =
+          NewPortfolioDetailsModel.fromJson(response.data);
+      //portfolio = dataModel;
+      // title.text = dataModel.data?.title ?? '';
+      // desc.text = dataModel.data?.description ?? '';
+      isLoadingDetails = false;
+      onSuccess(dataModel.data);
+      notifyListeners();
+    } catch (error) {
+      if (error is DioException) {
+        AppSnackBar.openErrorSnackBar(
+          message: Network().handelDioException(error),
+        );
+      } else {
+        AppSnackBar.openErrorSnackBar(
+          message: error.toString(),
+        );
+      }
+      isLoadingDetails = false;
+      notifyListeners();
+    }
+  }
 
   Future<void> getPortfolioList() async {
     try {
@@ -222,47 +269,6 @@ class FreelancerPortfolioProvider extends ChangeNotifier {
         );
       }
       isLoadingDelete = false;
-      notifyListeners();
-    }
-  }
-
-  Future<void> getPortfolioDetails(int id) async {
-    try {
-      isLoadingDetails = true;
-      if (portfolio != null) {
-        portfolio = null;
-      }
-      notifyListeners();
-
-      final response = await Network().get(
-        url: '${AppEndpoints.portfolioDetails}$id',
-      );
-
-      String errorMessage = await Network().handelError(response: response);
-      if (errorMessage.isNotEmpty) {
-        isLoadingDelete = false;
-        notifyListeners();
-        AppSnackBar.openErrorSnackBar(
-          message: errorMessage,
-        );
-        return;
-      }
-
-      DataModel dataModel = DataModel.fromJson(response.data);
-      portfolio = dataModel;
-      isLoadingDetails = false;
-      notifyListeners();
-    } catch (error) {
-      if (error is DioException) {
-        AppSnackBar.openErrorSnackBar(
-          message: Network().handelDioException(error),
-        );
-      } else {
-        AppSnackBar.openErrorSnackBar(
-          message: error.toString(),
-        );
-      }
-      isLoadingDetails = false;
       notifyListeners();
     }
   }

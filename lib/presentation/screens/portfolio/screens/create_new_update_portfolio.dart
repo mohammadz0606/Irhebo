@@ -6,6 +6,7 @@ import 'package:irhebo/domain/providers/files_manager.dart';
 import 'package:irhebo/presentation/screens/auth/register/widgets/upload_file.dart';
 
 import '../../../../app/global_imports.dart';
+import '../../../../domain/models/new_models/freelancer/freelancer_service_model.dart';
 import '../../../../domain/params/new_params/freelanser/create_portfolio_param.dart';
 import '../../../../domain/providers/freelancer/freelancer_portfolio.dart';
 import '../../../widgets/app_button.dart';
@@ -24,18 +25,19 @@ class CreateNewUpdatePortfolioScreen extends StatefulWidget {
 
 class _CreateNewUpdatePortfolioScreenState
     extends State<CreateNewUpdatePortfolioScreen> {
-  final TextEditingController _title = TextEditingController();
-  final TextEditingController _desc = TextEditingController();
   File? cove;
   final List<File> media = [];
   final List<int> services = [];
   late FilesManagerProvider filesManagerProvider;
   late FreelancerPortfolioProvider freelancerPortfolioProvider;
+  final TextEditingController title = TextEditingController();
+  final TextEditingController desc = TextEditingController();
+  List<int> selectedServices = [];
 
   @override
   void dispose() {
-    _title.dispose();
-    _desc.dispose();
+    title.dispose();
+    desc.dispose();
     super.dispose();
   }
 
@@ -47,16 +49,44 @@ class _CreateNewUpdatePortfolioScreenState
         Provider.of<FilesManagerProvider>(context, listen: false);
     freelancerPortfolioProvider =
         Provider.of<FreelancerPortfolioProvider>(context, listen: false);
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _onLoadEditData();
+    //freelancerPortfolioProvider.desc.addListener(_onTextChanged);
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await _onLoadEditData();
     });
     super.initState();
   }
 
-  _onLoadEditData() {
+  _onLoadEditData() async {
     if (Get.arguments?['data'] != null) {
-      freelancerPortfolioProvider.getPortfolioDetails(
+      await freelancerPortfolioProvider.getPortfolioDetails(
         Get.arguments?['id'],
+        (data) async {
+          media.clear();
+          title.text = data?.title ?? '';
+          desc.text = data?.description ?? '';
+          // cove = File(
+          //   data?.media?.first?.mediaPath ?? '',
+          // );
+          services.addAll(data!.service!
+              .map(
+                (e) => e?.id ?? 0,
+              )
+              .toList());
+
+          selectedServices.addAll(data.service!
+              .map(
+                (e) => e?.id ?? 0,
+              )
+              .toList());
+
+          for (String? url in data.media!.map((e) => e?.mediaPath).toList()) {
+            File file = await filesManagerProvider.urlToFile(url ?? '');
+            media.add(file);
+          }
+
+          setState(() {});
+        },
       );
     }
   }
@@ -77,15 +107,12 @@ class _CreateNewUpdatePortfolioScreenState
         bottom: true,
         child: Consumer<FreelancerPortfolioProvider>(
           builder: (context, provider, child) {
-            if (provider.isLoadingDetails) {
+            if (provider.isLoadingDetails && Get.arguments?['data'] != null) {
               return const Align(
                 alignment: Alignment.topCenter,
                 child: LinearProgressIndicator(),
               );
             } else {
-              _title.text = freelancerPortfolioProvider.portfolio?.title ?? '';
-              _desc.text =
-                  freelancerPortfolioProvider.portfolio?.description ?? '';
               return Column(
                 children: [
                   Expanded(
@@ -126,7 +153,7 @@ class _CreateNewUpdatePortfolioScreenState
                           ),
                           const SizedBox(height: 20),
                           AppTextField(
-                            controller: _title,
+                            controller: title,
                             hint: "Enter request title",
                             textInputType: TextInputType.text,
                           ),
@@ -137,13 +164,14 @@ class _CreateNewUpdatePortfolioScreenState
                           ),
                           const SizedBox(height: 20),
                           AppTextField(
-                            controller: _desc,
+                            controller: desc,
                             textInputType: TextInputType.multiline,
-                            maxLines: 2,
+                            maxLines: 3,
                             textInputAction: TextInputAction.newline,
                           ),
                           const SizedBox(height: 25),
                           RelatedServicesWidget(
+                            initialValue: selectedServices,
                             onServicesSelected: (value) {
                               services.addAll(value);
                               setState(() {});
@@ -161,6 +189,15 @@ class _CreateNewUpdatePortfolioScreenState
                               setState(() {});
                             },
                           ),
+
+                          if(Get.arguments?['data'] != null)...{
+                            const SizedBox(height: 15),
+                            // ListView.builder(
+                            //     itemCount: ,
+                            //     itemBuilder: itemBuilder)
+                          },
+
+
                           const SizedBox(height: 5),
                         ],
                       ),
@@ -170,8 +207,8 @@ class _CreateNewUpdatePortfolioScreenState
                     onPressed: () async {
                       if (media.isEmpty ||
                           cove == null ||
-                          _title.text.trim().isEmpty ||
-                          _desc.text.trim().isEmpty ||
+                          title.text.trim().isEmpty ||
+                          desc.text.trim().isEmpty ||
                           services.isEmpty) {
                         AppSnackBar.openErrorSnackBar(
                           message: 'Please fill all fields'.tr,
@@ -182,14 +219,14 @@ class _CreateNewUpdatePortfolioScreenState
                       await provider.createPortfolio(
                         CreatePortfolioParam(
                           cover: cove!,
-                          description: _desc.text,
-                          title: _title.text,
+                          description: desc.text,
+                          title: title.text,
                           services: services,
                           media: media,
                         ),
                       );
                     },
-                    title: "Save",
+                    title: Get.arguments?['data'] != null ? 'Update' : "Save",
                     isLoading: provider.isLoadingCreate,
                     backGroundColor: AppLightColors.greenContainer,
                   ),

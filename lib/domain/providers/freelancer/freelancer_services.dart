@@ -18,9 +18,13 @@ class FreelancerServicesProvider extends ChangeNotifier {
         this.freelancerServiceModel = null;
       }
       notifyListeners();
+      AppPreferences prefs = sl();
       final response = await Network().get(
         url: AppEndpoints.servicesByUser,
-        query: data.toJson(),
+        //query: data.toJson(),
+        query: {
+          "user_id": prefs.getInt(key: AppPrefsKeys.USER_ID),
+        }
       );
 
       String errorMessage = await Network().handelError(response: response);

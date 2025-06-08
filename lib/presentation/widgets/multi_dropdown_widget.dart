@@ -46,7 +46,7 @@ class MultiCustomDropdown<T> extends StatelessWidget {
             height: 2.48 * (w / 100),
           ),
         ],
-        if(initialValue != null) ... {
+        if(initialValue != null && initialValue?.isNotEmpty == true) ... {
           MultiSelectBottomSheetField<T?>(
             initialChildSize: 0.5,
             initialValue: initialValue!,

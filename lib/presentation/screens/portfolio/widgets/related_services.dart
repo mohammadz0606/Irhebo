@@ -12,9 +12,11 @@ class RelatedServicesWidget extends StatefulWidget {
   const RelatedServicesWidget({
     super.key,
     required this.onServicesSelected,
+    required this.initialValue,
   });
 
   final Function(List<int>) onServicesSelected;
+  final List<int> initialValue;
 
   @override
   State<RelatedServicesWidget> createState() => _RelatedServicesWidgetState();
@@ -45,29 +47,39 @@ class _RelatedServicesWidgetState extends State<RelatedServicesWidget> {
             ),
           );
         } else {
-          return MultiCustomDropdown<FreelancerServiceModelDataServices?>(
-            items: value.freelancerServiceModel!.data!.services!.map(
-              (e) {
-                return MultiSelectItem<FreelancerServiceModelDataServices?>(
-                  e,
-                  e?.title ?? '',
-                );
-              },
-            ).toList(),
+          // final matchedInitial = widget.initialValue
+          //     .map((selected) {
+          //       try {
+          //         return value.freelancerServiceModel!.data!.services!
+          //             .firstWhere((original) => original?.id == selected.id);
+          //       } catch (_) {
+          //         return null;
+          //       }
+          //     })
+          //     .where((e) => e != null)
+          //     .toList();
+          return MultiCustomDropdown<FreelancerServiceModelDataServices>(
+            items: value.freelancerServiceModel!.data!.services!
+                .whereType<FreelancerServiceModelDataServices>() // remove nulls
+                .map(
+                  (e) => MultiSelectItem<FreelancerServiceModelDataServices>(
+                    e,
+                    e.title ?? '',
+                  ),
+                )
+                .toList(),
             buttonText: 'Related Services Choices'.tr,
+            initialValue: value.freelancerServiceModel!.data!.services!
+                .where((e) => widget.initialValue.contains(e?.id))
+                .whereType<FreelancerServiceModelDataServices>()
+                .toList(),
             label: 'Related Services',
             titleStyle: Get.textTheme.labelMedium,
             showSelected: true,
             onConfirm: (value) {
               log('LEN SELECTED SERVICE ${value.length}');
-              List<int> ids = value
-                  .map(
-                    (e) => e?.id ?? 0,
-                  )
-                  .toList();
-
+              final ids = value.map((e) => e?.id ?? 0).toList();
               widget.onServicesSelected(ids);
-
               setState(() {});
             },
           );

@@ -72,6 +72,16 @@ class FreelancerServiceModelDataServices {
   String? startServiceFrom;
   FreelancerServiceModelDataServicesUser? user;
 
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+          other is FreelancerServiceModelDataServices &&
+              runtimeType == other.runtimeType &&
+              id == other.id;
+
+  @override
+  int get hashCode => id.hashCode;
+
   FreelancerServiceModelDataServices({
     this.id,
     this.subCategoryId,
