@@ -22,6 +22,7 @@ import '../../../app/network/network.dart';
 import '../../../app/snack_bar.dart';
 import '../../../domain/models/new_models/freelancer/freelancer_user.dart';
 import '../../../domain/models/new_models/new_config_model.dart';
+import '../auth/register/register_freelancer_screen.dart';
 
 class ProfileController extends GetxController {
   final appController = Get.find<AppController>();
@@ -203,12 +204,14 @@ class ProfileController extends GetxController {
             element?.title?.toLowerCase() ==
             (userFreelancerModelData?.freelancer?.profession?.toLowerCase() ??
                 0),
-      orElse: () {
-        return NewConfigModelDataProfessions();
-      },);
+        orElse: () {
+          return NewConfigModelDataProfessions();
+        },
+      );
       gender = appController.genders.firstWhere(
-            (element) =>
-        element.name?.toLowerCase() == (userFreelancerModelData?.freelancer?.gender?.toLowerCase() ?? ''),
+        (element) =>
+            element.name?.toLowerCase() ==
+            (userFreelancerModelData?.freelancer?.gender?.toLowerCase() ?? ''),
       );
     } else {
       country = appController.countries.firstWhere(
@@ -220,11 +223,10 @@ class ProfileController extends GetxController {
         (element) => element?.id == (user?.professionObject?.id ?? 0),
       );
       gender = appController.genders.firstWhere(
-            (element) =>
-        element.name?.toLowerCase() == (user?.gender?.toLowerCase() ?? ''),
+        (element) =>
+            element.name?.toLowerCase() == (user?.gender?.toLowerCase() ?? ''),
       );
     }
-
 
     // for (LanguageModel element in user?.languages ?? []) {
     //   final matched = appController.languages.firstWhereOrNull((lang) => lang?.id == element.id);
@@ -279,6 +281,14 @@ class ProfileController extends GetxController {
       () => UpdateProfileScreen(
         user: user,
         isUpdate: true,
+      ),
+    );
+  }
+
+  goToUpdateFreelancerDetails() async {
+    await Get.to(
+      () => RegisterFreelancerScreen(
+        userFreelancerModelData: userFreelancerModelData,
       ),
     );
   }

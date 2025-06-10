@@ -3,10 +3,10 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 
 final class CompleteProfileParam {
-  final File avatar;
+  final File? avatar;
   final String bio;
   final List<int> categoryIds;
-  final List<File> files;
+  final List<File>? files;
   final List<String> descriptions;
 
   const CompleteProfileParam({
@@ -16,8 +16,6 @@ final class CompleteProfileParam {
     required this.files,
     required this.descriptions,
   });
-
-
 
   /*
  Future<FormData> toJson() async {
@@ -53,39 +51,42 @@ final class CompleteProfileParam {
   }
    */
 
-
   Future<FormData> toJson() async {
-    final avatarFileName = avatar.path.split('/').last;
+    final formData = FormData();
 
-    List<MultipartFile> multiFiles = [];
-    for (var file in files) {
-      final fileName = file.path.split('/').last;
-      multiFiles.add(
-        await MultipartFile.fromFile(file.path, filename: fileName),
-      );
-    }
-
-    final formDataFields = <MapEntry<String, dynamic>>[];
-    formDataFields.add(MapEntry("bio", bio.trim()));
-    formDataFields.add(MapEntry(
-      "avatar",
-      await MultipartFile.fromFile(avatar.path, filename: avatarFileName),
-    ));
-    for (var id in categoryIds) {
-      formDataFields.add(MapEntry("category_ids[]", id.toString()));
-    }
-    for (var description in descriptions) {
-      if (description.trim().isNotEmpty) {
-        formDataFields.add(MapEntry("description[]", description.trim()));
+    if (files != null && files!.isNotEmpty) {
+      List<MultipartFile> multiFiles = [];
+      for (var file in files!) {
+        final fileName = file.path.split('/').last;
+        multiFiles.add(
+          await MultipartFile.fromFile(file.path, filename: fileName),
+        );
+      }
+      for (var file in multiFiles) {
+        formData.files.add(MapEntry("file[]", file));
       }
     }
 
+    formData.fields.add(MapEntry("bio", bio.trim()));
 
-    for (var file in multiFiles) {
-      formDataFields.add(MapEntry("file[]", file));
+    if (avatar != null) {
+      final avatarFileName = avatar!.path.split('/').last;
+      formData.files.add(MapEntry(
+        "avatar",
+        await MultipartFile.fromFile(avatar!.path, filename: avatarFileName),
+      ));
     }
 
+    for (var id in categoryIds) {
+      formData.fields.add(MapEntry("category_ids[]", id.toString()));
+    }
 
-    return FormData.fromMap(Map.fromEntries(formDataFields));
+    for (var description in descriptions) {
+      if (description.trim().isNotEmpty) {
+        formData.fields.add(MapEntry("description[]", description.trim()));
+      }
+    }
+
+    return formData;
   }
 }

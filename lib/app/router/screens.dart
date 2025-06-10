@@ -136,6 +136,7 @@ class AppScreens {
     GetPage(
       name: AppRoutes.registerFreelancer,
       page: () => const RegisterFreelancerScreen(),
+      binding: RegisterBinding(),
     ),
     GetPage(
         name: AppRoutes.seeAll,

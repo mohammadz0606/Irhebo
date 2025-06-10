@@ -523,7 +523,7 @@ class SearchControllerGetx extends GetxController {
     _checkboxFilters.refresh();
   }
 
-  getCategories() async {
+  Future<void> getCategories() async {
     isLoadingCategory = true;
     GetCategoriesUseCase getCategoriesUseCase = sl();
     final result = await getCategoriesUseCase(());

@@ -51,13 +51,13 @@ class ProfileHeader extends StatelessWidget {
                       height: 24.8 * (w / 100),
                       radius: 100,
                     ),
-              loading?SizedBox(height:20,width:20,child: CircularProgressIndicator()):InkWell(
+              loading?const SizedBox(height:20,width:20,child: CircularProgressIndicator()):InkWell(
                 onTap: () {
                   pickPicture();
                   updatePicture();
                 },
                 borderRadius: BorderRadius.circular(50 * (w / 100)),
-                child: GradientIcon(
+                child: const GradientIcon(
                   gradient: false,
                   icn: AppIcons.camera,
                   svgColor: AppDarkColors.greenContainer,

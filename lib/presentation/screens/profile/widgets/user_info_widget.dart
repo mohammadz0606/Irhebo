@@ -22,12 +22,14 @@ class UserInfoWidget extends StatelessWidget {
   final UserModel? user;
   final UserFreelancerModelData? userFreelancerModelData;
   final Function() goToUpdate;
+  final Function() goToUpdateFreelancerDetails;
 
   const UserInfoWidget({
     super.key,
     this.user,
     required this.goToUpdate,
     this.userFreelancerModelData,
+    required this.goToUpdateFreelancerDetails,
   });
 
   @override
@@ -52,7 +54,6 @@ class UserInfoWidget extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
               UserInfoRow(title: "Email", desciption: user?.email ?? ""),
               UserInfoRow(title: "Username", desciption: user?.name ?? ""),
               UserInfoRow(
@@ -154,6 +155,24 @@ class UserInfoWidget extends StatelessWidget {
             ),
           ),
         ),
+        if (getUserRole == UserRoles.freelancer)
+          Container(
+            decoration: AppDecoration.getDecorationWithRadius(
+                color: Get.find<AppController>().darkMode
+                    ? AppDarkColors.darkContainer2
+                    : Colors.white,
+                radius: 14),
+            margin: EdgeInsets.symmetric(vertical: 2.48 * (w / 100)),
+            padding: EdgeInsets.symmetric(
+                vertical: 0.99 * (w / 100), horizontal: 3.73 * (w / 100)),
+            child: InkWell(
+              onTap: goToUpdateFreelancerDetails,
+              child: const UserInfoRow(
+                title: "Edit Freelancer Details",
+                update: true,
+              ),
+            ),
+          ),
         Container(
           decoration: AppDecoration.getDecorationWithRadius(
               color: Get.find<AppController>().darkMode

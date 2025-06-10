@@ -44,6 +44,8 @@ class ProfileScreen extends GetView<ProfileController> {
                                 userFreelancerModelData:
                                     controller.userFreelancerModelData,
                                 goToUpdate: controller.goToUpdate,
+                                goToUpdateFreelancerDetails:
+                                    controller.goToUpdateFreelancerDetails,
                               ),
                             ],
                           )
