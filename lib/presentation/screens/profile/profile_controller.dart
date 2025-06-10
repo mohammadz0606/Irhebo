@@ -62,9 +62,13 @@ class ProfileController extends GetxController {
   onInit() async {
     super.onInit();
     if (getUserRole == UserRoles.freelancer) {
-      await getFreelancerProfile();
+      await getFreelancerProfile().then(
+        (value) => initFieldsValues(),
+      );
     } else {
-      await getMyProfile();
+      await getMyProfile().then(
+        (value) => initFieldsValues(),
+      );
     }
   }
 
@@ -169,7 +173,11 @@ class ProfileController extends GetxController {
     result!.fold((l) {
       isLoadingUpdate = false;
     }, (r) {
-      getMyProfile();
+      if (UserRoles.freelancer == getUserRole) {
+        getFreelancerProfile();
+      } else {
+        getMyProfile();
+      }
       isLoadingUpdate = false;
     });
   }
@@ -178,18 +186,46 @@ class ProfileController extends GetxController {
     email.text = user?.email ?? "";
     userName.text = user?.name ?? "";
     phone.text = user?.phone ?? "";
-    profession = appController.professions.firstWhere(
-      (element) => element?.id == (user?.professionObject?.id ?? 0),
-    );
-    country = appController.countries.firstWhere(
-      (element) => element?.id == (user?.countryObject?.id ?? 0),
-    );
-    gender = appController.genders.firstWhere(
-      (element) => element.name == (user?.gender ?? ''),
-    );
+
     selectedLanguages.clear();
-    selectedLanguages.addAll(appController.languages.where((lang) =>
-        user?.languages?.any((uLang) => uLang.id == lang?.id) ?? false));
+    if (getUserRole == UserRoles.freelancer) {
+      country = appController.countries.firstWhere(
+        (element) =>
+            element?.title ==
+            (userFreelancerModelData?.freelancer?.country ?? ''),
+      );
+      selectedLanguages.addAll(appController.languages.where((lang) =>
+          userFreelancerModelData?.freelancer?.languages
+              ?.any((uLang) => uLang.id == lang?.id) ??
+          false));
+      profession = appController.professions.firstWhere(
+        (element) =>
+            element?.title?.toLowerCase() ==
+            (userFreelancerModelData?.freelancer?.profession?.toLowerCase() ??
+                0),
+      orElse: () {
+        return NewConfigModelDataProfessions();
+      },);
+      gender = appController.genders.firstWhere(
+            (element) =>
+        element.name?.toLowerCase() == (userFreelancerModelData?.freelancer?.gender?.toLowerCase() ?? ''),
+      );
+    } else {
+      country = appController.countries.firstWhere(
+        (element) => element?.id == (user?.countryObject?.id ?? 0),
+      );
+      selectedLanguages.addAll(appController.languages.where((lang) =>
+          user?.languages?.any((uLang) => uLang.id == lang?.id) ?? false));
+      profession = appController.professions.firstWhere(
+        (element) => element?.id == (user?.professionObject?.id ?? 0),
+      );
+      gender = appController.genders.firstWhere(
+            (element) =>
+        element.name?.toLowerCase() == (user?.gender?.toLowerCase() ?? ''),
+      );
+    }
+
+
     // for (LanguageModel element in user?.languages ?? []) {
     //   final matched = appController.languages.firstWhereOrNull((lang) => lang?.id == element.id);
     //   if (matched != null) selectedLanguages.add(matched);
@@ -244,10 +280,6 @@ class ProfileController extends GetxController {
         user: user,
         isUpdate: true,
       ),
-    )?.then(
-      (value) {
-        initFieldsValues();
-      },
     );
   }
 }
