@@ -4,6 +4,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import '../../../app/global_imports.dart';
 import '../../../app/network/network.dart';
+import '../../../app/router/routes.dart';
 import '../../models/config_model.dart';
 import '../../models/new_models/freelancer/portfolio_list_model.dart';
 import '../../models/new_models/new_portfolio_details_model.dart';
@@ -203,7 +204,7 @@ class FreelancerPortfolioProvider extends ChangeNotifier {
 
       NewGeneralModel newGeneralModel = NewGeneralModel.fromJson(response.data);
       if (newGeneralModel.status ?? false) {
-        Get.back();
+        Get.offNamed(AppRoutes.bottomNavBar);
         AppSnackBar.openSuccessSnackBar(
           message: 'Portfolio update successfully'.tr,
         );
@@ -213,6 +214,7 @@ class FreelancerPortfolioProvider extends ChangeNotifier {
 
       isLoadingUpdate = false;
       notifyListeners();
+
     } catch (error) {
       if (error is DioException) {
         AppSnackBar.openErrorSnackBar(

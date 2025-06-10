@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import '../../../app/global_imports.dart';
 import '../../../app/network/network.dart';
@@ -9,22 +10,32 @@ class FreelancerServicesProvider extends ChangeNotifier {
   bool isLoading = false;
   FreelancerServiceModel? freelancerServiceModel;
 
+  int pageNumber = 1;
+  RefreshController refreshController =
+      RefreshController(initialRefresh: false);
+  List<FreelancerServiceModelDataServices?>? services = [];
+
   Future<void> getFreeLancerServices({
     required FreelancerServiceParam data,
+    bool enablePagination = false,
   }) async {
     try {
       isLoading = true;
       if (this.freelancerServiceModel != null) {
         this.freelancerServiceModel = null;
       }
+      if (pageNumber == 1 && enablePagination) {
+        services?.clear();
+      }
       notifyListeners();
       AppPreferences prefs = sl();
       final response = await Network().get(
         url: AppEndpoints.servicesByUser,
-        //query: data.toJson(),
-        query: {
-          "user_id": prefs.getInt(key: AppPrefsKeys.USER_ID),
-        }
+        query: enablePagination
+            ? data.toJson()
+            : {
+                "user_id": prefs.getInt(key: AppPrefsKeys.USER_ID),
+              },
       );
 
       String errorMessage = await Network().handelError(response: response);
@@ -35,17 +46,29 @@ class FreelancerServicesProvider extends ChangeNotifier {
         AppSnackBar.openErrorSnackBar(
           message: errorMessage,
         );
+        if (enablePagination) {
+          refreshController.refreshFailed();
+        }
         return;
       }
-
       FreelancerServiceModel freelancerServiceModel =
           FreelancerServiceModel.fromJson(response.data);
+      if (enablePagination) {
+        pageNumber = pageNumber + 1;
+        services?.addAll(freelancerServiceModel.data?.services ?? []);
 
-      if (freelancerServiceModel.status == true) {
-        this.freelancerServiceModel = freelancerServiceModel;
-        isLoading = false;
-        notifyListeners();
+        if (freelancerServiceModel.data?.services?.isEmpty == true) {
+          refreshController.loadNoData();
+        } else {
+          refreshController.loadComplete();
+        }
+      } else {
+        if (freelancerServiceModel.status == true) {
+          this.freelancerServiceModel = freelancerServiceModel;
+        }
       }
+      isLoading = false;
+      notifyListeners();
     } catch (error) {
       if (error is DioException) {
         AppSnackBar.openErrorSnackBar(
@@ -59,5 +82,19 @@ class FreelancerServicesProvider extends ChangeNotifier {
       isLoading = false;
       notifyListeners();
     }
+  }
+
+  Future<void> onRefreshList() async {
+    pageNumber = 1;
+    services?.clear();
+    await getFreeLancerServices(
+      enablePagination: true,
+      data: FreelancerServiceParam(
+        prePage: AppConstants.PAGE_LENGTH,
+        page: pageNumber,
+      ),
+    );
+    refreshController.refreshCompleted();
+    refreshController.refreshToIdle();
   }
 }

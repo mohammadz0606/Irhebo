@@ -6,9 +6,10 @@ import '../../../../../service_details/service_details_screen.dart';
 import 'edit_or_delete.dart';
 
 class FreelancerServiceItems extends StatelessWidget {
-  const FreelancerServiceItems({super.key, required this.data});
+  const FreelancerServiceItems({super.key, required this.data, this.space});
 
   final FreelancerHomeModelDataServices? data;
+  final double? space;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +40,7 @@ class FreelancerServiceItems extends StatelessWidget {
             Positioned(
               bottom: 0,
               child: SizedBox(
-                width: 57.46 * (w / 100),
+                width: w,
                 height: 25 * (w / 100),
                 child: Container(
                   clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -79,6 +80,7 @@ class FreelancerServiceItems extends StatelessWidget {
               right: 2.98 * (w / 100),
               child: EditOrDelete(
                 id: data?.id ?? 0,
+                space: space ?? 36,
               ),
             ),
           ],
