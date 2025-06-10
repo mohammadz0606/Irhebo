@@ -14,15 +14,15 @@ class SplashScreen extends GetView<SplashController> {
   Widget build(BuildContext context) {
     var w = MediaQuery.of(context).size.width;
     return Scaffold(
-        backgroundColor:
-            Get.find<AppController>().darkMode ? null : Colors.white,
-        body: Center(
-          child: AppImage(
-            imageUrl: AppImages.userImageUrl6,
-            width: 71.39 * (w / 100),
-            height: 71.39 * (w / 100),
-            radius: 40,
-          ),
-        ));
+      backgroundColor: Get.find<AppController>().darkMode ? null : Colors.white,
+      body: Center(
+        child: AppImage(
+          imageUrl: AppImages.userImageUrl6,
+          width: 71.39 * (w / 100),
+          height: 71.39 * (w / 100),
+          radius: 40,
+        ),
+      ),
+    );
   }
 }

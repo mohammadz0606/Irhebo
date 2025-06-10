@@ -12,6 +12,7 @@ class AppIcon extends StatelessWidget {
   final EdgeInsets? padding;
   final BoxFit? fit;
   final bool matchTextDirection;
+
   const AppIcon(
       {super.key,
       required this.path,
@@ -27,16 +28,20 @@ class AppIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     // var w = MediaQuery.of(context).size.width;
     return Container(
-        padding: padding,
-        width: width,
-        height: height,
-        child: isSvg
-            ? SvgPicture.asset(
-                path,
-                fit: fit ?? BoxFit.contain,
-                color: color,
-                matchTextDirection: matchTextDirection,
-              )
-            : Image.asset(path, fit: fit ?? BoxFit.cover));
+      padding: padding,
+      width: width,
+      height: height,
+      child: isSvg
+          ? SvgPicture.asset(
+              path,
+              fit: fit ?? BoxFit.contain,
+              color: color,
+              matchTextDirection: matchTextDirection,
+            )
+          : Image.asset(
+              path,
+              fit: fit ?? BoxFit.cover,
+            ),
+    );
   }
 }

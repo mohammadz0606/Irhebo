@@ -18,7 +18,7 @@ class LanguageScreen extends GetWidget<SplashController> {
       backgroundColor: Get.find<AppController>().darkMode ? null : Colors.white,
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(27 * (w / 100)),
-          child: AuthAppBar(
+          child: const AuthAppBar(
             hasBack: false,
           )),
       body: Padding(
@@ -27,7 +27,7 @@ class LanguageScreen extends GetWidget<SplashController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // AuthLogo(),
-            AuthHeadline(
+            const AuthHeadline(
               title: "Select Language",
               subtitle: "Choose your preference language",
             ),

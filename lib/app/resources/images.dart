@@ -15,6 +15,7 @@ class AppImages {
       "https://plus.unsplash.com/premium_photo-1664474619075-644dd191935f?q=80&w=2938&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
 
   static const images = "assets/images/";
+  static const placeholder = '${images}placeholder-img.jpg';
 
   ////////////////////////////////////////////////////////////////////////////////////////  video icons
 
@@ -55,6 +56,7 @@ class AppIcons {
   static const String bot = "${icons}bot.svg";
   static const String emptyHeart = "${icons}empty_heart.svg";
   static const String checkCircle = "${icons}check_circle.svg";
+
   // static const String google = "${icons}google.svg";
   // static const String linkedin = "${icons}linkedin.svg";
   static const String eyeLock = "${icons}eye_lock.svg";

@@ -10,6 +10,7 @@ class AppImage extends StatelessWidget {
   final double? radius;
   final Color? borderColor;
   final BoxFit? fit;
+
   const AppImage({
     super.key,
     required this.imageUrl,
@@ -35,13 +36,12 @@ class AppImage extends StatelessWidget {
           width: width,
           height: height,
         ),
-        errorWidget: (context, url, error) => Center(
-            child: CachedNetworkImage(
+        errorWidget: (context, url, error) => Image.asset(
+          AppImages.placeholder,
           width: width,
           height: height,
-          imageUrl: AppImages.userImageUrl6,
           fit: fit ?? BoxFit.cover,
-        )),
+        ),
         // errorWidget: (context, url, error) => Center(
         //     child: AppIcon(
         //   path: AppImages.steps,
