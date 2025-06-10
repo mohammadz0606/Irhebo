@@ -67,4 +67,5 @@ class AppEndpoints {
   static String tags = '$base_url/tags';
   static String plans = '$base_url/shared/plans';
   static String createService = '$base_url/services/create';
+  static String deleteMedia = '$base_url/services/delete-media/';
 }

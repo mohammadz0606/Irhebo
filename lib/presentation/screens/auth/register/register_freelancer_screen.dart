@@ -153,6 +153,7 @@ class _RegisterFreelancerScreenState extends State<RegisterFreelancerScreen> {
                             .toList(),
                         buttonText: 'Category Choices',
                         label: "Categories",
+                        showSelected: true,
                         onConfirm: (values) {
                           categoryIds = values
                               .map(

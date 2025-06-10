@@ -35,11 +35,12 @@ class PortfolioDetailsScreen extends GetView<PortfolioDetailsController> {
                           space: 0,
                           id: controller.portfolio?.id ?? 0,
                           onEditTap: () {
-                            Get.toNamed(AppRoutes.createUpdatePortfolio, arguments: {
-                              'data': controller.portfolio,
-                              'id': controller.portfolio?.id ?? 0,
-                              'title': controller.portfolio?.title,
-                            });
+                            Get.toNamed(AppRoutes.createUpdatePortfolio,
+                                arguments: {
+                                  'data': controller.portfolio,
+                                  'id': controller.portfolio?.id ?? 0,
+                                  'title': controller.portfolio?.title,
+                                });
                           },
                           onDeleteTap: () async {
                             showAdaptiveDialog(
@@ -51,7 +52,8 @@ class PortfolioDetailsScreen extends GetView<PortfolioDetailsController> {
                                     return AlertDialog.adaptive(
                                       title: Text('Delete Confirmation'.tr),
                                       content: Text(
-                                        "Are you sure you want to delete this item?".tr,
+                                        "Are you sure you want to delete this item?"
+                                            .tr,
                                       ),
                                       actions: [
                                         TextButton(
@@ -67,7 +69,8 @@ class PortfolioDetailsScreen extends GetView<PortfolioDetailsController> {
                                           },
                                           child: Text(
                                             "Yes".tr,
-                                            style: const TextStyle(color: Colors.red),
+                                            style: const TextStyle(
+                                                color: Colors.red),
                                           ),
                                         ),
                                         TextButton(
@@ -87,19 +90,18 @@ class PortfolioDetailsScreen extends GetView<PortfolioDetailsController> {
                                 );
                               },
                             );
-
                           },
                         ),
                       ),
                       const SizedBox(height: 30),
                       Text(
                         controller.portfolio?.title ?? '',
-                        style: Get.theme.textTheme.bodySmall!.copyWith(
-                            color: Get.find<AppController>().darkMode
-                                ? Colors.white
-                                : Colors.black),
+                        style: Get.theme.textTheme.bodySmall?.copyWith(
+                          color: Get.find<AppController>().darkMode
+                              ? Colors.white
+                              : Colors.black,
+                        ),
                       ),
-
                       SizedBox(
                         height: 3 * (w / 100),
                       ),
