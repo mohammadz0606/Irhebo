@@ -12,8 +12,12 @@ import 'package:irhebo/presentation/widgets/app_image.dart';
 class RequestItem extends StatelessWidget {
   final RequestModel request;
   final Function() nextButtonPressed;
-  const RequestItem(
-      {super.key, required this.request, required this.nextButtonPressed});
+
+  const RequestItem({
+    super.key,
+    required this.request,
+    required this.nextButtonPressed,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -109,7 +113,7 @@ class RequestItem extends StatelessWidget {
                   ],
                 ),
                 if (request.statusKey == "confirmed" ||
-                    request.statusKey == "inـprogress")
+                    request.statusKey == "in_progress")
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
@@ -131,7 +135,7 @@ class RequestItem extends StatelessWidget {
                         ),
                       ),
                       if (request.statusKey == "confirmed" ||
-                          request.statusKey == "inـprogress")
+                          request.statusKey == "in_progress")
                         Text(
                           "${request.elapsedDays}/${request.totalDays}${"Days".tr}",
                           style: Get.theme.textTheme.labelSmall,

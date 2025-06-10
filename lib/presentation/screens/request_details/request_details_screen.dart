@@ -19,7 +19,9 @@ class RequestDetailsScreen extends GetView<RequestDetailsController> {
         appBar: NormalAppBar(
           title: controller.title.toString(),
           onTapBack: controller.onTapBack,
-          onTapHistory: controller.onTapHistory,
+          onTapHistory: controller.request.statusKey == 'pending'
+              ? null
+              : controller.onTapHistory,
         ),
         body: Padding(
           padding: EdgeInsets.only(

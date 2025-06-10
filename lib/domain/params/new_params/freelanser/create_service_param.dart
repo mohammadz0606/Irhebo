@@ -17,10 +17,10 @@ final class CreateServiceParam {
   final List<int> deliveryDays;
   final List<bool> sourceFile;
   final List<int> revision;
-  final List<int> tags;
-  //final List<String> currencies;
+  final List<String> tags;
+  final String currency;
 
-  const CreateServiceParam( {
+  const CreateServiceParam({
     required this.supCategoryId,
     required this.title,
     required this.description,
@@ -32,7 +32,7 @@ final class CreateServiceParam {
     required this.sourceFile,
     required this.revision,
     required this.tags,
-   // required this.currencies
+    required this.currency,
   });
 
   Future<FormData> toJson() async {
@@ -54,9 +54,7 @@ final class CreateServiceParam {
       await MultipartFile.fromFile(cover.path, filename: coverFileName),
     ));
 
-
-    AppPreferences preferences = sl();
-    formDataFields.add(MapEntry("currency", preferences.getString(key: AppPrefsKeys.CURRENCY) ?? 'USD'));
+    formDataFields.add(MapEntry("currency", currency));
 
     for (int i = 0; i < multiFiles.length; i++) {
       formDataFields.add(MapEntry("media[$i]", multiFiles[i]));
@@ -69,33 +67,34 @@ final class CreateServiceParam {
       formDataFields.add(MapEntry("plans[$i][plan_id]", planId[i]));
 
       ///---
-      formDataFields
-          .add(MapEntry("plans[$i][feature][0][title]", 'Price'));
-      formDataFields.add(MapEntry("plans[$i][feature][0][type]", 'price'));
-      formDataFields.add(MapEntry("plans[$i][feature][0][value]", price[i]));
+      formDataFields.add(MapEntry("plans[$i][features][0][title]", 'Price'));
+      formDataFields.add(MapEntry("plans[$i][features][0][type]", 'price'));
+      formDataFields.add(MapEntry("plans[$i][features][0][value]", price[i]));
 
       ///----
       formDataFields
-          .add(MapEntry("plans[$i][feature][1][title]", 'Delivery Days'));
+          .add(MapEntry("plans[$i][features][1][title]", 'Delivery Days'));
       formDataFields
-          .add(MapEntry("plans[$i][feature][1][type]", 'delivery_days'));
+          .add(MapEntry("plans[$i][features][1][type]", 'delivery_days'));
       formDataFields
-          .add(MapEntry("plans[$i][feature][1][value]", deliveryDays[i]));
+          .add(MapEntry("plans[$i][features][1][value]", deliveryDays[i]));
 
       ///----
 
       formDataFields
-          .add(MapEntry("plans[$i][feature][2][title]", 'Source File'));
+          .add(MapEntry("plans[$i][features][2][title]", 'Source Files'));
       formDataFields
-          .add(MapEntry("plans[$i][feature][2][type]", 'source_file'));
+          .add(MapEntry("plans[$i][features][2][type]", 'source_files'));
       formDataFields
-          .add(MapEntry("plans[$i][feature][2][value]", sourceFile[i]));
+          .add(MapEntry("plans[$i][features][2][value]", sourceFile[i]));
 
       ///----
 
-      formDataFields.add(MapEntry("plans[$i][feature][3][title]", 'Revisions'));
-      formDataFields.add(MapEntry("plans[$i][feature][3][type]", 'revision'));
-      formDataFields.add(MapEntry("plans[$i][feature][3][value]", revision[i]));
+      formDataFields
+          .add(MapEntry("plans[$i][features][3][title]", 'Revisions'));
+      formDataFields.add(MapEntry("plans[$i][features][3][type]", 'revisions'));
+      formDataFields
+          .add(MapEntry("plans[$i][features][3][value]", revision[i]));
     }
 
     return FormData.fromMap(Map.fromEntries(formDataFields));

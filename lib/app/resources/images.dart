@@ -9,10 +9,10 @@ class AppImages {
   //     "https://cdn2.stylecraze.com/wp-content/uploads/2013/05/Bella-Hadid-1.jpg";
   // static const userImageUrl5 =
   //     "https://netstorage-briefly.akamaized.net/images/cac297cbd0522978.jpg?imwidth=900";
-  static const userImageUrl6 =
-      "https://www.beautycrew.com.au/media/54107/jodie-comer-most-beautiful-woman-p.png?width=720";
-  static const userImageUrl7 =
-      "https://plus.unsplash.com/premium_photo-1664474619075-644dd191935f?q=80&w=2938&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
+  // static const userImageUrl6 =
+  //     "https://www.beautycrew.com.au/media/54107/jodie-comer-most-beautiful-woman-p.png?width=720";
+  // static const userImageUrl7 =
+  //     "https://plus.unsplash.com/premium_photo-1664474619075-644dd191935f?q=80&w=2938&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
 
   static const images = "assets/images/";
   static const placeholder = '${images}placeholder-img.jpg';

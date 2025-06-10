@@ -17,7 +17,7 @@ class SplashScreen extends GetView<SplashController> {
       backgroundColor: Get.find<AppController>().darkMode ? null : Colors.white,
       body: Center(
         child: AppImage(
-          imageUrl: AppImages.userImageUrl6,
+          imageUrl: AppImages.placeholder,
           width: 71.39 * (w / 100),
           height: 71.39 * (w / 100),
           radius: 40,

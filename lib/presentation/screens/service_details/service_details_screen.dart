@@ -8,6 +8,9 @@ import 'package:irhebo/presentation/widgets/app_image.dart';
 import 'package:irhebo/presentation/widgets/app_loading.dart';
 import 'package:irhebo/presentation/widgets/service_details_app_bar.dart';
 
+import '../../../app/app_functions.dart';
+import '../../../app/enums.dart';
+
 class ServiceDetailsScreen extends StatefulWidget {
   const ServiceDetailsScreen({super.key});
 
@@ -55,12 +58,16 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
                       height: 63.68 * (w / 100),
                       color: Colors.black.withOpacity(0.2),
                     ),
+
                     Padding(
                       padding: EdgeInsets.only(top: 53.48 * (w / 100)),
                       child: const FreelancerInfoContainer(),
                     ),
-                    Positioned(
-                        top: 16.41 * (w / 100), child: const ServiceDetailsAppBar()),
+
+                      Positioned(
+                        top: 16.41 * (w / 100),
+                        child: const ServiceDetailsAppBar(),
+                      ),
                   ],
                 ),
               ),
@@ -68,7 +75,9 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
       bottomNavigationBar: Obx(
         () => Container(
           padding: EdgeInsets.symmetric(
-              horizontal: 5.97 * (w / 100), vertical: 5.47 * (w / 100)),
+            horizontal: 5.97 * (w / 100),
+            vertical: 5.47 * (w / 100),
+          ),
           child: controller.isLoading
               ? AppLoading(
                   width: 88 * (w / 100),

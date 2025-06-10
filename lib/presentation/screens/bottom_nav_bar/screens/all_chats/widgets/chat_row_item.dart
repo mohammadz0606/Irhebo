@@ -42,7 +42,7 @@ class ChatRowItem extends StatelessWidget {
             // mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               AppImage(
-                imageUrl: AppImages.userImageUrl6,
+                imageUrl: AppImages.placeholder,
                 width: 10.69 * (w / 100),
                 height: 10.69 * (w / 100),
                 radius: 50 * (w / 100),

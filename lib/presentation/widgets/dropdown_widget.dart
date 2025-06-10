@@ -33,6 +33,7 @@ class CustomDropdown<T> extends StatelessWidget {
 
   // final String? label;
   final bool isRequired;
+  final bool enabled;
 
   TextEditingController controller = TextEditingController();
 
@@ -59,6 +60,7 @@ class CustomDropdown<T> extends StatelessWidget {
     this.isRequired = false,
     this.icon,
     this.showSearchBox = true,
+    this.enabled = true,
   });
 
   @override
@@ -82,6 +84,7 @@ class CustomDropdown<T> extends StatelessWidget {
           width: double.infinity,
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(14)),
           child: DropdownSearch<T>(
+            enabled: enabled,
             suffixProps: DropdownSuffixProps(
                 dropdownButtonProps: DropdownButtonProps(
                     splashRadius: 14,

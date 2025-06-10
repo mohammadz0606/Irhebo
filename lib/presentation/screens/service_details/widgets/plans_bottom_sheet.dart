@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:irhebo/app/app_functions.dart';
+import 'package:irhebo/app/enums.dart';
 import 'package:irhebo/presentation/screens/search/widgets/tag_item.dart';
 import 'package:irhebo/presentation/screens/service_details/service_details_controller.dart';
 import 'package:irhebo/presentation/widgets/app_button.dart';
@@ -25,7 +27,7 @@ class PlansBottomSheet extends GetWidget<ServiceDetailsController> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          BottomSheetHeader(
+          const BottomSheetHeader(
             title: "Plans",
           ),
           Center(
@@ -60,6 +62,7 @@ class PlansBottomSheet extends GetWidget<ServiceDetailsController> {
               ),
             )),
           ),
+          if(getUserRole != UserRoles.freelancer)
           Padding(
             padding: EdgeInsets.only(top: 3 * (w / 100)),
             child: Obx(

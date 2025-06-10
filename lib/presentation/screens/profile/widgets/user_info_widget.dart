@@ -35,6 +35,11 @@ class UserInfoWidget extends StatelessWidget {
     var w = MediaQuery.of(context).size.width;
     return Column(
       children: [
+        if (userFreelancerModelData != null)
+          Text(
+            userFreelancerModelData!.freelancer!.bio ?? "",
+            style: Get.theme.textTheme.labelSmall,
+          ),
         Container(
           decoration: AppDecoration.getDecorationWithRadius(
               color: Get.find<AppController>().darkMode
@@ -47,11 +52,7 @@ class UserInfoWidget extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if (userFreelancerModelData != null)
-                Text(
-                  userFreelancerModelData!.freelancer!.bio ?? "",
-                  style: Get.theme.textTheme.labelSmall,
-                ),
+
               UserInfoRow(title: "Email", desciption: user?.email ?? ""),
               UserInfoRow(title: "Username", desciption: user?.name ?? ""),
               UserInfoRow(

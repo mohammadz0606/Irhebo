@@ -20,17 +20,90 @@ class RequestLogItemWidget extends StatelessWidget {
     var w = MediaQuery.of(context).size.width;
     return Column(
       children: [
+        /*
+        Padding(
+            padding: EdgeInsets.symmetric(
+                horizontal: 5.9 * (w / 100), vertical: 3.9 * (w / 100)),
+            child: Row(
+              children: [
+
+              ],
+            ),
+          )
+         */
         GestureDetector(
           onTap: () {
             Get.toNamed(AppRoutes.freelancerProfile,
                 arguments: {"id": log.user?.id ?? 0});
           },
-          child: Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: 5.9 * (w / 100), vertical: 3.9 * (w / 100)),
-            child: Row(
-              children: [
-                Expanded(
+          child: ListTile(
+            leading: AppImage(
+              imageUrl: log.user?.avatar ?? "",
+              height: 9.95 * (w / 100),
+              width: 9.95 * (w / 100),
+              radius: 500,
+            ),
+            title: Text(
+              log.user?.username ?? "",
+              style: Get.theme.textTheme.labelLarge?.copyWith(
+                  fontWeight: FontWeight.w700,
+                  color: Get.find<AppController>().darkMode
+                      ? AppDarkColors.pureWhite.withOpacity(0.9)
+                      : Colors.black.withOpacity(0.8)),
+            ),
+            subtitle: Text(
+              log.action ?? "",
+              style: Get.theme.textTheme.labelMedium?.copyWith(
+                fontWeight: FontWeight.w400,
+                color: Get.find<AppController>().darkMode
+                    ? AppDarkColors.pureWhite.withOpacity(0.9)
+                    : Colors.black,
+              ),
+            ),
+            trailing: log.attachments?.isNotEmpty == true? IconButton(
+              onPressed: () {
+                Get.bottomSheet(
+                  AppBottomSheet(
+                    title: "Attachments",
+                    child: ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: log.attachments?.length ?? 0,
+                      itemBuilder: (context, index) {
+                        return OpenFileItems(
+                          pathUrl: log.attachments?[index].mediaPath,
+                          fileName: extractFileName(
+                              log.attachments?[index].mediaPath ?? ""),
+                        );
+                      },
+                    ),
+                  ),
+                  backgroundColor: Get.find<AppController>().darkMode
+                      ? AppDarkColors.darkScaffoldColor
+                      : AppLightColors.pureWhite,
+                  barrierColor: Get.find<AppController>().darkMode
+                      ? AppDarkColors.darkContainer.withOpacity(0.3)
+                      : AppLightColors.shadow.withOpacity(0.3),
+                  elevation: 0,
+                  isScrollControlled: false,
+                );
+              },
+              icon: const Icon(Icons.attachment),
+            ) : null,
+          ),
+        ),
+      ],
+    );
+  }
+
+  String extractFileName(String url) {
+    return Uri.parse(url).pathSegments.last;
+  }
+
+
+
+  /*
+  Expanded(
                   child: Row(
                     children: [
                       AppImage(
@@ -90,7 +163,7 @@ class RequestLogItemWidget extends StatelessWidget {
                     ],
                   ),
                 ),
-                if (log.attachments?.isNotEmpty == true) ...{
+                if (log.attachments?.isNotEmpty == false) ...{
                   IconButton(
                     onPressed: () {
                       Get.bottomSheet(
@@ -122,15 +195,5 @@ class RequestLogItemWidget extends StatelessWidget {
                     icon: const Icon(Icons.attachment),
                   ),
                 }
-              ],
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  String extractFileName(String url) {
-    return Uri.parse(url).pathSegments.last;
-  }
+   */
 }

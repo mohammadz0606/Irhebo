@@ -20,9 +20,9 @@ class RequestDetailsBottomBar extends GetWidget<RequestDetailsController> {
       children: [
         if (getUserRole != UserRoles.freelancer)
           Obx(() {
-            final request = controller.request;
-            if (request.statusKey == 'completed' &&
-                request.isReviewed == false &&
+            //final request = controller.request;
+            if (controller.request.statusKey == 'completed' &&
+                controller.request.isReviewed == false &&
                 getUserRole == UserRoles.client) {
               return Column(
                 children: [
@@ -112,27 +112,19 @@ class RequestDetailsBottomBar extends GetWidget<RequestDetailsController> {
           ),
         } else if (getUserRole == UserRoles.client &&
             controller.request.statusKey == 'completed')
-          Obx(
-            () {
-              return AppButton(
-                onPressed: () async {
-                  await controller.openUpdateRequestDialog(status: 'confirmed');
-                },
-                title: "Confirm Delivery",
-              );
+          AppButton(
+            onPressed: () async {
+              await controller.openUpdateRequestDialog(status: 'confirmed');
             },
+            title: "Confirm Delivery",
           ),
         SizedBox(height: 2 * (w / 100)),
         if (controller.request.statusKey == 'in_progress')
-          Obx(
-            () {
-              return AppButton(
-                onPressed: () {
-                  controller.openUpdateRequestDialog(status: 'in_progress');
-                },
-                title: "Update Request",
-              );
+          AppButton(
+            onPressed: () {
+              controller.openUpdateRequestDialog(status: 'in_progress');
             },
+            title: "Update Request",
           ),
         SizedBox(height: 2 * (w / 100)),
         Padding(

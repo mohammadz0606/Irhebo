@@ -67,6 +67,9 @@ class RequestsScreen extends GetView<RequestsController> {
                                 visible: controller.selectedTab ==
                                         controller.requests[i].statusKey ||
                                     controller.selectedTab == "all".tr,
+                                // replacement: const NoData(
+                                //   forHome: false,
+                                // ),
                                 child: RequestItem(
                                   request: controller.requests[i],
                                   nextButtonPressed: () =>

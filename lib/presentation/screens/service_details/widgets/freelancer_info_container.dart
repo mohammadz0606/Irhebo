@@ -11,6 +11,9 @@ import 'package:irhebo/presentation/screens/service_details/widgets/portfolio_se
 import 'package:irhebo/presentation/screens/service_details/widgets/reviews_section.dart';
 import 'package:irhebo/presentation/widgets/app_title_with_action.dart';
 
+import '../../../../app/app_functions.dart';
+import '../../../../app/enums.dart';
+
 class FreelancerInfoContainer extends GetWidget<ServiceDetailsController> {
   const FreelancerInfoContainer({
     super.key,
@@ -33,18 +36,20 @@ class FreelancerInfoContainer extends GetWidget<ServiceDetailsController> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Obx(
-            () => InfoSection(
-              onTapChat: controller.onTapChat,
-              service: controller.serviceDetails.service,
-              onLikeService: controller.onLikeService,
-              reviews: controller.serviceDetails.reviews?.length ?? 0,
-              onTapFreelancer: controller.onTapFreelancerFromInfo,
+          //if (getUserRole != UserRoles.freelancer)
+            Obx(
+              () => InfoSection(
+                onTapChat: controller.onTapChat,
+                service: controller.serviceDetails.service,
+                onLikeService: controller.onLikeService,
+                reviews: controller.serviceDetails.reviews?.length ?? 0,
+                onTapFreelancer: controller.onTapFreelancerFromInfo,
+              ),
             ),
-          ),
-          const Divider(
-            height: 1,
-          ),
+          if (getUserRole != UserRoles.freelancer)
+            const Divider(
+              height: 1,
+            ),
           if (controller.serviceDetails.service?.description != null)
             DescriptionSection(
               desciption: controller.serviceDetails.service?.description ?? "",
@@ -55,12 +60,12 @@ class FreelancerInfoContainer extends GetWidget<ServiceDetailsController> {
               height: 1,
             ),
           ),
-          if (controller.serviceDetails.service!.media!.isNotEmpty)
+          if (controller.serviceDetails.service?.media?.isNotEmpty == true)
             MediaSection(
               mediaList: controller.serviceDetails.service?.media ?? [],
               onTapServices: (i) => controller.onTapServiceMedia(i),
             ),
-          if (controller.serviceDetails.portoflio!.isNotEmpty)
+          if (controller.serviceDetails.portoflio?.isNotEmpty == true)
             PortfolioSection(
               portfolio: controller.serviceDetails.portoflio ?? [],
               onTapPortfolio: (i) => controller.onTapPortfolio(i),
@@ -81,6 +86,7 @@ class FreelancerInfoContainer extends GetWidget<ServiceDetailsController> {
                 reviews: controller.moreReviews,
               ),
             ),
+          if (getUserRole != UserRoles.freelancer)
           if (controller.serviceDetails.recommended!.isNotEmpty) ...[
             const AppTitleWithAction(
               title: "Recommended",

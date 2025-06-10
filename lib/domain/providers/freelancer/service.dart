@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:irhebo/app/router/routes.dart';
 
 import '../../../app/global_imports.dart';
 import '../../../app/network/network.dart';
@@ -20,7 +21,7 @@ class ServiceProvider extends ChangeNotifier {
   List<SubcategoryModel>? subcategories;
   List<TagsModelData?>? tagsList;
   List<PlanModelData?>? planList;
-  List<int> tagsId = [];
+  List<String> tagsId = [];
 
   final TextEditingController titleController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
@@ -36,18 +37,14 @@ class ServiceProvider extends ChangeNotifier {
   ///LIST
 
   int planListUIndex = 0;
-  final List<PlanCard> listOfPlans = [const PlanCard()];
+  List<PlanCard> listOfPlans = [const PlanCard()];
 
-  final List<TextEditingController> priceController = [TextEditingController()];
-  final List<TextEditingController> deliveryDayController = [
-    TextEditingController()
-  ];
-  final List<TextEditingController> revisionController = [
-    TextEditingController()
-  ];
-  final List<PlanModelData?> plan = [PlanModelData()];
-  final List<CurrencyModelData?> selectedCurrency = [CurrencyModelData()];
-  final List<bool> sourceFile = [false];
+  List<TextEditingController> priceController = [TextEditingController()];
+  List<TextEditingController> deliveryDayController = [TextEditingController()];
+  List<TextEditingController> revisionController = [TextEditingController()];
+  List<PlanModelData?> plan = [PlanModelData()];
+  CurrencyModelData? selectedCurrency;
+  List<bool> sourceFile = [false];
 
   bool isLoadingWithCreate = false;
 
@@ -63,7 +60,7 @@ class ServiceProvider extends ChangeNotifier {
       );
 
       if (error != null) {
-        AppSnackBar.openErrorSnackBar(message: error);
+        AppSnackBar.openErrorSnackBar(message: error.tr);
         isLoadingWithCreate = false;
         notifyListeners();
         return;
@@ -72,6 +69,7 @@ class ServiceProvider extends ChangeNotifier {
       var data = CreateServiceParam(
         title: titleController.text,
         cover: cover!,
+        currency: selectedCurrency?.code ?? '',
         deliveryDays:
             deliveryDayController.map((e) => int.parse(e.text)).toList(),
         description: descriptionController.text,
@@ -96,6 +94,15 @@ class ServiceProvider extends ChangeNotifier {
         AppSnackBar.openErrorSnackBar(message: errorMessage);
         return;
       }
+
+      /// IMPLEMENT
+
+      isLoadingWithCreate = false;
+      notifyListeners();
+      AppSnackBar.openSuccessSnackBar(
+          message: 'Service Created Successfully'.tr);
+      disposeAll();
+      Get.offAllNamed(AppRoutes.bottomNavBar);
     } catch (error) {
       if (error is DioException) {
         AppSnackBar.openErrorSnackBar(
@@ -107,6 +114,7 @@ class ServiceProvider extends ChangeNotifier {
         );
       }
       isLoadingWithCreate = false;
+      notifyListeners();
     }
   }
 
@@ -142,12 +150,12 @@ class ServiceProvider extends ChangeNotifier {
   }
 
   onSelectedCurrency(CurrencyModelData? value) {
-    selectedCurrency[planListUIndex] = value;
+    selectedCurrency = value;
     notifyListeners();
   }
 
   onChangeTags(List<TagsModelData?> value) {
-    tagsId = value.map((e) => e?.id ?? 0).toList();
+    tagsId = value.map((e) => e?.slug ?? '').toList();
     notifyListeners();
   }
 
@@ -220,9 +228,6 @@ class ServiceProvider extends ChangeNotifier {
     try {
       planList?.clear();
       isLoadingPlan = true;
-      if (selectedCurrency[planListUIndex] != null) {
-        selectedCurrency[planListUIndex] = null;
-      }
       notifyListeners();
       final response = await Network().get(
         url: AppEndpoints.plans,
@@ -254,14 +259,34 @@ class ServiceProvider extends ChangeNotifier {
     }
   }
 
-  allPlanListUIndex() {
+  addPlanListUIndex() {
+    if (plan[planListUIndex]?.id == null) {
+      AppSnackBar.openErrorSnackBar(message: 'Please select a plan.'.tr);
+      return;
+    }
+    else if(selectedCurrency == null) {
+      AppSnackBar.openErrorSnackBar(message: 'Please select a currency.'.tr);
+      return;
+    }
+
+    for (var data in plan) {
+      planList?.removeWhere(
+        (element) => element?.id == data?.id,
+      );
+      if (planList?.isEmpty == true) {
+        AppSnackBar.openErrorSnackBar(
+            message: 'A new plan cannot be added.'.tr);
+        return;
+      }
+    }
+
     planListUIndex = planListUIndex + 1;
     listOfPlans.add(const PlanCard());
     priceController.add(TextEditingController());
     deliveryDayController.add(TextEditingController());
     revisionController.add(TextEditingController());
     plan.add(PlanModelData());
-    selectedCurrency.add(CurrencyModelData());
+    //selectedCurrency.add(CurrencyModelData());
     sourceFile.add(false);
     notifyListeners();
   }
@@ -273,8 +298,11 @@ class ServiceProvider extends ChangeNotifier {
       priceController.removeAt(index);
       deliveryDayController.removeAt(index);
       revisionController.removeAt(index);
+      if(plan[index]?.id != null && planList?.contains(plan[index]) == false) {
+        planList?.add(plan[index]);
+      }
       plan.removeAt(index);
-      selectedCurrency.removeAt(index);
+      //selectedCurrency.removeAt(index);
       sourceFile.removeAt(index);
       notifyListeners();
     }
@@ -305,6 +333,30 @@ class ServiceProvider extends ChangeNotifier {
       return "Please enter valid revision numbers.";
     }
 
+    if (selectedCurrency == null) {
+      return "Please select a currency.";
+    }
+
     return null;
+  }
+
+  disposeAll() {
+    titleController.clear();
+    descriptionController.clear();
+    cover = null;
+    media.clear();
+    categoryModel = null;
+    subcategoryModel = null;
+    tagsId.clear();
+    tagsList?.clear();
+    planListUIndex = 0;
+    selectedCurrency = null;
+
+    listOfPlans = [const PlanCard()];
+    priceController = [TextEditingController()];
+    deliveryDayController = [TextEditingController()];
+    revisionController = [TextEditingController()];
+    plan = [PlanModelData()];
+    sourceFile = [false];
   }
 }

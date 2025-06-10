@@ -26,14 +26,6 @@ class PlanCard extends StatefulWidget {
 
 class _PlanCardState extends State<PlanCard> {
   @override
-  void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<ServiceProvider>(context, listen: false).getPlans();
-    });
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     var w = MediaQuery.of(context).size.width;
     return Consumer<ServiceProvider>(
@@ -68,6 +60,8 @@ class _PlanCardState extends State<PlanCard> {
                       showSearchBox: true,
                       label: "Plans",
                       hintText: "Plans Choices",
+                      enabled:
+                          provider.plan[widget.currentIndex ?? 0]?.id == null,
                       items: provider.planList ?? [],
                       onChanged: provider.onChangePlan,
                       value: provider.plan[widget.currentIndex ?? 0],
@@ -195,7 +189,8 @@ class _PlanCardState extends State<PlanCard> {
       width: double.infinity,
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(14)),
       child: DropdownSearch<CurrencyModelData>(
-        selectedItem: provider.selectedCurrency[widget.currentIndex ?? 0],
+        selectedItem: provider.selectedCurrency,
+        enabled: widget.currentIndex == 0,
         onChanged: provider.onSelectedCurrency,
         validator: null,
         compareFn: (item1, item2) => item1.id == item2.id,

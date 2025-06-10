@@ -1,13 +1,12 @@
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:irhebo/app/app_controller.dart';
 import 'package:irhebo/app/resources/images.dart';
-import 'package:irhebo/app/resources/style/colors.dart';
-import 'package:irhebo/app/resources/style/text_style.dart';
+
 import 'package:irhebo/domain/models/home_model.dart';
 import 'package:irhebo/presentation/widgets/decorated_icon.dart';
 import 'package:irhebo/presentation/widgets/freelancer_widget.dart';
 import 'package:irhebo/presentation/widgets/rating_stars.dart';
+
+import '../../../../app/app_functions.dart';
+import '../../../../app/global_imports.dart';
 
 class InfoSection extends StatelessWidget {
   final ServiceModel? service;
@@ -34,6 +33,7 @@ class InfoSection extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+            if (getUserRole != UserRoles.freelancer)
             InkWell(
               onTap: () => onTapFreelancer(),
               child: FreelancerWidget(
@@ -41,6 +41,7 @@ class InfoSection extends StatelessWidget {
                 freelancerEntity: service?.user,
               ),
             ),
+            if (getUserRole != UserRoles.freelancer)
             Row(
               children: [
                 GestureDetector(
@@ -88,6 +89,7 @@ class InfoSection extends StatelessWidget {
             ),
           ],
         ),
+        if (getUserRole != UserRoles.freelancer)
         SizedBox(
           height: 4.47 * (w / 100),
         ),
@@ -96,12 +98,15 @@ class InfoSection extends StatelessWidget {
           style: Get.theme.textTheme.labelLarge!
               .copyWith(fontWeight: FontWeight.bold),
         ),
+        if (getUserRole != UserRoles.freelancer)
         SizedBox(
           height: 1.49 * (w / 100),
         ),
+        if (getUserRole != UserRoles.freelancer)
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment:MainAxisAlignment.spaceBetween,
           children: [
+
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -154,6 +159,7 @@ class InfoSection extends StatelessWidget {
             ),
           ],
         ),
+        if (getUserRole != UserRoles.freelancer)
         SizedBox(
           height: 1.49 * (w / 100),
         ),

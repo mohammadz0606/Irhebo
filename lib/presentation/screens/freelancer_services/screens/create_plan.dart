@@ -51,7 +51,7 @@ class CreatePlanScreen extends StatelessWidget {
                   const SizedBox(height: 30),
                   AppTextButton(
                     onPressed: () {
-                      provider.allPlanListUIndex();
+                      provider.addPlanListUIndex();
                     },
                     text: 'Upload another plan',
                   ),

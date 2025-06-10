@@ -28,9 +28,11 @@ class CreateServicesScreen extends StatefulWidget {
 class _CreateServicesScreenState extends State<CreateServicesScreen> {
   @override
   void initState() {
+    Provider.of<ServiceProvider>(context, listen: false).disposeAll();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<ServiceProvider>(context, listen: false).getCategories();
       Provider.of<ServiceProvider>(context, listen: false).getTags();
+      Provider.of<ServiceProvider>(context, listen: false).getPlans();
     });
     super.initState();
   }
@@ -186,12 +188,10 @@ class _CreateServicesScreenState extends State<CreateServicesScreen> {
                       } else if (provider.cover == null) {
                         AppSnackBar.openErrorSnackBar(
                             message: "Cover photo is required.".tr);
-                      }
-                      else if (provider.media.isEmpty) {
+                      } else if (provider.media.isEmpty) {
                         AppSnackBar.openErrorSnackBar(
                             message: "Media photos is required.".tr);
-                      }
-                      else if (provider.subcategoryModel == null ||
+                      } else if (provider.subcategoryModel == null ||
                           provider.subcategoryModel?.id == 0) {
                         AppSnackBar.openErrorSnackBar(
                             message: "Subcategory is required.".tr);

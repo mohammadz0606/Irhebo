@@ -129,70 +129,69 @@ class QuotationDetailsWidget extends GetView<QuotationDetailsController> {
                 //     ),
                 //   ],
                 // )
-
-                if (getUserRole != UserRoles.freelancer) ...{
-                  const Divider(),
-                  SizedBox(
-                    height: 5.97 * (w / 100),
-                  ),
-                  Text(
-                    'Comments'.tr,
-                    style: Get.theme.textTheme.labelMedium,
-                  ),
-                } else ...{
-                  if (quotation.comments?.isNotEmpty == true) ...{
-                    if (quotation.comments?.any(
-                          (element) =>
-                              element.user?.id ==
-                              AppPreferences(
-                                sl(),
-                              ).getInt(key: AppPrefsKeys.USER_ID),
-                        ) ==
-                        true) ...{
-                      _buildCommentData(
-                        quotation.comments?.firstWhere(
-                          (element) =>
-                              element.user?.id ==
-                              AppPreferences(
-                                sl(),
-                              ).getInt(key: AppPrefsKeys.USER_ID),
-                        ),
-                      ),
-                    } else ...{
-                      Obx(
-                        () {
-                          return AppButton(
-                            title: 'Apply for Quotation',
-                            backGroundColor: AppLightColors.greenContainer,
-                            isLoading: controller.isLoadingApplyQuotation.value,
-                            onPressed: () {
-                              showStandOutDialog(context);
-                            },
-                          );
-                        },
-                      ),
-                    }
-                  } else ...{
-                    Obx(
-                      () {
-                        return AppButton(
-                          title: 'Apply for Quotation',
-                          backGroundColor: AppLightColors.greenContainer,
-                          isLoading: controller.isLoadingApplyQuotation.value,
-                          onPressed: () {
-                            showStandOutDialog(context);
-                          },
-                        );
-                      },
-                    ),
-                  }
-                },
               ],
             ),
           ),
           SizedBox(
             height: 5.97 * (w / 100),
           ),
+          if (getUserRole != UserRoles.freelancer) ...{
+            const Divider(),
+            SizedBox(
+              height: 5.97 * (w / 100),
+            ),
+            Text(
+              'Comments'.tr,
+              style: Get.theme.textTheme.labelMedium,
+            ),
+          } else ...{
+            if (quotation.comments?.isNotEmpty == true) ...{
+              if (quotation.comments?.any(
+                    (element) =>
+                        element.user?.id ==
+                        AppPreferences(
+                          sl(),
+                        ).getInt(key: AppPrefsKeys.USER_ID),
+                  ) ==
+                  true) ...{
+                _buildCommentData(
+                  quotation.comments?.firstWhere(
+                    (element) =>
+                        element.user?.id ==
+                        AppPreferences(
+                          sl(),
+                        ).getInt(key: AppPrefsKeys.USER_ID),
+                  ),
+                ),
+              } else ...{
+                Obx(
+                  () {
+                    return AppButton(
+                      title: 'Apply for Quotation',
+                      backGroundColor: AppLightColors.greenContainer,
+                      isLoading: controller.isLoadingApplyQuotation.value,
+                      onPressed: () {
+                        showStandOutDialog(context);
+                      },
+                    );
+                  },
+                ),
+              }
+            } else ...{
+              Obx(
+                () {
+                  return AppButton(
+                    title: 'Apply for Quotation',
+                    backGroundColor: AppLightColors.greenContainer,
+                    isLoading: controller.isLoadingApplyQuotation.value,
+                    onPressed: () {
+                      showStandOutDialog(context);
+                    },
+                  );
+                },
+              ),
+            }
+          },
           if (getUserRole != UserRoles.freelancer)
             ListView.separated(
               shrinkWrap: true,
@@ -280,26 +279,27 @@ class QuotationDetailsWidget extends GetView<QuotationDetailsController> {
           overflow: TextOverflow.ellipsis,
         ),
         const SizedBox(height: 15),
-        Obx(
-          () {
-            return Align(
-              alignment: Alignment.centerRight,
-              child: AppButton(
-                padding: EdgeInsets.zero,
-                hieght: 21,
-                width: 151,
-                isLoading: controller.isLoadingApproveQuotation &&
-                    controller.loadingCommentId.value == data?.id,
-                title: 'Approve Quotation',
-                onPressed: () async {
-                  await controller.approveQuotation(
-                    commentId: data?.id ?? 0,
-                  );
-                },
-              ),
-            );
-          },
-        ),
+        if (getUserRole != UserRoles.freelancer)
+          Obx(
+            () {
+              return Align(
+                alignment: Alignment.centerRight,
+                child: AppButton(
+                  padding: EdgeInsets.zero,
+                  hieght: 21,
+                  width: 151,
+                  isLoading: controller.isLoadingApproveQuotation &&
+                      controller.loadingCommentId.value == data?.id,
+                  title: 'Approve Quotation',
+                  onPressed: () async {
+                    await controller.approveQuotation(
+                      commentId: data?.id ?? 0,
+                    );
+                  },
+                ),
+              );
+            },
+          ),
       ],
     );
   }
@@ -331,7 +331,8 @@ class QuotationDetailsWidget extends GetView<QuotationDetailsController> {
           ),
           const SizedBox(height: 20),
           Text(
-            "Tell the client why you’re the best choice. Highlight your experience, skills, and what makes you stand out.".tr,
+            "Tell the client why you’re the best choice. Highlight your experience, skills, and what makes you stand out."
+                .tr,
             style: Get.textTheme.bodyMedium?.copyWith(
               height: 1.5,
             ),

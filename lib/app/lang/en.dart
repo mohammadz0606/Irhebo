@@ -275,4 +275,15 @@ Map<String, String> en = {
   "Tell the client why you’re the best choice. Highlight your experience, skills, and what makes you stand out.":
       "Tell the client why you’re the best choice. Highlight your experience, skills, and what makes you stand out.",
   "Type your comment or question here": "Type your comment or question here",
+
+
+  "Please select a plan." : "Please select a plan.",
+  "Please select a currency." : "Please select a currency.",
+  "A new plan cannot be added." : "A new plan cannot be added.",
+  "At least one plan must be selected." : "At least one plan must be selected.",
+  "Please enter valid delivery days.":  "Please enter valid delivery days.",
+  "Please enter valid prices." : "Please enter valid prices.",
+  "Please enter valid revision numbers." : "Please enter valid revision numbers.",
+  "Service Created Successfully" : "Service Created Successfully",
+
 };

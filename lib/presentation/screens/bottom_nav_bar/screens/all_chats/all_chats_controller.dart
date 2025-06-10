@@ -19,7 +19,7 @@ class AllChatsController extends GetxController {
         id: "1",
         message:
             "Lorem ipsum dolor sit amet consectetur. Faucibus viverra et tempus et scelerisque fringilla erat purus. Sed id tincidunt risus et justo.",
-        image: AppImages.userImageUrl7,
+        image: AppImages.placeholder,
         timestamp: "2024/24/04",
         type: "Spam"),
     ChatEntity(
@@ -27,7 +27,7 @@ class AllChatsController extends GetxController {
         id: "2",
         message:
             "Lorem ipsum dolor sit amet consectetur. Faucibus viverra et tempus et scelerisque fringilla erat purus. Sed id tincidunt risus et justo.",
-        image: AppImages.userImageUrl7,
+        image: AppImages.placeholder,
         timestamp: "2024/24/04",
         type: "Starred"),
     ChatEntity(
@@ -35,7 +35,7 @@ class AllChatsController extends GetxController {
         id: "3",
         message:
             "Lorem ipsum dolor sit amet consectetur. Faucibus viverra et tempus et scelerisque fringilla erat purus. Sed id tincidunt risus et justo.",
-        image: AppImages.userImageUrl7,
+        image: AppImages.placeholder,
         timestamp: "2024/24/04",
         type: "Unread"),
     ChatEntity(
@@ -43,7 +43,7 @@ class AllChatsController extends GetxController {
         id: "4",
         message:
             "Lorem ipsum dolor sit amet consectetur. Faucibus viverra et tempus et scelerisque fringilla erat purus. Sed id tincidunt risus et justo.",
-        image: AppImages.userImageUrl7,
+        image: AppImages.placeholder,
         timestamp: "2024/24/04",
         type: "Unread"),
     ChatEntity(
@@ -51,7 +51,7 @@ class AllChatsController extends GetxController {
         id: "5",
         message:
             "Lorem ipsum dolor sit amet consectetur. Faucibus viverra et tempus et scelerisque fringilla erat purus. Sed id tincidunt risus et justo.",
-        image: AppImages.userImageUrl7,
+        image: AppImages.placeholder,
         timestamp: "2024/24/04",
         type: "Unread"),
     ChatEntity(
@@ -59,7 +59,7 @@ class AllChatsController extends GetxController {
         id: "6",
         message:
             "Lorem ipsum dolor sit amet consectetur. Faucibus viverra et tempus et scelerisque fringilla erat purus. Sed id tincidunt risus et justo.",
-        image: AppImages.userImageUrl7,
+        image: AppImages.placeholder,
         timestamp: "2024/24/04",
         type: "Unread"),
     ChatEntity(
@@ -67,7 +67,7 @@ class AllChatsController extends GetxController {
         id: "7",
         message:
             "Lorem ipsum dolor sit amet consectetur. Faucibus viverra et tempus et scelerisque fringilla erat purus. Sed id tincidunt risus et justo.",
-        image: AppImages.userImageUrl7,
+        image: AppImages.placeholder,
         timestamp: "2024/24/04",
         type: "Unread"),
     ChatEntity(
@@ -75,7 +75,7 @@ class AllChatsController extends GetxController {
         id: "8",
         message:
             "Lorem ipsum dolor sit amet consectetur. Faucibus viverra et tempus et scelerisque fringilla erat purus. Sed id tincidunt risus et justo.",
-        image: AppImages.userImageUrl7,
+        image: AppImages.placeholder,
         timestamp: "2024/24/04",
         type: "Unread"),
     ChatEntity(
@@ -83,7 +83,7 @@ class AllChatsController extends GetxController {
         id: "9",
         message:
             "Lorem ipsum dolor sit amet consectetur. Faucibus viverra et tempus et scelerisque fringilla erat purus. Sed id tincidunt risus et justo.",
-        image: AppImages.userImageUrl7,
+        image: AppImages.placeholder,
         timestamp: "2024/24/04",
         type: "Unread"),
   ].obs;

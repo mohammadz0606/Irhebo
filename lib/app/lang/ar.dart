@@ -270,5 +270,13 @@ Map<String, String> ar = {
   "Stand out from the crowd!": "كن مميزًا عن الآخرين!",
   "Tell the client why you’re the best choice. Highlight your experience, skills, and what makes you stand out.":
       "أخبر العميل لماذا أنت الخيار الأفضل. أبرز خبراتك، مهاراتك، وما يجعلك مميزًا.",
-  "Type your comment or question here": "اكتب تعليقك أو سؤالك هنا"
+  "Type your comment or question here": "اكتب تعليقك أو سؤالك هنا",
+  "Please select a plan.": "يرجى اختيار خطة.",
+  "Please select a currency.": "يرجى اختيار العملة.",
+  "A new plan cannot be added.": "لا يمكن إضافة خطة جديدة.",
+  "At least one plan must be selected.": "يجب اختيار خطة واحدة على الأقل.",
+  "Please enter valid delivery days.": "يرجى إدخال عدد أيام تسليم صالح.",
+  "Please enter valid prices.": "يرجى إدخال أسعار صالحة.",
+  "Please enter valid revision numbers.": "يرجى إدخال عدد مراجعات صالح.",
+  "Service Created Successfully": "تم إنشاء الخدمة بنجاح"
 };

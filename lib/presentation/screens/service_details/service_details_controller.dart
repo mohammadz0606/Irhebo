@@ -65,7 +65,7 @@ class ServiceDetailsController extends GetxController {
 
   onTapService(int i) {
     id = serviceDetails.recommended![i].id!;
-    Get.to(() => ServiceDetailsScreen(),
+    Get.to(() => const ServiceDetailsScreen(),
         preventDuplicates: false,
         arguments: {"id": serviceDetails.recommended![i].id})?.then((_) {
       receiveParameters();
@@ -107,7 +107,7 @@ class ServiceDetailsController extends GetxController {
       openLoginRequiredDialog();
     } else {
       Get.bottomSheet(
-        PlansBottomSheet(),
+        const PlansBottomSheet(),
         backgroundColor: Get.find<AppController>().darkMode
             ? AppDarkColors.darkScaffoldColor
             : AppLightColors.pureWhite,
@@ -221,7 +221,7 @@ class ServiceDetailsController extends GetxController {
       barrierColor: Get.find<AppController>().darkMode
           ? AppDarkColors.darkContainer.withOpacity(0.3)
           : AppLightColors.shadow.withOpacity(0.3),
-      AppDialog(
+      const AppDialog(
         child: LoginRequiredDialog(),
       ),
     );
