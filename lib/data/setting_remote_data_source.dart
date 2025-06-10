@@ -141,7 +141,7 @@ class SettingRemoteDataSourceImp extends BaseRemoteDataSourceImpl
       );
       return response;
     } catch (err) {
-      log("${AppLoggerColors.red} data source:  ${err.toString()}");
+      log('${AppLoggerColors.red} data source:  ${err.toString()}');
       rethrow;
     }
   }

@@ -46,7 +46,7 @@ class MultiCustomDropdown<T> extends StatelessWidget {
             height: 2.48 * (w / 100),
           ),
         ],
-        if(initialValue != null && initialValue?.isNotEmpty == true) ... {
+        if (initialValue != null && initialValue?.isNotEmpty == true) ...{
           MultiSelectBottomSheetField<T?>(
             initialChildSize: 0.5,
             initialValue: initialValue!,
@@ -76,7 +76,6 @@ class MultiCustomDropdown<T> extends StatelessWidget {
                   fontSize: AppTextStyle.size14),
             ),
             items: items,
-            // chipDisplay: MultiSelectChipDisplay.none(),
             chipDisplay: showSelected
                 ? MultiSelectChipDisplay(
               scroll: true,
@@ -88,11 +87,6 @@ class MultiCustomDropdown<T> extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
               ),
-              // icon: const Icon(
-              //   Icons.close,
-              //   color: Colors.white,
-              //   size: 18,
-              // ),
             )
                 : MultiSelectChipDisplay.none(),
             itemsTextStyle: getRegularStyle(
@@ -110,6 +104,7 @@ class MultiCustomDropdown<T> extends StatelessWidget {
             validator: validators,
             onConfirm: onConfirm,
             autovalidateMode: AutovalidateMode.onUserInteraction,
+
           ),
         } else ...{
           MultiSelectBottomSheetField<T?>(
@@ -143,21 +138,21 @@ class MultiCustomDropdown<T> extends StatelessWidget {
             // chipDisplay: MultiSelectChipDisplay.none(),
             chipDisplay: showSelected
                 ? MultiSelectChipDisplay(
-              scroll: true,
-              chipColor: AppLightColors.switcher,
-              textStyle: getRegularStyle(
-                color: Colors.white,
-                fontSize: AppTextStyle.size14,
-              ),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-              // icon: const Icon(
-              //   Icons.close,
-              //   color: Colors.white,
-              //   size: 18,
-              // ),
-            )
+                    scroll: true,
+                    chipColor: AppLightColors.switcher,
+                    textStyle: getRegularStyle(
+                      color: Colors.white,
+                      fontSize: AppTextStyle.size14,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    // icon: const Icon(
+                    //   Icons.close,
+                    //   color: Colors.white,
+                    //   size: 18,
+                    // ),
+                  )
                 : MultiSelectChipDisplay.none(),
             itemsTextStyle: getRegularStyle(
                 color: Get.find<AppController>().darkMode
@@ -176,7 +171,6 @@ class MultiCustomDropdown<T> extends StatelessWidget {
             autovalidateMode: AutovalidateMode.onUserInteraction,
           ),
         },
-
       ],
     );
   }

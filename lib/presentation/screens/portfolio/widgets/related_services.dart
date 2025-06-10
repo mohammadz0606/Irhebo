@@ -47,17 +47,6 @@ class _RelatedServicesWidgetState extends State<RelatedServicesWidget> {
             ),
           );
         } else {
-          // final matchedInitial = widget.initialValue
-          //     .map((selected) {
-          //       try {
-          //         return value.freelancerServiceModel!.data!.services!
-          //             .firstWhere((original) => original?.id == selected.id);
-          //       } catch (_) {
-          //         return null;
-          //       }
-          //     })
-          //     .where((e) => e != null)
-          //     .toList();
           return MultiCustomDropdown<FreelancerServiceModelDataServices>(
             items: value.freelancerServiceModel!.data!.services!
                 .whereType<FreelancerServiceModelDataServices>() // remove nulls

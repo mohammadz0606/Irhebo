@@ -4,11 +4,14 @@ import '../../../../app/global_imports.dart';
 import '../../../../app/resources/images.dart';
 import '../../../../domain/providers/files_manager.dart';
 import '../../../widgets/app_icon.dart';
+import '../../../widgets/open_file_items.dart';
 
 class UploadMultipleFile extends StatefulWidget {
-  const UploadMultipleFile({super.key, required this.onFilesSelected});
+  const UploadMultipleFile(
+      {super.key, required this.onFilesSelected, this.urlsImage});
 
   final Function(List<File> files) onFilesSelected;
+  final List<String>? urlsImage;
 
   @override
   State<UploadMultipleFile> createState() => _UploadMultipleFileState();
@@ -81,8 +84,27 @@ class _UploadMultipleFileState extends State<UploadMultipleFile> {
               ),
             ),
           ),
-        ]
+        ],
+        if (files.isEmpty && widget.urlsImage != null) ...{
+          ListView.builder(
+            padding: EdgeInsets.zero,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: widget.urlsImage!.length,
+            itemBuilder: (context, index) {
+              return OpenFileItems(
+                pathUrl: widget.urlsImage![index],
+                fileName: extractFileName(widget.urlsImage![index]),
+              );
+            },
+          ),
+          const SizedBox(height: 20),
+        },
       ],
     );
+  }
+
+  String extractFileName(String url) {
+    return Uri.parse(url).pathSegments.last;
   }
 }

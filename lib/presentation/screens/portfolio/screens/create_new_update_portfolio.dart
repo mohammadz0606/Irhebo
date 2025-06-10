@@ -32,7 +32,9 @@ class _CreateNewUpdatePortfolioScreenState
   late FreelancerPortfolioProvider freelancerPortfolioProvider;
   final TextEditingController title = TextEditingController();
   final TextEditingController desc = TextEditingController();
-  List<int> selectedServices = [];
+ // List<int> selectedServices = [];
+  String? urlCover;
+  List<String>? mediaUrls;
 
   @override
   void dispose() {
@@ -65,25 +67,32 @@ class _CreateNewUpdatePortfolioScreenState
           media.clear();
           title.text = data?.title ?? '';
           desc.text = data?.description ?? '';
-          // cove = File(
-          //   data?.media?.first?.mediaPath ?? '',
-          // );
+          urlCover = data?.media
+              ?.firstWhere(
+                (element) => element?.isCover == true,
+              )
+              ?.mediaPath;
+
+          mediaUrls = (data?.media
+                      ?.where((element) => element?.isCover == false)
+                      .toList() ??
+                  [])
+              .map((e) => e?.mediaPath ?? '')
+              .toList();
+
           services.addAll(data!.service!
               .map(
                 (e) => e?.id ?? 0,
               )
               .toList());
 
-          selectedServices.addAll(data.service!
-              .map(
-                (e) => e?.id ?? 0,
-              )
-              .toList());
-
-          for (String? url in data.media!.map((e) => e?.mediaPath).toList()) {
-            File file = await filesManagerProvider.urlToFile(url ?? '');
-            media.add(file);
-          }
+          // selectedServices.addAll(
+          //   data.service!
+          //       .map(
+          //         (e) => e?.id ?? 0,
+          //       )
+          //       .toList(),
+          // );
 
           setState(() {});
         },
@@ -140,6 +149,7 @@ class _CreateNewUpdatePortfolioScreenState
                             style: Get.textTheme.labelMedium,
                           ),
                           UploadFileWidget(
+                            imageStartUrl: urlCover,
                             fileType: FileType.image,
                             onFileSelected: (file) {
                               log('DONE PIK FILE $file');
@@ -171,7 +181,7 @@ class _CreateNewUpdatePortfolioScreenState
                           ),
                           const SizedBox(height: 25),
                           RelatedServicesWidget(
-                            initialValue: selectedServices,
+                            initialValue: services,
                             onServicesSelected: (value) {
                               services.addAll(value);
                               setState(() {});
@@ -183,21 +193,13 @@ class _CreateNewUpdatePortfolioScreenState
                             style: Get.textTheme.labelMedium,
                           ),
                           UploadMultipleFile(
+                            urlsImage: mediaUrls,
                             onFilesSelected: (file) {
                               log('DONE PIK FILE ${file.length}');
                               media.addAll(file);
                               setState(() {});
                             },
                           ),
-
-                          if(Get.arguments?['data'] != null)...{
-                            const SizedBox(height: 15),
-                            // ListView.builder(
-                            //     itemCount: ,
-                            //     itemBuilder: itemBuilder)
-                          },
-
-
                           const SizedBox(height: 5),
                         ],
                       ),
@@ -205,29 +207,51 @@ class _CreateNewUpdatePortfolioScreenState
                   ),
                   AppButton(
                     onPressed: () async {
-                      if (media.isEmpty ||
-                          cove == null ||
-                          title.text.trim().isEmpty ||
-                          desc.text.trim().isEmpty ||
-                          services.isEmpty) {
-                        AppSnackBar.openErrorSnackBar(
-                          message: 'Please fill all fields'.tr,
+                      if (Get.arguments?['data'] != null) {
+                        if (title.text.trim().isEmpty ||
+                            desc.text.trim().isEmpty ||
+                            services.isEmpty) {
+                          AppSnackBar.openErrorSnackBar(
+                            message: 'Please fill all fields'.tr,
+                          );
+                          return;
+                        }
+                        await provider.updatePortfolio(
+                          id: Get.arguments?['id'],
+                          CreatePortfolioParam(
+                            cover: cove,
+                            description: desc.text,
+                            title: title.text,
+                            services: services,
+                            media: media.isEmpty ? null : media,
+                          ),
                         );
-                        return;
+                      } else {
+                        if (media.isEmpty ||
+                            cove == null ||
+                            title.text.trim().isEmpty ||
+                            desc.text.trim().isEmpty ||
+                            services.isEmpty) {
+                          AppSnackBar.openErrorSnackBar(
+                            message: 'Please fill all fields'.tr,
+                          );
+                          return;
+                        }
+                        await provider.createPortfolio(
+                          CreatePortfolioParam(
+                            cover: cove!,
+                            description: desc.text,
+                            title: title.text,
+                            services: services,
+                            media: media,
+                          ),
+                        );
                       }
-
-                      await provider.createPortfolio(
-                        CreatePortfolioParam(
-                          cover: cove!,
-                          description: desc.text,
-                          title: title.text,
-                          services: services,
-                          media: media,
-                        ),
-                      );
                     },
                     title: Get.arguments?['data'] != null ? 'Update' : "Save",
-                    isLoading: provider.isLoadingCreate,
+                    isLoading: Get.arguments?['data'] != null
+                        ? provider.isLoadingUpdate
+                        : provider.isLoadingCreate,
                     backGroundColor: AppLightColors.greenContainer,
                   ),
                   const SizedBox(height: 10),
