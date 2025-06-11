@@ -10,10 +10,10 @@ SliderModel _$SliderModelFromJson(Map<String, dynamic> json) => SliderModel(
       id: (json['id'] as num?)?.toInt(),
       title: json['title'] as String?,
       description: json['description'] as String?,
-      buttonAction: json['buttonAction'] as String?,
-      buttonText: json['buttonText'] as String?,
-      mediaPath: json['mediaPath'] as String?,
-      mediaType: json['mediaType'] as String?,
+      buttonAction: json['button_action'] as String?,
+      buttonText: json['button_text'] as String?,
+      mediaPath: json['media_path'] as String?,
+      mediaType: json['media_type'] as String?,
     );
 
 Map<String, dynamic> _$SliderModelToJson(SliderModel instance) =>

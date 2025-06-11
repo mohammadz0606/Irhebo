@@ -285,6 +285,10 @@ Map<String, String> en = {
   "Please enter valid prices." : "Please enter valid prices.",
   "Please enter valid revision numbers." : "Please enter valid revision numbers.",
   "Service Created Successfully" : "Service Created Successfully",
-  "Edit Freelancer Details" : "Edit Freelancer Details"
+  "Edit Freelancer Details" : "Edit Freelancer Details",
+
+  "Fees" :"Fees",
+  "Commission" : "Commission",
+  "Request Sent Successfully"  : "Request Sent Successfully"
 
 };

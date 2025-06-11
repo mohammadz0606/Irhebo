@@ -11,10 +11,11 @@ CheckoutModel _$CheckoutModelFromJson(Map<String, dynamic> json) =>
       id: json['id'] as String?,
       description: json['description'] as String?,
       subTotal: json['sub_total'] as String?,
-      tax: json['tax'] as String?,
       total: json['total'] as String?,
       title: json['title'] as String?,
       planTitle: json['plan_title'] as String?,
+      commission: json['commission'] as String?,
+      fees: json['fees'] as String?,
     );
 
 Map<String, dynamic> _$CheckoutModelToJson(CheckoutModel instance) =>
@@ -22,7 +23,6 @@ Map<String, dynamic> _$CheckoutModelToJson(CheckoutModel instance) =>
       'id': instance.id,
       'description': instance.description,
       'sub_total': instance.subTotal,
-      'tax': instance.tax,
       'total': instance.total,
       'title': instance.title,
       'plan_title': instance.planTitle,

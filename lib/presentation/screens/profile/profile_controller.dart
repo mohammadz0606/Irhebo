@@ -194,11 +194,17 @@ class ProfileController extends GetxController {
         (element) =>
             element?.title ==
             (userFreelancerModelData?.freelancer?.country ?? ''),
+        orElse: () {
+          return NewConfigModelDataCountries();
+        },
       );
-      selectedLanguages.addAll(appController.languages.where((lang) =>
-          userFreelancerModelData?.freelancer?.languages
-              ?.any((uLang) => uLang.id == lang?.id) ??
-          false));
+      selectedLanguages.addAll(
+        appController.languages.where((lang) {
+          return userFreelancerModelData?.freelancer?.languages
+                ?.any((uLang) => uLang.id == lang?.id) ??
+            false;
+        },),
+      );
       profession = appController.professions.firstWhere(
         (element) =>
             element?.title?.toLowerCase() ==

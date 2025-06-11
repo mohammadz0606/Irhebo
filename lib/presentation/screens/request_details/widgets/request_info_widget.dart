@@ -31,7 +31,7 @@ class RequestInfoWidget extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: Get.theme.textTheme.labelLarge,
                 )
-              : Icon(
+              : const Icon(
                   Icons.check_sharp,
                   color: AppDarkColors.primaryColor,
                 )

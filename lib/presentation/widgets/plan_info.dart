@@ -14,14 +14,14 @@ class PlanInfo extends StatelessWidget {
     var w = MediaQuery.of(context).size.width;
     return Column(
       children: [
-        RequestInfoWidget(title: 'Price', count: plan?.price ?? ""),
-        SizedBox(
-          height: 4 * (w / 100),
-        ),
-        RequestInfoWidget(
-          title: 'Delivery Days',
-          count: (plan?.deliveryDays ?? 0).toString(),
-        ),
+        //RequestInfoWidget(title: 'Price', count: plan?.price ?? ""),
+        // SizedBox(
+        //   height: 4 * (w / 100),
+        // ),
+        // RequestInfoWidget(
+        //   title: 'Delivery Days',
+        //   count: (plan?.deliveryDays ?? 0).toString(),
+        // ),
         SizedBox(
           height: 4 * (w / 100),
         ),

@@ -9,19 +9,21 @@ class CheckoutModel {
   String? description;
   @JsonKey(name: 'sub_total')
   String? subTotal;
-  String? tax;
   String? total;
   String? title;
   @JsonKey(name: 'plan_title')
   String? planTitle;
+  String? commission;
+  String? fees;
   CheckoutModel({
     this.id,
     this.description,
     this.subTotal,
-    this.tax,
     this.total,
     this.title,
     this.planTitle,
+    this.commission,
+    this.fees,
   });
 
   factory CheckoutModel.fromJson(Map<String, dynamic> json) {

@@ -8,10 +8,15 @@ class SliderModel {
   int? id;
   String? title;
   String? description;
+  @JsonKey(name: 'button_action')
   String? buttonAction;
+  @JsonKey(name: 'button_text')
   String? buttonText;
+  @JsonKey(name: 'media_path')
   String? mediaPath;
+  @JsonKey(name: 'media_type')
   String? mediaType;
+
   SliderModel({
     this.id,
     this.title,

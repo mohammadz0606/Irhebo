@@ -15,6 +15,9 @@ import 'package:irhebo/presentation/screens/service_details/widgets/plans_bottom
 import 'package:irhebo/presentation/widgets/app_dialog.dart';
 import 'package:irhebo/presentation/widgets/login_required_dialog.dart';
 
+import '../checkout/checkout_controller.dart';
+import '../checkout/checkout_screen.dart';
+
 class ServiceDetailsController extends GetxController {
   final appController = Get.find<AppController>();
 
@@ -42,7 +45,7 @@ class ServiceDetailsController extends GetxController {
 
   set moreReviews(value) => _moreReviews.value = value;
 
-  RxList<ReviewModel> _moreReviews = <ReviewModel>[].obs;
+  final RxList<ReviewModel> _moreReviews = <ReviewModel>[].obs;
 
   showMoreReviews() {
     int remaining = serviceDetails.reviews!.length - moreReviews.length;
@@ -185,20 +188,24 @@ class ServiceDetailsController extends GetxController {
   }
 
   selectPlan() async {
-    isLoadingPlan = true;
-    CreateRequestUseCase createRequestUseCase = sl();
-    final result = await createRequestUseCase(CreateRequestParams(
-        planId: serviceDetails.plans![selectedTab].id, serviceId: id));
-    result!.fold((l) {
-      isLoadingPlan = false;
-    }, (r) {
-      Get.back();
-      Get.toNamed(AppRoutes.checkout, arguments: {
-        "plan_id": serviceDetails.plans![selectedTab].id,
-        "service_id": id
-      });
-      isLoadingPlan = false;
+    Get.toNamed(AppRoutes.checkout, arguments: {
+      "plan_id": serviceDetails.plans![selectedTab].id,
+      "service_id": id
     });
+    // isLoadingPlan = true;
+    // CreateRequestUseCase createRequestUseCase = sl();
+    // final result = await createRequestUseCase(CreateRequestParams(
+    //     planId: serviceDetails.plans![selectedTab].id, serviceId: id));
+    // result!.fold((l) {
+    //   isLoadingPlan = false;
+    // }, (r) {
+    //   Get.back();
+    //   Get.toNamed(AppRoutes.checkout, arguments: {
+    //     "plan_id": serviceDetails.plans![selectedTab].id,
+    //     "service_id": id
+    //   });
+    //   isLoadingPlan = false;
+    // });
   }
 
   getServiceDetails() async {

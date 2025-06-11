@@ -17,7 +17,7 @@ class CheckoutScreen extends GetView<CheckoutController> {
   Widget build(BuildContext context) {
     var w = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: NormalAppBar(
+      appBar: const NormalAppBar(
         title: "Checkout",
       ),
       body: SingleChildScrollView(
@@ -81,7 +81,7 @@ class CheckoutScreen extends GetView<CheckoutController> {
                       //     ),
                       //   ],
                       // ),
-                      AppTitleWithAction(
+                      const AppTitleWithAction(
                         title: "Summary",
                         services: true,
                       ),
@@ -99,16 +99,17 @@ class CheckoutScreen extends GetView<CheckoutController> {
           ),
         ),
       ),
-      bottomNavigationBar: AppButton(
-        onPressed: () {
-          Get.back();
-          Get.back();
-          Get.find<BottomNavBarController>().onChangeIndex(0);
-          // Get.offAllNamed(AppRoutes.bottomNavBar);
-          // Get.to(RequestsScreen());
+      bottomNavigationBar: Obx(
+        () {
+          return AppButton(
+            isLoading: controller.isLoadingPlan,
+            onPressed: () async {
+              await controller.createRequest();
+            },
+            bottom: true,
+            title: "Continue",
+          );
         },
-        bottom: true,
-        title: "Continue",
       ),
     );
   }

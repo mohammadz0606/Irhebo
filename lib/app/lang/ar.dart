@@ -279,5 +279,11 @@ Map<String, String> ar = {
   "Please enter valid prices.": "يرجى إدخال أسعار صالحة.",
   "Please enter valid revision numbers.": "يرجى إدخال عدد مراجعات صالح.",
   "Service Created Successfully": "تم إنشاء الخدمة بنجاح",
-  "Edit Freelancer Details": "تعديل تفاصيل المستقل"
+  "Edit Freelancer Details": "تعديل تفاصيل المستقل",
+
+  "Fees" :"الرسوم",
+  "Commission" : "العمولة",
+  "Request Sent Successfully"  : "تم ارسال طلبك بنجاج"
+
+
 };

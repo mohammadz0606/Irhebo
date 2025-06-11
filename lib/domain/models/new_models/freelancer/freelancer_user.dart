@@ -72,6 +72,7 @@ class UserFreelancerModelDataFreelancer {
   String? status;
   List<UserFreelancerModelDataFreelancerCertificates>? certificates;
   List<LanguageModel>? languages;
+  List<Categories>? categories;
 
   UserFreelancerModelDataFreelancer({
     this.id,
@@ -89,6 +90,7 @@ class UserFreelancerModelDataFreelancer {
     this.certificates,
     this.languages,
     this.profession,
+    this.categories,
   });
 
   UserFreelancerModelDataFreelancer.fromJson(Map<String, dynamic> json) {
@@ -122,5 +124,31 @@ class UserFreelancerModelDataFreelancer {
       });
       languages = arr0;
     }
+
+    if (json['categories'] != null) {
+      final v = json['categories'];
+      final arr0 = <Categories>[];
+      v.forEach((v) {
+        arr0.add(Categories.fromJson(v));
+      });
+      categories = arr0;
+    }
+  }
+}
+
+final class Categories {
+  int? id;
+  String? title;
+
+  Categories({
+    this.id,
+    this.title,
+  });
+
+  factory Categories.fromJson(Map<String, dynamic> json) {
+    return Categories(
+      id: json["id"],
+      title: json["title"],
+    );
   }
 }

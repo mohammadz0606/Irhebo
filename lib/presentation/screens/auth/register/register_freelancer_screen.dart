@@ -71,7 +71,11 @@ class _RegisterFreelancerScreenState extends State<RegisterFreelancerScreen> {
     searchController.getCategories().then((_) {
       if (widget.userFreelancerModelData != null) {
         _biography.text = widget.userFreelancerModelData?.freelancer?.bio ?? '';
-        //  categoryIds = widget.userFreelancerModelData?.freelancer.?
+
+        categoryIds = widget.userFreelancerModelData?.freelancer?.categories
+                ?.map((e) => e.id ?? 0)
+                .toList() ??
+            [];
         avatarUrl = widget.userFreelancerModelData?.freelancer?.avatar;
         final certificates =
             widget.userFreelancerModelData?.freelancer?.certificates ?? [];
@@ -145,6 +149,10 @@ class _RegisterFreelancerScreenState extends State<RegisterFreelancerScreen> {
                   Obx(
                     () {
                       return MultiCustomDropdown<CategoryModel?>(
+                        initialValue: searchController.categories
+                            .where(
+                                (element) => categoryIds.contains(element.id))
+                            .toList(),
                         items: searchController.categories
                             .map(
                               (category) => MultiSelectItem<CategoryModel?>(
@@ -204,14 +212,16 @@ class _RegisterFreelancerScreenState extends State<RegisterFreelancerScreen> {
                     imageStartUrl: certificateUrl,
                     onFileSelected: (file) {
                       setState(() {
-                        if (certificateFile != null) {
-                          selectedFiles.remove(certificateFile);
-                          certificateFile = null;
-                        }
+                        // if (certificateFile != null) {
+                        //   selectedFiles.remove(certificateFile);
+                        //   certificateFile = null;
+                        // }
                         certificateFile = file;
-                        if (certificateFile != null) {
-                          selectedFiles.add(certificateFile!);
-                        }
+                        // if (certificateFile != null) {
+                        //   selectedFiles.add(certificateFile!);
+                        //   fileDescriptions.add(TextEditingController());
+                        // }
+                        setState(() {});
                       });
                     },
                   ),
@@ -302,6 +312,9 @@ class _RegisterFreelancerScreenState extends State<RegisterFreelancerScreen> {
                                 categoryIds.isEmpty ||
                                 fileDescriptions.isNotEmpty) {
                               List<File> allFiles = [];
+                              if (certificateFile != null) {
+                                allFiles.add(certificateFile!);
+                              }
                               allFiles.addAll(selectedFiles.whereType<File>());
 
                               await provider.completeProfile(
@@ -329,6 +342,7 @@ class _RegisterFreelancerScreenState extends State<RegisterFreelancerScreen> {
                                 selectedFiles.isNotEmpty ||
                                 fileDescriptions.isNotEmpty) {
                               List<File> allFiles = [];
+                              allFiles.add(certificateFile!);
                               allFiles.addAll(selectedFiles.whereType<File>());
 
                               await provider.completeProfile(

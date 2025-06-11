@@ -50,12 +50,21 @@ class SummaryWidget extends StatelessWidget {
             height: 4.97 * (w / 100),
           ),
           PriceRow(
-            title: "Tax",
-            price: model.tax ?? "",
+            title: "Fees",
+            price: model.fees ?? "",
+          ),
+
+          SizedBox(
+            height: 4.97 * (w / 100),
+          ),
+
+          PriceRow(
+            title: "Commission",
+            price: model.commission ?? "",
           ),
           Padding(
             padding: EdgeInsets.symmetric(vertical: 4.97 * (w / 100)),
-            child: Divider(
+            child: const Divider(
               height: 1,
             ),
           ),
