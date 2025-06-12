@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 final MediaQueryData media =
@@ -78,6 +79,25 @@ extension ColorExtension on String {
     }
     if (hexColor.length == 8) {
       return Color(int.parse("0x$hexColor"));
+    }
+  }
+
+  String get requestFilterTitle {
+    switch(this) {
+      case "all":
+        return 'all new'.tr;
+      case "pending":
+        return "pending new".tr;
+      case "in_progress":
+        return "in_progress new".tr;
+      case "completed":
+        return "completed new".tr;
+      case "cancelled":
+        return "cancelled new".tr;
+      case "confirmed" :
+        return "confirmed new".tr;
+      default:
+        return '';
     }
   }
 }

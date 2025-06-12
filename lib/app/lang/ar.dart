@@ -283,7 +283,15 @@ Map<String, String> ar = {
 
   "Fees" :"الرسوم",
   "Commission" : "العمولة",
-  "Request Sent Successfully"  : "تم ارسال طلبك بنجاج"
+  "Request Sent Successfully"  : "تم ارسال طلبك بنجاج",
+  "Complete Request" : "اكمال الطلب",
+
+  "pending new": "قيد الانتظار",
+  "in_progress new": "قيد التنفيذ",
+  "completed new" : "مكتمل",
+  "cancelled new" : "ملغى",
+  "all new" : "الكل",
+  "confirmed new" : "مؤكد"
 
 
 };

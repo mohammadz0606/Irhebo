@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:irhebo/app/extensions.dart';
 import 'package:irhebo/presentation/screens/bottom_nav_bar/bottom_nav_bar_controller.dart';
 import 'package:irhebo/presentation/screens/bottom_nav_bar/screens/requests/requests_controller.dart';
 import 'package:irhebo/presentation/screens/bottom_nav_bar/screens/requests/widgets/request_item.dart';
@@ -47,7 +48,7 @@ class RequestsScreen extends GetView<RequestsController> {
                                       child: TagItem(
                                         selected: controller.types[i] ==
                                             controller.selectedTab,
-                                        title: controller.types[i],
+                                        title: controller.types[i].requestFilterTitle,
                                         onTapTag: () =>
                                             controller.onTapFilter(i),
                                       ),
@@ -66,7 +67,7 @@ class RequestsScreen extends GetView<RequestsController> {
                               Visibility(
                                 visible: controller.selectedTab ==
                                         controller.requests[i].statusKey ||
-                                    controller.selectedTab == "all".tr,
+                                    controller.selectedTab == "all",
                                 // replacement: const NoData(
                                 //   forHome: false,
                                 // ),

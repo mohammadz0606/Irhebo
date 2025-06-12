@@ -42,12 +42,16 @@ class RequestsController extends GetxController {
   }
 
   List<String> types = [
-    "all".tr,
-    "pending".tr,
-    "completed".tr,
-    "cancelled".tr,
-    "confirmed".tr
+    "all",
+    "pending",
+    "in_progress"
+    "completed",
+    "cancelled",
+    "confirmed",
   ];
+
+
+
 
   onTapFilter(int index) {
     selectedTab = types[index];

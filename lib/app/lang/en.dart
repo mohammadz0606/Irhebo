@@ -289,6 +289,16 @@ Map<String, String> en = {
 
   "Fees" :"Fees",
   "Commission" : "Commission",
-  "Request Sent Successfully"  : "Request Sent Successfully"
+  "Request Sent Successfully"  : "Request Sent Successfully",
+  "Complete Request" : "Complete Request",
+
+
+  "pending new": "Pending",
+  "in_progress new": "In Progress",
+  "completed new" : "Completed",
+  "cancelled new" : "Cancelled",
+  "all new" : "All",
+  "confirmed new" : "Confirmed"
+
 
 };
