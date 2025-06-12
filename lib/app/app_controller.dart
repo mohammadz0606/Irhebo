@@ -50,8 +50,8 @@ class AppController extends GetxController {
   List<NewConfigModelDataLanguagesData?> languages = [];
 
   List<GenderEntity> genders = [
-    GenderEntity("1", "Male","ذكر"),
-    GenderEntity("2", "Female","انثى"),
+    GenderEntity("1", "Male", "ذكر"),
+    GenderEntity("2", "Female", "انثى"),
   ];
 
   @override
@@ -59,8 +59,9 @@ class AppController extends GetxController {
     super.onInit();
     await detectLanguageLocale();
     await detectAppTheme();
+    await getConfig();
     token = prefs.getAccessToken();
-    getConfig();
+
     log("${AppLoggerColors.magenta}${token}token");
   }
 
@@ -102,7 +103,7 @@ class AppController extends GetxController {
     onChangeThemeMode(darkMode);
   }
 
-  getConfig() async {
+  Future<void> getConfig() async {
     // GetConfigUseCase getConfigUseCase = sl();
     // final result = await getConfigUseCase(());
     // result!.fold((l) {}, (r) {

@@ -10,6 +10,7 @@ import '../../../../app/global_imports.dart';
 import '../../../../app/router/routes.dart';
 import '../../../../domain/models/home_model.dart';
 import '../../../../domain/models/new_models/tags_model.dart';
+import '../../../../domain/providers/currency.dart';
 import '../../../widgets/app_text_field.dart';
 import '../../../widgets/dropdown_item.dart';
 import '../../../widgets/dropdown_widget.dart';
@@ -33,6 +34,8 @@ class _CreateServicesScreenState extends State<CreateServicesScreen> {
       Provider.of<ServiceProvider>(context, listen: false).getCategories();
       Provider.of<ServiceProvider>(context, listen: false).getTags();
       Provider.of<ServiceProvider>(context, listen: false).getPlans();
+      Provider.of<CurrencyProvider>(Get.context!, listen: false)
+          .getCurrencies();
     });
     super.initState();
   }
