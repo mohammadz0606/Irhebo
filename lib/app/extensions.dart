@@ -97,7 +97,7 @@ extension ColorExtension on String {
       case "confirmed" :
         return "confirmed new".tr;
       default:
-        return '';
+        return "";
     }
   }
 }

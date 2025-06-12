@@ -15,7 +15,7 @@ import '../../../../../app/snack_bar.dart';
 class RequestsController extends GetxController {
   final appController = Get.find<AppController>();
 
-  final Rx<String> _selectedTab = ("all".tr).obs;
+  final Rx<String> _selectedTab = ("all").obs;
   final RxBool _isLoading = false.obs;
   final RxList<RequestModel> _requests = <RequestModel>[].obs;
 
@@ -44,7 +44,7 @@ class RequestsController extends GetxController {
   List<String> types = [
     "all",
     "pending",
-    "in_progress"
+    "in_progress",
     "completed",
     "cancelled",
     "confirmed",

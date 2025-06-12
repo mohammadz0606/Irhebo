@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:irhebo/app/enums.dart';
 import 'package:irhebo/app/extensions.dart';
 import 'package:irhebo/presentation/screens/bottom_nav_bar/bottom_nav_bar_controller.dart';
 import 'package:irhebo/presentation/screens/bottom_nav_bar/screens/requests/requests_controller.dart';
@@ -8,6 +9,8 @@ import 'package:irhebo/presentation/screens/bottom_nav_bar/screens/requests/widg
 import 'package:irhebo/presentation/screens/search/widgets/tag_item.dart';
 import 'package:irhebo/presentation/widgets/no_data.dart';
 import 'package:irhebo/presentation/widgets/normal_app_bar.dart';
+
+import '../../../../../app/app_functions.dart';
 
 class RequestsScreen extends GetView<RequestsController> {
   const RequestsScreen({super.key});
@@ -46,9 +49,12 @@ class RequestsScreen extends GetView<RequestsController> {
                                     () => SizedBox(
                                       width: 30 * (w / 100),
                                       child: TagItem(
+                                        freelancer:
+                                            getUserRole == UserRoles.freelancer,
                                         selected: controller.types[i] ==
                                             controller.selectedTab,
-                                        title: controller.types[i].requestFilterTitle,
+                                        title: controller
+                                            .types[i].requestFilterTitle,
                                         onTapTag: () =>
                                             controller.onTapFilter(i),
                                       ),
