@@ -27,9 +27,56 @@ class _UploadMultipleFileState extends State<UploadMultipleFile> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        if (files.isNotEmpty) ...[
+          const SizedBox(height: 10),
+          SizedBox(
+            height: 120,
+            child: ListView.builder(
+              padding: EdgeInsets.zero,
+              scrollDirection: Axis.horizontal,
+              itemCount: files.length,
+              itemBuilder: (context, index) {
+                return Stack(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 4),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Image.file(
+                          files[index],
+                          fit: BoxFit.cover,
+                          width: 100,
+                          height: 150,
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      top: 0,
+                      right: 0,
+                      child: CircleAvatar(
+                        child: IconButton(
+                          onPressed: () {
+                            files.remove(files[index]);
+                            widget.onFilesSelected(files);
+                            setState(() {});
+                          },
+                          icon: const AppIcon(
+                            path: AppIcons.delete,
+                            color: AppLightColors.pureWhite,
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                );
+              },
+            ),
+          ),
+          const SizedBox(height: 10),
+        ],
         Container(
           margin: const EdgeInsets.only(top: 20, bottom: 10),
-          height: 17.5 * (w / 100),
+          height: 20.5 * (w / 100),
           width: 45 * (w / 100),
           alignment: Alignment.center,
           decoration: AppDecoration.getDecorationWithRadius(
@@ -66,25 +113,25 @@ class _UploadMultipleFileState extends State<UploadMultipleFile> {
             },
           ),
         ),
-        if (files.isNotEmpty) ...[
-          ...files.map(
-            (e) => ListTile(
-              contentPadding: EdgeInsets.zero,
-              title: Text(e.path.split('/').last),
-              trailing: IconButton(
-                onPressed: () {
-                  files.remove(e);
-                  widget.onFilesSelected(files);
-                  setState(() {});
-                },
-                icon: const AppIcon(
-                  path: AppIcons.delete,
-                  color: AppLightColors.red,
-                ),
-              ),
-            ),
-          ),
-        ],
+        // if (files.isNotEmpty) ...[
+        //   ...files.map(
+        //     (e) => ListTile(
+        //       contentPadding: EdgeInsets.zero,
+        //       title: Text(e.path.split('/').last),
+        //       trailing: IconButton(
+        //         onPressed: () {
+        //           files.remove(e);
+        //           widget.onFilesSelected(files);
+        //           setState(() {});
+        //         },
+        //         icon: const AppIcon(
+        //           path: AppIcons.delete,
+        //           color: AppLightColors.red,
+        //         ),
+        //       ),
+        //     ),
+        //   ),
+        // ],
         if (files.isEmpty && widget.urlsImage != null) ...{
           ListView.builder(
             padding: EdgeInsets.zero,

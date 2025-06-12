@@ -111,35 +111,43 @@ class RequestDetailsBottomBar extends GetWidget<RequestDetailsController> {
             },
           ),
         } else if (getUserRole == UserRoles.client &&
-            controller.request.statusKey == 'completed')
+            controller.request.statusKey == 'completed')... {
           AppButton(
             onPressed: () async {
               await controller.openUpdateRequestDialog(status: 'confirmed');
             },
             title: "Confirm Delivery",
           ),
-        SizedBox(height: 2 * (w / 100)),
+          SizedBox(height: 2 * (w / 100)),
+        },
 
-        if (controller.request.statusKey == 'in_progress' && getUserRole == UserRoles.freelancer)
+
+        if (controller.request.statusKey == 'in_progress' && getUserRole == UserRoles.freelancer)...{
           AppButton(
             onPressed: () async{
               await controller.openUpdateRequestDialog(status: 'completed');
             },
             title: "Complete Request",
           ),
-        SizedBox(height: 2 * (w / 100)),
-        if (controller.request.statusKey == 'in_progress')
+          SizedBox(height: 2 * (w / 100)),
+        },
+
+        if (controller.request.statusKey == 'in_progress')...{
           AppButton(
             onPressed: () {
               controller.openUpdateRequestDialog(status: 'in_progress');
             },
             title: "Update Request",
           ),
+          SizedBox(height: 2 * (w / 100)),
+        },
         SizedBox(height: 2 * (w / 100)),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 5.9 * (w / 100)),
           child: AppButton(
-            onPressed: () {},
+            onPressed: () {
+
+            },
             title: "Download Contract",
           ),
         ),

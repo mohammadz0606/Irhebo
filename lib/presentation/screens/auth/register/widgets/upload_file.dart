@@ -36,7 +36,7 @@ class _UploadFileWidgetState extends State<UploadFileWidget> {
       children: [
         Container(
           margin: const EdgeInsets.only(top: 20, bottom: 30),
-          height: 17.5 * (w / 100),
+          height: 20.5 * (w / 100),
           width: 45 * (w / 100),
           decoration: AppDecoration.getDecorationWithRadius(
             borderColor: AppLightColors.greenContainer,
@@ -49,39 +49,52 @@ class _UploadFileWidgetState extends State<UploadFileWidget> {
           alignment: Alignment.center,
           child: Consumer<FilesManagerProvider>(
             builder: (context, provider, _) {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+              return Stack(
                 children: [
-                  Visibility(
-                    visible: !provider.isLoadingPickFile,
-                    replacement: const CircularProgressIndicator.adaptive(),
-                    child: IconButton(
-                      onPressed: () async {
-                        if (file != null) {
-                          file = null;
-                          widget.onFileSelected(file);
-                          setState(() {});
-                        }
-
-                        File? pickFile =
-                            await provider.pickFile(fileType: widget.fileType);
-
-                        file = pickFile;
-
-                        widget.onFileSelected(file);
-
-                        setState(() {});
-                      },
-                      icon: AppIcon(
-                        color: AppLightColors.greenContainer,
-                        path: file == null || widget.imageStartUrl == null
-                            ? AppIcons.upload
-                            : AppIcons.attachment,
-                        width: 5.97 * (w / 100),
-                        height: 5.97 * (w / 100),
+                  if (file != null)
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(20.r),
+                      child: SizedBox(
+                        height: double.infinity,
+                        width: double.infinity,
+                        child: Image.file(
+                          file!,
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
-                  ),
+                  if (!provider.isLoadingPickFile)
+                    Center(
+                      child: IconButton(
+                        onPressed: () async {
+                          if (file != null) {
+                            file = null;
+                            widget.onFileSelected(file);
+                            setState(() {});
+                          }
+
+                          File? pickFile = await provider.pickFile(
+                              fileType: widget.fileType);
+
+                          file = pickFile;
+                          widget.onFileSelected(file);
+                          setState(() {});
+                        },
+                        icon: file == null
+                            ? AppIcon(
+                                color: AppLightColors.greenContainer,
+                                path:
+                                    file == null || widget.imageStartUrl == null
+                                        ? AppIcons.upload
+                                        : AppIcons.attachment,
+                                width: 5.97 * (w / 100),
+                                height: 5.97 * (w / 100),
+                              )
+                            : const SizedBox(),
+                      ),
+                    )
+                  else
+                    const Center(child: CircularProgressIndicator.adaptive()),
                 ],
               );
             },
@@ -109,7 +122,6 @@ class _UploadFileWidgetState extends State<UploadFileWidget> {
           const SizedBox(height: 20),
         },
         if (file == null && widget.imageStartUrl != null) ...{
-
           OpenFileItems(
             pathUrl: widget.imageStartUrl,
             fileName: extractFileName(widget.imageStartUrl!),
