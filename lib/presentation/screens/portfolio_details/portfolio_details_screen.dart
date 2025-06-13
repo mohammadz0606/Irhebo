@@ -29,71 +29,73 @@ class PortfolioDetailsScreen extends GetView<PortfolioDetailsController> {
                 : Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: EditOrDelete(
-                          space: 0,
-                          id: controller.portfolio?.id ?? 0,
-                          onEditTap: () {
-                            Get.toNamed(AppRoutes.createUpdatePortfolio,
-                                arguments: {
-                                  'data': controller.portfolio,
-                                  'id': controller.portfolio?.id ?? 0,
-                                  'title': controller.portfolio?.title,
-                                });
-                          },
-                          onDeleteTap: () async {
-                            showAdaptiveDialog(
-                              context: Get.context!,
-                              barrierDismissible: false,
-                              builder: (_) {
-                                return Consumer<FreelancerPortfolioProvider>(
-                                  builder: (context, provider, _) {
-                                    return AlertDialog.adaptive(
-                                      title: Text('Delete Confirmation'.tr),
-                                      content: Text(
-                                        "Are you sure you want to delete this item?"
-                                            .tr,
-                                      ),
-                                      actions: [
-                                        TextButton(
-                                          onPressed: () async {
-                                            await provider.deletePortfolio(
-                                              onSuccess: () {
-                                                provider.onRefreshList();
-                                                log('DONE DELETE PORTFOLIO');
-                                              },
-                                              id: controller.portfolio?.id ?? 0,
-                                            );
-                                            Navigator.of(Get.context!).pop();
-                                          },
-                                          child: Text(
-                                            "Yes".tr,
-                                            style: const TextStyle(
-                                                color: Colors.red),
-                                          ),
+                      if(getUserRole == UserRoles.freelancer) ... {
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: EditOrDelete(
+                            space: 0,
+                            id: controller.portfolio?.id ?? 0,
+                            onEditTap: () {
+                              Get.toNamed(AppRoutes.createUpdatePortfolio,
+                                  arguments: {
+                                    'data': controller.portfolio,
+                                    'id': controller.portfolio?.id ?? 0,
+                                    'title': controller.portfolio?.title,
+                                  });
+                            },
+                            onDeleteTap: () async {
+                              showAdaptiveDialog(
+                                context: Get.context!,
+                                barrierDismissible: false,
+                                builder: (_) {
+                                  return Consumer<FreelancerPortfolioProvider>(
+                                    builder: (context, provider, _) {
+                                      return AlertDialog.adaptive(
+                                        title: Text('Delete Confirmation'.tr),
+                                        content: Text(
+                                          "Are you sure you want to delete this item?"
+                                              .tr,
                                         ),
-                                        TextButton(
-                                          onPressed: () {
-                                            Navigator.of(Get.context!).pop();
-                                          },
-                                          child: Text(
-                                            "No".tr,
-                                            style: const TextStyle(
-                                              color: AppLightColors.greenText,
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () async {
+                                              await provider.deletePortfolio(
+                                                onSuccess: () {
+                                                  provider.onRefreshList();
+                                                  log('DONE DELETE PORTFOLIO');
+                                                },
+                                                id: controller.portfolio?.id ?? 0,
+                                              );
+                                              Navigator.of(Get.context!).pop();
+                                            },
+                                            child: Text(
+                                              "Yes".tr,
+                                              style: const TextStyle(
+                                                  color: Colors.red),
                                             ),
                                           ),
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                );
-                              },
-                            );
-                          },
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.of(Get.context!).pop();
+                                            },
+                                            child: Text(
+                                              "No".tr,
+                                              style: const TextStyle(
+                                                color: AppLightColors.greenText,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                },
+                              );
+                            },
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 30),
+                        const SizedBox(height: 30),
+                      },
                       Text(
                         controller.portfolio?.title ?? '',
                         style: Get.theme.textTheme.bodySmall?.copyWith(

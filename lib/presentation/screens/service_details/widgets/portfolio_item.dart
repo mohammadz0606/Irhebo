@@ -66,95 +66,98 @@ class PortfolioItem extends StatelessWidget {
               ),
             ),
           ),
-          Positioned(
-            top: 2.98 * (w / 100),
-            right: 2.98 * (w / 100),
-            child: EditOrDelete(
-              space: 19,
-              id: portfoilo.id ?? 0,
-              onEditTap: () {
-                Get.toNamed(AppRoutes.createUpdatePortfolio, arguments: {
-                  'data': portfoilo,
-                  'id': portfoilo.id ?? 0,
-                  'title': portfoilo.title,
-                });
-              },
-              onDeleteTap: () async {
-                showAdaptiveDialog(
-                  context: Get.context!,
-                  barrierDismissible: false,
-                  builder: (_) {
-                    return Consumer<FreelancerPortfolioProvider>(
-                      builder: (context, provider, _) {
-                        return AlertDialog.adaptive(
-                          title: Text('Delete Confirmation'.tr),
-                          content: Text(
-                            "Are you sure you want to delete this item?".tr,
-                          ),
-                          actions: [
-                            TextButton(
-                              onPressed: () async {
-                                await provider.deletePortfolio(
-                                  onSuccess: () {
-                                    provider.onRefreshList();
-                                    log('DONE DELETE PORTFOLIO');
-                                  },
-                                  id: portfoilo.id ?? 0,
-                                );
-                                Navigator.of(Get.context!).pop();
-                              },
-                              child: Text(
-                                "Yes".tr,
-                                style: const TextStyle(color: Colors.red),
-                              ),
+          if(getUserRole == UserRoles.freelancer) ... {
+            Positioned(
+              top: 2.98 * (w / 100),
+              right: 2.98 * (w / 100),
+              child: EditOrDelete(
+                space: 19,
+                id: portfoilo.id ?? 0,
+                onEditTap: () {
+                  Get.toNamed(AppRoutes.createUpdatePortfolio, arguments: {
+                    'data': portfoilo,
+                    'id': portfoilo.id ?? 0,
+                    'title': portfoilo.title,
+                  });
+                },
+                onDeleteTap: () async {
+                  showAdaptiveDialog(
+                    context: Get.context!,
+                    barrierDismissible: false,
+                    builder: (_) {
+                      return Consumer<FreelancerPortfolioProvider>(
+                        builder: (context, provider, _) {
+                          return AlertDialog.adaptive(
+                            title: Text('Delete Confirmation'.tr),
+                            content: Text(
+                              "Are you sure you want to delete this item?".tr,
                             ),
-                            TextButton(
-                              onPressed: () {
-                                Navigator.of(Get.context!).pop();
-                              },
-                              child: Text(
-                                "No".tr,
-                                style: const TextStyle(
-                                  color: AppLightColors.greenText,
+                            actions: [
+                              TextButton(
+                                onPressed: () async {
+                                  await provider.deletePortfolio(
+                                    onSuccess: () {
+                                      provider.onRefreshList();
+                                      log('DONE DELETE PORTFOLIO');
+                                    },
+                                    id: portfoilo.id ?? 0,
+                                  );
+                                  Navigator.of(Get.context!).pop();
+                                },
+                                child: Text(
+                                  "Yes".tr,
+                                  style: const TextStyle(color: Colors.red),
                                 ),
                               ),
-                            ),
-                          ],
-                        );
-                      },
-                    );
-                  },
-                );
-                // Get.defaultDialog(
-                //   title: 'Delete Confirmation'.tr,
-                //   middleText:
-                //       "Are you sure you want to delete this item?".tr,
-                //   textConfirm: "Yes".tr,
-                //   textCancel: "No".tr,
-                //   confirmTextColor: Colors.white,
-                //   buttonColor: Colors.red,
-                //   cancelTextColor: Colors.white,
-                //   onConfirm: () async {
-                //     await provider.deletePortfolio(
-                //       onSuccess: () {
-                //         controller.onRefreshList();
-                //         log('DONE DELETE PORTFOLIO');
-                //       },
-                //       id: data?.id ?? 0,
-                //     );
-                //     if (Get.isDialogOpen ?? false) {
-                //       Get.back();
-                //     }
-                //   },
-                //   onCancel: () {
-                //     if (Get.isDialogOpen ?? false) {
-                //       Get.back(); // يغلق الـ dialog فقط
-                //     }
-                //   },
-                // );
-              },
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(Get.context!).pop();
+                                },
+                                child: Text(
+                                  "No".tr,
+                                  style: const TextStyle(
+                                    color: AppLightColors.greenText,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
+                  );
+                  // Get.defaultDialog(
+                  //   title: 'Delete Confirmation'.tr,
+                  //   middleText:
+                  //       "Are you sure you want to delete this item?".tr,
+                  //   textConfirm: "Yes".tr,
+                  //   textCancel: "No".tr,
+                  //   confirmTextColor: Colors.white,
+                  //   buttonColor: Colors.red,
+                  //   cancelTextColor: Colors.white,
+                  //   onConfirm: () async {
+                  //     await provider.deletePortfolio(
+                  //       onSuccess: () {
+                  //         controller.onRefreshList();
+                  //         log('DONE DELETE PORTFOLIO');
+                  //       },
+                  //       id: data?.id ?? 0,
+                  //     );
+                  //     if (Get.isDialogOpen ?? false) {
+                  //       Get.back();
+                  //     }
+                  //   },
+                  //   onCancel: () {
+                  //     if (Get.isDialogOpen ?? false) {
+                  //       Get.back(); // يغلق الـ dialog فقط
+                  //     }
+                  //   },
+                  // );
+                },
+              ),
             ),
-          ),
+          }
+
         ],
       ),
     );

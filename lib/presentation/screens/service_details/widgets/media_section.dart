@@ -53,76 +53,79 @@ class MediaSection extends GetView<ServiceDetailsController> {
                         )
                       ],
                     ),
-                    Positioned(
-                        top: 10,
-                        right: 24,
-                        child: Consumer<MediaProvider>(
-                          builder: (context, provider, _) {
-                            return provider.isLoading
-                                ? const CircularProgressIndicator.adaptive()
-                                : GestureDetector(
-                              onTap: () async {
-                                await showAdaptiveDialog(
-                                  context: Get.context!,
-                                  barrierDismissible: false,
-                                  builder: (_) {
-                                    return AlertDialog.adaptive(
-                                      title: Text(
-                                          'Delete Confirmation'.tr),
-                                      content: Text(
-                                        "Are you sure you want to delete this item?"
-                                            .tr,
-                                      ),
-                                      actions: [
-                                        TextButton(
-                                          onPressed: () async {
-                                            Navigator.of(Get.context!)
-                                                .pop();
-                                            await provider
-                                                .deleteMedia(
-                                              id: mediaList[i].id ??
-                                                  0,
-                                              onSuccess: () async {
-                                                await controller
-                                                    .getServiceDetails();
-                                              },
-                                            );
-                                          },
-                                          child: Text(
-                                            "Yes".tr,
-                                            style: const TextStyle(
-                                                color: Colors.red),
-                                          ),
+                    if(getUserRole == UserRoles.freelancer)...{
+                      Positioned(
+                          top: 10,
+                          right: 24,
+                          child: Consumer<MediaProvider>(
+                            builder: (context, provider, _) {
+                              return provider.isLoading
+                                  ? const CircularProgressIndicator.adaptive()
+                                  : GestureDetector(
+                                onTap: () async {
+                                  await showAdaptiveDialog(
+                                    context: Get.context!,
+                                    barrierDismissible: false,
+                                    builder: (_) {
+                                      return AlertDialog.adaptive(
+                                        title: Text(
+                                            'Delete Confirmation'.tr),
+                                        content: Text(
+                                          "Are you sure you want to delete this item?"
+                                              .tr,
                                         ),
-                                        TextButton(
-                                          onPressed: () {
-                                            Navigator.of(Get.context!)
-                                                .pop();
-                                          },
-                                          child: Text(
-                                            "No".tr,
-                                            style: const TextStyle(
-                                              color: AppLightColors
-                                                  .greenText,
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () async {
+                                              Navigator.of(Get.context!)
+                                                  .pop();
+                                              await provider
+                                                  .deleteMedia(
+                                                id: mediaList[i].id ??
+                                                    0,
+                                                onSuccess: () async {
+                                                  await controller
+                                                      .getServiceDetails();
+                                                },
+                                              );
+                                            },
+                                            child: Text(
+                                              "Yes".tr,
+                                              style: const TextStyle(
+                                                  color: Colors.red),
                                             ),
                                           ),
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                );
-                              },
-                              child: const CircleAvatar(
-                                child: AppIcon(
-                                  path: AppIcons.delete,
-                                  color: AppDarkColors.pureWhite,
-                                  height: 30,
-                                  width: 20,
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.of(Get.context!)
+                                                  .pop();
+                                            },
+                                            child: Text(
+                                              "No".tr,
+                                              style: const TextStyle(
+                                                color: AppLightColors
+                                                    .greenText,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                },
+                                child: const CircleAvatar(
+                                  child: AppIcon(
+                                    path: AppIcons.delete,
+                                    color: AppDarkColors.pureWhite,
+                                    height: 30,
+                                    width: 20,
+                                  ),
                                 ),
-                              ),
-                            );
-                          },
-                        )),
+                              );
+                            },
+                          )),
+                    },
+
                   ],
                 ),
             ],

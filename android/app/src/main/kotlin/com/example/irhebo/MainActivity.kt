@@ -1,4 +1,4 @@
-package com.example.irhebo
+package com.ptplatform.irhebo
 
 import io.flutter.embedding.android.FlutterActivity
 
