@@ -25,75 +25,80 @@ class SettingsScreen extends GetView<SettingsController> {
           title: "Settings",
           onTapBack: () => Get.find<BottomNavBarController>().onWillPop(false),
         ),
-        body: Obx(
-          () => SingleChildScrollView(
-            padding: EdgeInsets.symmetric(horizontal: 3.98 * (w / 100)),
-            child: Column(
-              children: [
-                if (controller.appController.token.isNotEmpty)
+        body: SafeArea(
+          child: Obx(
+            () => SingleChildScrollView(
+              padding: EdgeInsets.symmetric(horizontal: 3.98 * (w / 100)),
+              child: Column(
+                children: [
+                  if (controller.appController.token.isNotEmpty)
+                    SettingsRow(
+                      title: "Profile",
+                      onTap: controller.goToProfile,
+                    ),
+                  if (controller.appController.token.isNotEmpty)
                   SettingsRow(
-                    title: "Profile",
-                    onTap: controller.goToProfile,
+                    title: "Quotations",
+                    onTap: controller.onTapQuotations,
                   ),
-                SettingsRow(
-                  title: "Quotations",
-                  onTap: controller.onTapQuotations,
-                ),
-                SettingsRow(
-                  title: "Support Tickets",
-                  onTap: controller.onTapSupportTickets,
-                ),
-                SettingsRow(
-                  title: "Notifications",
-                  onChange: controller.onToggleNotifications,
-                  value: controller.noti,
-                ),
-                SettingsRow(
-                  title: "Dark Mode",
-                  onChange: controller.onToggleMode,
-                  value: controller.appController.darkMode,
-                ),
-                SettingsRow(
-                  title: "Currency",
-                  onTap: () {
-                    Get.bottomSheet(
-                      const AppBottomSheet(
-                        title: "Currencies",
-                        child: CurrencyData(),
-                      ),
-                      backgroundColor: Get.find<AppController>().darkMode
-                          ? AppDarkColors.darkScaffoldColor
-                          : AppLightColors.pureWhite,
-                      barrierColor: Get.find<AppController>().darkMode
-                          ? AppDarkColors.darkContainer.withOpacity(0.3)
-                          : AppLightColors.shadow.withOpacity(0.3),
-                      elevation: 0,
-                      isScrollControlled: false,
-                    );
-                  },
-                ),
-                SettingsRow(
-                  title: "Language",
-                  onTap: () => controller.openLanguageBottomSheet(),
-                ),
-                SettingsRow(
-                  title: "FAQ",
-                  onTap: () => Get.toNamed(AppRoutes.faqs),
-                ),
-                SettingsRow(
-                  title: "Privacy Policy",
-                  onTap: () => Get.toNamed(AppRoutes.privacyPolicy),
-                ),
-                SettingsRow(
-                  title: "Terms & Conditions",
-                  onTap: () => Get.toNamed(AppRoutes.termsConditions),
-                ),
-                if (controller.appController.token.isNotEmpty)
+                  if (controller.appController.token.isNotEmpty)
                   SettingsRow(
-                    title: "Logout",
-                    onTap: controller.openLogoutBottomSheet,
+                    title: "Support Tickets",
+                    onTap: controller.onTapSupportTickets,
                   ),
-              ],
+                  if (controller.appController.token.isNotEmpty)
+                  SettingsRow(
+                    title: "Notifications",
+                    onChange: controller.onToggleNotifications,
+                    value: controller.noti,
+                  ),
+                  SettingsRow(
+                    title: "Dark Mode",
+                    onChange: controller.onToggleMode,
+                    value: controller.appController.darkMode,
+                  ),
+                  SettingsRow(
+                    title: "Currency",
+                    onTap: () {
+                      Get.bottomSheet(
+                        const AppBottomSheet(
+                          title: "Currencies",
+                          child: CurrencyData(),
+                        ),
+                        backgroundColor: Get.find<AppController>().darkMode
+                            ? AppDarkColors.darkScaffoldColor
+                            : AppLightColors.pureWhite,
+                        barrierColor: Get.find<AppController>().darkMode
+                            ? AppDarkColors.darkContainer.withOpacity(0.3)
+                            : AppLightColors.shadow.withOpacity(0.3),
+                        elevation: 0,
+                        isScrollControlled: false,
+                      );
+                    },
+                  ),
+                  SettingsRow(
+                    title: "Language",
+                    onTap: () => controller.openLanguageBottomSheet(),
+                  ),
+                  SettingsRow(
+                    title: "FAQ",
+                    onTap: () => Get.toNamed(AppRoutes.faqs),
+                  ),
+                  SettingsRow(
+                    title: "Privacy Policy",
+                    onTap: () => Get.toNamed(AppRoutes.privacyPolicy),
+                  ),
+                  SettingsRow(
+                    title: "Terms & Conditions",
+                    onTap: () => Get.toNamed(AppRoutes.termsConditions),
+                  ),
+                  if (controller.appController.token.isNotEmpty)
+                    SettingsRow(
+                      title: "Logout",
+                      onTap: controller.openLogoutBottomSheet,
+                    ),
+                ],
+              ),
             ),
           ),
         ),

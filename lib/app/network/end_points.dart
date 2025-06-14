@@ -1,11 +1,21 @@
 // ignore_for_file: non_constant_identifier_names
 
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
+
 import '../injection.dart';
 import '../storage/app_prefs.dart';
 
 class AppEndpoints {
   AppPreferences prefs = sl();
-  static String base_url = 'https://irhebo-backend.smartedge.me/api/v1';
+
+  ///LOCAL
+  //static String base_url = 'https://irhebo-backend.smartedge.me/api/v1';
+  ///STORE
+  static String base_url = kDebugMode
+      ? 'https://irhebo-backend.smartedge.me/api/v1'
+      : 'https://irhebo-back.smartedge.me/api/v1';
 
   static String login = '$base_url/login';
   static String logout = '$base_url/auth/logout';
@@ -26,7 +36,8 @@ class AppEndpoints {
   static String tickets = '$base_url/tickets/';
   static String applyFilter = '$base_url/filters/apply';
   static String quotations = '$base_url/quotations/get-by-user-id';
-  static String quotationsForFreelance = '$base_url/quotations/get-by-freelancer-id';
+  static String quotationsForFreelance =
+      '$base_url/quotations/get-by-freelancer-id';
   static String quotationDetails = '$base_url/quotations/details/';
   static String createQuotationComment = '$base_url/quotations/create-comment';
   static String quotationCommentList = '$base_url/quotations/comment-list/';

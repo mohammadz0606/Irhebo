@@ -39,70 +39,73 @@ class PortfolioMedia extends GetWidget<PortfolioDetailsController> {
                             radius: 8,
                           ),
                   ),
-                  Positioned(
-                      top: 10,
-                      right: 10,
-                      child: Consumer<MediaProvider>(
-                        builder: (context, provider, _) {
-                          return provider.isLoading
-                              ? const CircularProgressIndicator.adaptive()
-                              : GestureDetector(
-                                  onTap: () async {
-                                   await showAdaptiveDialog(
-                                      context: Get.context!,
-                                      barrierDismissible: false,
-                                      builder: (_) {
-                                        return AlertDialog.adaptive(
-                                          title: Text('Delete Confirmation'.tr),
-                                          content: Text(
-                                            "Are you sure you want to delete this item?".tr,
+                  if(getUserRole == UserRoles.freelancer) ... {
+                    Positioned(
+                        top: 10,
+                        right: 10,
+                        child: Consumer<MediaProvider>(
+                          builder: (context, provider, _) {
+                            return provider.isLoading
+                                ? const CircularProgressIndicator.adaptive()
+                                : GestureDetector(
+                              onTap: () async {
+                                await showAdaptiveDialog(
+                                  context: Get.context!,
+                                  barrierDismissible: false,
+                                  builder: (_) {
+                                    return AlertDialog.adaptive(
+                                      title: Text('Delete Confirmation'.tr),
+                                      content: Text(
+                                        "Are you sure you want to delete this item?".tr,
+                                      ),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () async {
+                                            Navigator.of(Get.context!).pop();
+                                            await provider.deleteMedia(
+                                              id: controller.portfolio!.media![i].id ?? 0,
+                                              onSuccess: () async {
+                                                await controller.getPortfolioDetails();
+                                              },
+                                            );
+
+                                          },
+                                          child: Text(
+                                            "Yes".tr,
+                                            style: const TextStyle(color: Colors.red),
                                           ),
-                                          actions: [
-                                            TextButton(
-                                              onPressed: () async {
-                                                Navigator.of(Get.context!).pop();
-                                                await provider.deleteMedia(
-                                                  id: controller.portfolio!.media![i].id ?? 0,
-                                                  onSuccess: () async {
-                                                    await controller.getPortfolioDetails();
-                                                  },
-                                                );
-
-                                              },
-                                              child: Text(
-                                                "Yes".tr,
-                                                style: const TextStyle(color: Colors.red),
-                                              ),
+                                        ),
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.of(Get.context!).pop();
+                                          },
+                                          child: Text(
+                                            "No".tr,
+                                            style: const TextStyle(
+                                              color: AppLightColors.greenText,
                                             ),
-                                            TextButton(
-                                              onPressed: () {
-                                                Navigator.of(Get.context!).pop();
-                                              },
-                                              child: Text(
-                                                "No".tr,
-                                                style: const TextStyle(
-                                                  color: AppLightColors.greenText,
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        );
-                                      },
+                                          ),
+                                        ),
+                                      ],
                                     );
-
-
                                   },
-                                  child: const CircleAvatar(
-                                    child: AppIcon(
-                                      path: AppIcons.delete,
-                                      color: AppDarkColors.pureWhite,
-                                      height: 30,
-                                      width: 20,
-                                    ),
-                                  ),
                                 );
-                        },
-                      )),
+
+
+                              },
+                              child: const CircleAvatar(
+                                child: AppIcon(
+                                  path: AppIcons.delete,
+                                  color: AppDarkColors.pureWhite,
+                                  height: 30,
+                                  width: 20,
+                                ),
+                              ),
+                            );
+                          },
+                        )),
+                  },
+
                 ],
               ),
               SizedBox(
