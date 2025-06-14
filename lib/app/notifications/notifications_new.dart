@@ -11,10 +11,11 @@ final class Notifications {
     return _instance;
   }
 
-  init() {
+  init() async {
     OneSignal.Debug.setLogLevel(OSLogLevel.verbose);
     OneSignal.initialize('7ab59a87-79f3-46e8-af69-673331be40cc');
-    OneSignal.Notifications.requestPermission(false);
+    OneSignal.LiveActivities.setupDefault();
+    await OneSignal.Notifications.requestPermission(false);
     getId();
   }
 
