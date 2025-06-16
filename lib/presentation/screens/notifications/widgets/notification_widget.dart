@@ -1,9 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:irhebo/app/app_controller.dart';
-import 'package:irhebo/app/resources/style/colors.dart';
 import 'package:irhebo/domain/models/notification_model.dart';
-import 'package:irhebo/presentation/widgets/app_image.dart';
+import 'package:irhebo/domain/providers/notification.dart';
+
+import '../../../../app/global_imports.dart';
 
 class NotificationWidget extends StatelessWidget {
   final NotificationModel notification;
@@ -16,35 +14,58 @@ class NotificationWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var w = MediaQuery.of(context).size.width;
-    return ListTile(
-      contentPadding: const EdgeInsets.symmetric(vertical: 20, horizontal: 12),
-      // leading: AppImage(
-      //   imageUrl: notification.icon ?? "",
-      //   width: 10.69 * (w / 100),
-      //   height: 10.69 * (w / 100),
-      //   radius: 50 * (w / 100),
-      // ),
-      title: Text(
-        notification.title ?? "",
-        style: Get.theme.textTheme.labelLarge!
-            .copyWith(fontWeight: FontWeight.w600),
-        maxLines: 2,
-        overflow: TextOverflow.ellipsis,
-      ),
-      subtitle: Text(
-        notification.body ?? '',
-        style: Get.theme.textTheme.labelSmall!.copyWith(
-          fontWeight: FontWeight.w600,
-
-        ),
-      ),
-      trailing: Text(
-        notification.createdAt ?? "",
-        style: Get.theme.textTheme.labelSmall!.copyWith(
-            color: Get.find<AppController>().darkMode
-                ? AppDarkColors.pureWhite.withOpacity(0.5)
-                : Colors.black.withOpacity(0.5)),
-      ),
+    return Consumer<NotificationProvider>(
+      builder: (context, provider, _) {
+        return ListTile(
+          contentPadding:
+              const EdgeInsets.symmetric(vertical: 20, horizontal: 12),
+          // leading: AppImage(
+          //   imageUrl: notification.icon ?? "",
+          //   width: 10.69 * (w / 100),
+          //   height: 10.69 * (w / 100),
+          //   radius: 50 * (w / 100),
+          // ),
+          onTap: () async {
+            await provider.markAsRead(notification.id ?? 0);
+          },
+          title: Text(
+            notification.title ?? "",
+            style: Get.theme.textTheme.labelLarge!
+                .copyWith(fontWeight: FontWeight.w600),
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+          ),
+          subtitle: Text(
+            notification.body ?? '',
+            maxLines: 3,
+            overflow: TextOverflow.ellipsis,
+            style: Get.theme.textTheme.labelSmall!.copyWith(
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          trailing: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Visibility(
+                visible: notification.isRead == 0,
+                replacement: const SizedBox(),
+                child: CircleAvatar(
+                  radius: 5.r,
+                  backgroundColor: AppLightColors.redBadge,
+                ),
+              ),
+              const Spacer(),
+              Text(
+                notification.createdAt?.formatTimeAgo ?? '',
+                style: Get.theme.textTheme.labelSmall!.copyWith(
+                    color: Get.find<AppController>().darkMode
+                        ? AppDarkColors.pureWhite.withOpacity(0.5)
+                        : Colors.black.withOpacity(0.5)),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

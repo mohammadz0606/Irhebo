@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 final MediaQueryData media =
     MediaQueryData.fromView(WidgetsBinding.instance.window);
@@ -118,6 +119,11 @@ extension OnString on String? {
     } catch (e) {
       return "";
     }
+  }
+
+  String get formatTimeAgo {
+    final dateTime = DateTime.parse(this ?? DateTime.now().toString());
+    return timeago.format(dateTime);
   }
 }
 

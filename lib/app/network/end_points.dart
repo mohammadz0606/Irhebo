@@ -11,11 +11,11 @@ class AppEndpoints {
   AppPreferences prefs = sl();
 
   ///LOCAL
-  //static String base_url = 'https://irhebo-backend.smartedge.me/api/v1';
+  static String base_url = 'https://irhebo-backend.smartedge.me/api/v1';
   ///STORE
-  static String base_url = kDebugMode
-      ? 'https://irhebo-backend.smartedge.me/api/v1'
-      : 'https://irhebo-back.smartedge.me/api/v1';
+  // static String base_url = kDebugMode
+  //     ? 'https://irhebo-backend.smartedge.me/api/v1'
+  //     : 'https://irhebo-back.smartedge.me/api/v1';
 
   static String login = '$base_url/login';
   static String logout = '$base_url/auth/logout';

@@ -1,5 +1,4 @@
 import 'package:onesignal_flutter/onesignal_flutter.dart';
-
 import '../injection.dart';
 import '../storage/app_prefs.dart';
 import '../storage/app_prefs_keys.dart';
@@ -24,7 +23,7 @@ final class Notifications {
   }
 
   Future<String?>? getId() async {
-    var onesignalId = await OneSignal.User.getOnesignalId();
+    var onesignalId = await OneSignal.User.getExternalId();
     if (onesignalId != null) {
       AppPreferences prefs = sl();
       prefs.setString(key: AppPrefsKeys.NOTIFICATION_KEY, value: onesignalId);

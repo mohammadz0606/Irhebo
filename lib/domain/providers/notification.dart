@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:irhebo/app/global_imports.dart';
 
 import '../../app/network/network.dart';
+import '../../presentation/screens/notifications/notifications_controller.dart';
 
 class NotificationProvider extends ChangeNotifier {
   bool isNotifiable = true;
@@ -64,6 +65,7 @@ class NotificationProvider extends ChangeNotifier {
         return;
       }
       isLoadingMarkAsRead = false;
+      await Get.find<NotificationsController>().onRefreshList();
       notifyListeners();
     } catch (error) {
       if (error is DioException) {
