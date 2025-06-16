@@ -16,4 +16,6 @@ class AppPrefsKeys {
   static const String USER_ROLE = "USER_ROLE";
   static const String USER_ID = "USER_ID";
   static const String CURRENCY = "CURRENCY";
+
+  static const String NOTIFICATION_KEY = "NOTIFICATION_KEY";
 }

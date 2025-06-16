@@ -15,7 +15,7 @@ class NotificationsScreen extends GetView<NotificationsController> {
   Widget build(BuildContext context) {
     var w = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: NormalAppBar(
+      appBar: const NormalAppBar(
         title: "Notificaations",
       ),
       body: Obx(
@@ -24,7 +24,7 @@ class NotificationsScreen extends GetView<NotificationsController> {
           onRefresh: controller.onRefreshList,
           enablePullDown: true,
           enablePullUp: true,
-          footer: CustomePaginagtionFooter(),
+          footer: const CustomePaginagtionFooter(),
           onLoading: controller.getNotifications,
           child: SingleChildScrollView(
             child: Column(
@@ -33,9 +33,9 @@ class NotificationsScreen extends GetView<NotificationsController> {
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: 3.98 * (w / 100)),
                   child: controller.isLoading
-                      ? NotificationsShimmer()
+                      ? const NotificationsShimmer()
                       : controller.notifications.isEmpty
-                          ? NoData(
+                          ? const NoData(
                               forHome: false,
                             )
                           : NotificationsTodayList(

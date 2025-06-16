@@ -24,7 +24,7 @@ class NotificationsTodayList extends StatelessWidget {
               NotificationWidget(
                 notification: notifications[i],
               ),
-              Divider(
+              const Divider(
                 height: 1,
               )
             ],

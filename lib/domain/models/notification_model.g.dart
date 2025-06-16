@@ -9,26 +9,15 @@ part of 'notification_model.dart';
 NotificationModel _$NotificationModelFromJson(Map<String, dynamic> json) =>
     NotificationModel(
       id: (json['id'] as num?)?.toInt(),
-      action: json['action'] as String?,
-      actionId: json['action_id'] as String?,
-      icon: json['icon'] as String?,
-      isGeneral: json['is_general'] as bool?,
+      type: json['type'] as String?,
+      typeId: json['type_id'] as String?,
+      isRead: (json['is_read'] as num?)?.toInt(),
       title: json['title'] as String?,
-      description: json['description'] as String?,
+      body: json['body'] as String?,
       createdAt: json['created_at'] as String?,
     );
 
-Map<String, dynamic> _$NotificationModelToJson(NotificationModel instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'action': instance.action,
-      'action_id': instance.actionId,
-      'icon': instance.icon,
-      'is_general': instance.isGeneral,
-      'title': instance.title,
-      'description': instance.description,
-      'created_at': instance.createdAt,
-    };
+
 
 PaginatedNotificationsModel _$PaginatedNotificationsModelFromJson(
         Map<String, dynamic> json) =>

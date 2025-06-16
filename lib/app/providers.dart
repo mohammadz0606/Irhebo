@@ -8,6 +8,7 @@ import '../domain/providers/files_manager.dart';
 import '../domain/providers/freelancer/freelancer_services.dart';
 import '../domain/providers/freelancer/service.dart';
 import '../domain/providers/media.dart';
+import '../domain/providers/notification.dart';
 import 'global_imports.dart';
 
 List<SingleChildWidget> providers = [
@@ -19,4 +20,5 @@ List<SingleChildWidget> providers = [
   ChangeNotifierProvider(create: (_) => CurrencyProvider()),
   ChangeNotifierProvider(create: (_) => ServiceProvider()),
   ChangeNotifierProvider(create: (_) => MediaProvider()),
+  ChangeNotifierProvider(create: (_) => NotificationProvider()),
 ];

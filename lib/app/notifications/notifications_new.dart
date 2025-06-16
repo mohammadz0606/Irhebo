@@ -1,5 +1,9 @@
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 
+import '../injection.dart';
+import '../storage/app_prefs.dart';
+import '../storage/app_prefs_keys.dart';
+
 final class Notifications {
   /// Singleton class
 
@@ -16,12 +20,16 @@ final class Notifications {
     OneSignal.initialize('7ab59a87-79f3-46e8-af69-673331be40cc');
     OneSignal.LiveActivities.setupDefault();
     await OneSignal.Notifications.requestPermission(false);
-    getId();
+    await getId();
   }
 
   Future<String?>? getId() async {
     var onesignalId = await OneSignal.User.getOnesignalId();
-    OneSignal.login(onesignalId!);
+    if (onesignalId != null) {
+      AppPreferences prefs = sl();
+      prefs.setString(key: AppPrefsKeys.NOTIFICATION_KEY, value: onesignalId);
+      OneSignal.login(onesignalId);
+    }
     return onesignalId;
   }
 }

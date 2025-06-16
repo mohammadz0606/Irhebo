@@ -57,9 +57,11 @@ class AppController extends GetxController {
   @override
   Future<void> onInit() async {
     super.onInit();
+
     await detectLanguageLocale();
     await detectAppTheme();
     await getConfig();
+    await getGeneral();
     token = prefs.getAccessToken();
 
     log("${AppLoggerColors.magenta}${token}token");
@@ -180,7 +182,7 @@ class AppController extends GetxController {
     prefs.removeItem(AppPrefsKeys.TOKEN);
   }
 
-  getGeneral() async {
+  Future<void> getGeneral() async {
     GetGeneralUseCase getGeneralUseCase = sl();
     final result = await getGeneralUseCase(());
     result!.fold((l) {}, (r) {

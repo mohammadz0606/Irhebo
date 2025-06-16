@@ -28,6 +28,7 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
       phone: json['phone'] as String?,
       gender: json['gender'] as String?,
       profession: json['profession'] as String?,
+      isNotifiable: (json['is_notifiable'] as num?)?.toInt(),
       professionObject: json['profession_object'] == null
           ? null
           : ProfessionModel.fromJson(

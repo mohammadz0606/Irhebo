@@ -41,6 +41,9 @@ class SplashController extends GetxController {
   onInit() async {
     super.onInit();
     Timer(const Duration(seconds: 2), () async {
+      await appController.detectLanguageLocale();
+      await appController.detectAppTheme();
+      await appController.getConfig();
       await appController.getGeneral();
       if (!(Get.find<AppController>()
           .getBoolValue(AppPrefsKeys.LANGUAGE_DIALOG))) {

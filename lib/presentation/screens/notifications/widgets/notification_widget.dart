@@ -16,7 +16,40 @@ class NotificationWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var w = MediaQuery.of(context).size.width;
-    return Container(
+    return ListTile(
+      contentPadding: const EdgeInsets.symmetric(vertical: 20, horizontal: 12),
+      // leading: AppImage(
+      //   imageUrl: notification.icon ?? "",
+      //   width: 10.69 * (w / 100),
+      //   height: 10.69 * (w / 100),
+      //   radius: 50 * (w / 100),
+      // ),
+      title: Text(
+        notification.title ?? "",
+        style: Get.theme.textTheme.labelLarge!
+            .copyWith(fontWeight: FontWeight.w600),
+        maxLines: 2,
+        overflow: TextOverflow.ellipsis,
+      ),
+      subtitle: Text(
+        notification.body ?? '',
+        style: Get.theme.textTheme.labelSmall!.copyWith(
+          fontWeight: FontWeight.w600,
+
+        ),
+      ),
+      trailing: Text(
+        notification.createdAt ?? "",
+        style: Get.theme.textTheme.labelSmall!.copyWith(
+            color: Get.find<AppController>().darkMode
+                ? AppDarkColors.pureWhite.withOpacity(0.5)
+                : Colors.black.withOpacity(0.5)),
+      ),
+    );
+  }
+}
+/*
+Container(
       // color: (notification.isGeneral == true)
       //     ? Get.find<AppController>().darkMode
       //         ? AppDarkColors.darkContainer2
@@ -101,5 +134,4 @@ class NotificationWidget extends StatelessWidget {
         ),
       ),
     );
-  }
-}
+ */

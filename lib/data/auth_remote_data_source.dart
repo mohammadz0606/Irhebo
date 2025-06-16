@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:irhebo/app/base/base_models/base_error_model.dart';
@@ -14,6 +15,8 @@ import 'package:irhebo/domain/params/register_params.dart';
 import 'package:irhebo/domain/params/send_otp_params.dart';
 import 'package:irhebo/domain/params/verify_otp_params.dart';
 
+import '../app/global_imports.dart';
+
 abstract class AuthRemoteDataSource extends BaseRemoteDataSourceImpl {
   AuthRemoteDataSource({required super.dio});
 
@@ -25,6 +28,7 @@ abstract class AuthRemoteDataSource extends BaseRemoteDataSourceImpl {
 
   Future<Either<BaseErrorModel, BaseResponseModel<LoginModel>>> verifyOtp(
       VerifyOtpParams params);
+
   Future<Either<BaseErrorModel, BaseResponseModel<OtpModel>>> sendOtp(
       SendOtpParams params);
 
@@ -57,9 +61,13 @@ class AuthRemoteDataSourceImp extends BaseRemoteDataSourceImpl
   @override
   Future<Either<BaseErrorModel, BaseResponseModel<dynamic>>> logout() async {
     try {
+      AppPreferences prefs = sl();
       final response = await performPostRequest<dynamic>(
         endpoint: AppEndpoints.logout,
-        body: {},
+        body: {
+          "platform": Platform.isIOS ? 'ios' : 'android',
+          "player_id": prefs.getString(key: AppPrefsKeys.NOTIFICATION_KEY),
+        },
         fromJson: (p0) => {},
         hasDataBody: false,
       );

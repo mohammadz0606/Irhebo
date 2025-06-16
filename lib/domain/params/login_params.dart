@@ -1,3 +1,7 @@
+import 'dart:io';
+
+import '../../app/global_imports.dart';
+
 class LoginParams {
   final String? prefix;
   final String? phone;
@@ -26,9 +30,14 @@ class LoginParams {
         password: json["password"],
       );
 
-  Map<String, dynamic> toJson() => {
-        "prefix": prefix,
-        "phone": phone,
-        "password": password,
-      };
+  Map<String, dynamic> toJson() {
+    AppPreferences prefs = sl();
+    return {
+      "prefix": prefix,
+      "phone": phone,
+      "password": password,
+      "platform": Platform.isIOS ? 'ios' : 'android',
+      "player_id": prefs.getString(key: AppPrefsKeys.NOTIFICATION_KEY),
+    };
+  }
 }

@@ -1,3 +1,7 @@
+import 'dart:io';
+
+import '../../app/global_imports.dart';
+
 class RegisterParams {
   final String? username;
   final String? email;
@@ -63,18 +67,22 @@ class RegisterParams {
             : List<int>.from(json["languages"]!.map((x) => x)),
       );
 
-  Map<String, dynamic> toJson() => {
-        "username": username,
-        "email": email,
-        "password": password,
-        "confirm_password": confirmPassword,
-        "prefix": prefix,
-        "phone": phone,
-        "gender": gender,
-        "profession_id": professionId,
-        "country_id": countryId,
-        "languages": languages == null
-            ? []
-            : List<dynamic>.from(languages!.map((x) => x)),
-      };
+  Map<String, dynamic> toJson() {
+    AppPreferences prefs = sl();
+    return {
+      "username": username,
+      "email": email,
+      "password": password,
+      "confirm_password": confirmPassword,
+      "prefix": prefix,
+      "phone": phone,
+      "gender": gender,
+      "profession_id": professionId,
+      "country_id": countryId,
+      "platform": Platform.isIOS ? 'ios' : 'android',
+      "player_id": prefs.getString(key: AppPrefsKeys.NOTIFICATION_KEY),
+      "languages":
+          languages == null ? [] : List<dynamic>.from(languages!.map((x) => x)),
+    };
+  }
 }

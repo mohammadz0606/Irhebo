@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:irhebo/app/app_controller.dart';
 import 'package:irhebo/app/injection.dart';
 import 'package:irhebo/app/router/routes.dart';
+import 'package:irhebo/domain/models/login_model.dart';
 import 'package:irhebo/domain/params/login_params.dart';
 import 'package:irhebo/domain/usecases/auth_usecases/login_use_case.dart';
 
@@ -18,6 +19,7 @@ class LoginController extends GetxController {
 
   TextEditingController loginPhone = TextEditingController();
   TextEditingController loginPassword = TextEditingController();
+  final loginModel = Rxn<LoginModel>();
   final RxBool _isVisibileLogin = (false).obs;
   final RxBool _isLoading = (false).obs;
 
@@ -36,6 +38,7 @@ class LoginController extends GetxController {
   loginClient() async {
     if (loginFormKey.currentState!.validate()) {
       isLoading = true;
+      loginModel.value = null;
       LoginUseCase loginUseCase = sl();
       final result = await loginUseCase(LoginParams(
           password: loginPassword.text,
@@ -45,7 +48,9 @@ class LoginController extends GetxController {
         isLoading = false;
       }, (r) {
         isLoading = false;
-        appController.setAccessToken(r.data!.token ?? '',r.data!.user?.id ?? 0);
+        loginModel.value = r.data;
+        appController.setAccessToken(
+            r.data!.token ?? '', r.data!.user?.id ?? 0);
         AppPreferences prefs = sl();
 
         // if (prefs.getString(key: AppPrefsKeys.USER_ROLE) != null) {

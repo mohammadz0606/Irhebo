@@ -41,6 +41,8 @@ class UserModel {
   String? username;
   String? avatar;
   String? role;
+  @JsonKey(name: 'is_notifiable')
+  int? isNotifiable;
   List<LanguageModel>? languages;
   UserModel({
     this.id,
@@ -58,6 +60,7 @@ class UserModel {
     this.avatar,
     this.role,
     this.languages,
+    this.isNotifiable,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {

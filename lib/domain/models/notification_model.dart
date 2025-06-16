@@ -8,24 +8,22 @@ part 'notification_model.g.dart';
 @JsonSerializable()
 class NotificationModel {
   int? id;
-  String? action;
-  @JsonKey(name: 'action_id')
-  String? actionId;
-  String? icon;
-  @JsonKey(name: 'is_general')
-  bool? isGeneral;
+  String? type;
+  @JsonKey(name: 'type_id')
+  String? typeId;
+  @JsonKey(name: 'is_read')
+  int? isRead;
   String? title;
-  String? description;
+  String? body;
   @JsonKey(name: 'created_at')
   String? createdAt;
   NotificationModel({
     this.id,
-    this.action,
-    this.actionId,
-    this.icon,
-    this.isGeneral,
+    this.typeId,
+    this.type,
+    this.isRead,
     this.title,
-    this.description,
+    this.body,
     this.createdAt,
   });
 
@@ -33,7 +31,6 @@ class NotificationModel {
     return _$NotificationModelFromJson(json);
   }
 
-  Map<String, dynamic> toJson() => _$NotificationModelToJson(this);
 }
 
 @JsonSerializable()
