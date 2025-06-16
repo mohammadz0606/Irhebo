@@ -97,6 +97,22 @@ final class Network {
     return response;
   }
 
+  Future<Response> put({
+    required String url,
+    Map<String, dynamic>? query,
+    dynamic data,
+    bool isUploadFile = false,
+  }) async {
+    Response response = await _dio.put(
+      url,
+      data: data,
+      queryParameters: query,
+      options: _buildOptions(isUploadFile: isUploadFile),
+    );
+
+    return response;
+  }
+
   Options _buildOptions({
     bool isUploadFile = false,
   }) {

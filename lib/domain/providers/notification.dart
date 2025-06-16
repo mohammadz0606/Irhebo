@@ -6,7 +6,9 @@ import '../../app/network/network.dart';
 class NotificationProvider extends ChangeNotifier {
   bool isNotifiable = true;
 
-   Future<bool> getNotificationStatus() async {
+  bool isLoadingMarkAsRead = false;
+
+  Future<bool> getNotificationStatus() async {
     AppPreferences prefs = sl();
     bool isNotifiable = prefs.getBoolValue(AppPrefsKeys.IS_NOTIFIABLE);
     this.isNotifiable = isNotifiable;
@@ -41,6 +43,40 @@ class NotificationProvider extends ChangeNotifier {
           message: error.toString(),
         );
       }
+    }
+  }
+
+  Future<void> markAsRead(int id) async {
+    try {
+      isLoadingMarkAsRead = true;
+      final response =
+          await Network().put(url: '${AppEndpoints.markAsRead}$id');
+
+      String errorMessage = await Network().handelError(response: response);
+      if (errorMessage.isNotEmpty) {
+        isLoadingMarkAsRead = false;
+
+        notifyListeners();
+
+        AppSnackBar.openErrorSnackBar(
+          message: errorMessage,
+        );
+        return;
+      }
+      isLoadingMarkAsRead = false;
+      notifyListeners();
+    } catch (error) {
+      if (error is DioException) {
+        AppSnackBar.openErrorSnackBar(
+          message: Network().handelDioException(error),
+        );
+      } else {
+        AppSnackBar.openErrorSnackBar(
+          message: error.toString(),
+        );
+      }
+
+      isLoadingMarkAsRead = false;
       notifyListeners();
     }
   }
