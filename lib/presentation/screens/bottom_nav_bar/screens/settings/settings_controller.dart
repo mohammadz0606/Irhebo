@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart' as dio;
 import 'package:get/get.dart';
 import 'package:irhebo/app/app_controller.dart';
+import 'package:irhebo/app/global_imports.dart';
 import 'package:irhebo/app/injection.dart';
 import 'package:irhebo/app/resources/style/colors.dart';
 import 'package:irhebo/app/router/routes.dart';
@@ -14,18 +15,23 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import '../../../../../app/storage/app_prefs.dart';
 import '../../../../../app/storage/app_prefs_keys.dart';
+import '../../../../../domain/providers/notification.dart';
 
 class SettingsController extends GetxController {
   final appController = Get.find<AppController>();
   RefreshController refreshController =
       RefreshController(initialRefresh: false);
 
-  final RxBool _noti = false.obs;
+  final RxBool _noti = true.obs;
   final RxBool isLoadingLogout = false.obs;
   final RxBool _darkTheme = false.obs;
+
   bool get noti => _noti.value;
+
   bool get darkTheme => _darkTheme.value;
+
   set noti(value) => _noti.value = value;
+
   set darkTheme(value) => _darkTheme.value = value;
 
   // ignore: invalid_use_of_protected_member
@@ -38,11 +44,15 @@ class SettingsController extends GetxController {
 
   @override
   onInit() async {
+    bool isNotifiable = await Provider.of<NotificationProvider>(Get.context!)
+        .getNotificationStatus();
+    _noti.value = isNotifiable;
     super.onInit();
   }
 
-  onToggleNotifications(bool value) {
+  onToggleNotifications(bool value) async {
     noti = !noti;
+    await Provider.of<NotificationProvider>(Get.context!,listen: false).changeNotifiable();
   }
 
   onToggleMode(bool value) async {
@@ -94,6 +104,7 @@ class SettingsController extends GetxController {
       appController.removeToken();
       AppPreferences pref = sl();
       pref.removeItem(AppPrefsKeys.USER_ROLE);
+      pref.removeItem(AppPrefsKeys.IS_NOTIFIABLE);
       Get.offAllNamed(AppRoutes.splash);
     });
   }

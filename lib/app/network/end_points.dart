@@ -79,4 +79,9 @@ class AppEndpoints {
   static String plans = '$base_url/shared/plans';
   static String createService = '$base_url/services/create';
   static String deleteMedia = '$base_url/services/delete-media/';
+
+
+  static String changeNotifiable = '$base_url/notifications/change-notifiable';
+  static String markAsRead = '$base_url/notifications/mark-as-read/';
+
 }

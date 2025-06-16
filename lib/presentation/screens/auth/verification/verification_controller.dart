@@ -128,7 +128,8 @@ class VerificationController extends GetxController {
           } else {
             /// IMPLEMENT FREELANCER LOGIC
             AppPreferences prefs = sl();
-            appController.setAccessToken(r.data!.token ?? '',r.data!.user?.id ?? 0);
+            appController.setAccessToken(
+                r.data!.token ?? '', r.data!.user?.id ?? 0);
 
             // if (prefs.getString(key: AppPrefsKeys.USER_ROLE) != null) {
             //   if (prefs.getString(key: AppPrefsKeys.USER_ROLE) !=
@@ -140,6 +141,10 @@ class VerificationController extends GetxController {
             prefs.setString(
               key: AppPrefsKeys.USER_ROLE,
               value: r.data?.user?.role ?? '',
+            );
+            prefs.setBoolValue(
+              r.data?.user?.isNotifiable == 1,
+              AppPrefsKeys.IS_NOTIFIABLE,
             );
             final splashController = Get.find<SplashController>();
 

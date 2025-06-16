@@ -18,4 +18,5 @@ class AppPrefsKeys {
   static const String CURRENCY = "CURRENCY";
 
   static const String NOTIFICATION_KEY = "NOTIFICATION_KEY";
+  static const String IS_NOTIFIABLE = "IS_NOTIFIABLE";
 }

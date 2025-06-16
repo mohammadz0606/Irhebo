@@ -65,6 +65,11 @@ class LoginController extends GetxController {
           value: r.data?.user?.role ?? '',
         );
 
+        prefs.setBoolValue(
+          r.data?.user?.isNotifiable == 1,
+          AppPrefsKeys.IS_NOTIFIABLE,
+        );
+
         Get.offAllNamed(AppRoutes.bottomNavBar);
       });
     }
