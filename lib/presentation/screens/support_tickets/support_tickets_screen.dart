@@ -13,10 +13,10 @@ class SupportTicketsScreen extends GetView<SupportTicketsController> {
   Widget build(BuildContext context) {
     // var w = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: NormalAppBar(
+      appBar: const NormalAppBar(
         title: "Tickets",
       ),
-      body: SingleChildScrollView(
+      body: const SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [TicketsList()],

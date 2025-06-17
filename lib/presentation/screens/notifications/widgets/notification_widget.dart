@@ -2,6 +2,7 @@ import 'package:irhebo/domain/models/notification_model.dart';
 import 'package:irhebo/domain/providers/notification.dart';
 
 import '../../../../app/global_imports.dart';
+import '../../../widgets/waiting_screen.dart';
 
 class NotificationWidget extends StatelessWidget {
   final NotificationModel notification;
@@ -16,54 +17,65 @@ class NotificationWidget extends StatelessWidget {
     var w = MediaQuery.of(context).size.width;
     return Consumer<NotificationProvider>(
       builder: (context, provider, _) {
-        return ListTile(
-          contentPadding:
-              const EdgeInsets.symmetric(vertical: 20, horizontal: 12),
-          // leading: AppImage(
-          //   imageUrl: notification.icon ?? "",
-          //   width: 10.69 * (w / 100),
-          //   height: 10.69 * (w / 100),
-          //   radius: 50 * (w / 100),
-          // ),
-          onTap: () async {
-            await provider.markAsRead(notification.id ?? 0);
-          },
-          title: Text(
-            notification.title ?? "",
-            style: Get.theme.textTheme.labelLarge!
-                .copyWith(fontWeight: FontWeight.w600),
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-          ),
-          subtitle: Text(
-            notification.body ?? '',
-            maxLines: 3,
-            overflow: TextOverflow.ellipsis,
-            style: Get.theme.textTheme.labelSmall!.copyWith(
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          trailing: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Visibility(
-                visible: notification.isRead == 0,
-                replacement: const SizedBox(),
-                child: CircleAvatar(
-                  radius: 5.r,
-                  backgroundColor: AppLightColors.redBadge,
+        return Stack(
+          children: [
+            ListTile(
+              contentPadding:
+                  const EdgeInsets.symmetric(vertical: 20, horizontal: 12),
+              // leading: AppImage(
+              //   imageUrl: notification.icon ?? "",
+              //   width: 10.69 * (w / 100),
+              //   height: 10.69 * (w / 100),
+              //   radius: 50 * (w / 100),
+              // ),
+              onTap: () async {
+                await provider.markAsRead(notification.id ?? 0);
+                provider.navigationTo(
+                    id: int.tryParse(notification.typeId ?? '0') ?? 0,
+                    notificationType: notification.type);
+              },
+              title: Text(
+                notification.title ?? "",
+                style: Get.theme.textTheme.labelLarge!
+                    .copyWith(fontWeight: FontWeight.w600),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+              subtitle: Text(
+                notification.body ?? '',
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
+                style: Get.theme.textTheme.labelSmall!.copyWith(
+                  fontWeight: FontWeight.w600,
                 ),
               ),
-              const Spacer(),
-              Text(
-                notification.createdAt?.formatTimeAgo ?? '',
-                style: Get.theme.textTheme.labelSmall!.copyWith(
-                    color: Get.find<AppController>().darkMode
-                        ? AppDarkColors.pureWhite.withOpacity(0.5)
-                        : Colors.black.withOpacity(0.5)),
+              trailing: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Visibility(
+                    visible: notification.isRead == 0,
+                    replacement: const SizedBox(),
+                    child: CircleAvatar(
+                      radius: 5.r,
+                      backgroundColor: AppLightColors.redBadge,
+                    ),
+                  ),
+                  const Spacer(),
+                  Text(
+                    notification.createdAt?.formatTimeAgo ?? '',
+                    style: Get.theme.textTheme.labelSmall!.copyWith(
+                        color: Get.find<AppController>().darkMode
+                            ? AppDarkColors.pureWhite.withOpacity(0.5)
+                            : Colors.black.withOpacity(0.5)),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+            Visibility(
+              visible: provider.navigateToLoading,
+              child: const WaitingScreen(),
+            )
+          ],
         );
       },
     );

@@ -31,7 +31,7 @@ class TicketsList extends GetWidget<SupportTicketsController> {
                 ],
               )
             : controller.tickets.isEmpty
-                ? NoData(
+                ? const NoData(
                     forHome: false,
                   )
                 : Column(

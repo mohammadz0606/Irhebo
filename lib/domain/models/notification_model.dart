@@ -3,12 +3,15 @@ import 'package:json_annotation/json_annotation.dart';
 
 import 'package:irhebo/domain/models/config_model.dart';
 
+import '../../app/app_functions.dart';
+import '../../app/enums.dart';
+
 part 'notification_model.g.dart';
 
 @JsonSerializable()
 class NotificationModel {
   int? id;
-  String? type;
+  NotificationType? type;
   @JsonKey(name: 'type_id')
   String? typeId;
   @JsonKey(name: 'is_read')

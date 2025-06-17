@@ -17,7 +17,11 @@ class RequestDetailsScreen extends GetView<RequestDetailsController> {
     return Obx(
       () => Scaffold(
         appBar: NormalAppBar(
-          title: controller.title.toString(),
+          title: controller.title.isEmpty
+              ? (controller.isLoading
+                  ? 'Loading'.tr
+                  : controller.request.title ?? '')
+              : controller.title,
           onTapBack: controller.onTapBack,
           onTapHistory: controller.request.statusKey == 'pending'
               ? null

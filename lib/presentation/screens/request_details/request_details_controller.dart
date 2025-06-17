@@ -258,11 +258,11 @@ class RequestDetailsController extends GetxController {
     }
   }
 
-  getRequestDetails() async {
+  getRequestDetails([int? id]) async {
     //RequestModel
     isLoading = true;
     GetRequestDetailsUseCase getRequestDetailsUseCase = sl();
-    final result = await getRequestDetailsUseCase(id);
+    final result = await getRequestDetailsUseCase(id ?? this.id);
     result!.fold((l) {
       isLoading = false;
     }, (r) {

@@ -58,10 +58,22 @@ enum ErrorCode {
   BAD_REQUEST
 }
 
-
 enum UserRoles {
   freelancer,
   client,
   non,
 }
 
+enum NotificationType {
+  request,
+  requestLog,
+  newFreelancer,
+  rate,
+  quotation,
+  chat,
+  call,
+  verified,
+  support,
+  service,
+  portfolio,
+}

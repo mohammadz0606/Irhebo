@@ -291,7 +291,8 @@ Map<String, String> ar = {
   "completed new" : "مكتمل",
   "cancelled new" : "ملغى",
   "all new" : "الكل",
-  "confirmed new" : "مؤكد"
+  "confirmed new" : "مؤكد",
+  "Loading"  : "تحميل...",
 
 
 };

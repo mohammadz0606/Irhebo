@@ -15,12 +15,14 @@ class SplashScreen extends GetView<SplashController> {
     var w = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Get.find<AppController>().darkMode ? null : Colors.white,
-      body: Center(
+      body: const Center(
         child: AppImage(
-          imageUrl: AppImages.placeholder,
-          width: 71.39 * (w / 100),
-          height: 71.39 * (w / 100),
+          //imageUrl: AppImages.appLogo,
+          imageUrl: 'https://irhebo-backend.smartedge.me/storage/logo/1750084979_Irhebo_logo_page-0008.png',
+          //width: 71.39 * (w / 100),
+          //height: 71.39 * (w / 100),
           radius: 40,
+          fit: BoxFit.cover,
         ),
       ),
     );

@@ -298,7 +298,9 @@ Map<String, String> en = {
   "completed new" : "Completed",
   "cancelled new" : "Cancelled",
   "all new" : "All",
-  "confirmed new" : "Confirmed"
+  "confirmed new" : "Confirmed",
+
+  "Loading"  : "Loading...",
 
 
 };

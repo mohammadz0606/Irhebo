@@ -18,7 +18,10 @@ class PortfolioDetailsScreen extends GetView<PortfolioDetailsController> {
     var w = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: NormalAppBar(
-        title: controller.title,
+        title: controller.title.isEmpty ? (controller.isLoading
+            ? 'Loading'.tr
+            : controller.portfolio?.title ?? '')
+            : controller.title,
       ),
       body: Obx(
         () => SingleChildScrollView(

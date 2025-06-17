@@ -17,10 +17,11 @@ class AppLogo extends GetWidget<AppController> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         AppImage(
-          imageUrl: controller.generalData?.platformLogo ?? "",
+          imageUrl: 'https://irhebo-backend.smartedge.me/${controller.generalData?.platformLogo ?? ""}',
           radius: 50 * (w / 100),
           width: 7.46 * (w / 100),
           height: 7.46 * (w / 100),
+          fit: BoxFit.fill,
         ),
         SizedBox(
           width: 2.48 * (w / 100),

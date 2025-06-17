@@ -48,10 +48,10 @@ class QuotationDetailsController extends GetxController {
     await getQutationDetailsDetails();
   }
 
-  getQutationDetailsDetails() async {
+  getQutationDetailsDetails([int? id]) async {
     isLoading = true;
     GetQuotationDetailsUseCase getQuotationDetailsUseCase = sl();
-    final result = await getQuotationDetailsUseCase(id);
+    final result = await getQuotationDetailsUseCase(id ?? this.id);
     result!.fold((l) {
       isLoading = false;
     }, (r) {

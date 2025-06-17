@@ -85,3 +85,32 @@ UserRoles get getUserRole {
       return UserRoles.non;
   }
 }
+
+NotificationType? notificationTypeFromString(String? type) {
+  switch (type?.toLowerCase()) {
+    case 'request':
+      return NotificationType.request;
+    case 'request_log':
+      return NotificationType.requestLog;
+    case 'new_freelancer':
+      return NotificationType.newFreelancer;
+    case 'rate':
+      return NotificationType.rate;
+    case 'quotation':
+      return NotificationType.quotation;
+    case 'chat':
+      return NotificationType.chat;
+    case 'call':
+      return NotificationType.call;
+    case 'verified':
+      return NotificationType.verified;
+    case 'support':
+      return NotificationType.support;
+    case 'service':
+      return NotificationType.service;
+    case 'portfolio':
+      return NotificationType.portfolio;
+    default:
+      return null;
+  }
+}

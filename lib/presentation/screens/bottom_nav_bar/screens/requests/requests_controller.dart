@@ -50,16 +50,13 @@ class RequestsController extends GetxController {
     "confirmed",
   ];
 
-
-
-
   onTapFilter(int index) {
     selectedTab = types[index];
   }
 
   getRequests() async {
     isLoading = true;
-   // GetRequestsUseCase getRequestsUseCase = sl();
+    // GetRequestsUseCase getRequestsUseCase = sl();
 
     try {
       final response = await Network().get(
@@ -117,6 +114,17 @@ class RequestsController extends GetxController {
     Get.toNamed(AppRoutes.requestDetails, arguments: {
       "id": requests[index].id,
       "title": requests[index].title
+    })?.then(
+      (value) {
+        getRequests();
+      },
+    );
+  }
+
+  navigateToRequestDetailsWithId(int id) {
+    Get.toNamed(AppRoutes.requestDetails, arguments: {
+      "id": id,
+      "title": '',
     })?.then(
       (value) {
         getRequests();

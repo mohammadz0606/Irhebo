@@ -19,7 +19,7 @@ class AppImages {
 
   ////////////////////////////////////////////////////////////////////////////////////////  video icons
 
-  static const String appLogo = "${images}app_logo.png";
+  //static const String appLogo = "${images}app_logo.png";
   static const String linkedin = "${images}linkedin.png";
   static const String google = "${images}google.png";
 
@@ -27,6 +27,8 @@ class AppImages {
   static const String pattern = "${images}pattern.png";
   static const String trashCover = "${images}trash_cover.png";
   static const String trashContainer = "${images}trash_container.png";
+  static const String appLogo = "${images}Irhebo_logo_page-0008.png";
+
 }
 
 class AppIcons {
