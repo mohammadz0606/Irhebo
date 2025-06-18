@@ -1,11 +1,12 @@
-import 'dart:io';
-
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
+
 import '../../presentation/screens/bottom_nav_bar/screens/requests/requests_controller.dart';
 import '../../presentation/screens/request_details/request_details_controller.dart';
+import '../../presentation/screens/service_details/service_details_screen.dart';
+import '../../presentation/screens/support_tickets/support_tickets_controller.dart';
+import '../app_functions.dart';
 import '../enums.dart';
+import '../global_imports.dart';
 import '../injection.dart';
 import '../router/routes.dart';
 import '../storage/app_prefs.dart';
@@ -30,12 +31,11 @@ final class Notifications {
     await OneSignal.Notifications.requestPermission(false);
 
     await getId();
+
+    _navigationOnClick();
   }
 
   Future<String?>? getId() async {
-    // var onesignalId = Platform.isIOS
-    //     ? await OneSignal.User.getExternalId()
-    //     : await OneSignal.User.getOnesignalId();
     await Future.delayed(const Duration(seconds: 1));
     final String? subscriptionId = OneSignal.User.pushSubscription.id;
     if (subscriptionId != null) {
@@ -47,5 +47,94 @@ final class Notifications {
     return subscriptionId;
   }
 
+  void _navigationOnClick() {
+    return OneSignal.Notifications.addClickListener(
+      (event) async {
+        final additionalData = event.notification.additionalData;
+        int? id = additionalData?['id'];
+        NotificationType? type =
+            notificationTypeFromString(additionalData?['type'] as String?);
 
+        if (type == null) {
+          return;
+        }
+        switch (type) {
+          case NotificationType.request:
+            await Get.find<RequestsController>()
+                .navigateToRequestDetailsWithId(id ?? 0);
+
+            break;
+          case NotificationType.requestLog:
+            await Get.find<RequestDetailsController>()
+                .getRequestDetails(id)
+                .then((value) {
+              Get.toNamed(
+                AppRoutes.requestHistory,
+                arguments: {
+                  "logs": Get.find<RequestDetailsController>().request.logs,
+                },
+              );
+            });
+
+            break;
+          case NotificationType.newFreelancer:
+            Get.toNamed(AppRoutes.createService);
+
+            break;
+          case NotificationType.rate:
+            Get.to(() => const ServiceDetailsScreen(), arguments: {
+              "id": id,
+            });
+
+            break;
+          case NotificationType.quotation:
+            Get.toNamed(AppRoutes.quotationDetails, arguments: {
+              "id": id,
+              "title": '',
+            });
+
+            break;
+          case NotificationType.chat:
+            break;
+          case NotificationType.call:
+            break;
+          case NotificationType.verified:
+            Get.toNamed(AppRoutes.profile);
+
+            break;
+          case NotificationType.support:
+            await Get.find<SupportTicketsController>()
+                .getTickets()
+                .then((value) {
+              var data = Get.find<SupportTicketsController>()
+                  .tickets
+                  .firstWhere((element) => element.id == id);
+
+              Get.toNamed(
+                AppRoutes.ticketDetails,
+                arguments: {
+                  "id": data.id,
+                  "ticket": data,
+                },
+              );
+            });
+
+            break;
+          case NotificationType.service:
+            Get.to(() => const ServiceDetailsScreen(), arguments: {
+              "id": id,
+            });
+
+            break;
+          case NotificationType.portfolio:
+            Get.toNamed(AppRoutes.portfolioDetails, arguments: {
+              "id": id,
+              "title": '',
+            });
+
+            break;
+        }
+      },
+    );
+  }
 }
