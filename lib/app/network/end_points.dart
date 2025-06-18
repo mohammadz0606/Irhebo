@@ -52,6 +52,7 @@ class AppEndpoints {
   static String review = '$base_url/submit-review';
   static String searchServices = '$base_url/services/search';
   static String categories = '$base_url/categories/';
+  static String freelancerCategories = '$base_url/users/freelancer-categories';
   static String subcategories = '$base_url/sub-categories/';
   static String serivceDetails = '$base_url/services/details/';
   static String portfolioDetails = '$base_url/portfolio/details/';
@@ -75,7 +76,7 @@ class AppEndpoints {
   static String confirmRequest = '$base_url/requests/confirm-request/';
   static String approveQuotation = '$base_url/quotations/approve-quotation/';
   static String currencies = '$base_url/currencies';
-  static String tags = '$base_url/tags';
+  static String tags = '$base_url/tags/by_sub_category/';
   static String plans = '$base_url/shared/plans';
   static String createService = '$base_url/services/create';
   static String deleteMedia = '$base_url/services/delete-media/';

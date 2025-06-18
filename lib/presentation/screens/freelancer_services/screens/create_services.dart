@@ -32,7 +32,7 @@ class _CreateServicesScreenState extends State<CreateServicesScreen> {
     Provider.of<ServiceProvider>(context, listen: false).disposeAll();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<ServiceProvider>(context, listen: false).getCategories();
-      Provider.of<ServiceProvider>(context, listen: false).getTags();
+      //Provider.of<ServiceProvider>(context, listen: false).getTags();
       Provider.of<ServiceProvider>(context, listen: false).getPlans();
       Provider.of<CurrencyProvider>(Get.context!, listen: false)
           .getCurrencies();
@@ -108,6 +108,28 @@ class _CreateServicesScreenState extends State<CreateServicesScreen> {
                             itemToString: (value) => value?.title ?? "",
                           ),
                   const SizedBox(height: 15),
+                  if (provider.subcategoryModel != null) ...{
+                    if (provider.isLoadingTags || provider.tagsList == null)
+                      const Center(child: CircularProgressIndicator.adaptive())
+                    else
+                      MultiCustomDropdown<TagsModelData?>(
+                        items: provider.tagsList!.map(
+                          (e) {
+                            return MultiSelectItem<TagsModelData?>(
+                              e,
+                              e?.slug ?? '',
+                            );
+                          },
+                        ).toList(),
+                        buttonText: 'Tags Choices'.tr,
+                        label: 'Tags',
+                        titleStyle: Get.textTheme.labelMedium,
+                        showSelected: true,
+                        onConfirm: provider.onChangeTags,
+                      ),
+                    const SizedBox(height: 25),
+                  },
+
                   Text(
                     'Title'.tr,
                     style: Get.textTheme.headlineSmall,
@@ -157,25 +179,6 @@ class _CreateServicesScreenState extends State<CreateServicesScreen> {
                   ),
                   const SizedBox(height: 20),
 
-                  if (provider.isLoadingTags || provider.tagsList == null)
-                    const Center(child: CircularProgressIndicator.adaptive())
-                  else
-                    MultiCustomDropdown<TagsModelData?>(
-                      items: provider.tagsList!.map(
-                        (e) {
-                          return MultiSelectItem<TagsModelData?>(
-                            e,
-                            e?.slug ?? '',
-                          );
-                        },
-                      ).toList(),
-                      buttonText: 'Tags Choices'.tr,
-                      label: 'Tags',
-                      titleStyle: Get.textTheme.labelMedium,
-                      showSelected: true,
-                      onConfirm: provider.onChangeTags,
-                    ),
-                  const SizedBox(height: 25),
                   AppButton(
                     title: 'Next',
                     backGroundColor: AppLightColors.greenContainer,

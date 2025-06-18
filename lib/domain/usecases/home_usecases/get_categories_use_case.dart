@@ -8,11 +8,12 @@ import 'package:irhebo/domain/repository/home_repository.dart';
 class GetCategoriesUseCase
     extends UseCase<BaseResponseModel<List<CategoryModel>>, void> {
   final HomeRepository homeRepository;
-  GetCategoriesUseCase({required this.homeRepository});
+  final String? url;
+  GetCategoriesUseCase({required this.homeRepository,this.url});
 
   @override
   Future<Either<BaseErrorModel, BaseResponseModel<List<CategoryModel>>>>? call(
       params) async {
-    return await homeRepository.getCategories();
+    return await homeRepository.getCategories(url: url);
   }
 }

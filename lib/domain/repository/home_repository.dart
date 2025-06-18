@@ -100,9 +100,9 @@ class HomeRepository extends BaseRepositoryImpl {
   }
 
   Future<Either<BaseErrorModel, BaseResponseModel<List<CategoryModel>>>>
-      getCategories() async {
+      getCategories({String? url}) async {
     try {
-      final result = await homeRemoteDataSource.getCategories();
+      final result = await homeRemoteDataSource.getCategories(url: url);
       result.fold((l) => {}, (r) => {});
       return result;
     } catch (e) {

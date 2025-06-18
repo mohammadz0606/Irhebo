@@ -30,7 +30,7 @@ abstract class HomeRemoteDataSource extends BaseRemoteDataSourceImpl {
       int id);
 
   Future<Either<BaseErrorModel, BaseResponseModel<List<CategoryModel>>>>
-      getCategories();
+      getCategories({String? url});
 
   Future<Either<BaseErrorModel, BaseResponseModel<List<SubcategoryModel>>>>
       getSubcategories(int id);
@@ -114,10 +114,10 @@ class HomeRemoteDataSourceImp extends BaseRemoteDataSourceImpl
 
   @override
   Future<Either<BaseErrorModel, BaseResponseModel<List<CategoryModel>>>>
-      getCategories() async {
+      getCategories({String? url}) async {
     try {
       final response = await performGetListRequest<CategoryModel>(
-        endpoint: AppEndpoints.categories,
+        endpoint: url ?? AppEndpoints.categories,
         params: {},
         fromJson: CategoryModel.fromJson,
       );

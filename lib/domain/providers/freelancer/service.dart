@@ -141,6 +141,7 @@ class ServiceProvider extends ChangeNotifier {
 
   onChangeSubcategory(SubcategoryModel? value) {
     subcategoryModel = value;
+    getTags();
     notifyListeners();
   }
 
@@ -163,8 +164,11 @@ class ServiceProvider extends ChangeNotifier {
     categories?.clear();
     isLoadingCategory = true;
     notifyListeners();
-    GetCategoriesUseCase getCategoriesUseCase = sl();
-    final result = await getCategoriesUseCase(());
+    final getCategoriesUseCase = GetCategoriesUseCase(
+      homeRepository: sl(),
+      url: AppEndpoints.freelancerCategories,
+    );
+    final result = await getCategoriesUseCase(null);
     result!.fold((l) {
       isLoadingCategory = false;
     }, (r) {
@@ -195,7 +199,7 @@ class ServiceProvider extends ChangeNotifier {
       isLoadingTags = true;
       notifyListeners();
       final response = await Network().get(
-        url: AppEndpoints.tags,
+        url: '${AppEndpoints.tags}${subcategoryModel?.id}',
       );
 
       String errorMessage = await Network().handelError(response: response);

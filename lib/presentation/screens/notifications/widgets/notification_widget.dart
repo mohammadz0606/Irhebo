@@ -18,63 +18,71 @@ class NotificationWidget extends StatelessWidget {
     return Consumer<NotificationProvider>(
       builder: (context, provider, _) {
         return Stack(
+          alignment: Alignment.center,
           children: [
-            ListTile(
-              contentPadding:
-                  const EdgeInsets.symmetric(vertical: 20, horizontal: 12),
-              // leading: AppImage(
-              //   imageUrl: notification.icon ?? "",
-              //   width: 10.69 * (w / 100),
-              //   height: 10.69 * (w / 100),
-              //   radius: 50 * (w / 100),
-              // ),
-              onTap: () async {
-                await provider.markAsRead(notification.id ?? 0);
-                provider.navigationTo(
-                    id: int.tryParse(notification.typeId ?? '0') ?? 0,
-                    notificationType: notification.type);
-              },
-              title: Text(
-                notification.title ?? "",
-                style: Get.theme.textTheme.labelLarge!
-                    .copyWith(fontWeight: FontWeight.w600),
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              ),
-              subtitle: Text(
-                notification.body ?? '',
-                maxLines: 3,
-                overflow: TextOverflow.ellipsis,
-                style: Get.theme.textTheme.labelSmall!.copyWith(
-                  fontWeight: FontWeight.w600,
+            Visibility(
+              visible: !provider.navigateToLoading,
+              replacement: const Center(child: CircularProgressIndicator.adaptive()),
+              child: ListTile(
+                contentPadding:
+                    const EdgeInsets.symmetric(vertical: 20, horizontal: 12),
+                // leading: AppImage(
+                //   imageUrl: notification.icon ?? "",
+                //   width: 10.69 * (w / 100),
+                //   height: 10.69 * (w / 100),
+                //   radius: 50 * (w / 100),
+                // ),
+                onTap: () async {
+                  provider.navigationTo(
+                      id: int.tryParse(notification.typeId ?? '0') ?? 0,
+                      notificationType: notification.type);
+                  if (notification.isRead == 0) {
+                    await provider.markAsRead(notification.id ?? 0);
+                  }
+                },
+                title: Text(
+                  notification.title ?? "",
+                  style: Get.theme.textTheme.labelLarge!
+                      .copyWith(fontWeight: FontWeight.w600),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                subtitle: Text(
+                  notification.body ?? '',
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
+                  style: Get.theme.textTheme.labelSmall!.copyWith(
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                trailing: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Visibility(
+                      visible: notification.isRead == 0,
+                      replacement: const SizedBox(),
+                      child: CircleAvatar(
+                        radius: 5.r,
+                        backgroundColor: AppLightColors.redBadge,
+                      ),
+                    ),
+                    const Spacer(),
+                    Text(
+                      notification.createdAt?.formatTimeAgo ?? '',
+                      style: Get.theme.textTheme.labelSmall!.copyWith(
+                          color: Get.find<AppController>().darkMode
+                              ? AppDarkColors.pureWhite.withOpacity(0.5)
+                              : Colors.black.withOpacity(0.5)),
+                    ),
+                  ],
                 ),
               ),
-              trailing: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Visibility(
-                    visible: notification.isRead == 0,
-                    replacement: const SizedBox(),
-                    child: CircleAvatar(
-                      radius: 5.r,
-                      backgroundColor: AppLightColors.redBadge,
-                    ),
-                  ),
-                  const Spacer(),
-                  Text(
-                    notification.createdAt?.formatTimeAgo ?? '',
-                    style: Get.theme.textTheme.labelSmall!.copyWith(
-                        color: Get.find<AppController>().darkMode
-                            ? AppDarkColors.pureWhite.withOpacity(0.5)
-                            : Colors.black.withOpacity(0.5)),
-                  ),
-                ],
-              ),
             ),
-            Visibility(
-              visible: provider.navigateToLoading,
-              child: const WaitingScreen(),
-            )
+            //const WaitingScreen()
+            // Visibility(
+            //   visible: provider.navigateToLoading,
+            //   child: const WaitingScreen(),
+            // )
           ],
         );
       },

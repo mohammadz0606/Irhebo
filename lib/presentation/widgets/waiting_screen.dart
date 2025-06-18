@@ -6,8 +6,8 @@ class WaitingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: double.infinity,
-      height: double.infinity,
+      //width: double.infinity,
+      //height: double.infinity,
       color: AppLightColors.primaryColor.withValues(alpha: 0.15),
       alignment: Alignment.center,
       child: const Center(
