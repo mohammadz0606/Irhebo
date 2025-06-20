@@ -12,6 +12,7 @@ class AppEndpoints {
 
   ///LOCAL
   static String base_url = 'https://irhebo-backend.smartedge.me/api/v1';
+
   ///STORE
   // static String base_url = kDebugMode
   //     ? 'https://irhebo-backend.smartedge.me/api/v1'
@@ -81,8 +82,10 @@ class AppEndpoints {
   static String createService = '$base_url/services/create';
   static String deleteMedia = '$base_url/services/delete-media/';
 
-
   static String changeNotifiable = '$base_url/notifications/change-notifiable';
   static String markAsRead = '$base_url/notifications/mark-as-read/';
 
+  ///CHAT
+  static String startChat = '$base_url/chat/start-chat?user_id=';
+  static String getChatList = '$base_url/chat/get-chat';
 }

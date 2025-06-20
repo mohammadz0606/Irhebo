@@ -4,13 +4,10 @@ import '../../presentation/screens/bottom_nav_bar/screens/requests/requests_cont
 import '../../presentation/screens/request_details/request_details_controller.dart';
 import '../../presentation/screens/service_details/service_details_screen.dart';
 import '../../presentation/screens/support_tickets/support_tickets_controller.dart';
-import '../app_functions.dart';
-import '../enums.dart';
+
 import '../global_imports.dart';
-import '../injection.dart';
 import '../router/routes.dart';
-import '../storage/app_prefs.dart';
-import '../storage/app_prefs_keys.dart';
+
 
 final class Notifications {
   /// Singleton class

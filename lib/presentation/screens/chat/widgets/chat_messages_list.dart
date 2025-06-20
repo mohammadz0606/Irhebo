@@ -38,7 +38,7 @@ class ChatMessagesList extends GetWidget<ChatController> {
                 ListView.builder(
                   shrinkWrap: true,
                   reverse: true,
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   itemCount: controller
                       .groupedMessages[
                           (controller.groupedMessages.keys.toList())[index]]!

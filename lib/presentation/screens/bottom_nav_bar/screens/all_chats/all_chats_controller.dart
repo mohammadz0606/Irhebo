@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:irhebo/app/enums.dart';
+import 'package:irhebo/app/global_imports.dart';
 import 'package:irhebo/app/resources/images.dart';
 import 'package:irhebo/domain/entities/chat_entity.dart';
+
+import '../../../../../domain/providers/chat/chat_provider.dart';
 
 class AllChatsController extends GetxController {
   TextEditingController searchController = TextEditingController();
@@ -90,19 +93,19 @@ class AllChatsController extends GetxController {
 
   // ignore: invalid_use_of_protected_member
   List<ChatEntity> get chats => _chats.value;
+
   bool get isLoading => _isLoading.value;
 
   set chats(value) => _chats.value = value;
+
   set isLoading(value) => _isLoading.value = value;
 
   @override
   onInit() async {
     super.onInit();
-
-    isLoading = true;
-    await Future.delayed(Duration(seconds: 2));
-    isLoading = false;
-    // receiveParameters();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<ChatProvider>(Get.context!, listen: false).getChatList();
+    });
   }
 
   onDeleteChat(int i) {

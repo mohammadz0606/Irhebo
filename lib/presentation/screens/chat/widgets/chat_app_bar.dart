@@ -37,7 +37,7 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
               InkWell(
                 borderRadius: BorderRadius.circular(50 * (w / 100)),
                 onTap: () => Get.back(),
-                child: GradientIcon(
+                child: const GradientIcon(
                   icn: AppIcons.arrowLeft,
                   matchTextDirection: true,
                 ),
@@ -70,23 +70,23 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
               : [
                   InkWell(
                     borderRadius: BorderRadius.circular(50 * (w / 100)),
-                    child: GradientIcon(
+                    child: const GradientIcon(
                       icn: AppIcons.call,
                     ),
                   ),
                   SizedBox(
                     width: 2.48 * (w / 100),
                   ),
-                  InkWell(
-                    onTap: () => onTapSearch(),
-                    borderRadius: BorderRadius.circular(50 * (w / 100)),
-                    child: GradientIcon(
-                      icn: AppIcons.searchIcon,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 3.92 * (w / 100),
-                  ),
+                  // InkWell(
+                  //   onTap: () => onTapSearch(),
+                  //   borderRadius: BorderRadius.circular(50 * (w / 100)),
+                  //   child: const GradientIcon(
+                  //     icn: AppIcons.searchIcon,
+                  //   ),
+                  // ),
+                  // SizedBox(
+                  //   width: 3.92 * (w / 100),
+                  // ),
                 ],
         ),
         if (showSearch)

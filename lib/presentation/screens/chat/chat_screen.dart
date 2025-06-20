@@ -30,8 +30,8 @@ class ChatScreen extends GetView<ChatController> {
                 )),
             body: controller.groupedMessages.isEmpty
                 ? Container()
-                : ChatMessagesList(),
-            bottomSheet: ChatBottomSheet(),
+                : const ChatMessagesList(),
+            bottomSheet: const ChatBottomSheet(),
           ),
         ),
       ),
