@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
 
 final class ChatPusherConfig {
@@ -11,28 +13,49 @@ final class ChatPusherConfig {
     return _instance;
   }
 
-  PusherChannelsFlutter pusher = PusherChannelsFlutter.getInstance();
+  final PusherChannelsFlutter _pusher = PusherChannelsFlutter.getInstance();
 
   Future<void> init({
     required Function(PusherEvent event) onEvent,
   }) async {
-    await pusher.init(
+    await _pusher.init(
       apiKey: '9f752ff2758680389c5f',
       cluster: 'mt1',
-      onEvent: onEvent,
+      //authEndpoint: '',
+      logToConsole: true,
+      onEvent: (event) {
+        log('🔥 [PUSHER EVENT]');
+        log('channel: ${event.channelName}');
+        log('event: ${event.eventName}');
+        log('data: ${event.data}');
+        onEvent(event);
+      },
+      onError: (message, code, error) {
+        log('Pusher error: $message, $code, $error');
+      },
+      onConnectionStateChange: (currentState, previousState) {
+        log('onConnectionStateChange: ${currentState.toString()}');
+      },
     );
-    await pusher.connect();
+
+    await _pusher.connect();
   }
 
   Future<PusherChannel> subscribeToChannel({
-    required Function(PusherEvent event) onEvent,
-    required int clintId,
-    required int freelancerId,
+    required Function(PusherEvent? event) onEvent,
+    required int chatId,
   }) async {
-    //chat-{client-id}-{freelancer-id}
-    return await pusher.subscribe(
-      channelName: 'chat-$clintId-$freelancerId',
-      onEvent: onEvent,
+
+    /// USER = chat-94-98
+    /// FREELANCER = chat-94-98
+
+
+   // log('MY CHANEL NAME: chat-$clintId-$freelancerId');
+    return await _pusher.subscribe(
+      channelName: 'private-chat.$chatId',
+      onEvent: (dynamic event) {
+        onEvent(event as PusherEvent?);
+      },
     );
   }
 
@@ -43,6 +66,6 @@ final class ChatPusherConfig {
   }
 
   Future<void> disconnect() async {
-    await pusher.disconnect();
+    await _pusher.disconnect();
   }
 }

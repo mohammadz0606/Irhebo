@@ -280,19 +280,16 @@ Map<String, String> ar = {
   "Please enter valid revision numbers.": "يرجى إدخال عدد مراجعات صالح.",
   "Service Created Successfully": "تم إنشاء الخدمة بنجاح",
   "Edit Freelancer Details": "تعديل تفاصيل المستقل",
-
-  "Fees" :"الرسوم",
-  "Commission" : "العمولة",
-  "Request Sent Successfully"  : "تم ارسال طلبك بنجاج",
-  "Complete Request" : "اكمال الطلب",
-
+  "Fees": "الرسوم",
+  "Commission": "العمولة",
+  "Request Sent Successfully": "تم ارسال طلبك بنجاج",
+  "Complete Request": "اكمال الطلب",
   "pending new": "قيد الانتظار",
   "in_progress new": "قيد التنفيذ",
-  "completed new" : "مكتمل",
-  "cancelled new" : "ملغى",
-  "all new" : "الكل",
-  "confirmed new" : "مؤكد",
-  "Loading"  : "تحميل...",
-
-
+  "completed new": "مكتمل",
+  "cancelled new": "ملغى",
+  "all new": "الكل",
+  "confirmed new": "مؤكد",
+  "Loading": "تحميل...",
+  "A conversation with the freelancer already exists" : "يوجد بالفعل محاثة مع المستقل"
 };

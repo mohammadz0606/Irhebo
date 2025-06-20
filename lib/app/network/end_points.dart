@@ -88,4 +88,7 @@ class AppEndpoints {
   ///CHAT
   static String startChat = '$base_url/chat/start-chat?user_id=';
   static String getChatList = '$base_url/chat/get-chat';
+  static String sendMessage = '$base_url/chat/send-message';
+  static String getMessages = '$base_url/chat/get-messages/';
+  static String markRead = '$base_url/chat/mark-read/';
 }

@@ -28,13 +28,27 @@ class ChatsList extends GetWidget<AllChatsController> {
                 //     controller.chats[i].type ||
                 //     controller.selectedTab.name == "All",
                 child: GestureDetector(
-                  onTap: () {
+                  onTap: () async {
                     Get.toNamed(
                       AppRoutes.chat,
                       arguments: {
                         "chat_type": ChatType.Users,
+                        'userId': provider.allChatList![i].receiver?.id ?? 0,
+                        'chatId': provider.allChatList![i].chatId ?? 0,
                       },
                     );
+
+                    if (provider.allChatList![i].unreadCount != 0) {
+                      await provider
+                          .markRead(
+                        chatId: provider.allChatList![i].chatId ?? 0,
+                      )
+                          .then(
+                        (value) async {
+                          await provider.getChatList();
+                        },
+                      );
+                    }
                   },
                   child: ChatRowItem(
                     onChangeValue: (val) => controller.onChangeStatus(val, i),

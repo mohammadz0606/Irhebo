@@ -17,6 +17,10 @@ import 'package:irhebo/presentation/screens/chat/animation_button_controller.dar
 import 'package:just_audio/just_audio.dart';
 import 'package:path_provider/path_provider.dart';
 
+import '../../../app/chat_pusher/chat_pusher_config.dart';
+import '../../../app/global_imports.dart';
+import '../../../domain/providers/chat/chat_provider.dart';
+
 class ChatController extends GetxController with GetTickerProviderStateMixin {
   // final animationController = Get.find<AnimationButtonController>();
 
@@ -106,6 +110,7 @@ class ChatController extends GetxController with GetTickerProviderStateMixin {
   ].obs;
   RxMap<String, List<ChatMessageEntity>> groupedMessages =
       <String, List<ChatMessageEntity>>{}.obs;
+
   List<ChatMessageEntity> get messages => _messages.value;
 
   ////
@@ -113,7 +118,9 @@ class ChatController extends GetxController with GetTickerProviderStateMixin {
   late Animation<double> timerAnimation;
   final Rx<Duration> _duration = Duration.zero.obs;
   late Timer timer;
+
   Duration get duration => _duration.value;
+
   set duration(value) => _duration.value = value;
   RxBool isRecord = false.obs;
   RxBool showSearch = false.obs;
@@ -124,18 +131,69 @@ class ChatController extends GetxController with GetTickerProviderStateMixin {
   RxList<String?> selectedFilePath = <String?>[].obs;
   RxBool attachAnimated = false.obs;
   AudioPlayer player = AudioPlayer();
-  ChatType type = ChatType.Users;
+
   Rx<TextEditingController> chatMessage = TextEditingController().obs;
   final ScrollController chatScrollController = ScrollController();
+
+  ///
+  ChatType type = ChatType.Users;
+  int chatId = 0;
+  int userId = 0;
 
   set messages(List<ChatMessageEntity> value) {
     _messages.value = value;
     groupMessages();
   }
 
+  @override
+  void onInit() {
+    receiveParameters();
+    timerController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 500),
+    );
+    timerAnimation = Tween<double>(begin: 0, end: 1).animate(
+        CurvedAnimation(parent: timerController, curve: Curves.linear));
+    startTimer();
+    stopTimer();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      startLiveChat();
+    });
+    super.onInit();
+    groupMessages();
+  }
+
   receiveParameters() {
     type = Get.arguments["chat_type"] ?? ChatType.Users;
-    // log(type.toString() + "ASasssssssssssssssssssssassa");
+    userId = Get.arguments["userId"] ?? 0;
+    chatId = Get.arguments["chatId"] ?? 0;
+  }
+
+  startLiveChat() async {
+    await ChatPusherConfig().init(
+      onEvent: (event) {
+
+      },
+    );
+    //AppPreferences preferences = sl();
+    await ChatPusherConfig().subscribeToChannel(
+      chatId: chatId,
+      onEvent: (event) {
+        log('-----------');
+        log('START CHAT');
+        log('channelName: ${event?.channelName}');
+        log('eventName: ${event?.eventName}');
+        log('data: ${event?.data}');
+        log('-----------');
+      },
+      // clintId: getUserRole == UserRoles.client
+      //     ? preferences.getInt(key: AppPrefsKeys.USER_ID) ?? 0
+      //     : userId,
+      // freelancerId: getUserRole == UserRoles.client
+      //     ? userId
+      //     : preferences.getInt(key: AppPrefsKeys.USER_ID) ?? 0,
+    );
   }
 
   void groupMessages() {
@@ -160,21 +218,6 @@ class ChatController extends GetxController with GetTickerProviderStateMixin {
         curve: Curves.fastOutSlowIn,
       );
     });
-  }
-
-  @override
-  void onInit() {
-    receiveParameters();
-    timerController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 500),
-    );
-    timerAnimation = Tween<double>(begin: 0, end: 1).animate(
-        CurvedAnimation(parent: timerController, curve: Curves.linear));
-    startTimer();
-    stopTimer();
-    super.onInit();
-    groupMessages();
   }
 
   onStartTyping() {

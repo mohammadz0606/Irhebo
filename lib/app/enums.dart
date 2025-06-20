@@ -77,3 +77,11 @@ enum NotificationType {
   service,
   portfolio,
 }
+
+enum MessageType {
+  text,
+  image,
+  video,
+  audio,
+  file,
+}

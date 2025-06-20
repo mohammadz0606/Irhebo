@@ -30,8 +30,8 @@ class ChatBottomSheet extends GetWidget<ChatController> {
                 duration: 200.ms,
                 curve: Curves.fastLinearToSlowEaseIn),
             SlideEffect(
-                begin: Offset(0, 3),
-                end: Offset(0, 0),
+                begin: const Offset(0, 3),
+                end: const Offset(0, 0),
                 duration: 200.ms,
                 curve: Curves.fastLinearToSlowEaseIn),
           ],
@@ -53,8 +53,8 @@ class ChatBottomSheet extends GetWidget<ChatController> {
                 duration: 200.ms,
                 curve: Curves.fastLinearToSlowEaseIn),
             SlideEffect(
-                begin: Offset(0, 3),
-                end: Offset(0, 0),
+                begin: const Offset(0, 3),
+                end: const Offset(0, 0),
                 duration: 200.ms,
                 curve: Curves.fastLinearToSlowEaseIn),
           ],
@@ -76,8 +76,8 @@ class ChatBottomSheet extends GetWidget<ChatController> {
                 duration: 200.ms,
                 curve: Curves.fastLinearToSlowEaseIn),
             SlideEffect(
-                begin: Offset(0, 3),
-                end: Offset(0, 0),
+                begin: const Offset(0, 3),
+                end: const Offset(0, 0),
                 duration: 200.ms,
                 curve: Curves.fastLinearToSlowEaseIn),
           ],
@@ -87,7 +87,7 @@ class ChatBottomSheet extends GetWidget<ChatController> {
             onTap: () => controller.pickChatFile(FileType.any),
           ),
         ),
-        ChatTextField(),
+        const ChatTextField(),
       ],
     );
   }
