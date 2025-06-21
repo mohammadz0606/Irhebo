@@ -1,26 +1,63 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:irhebo/domain/providers/chat/chat_provider.dart';
 import 'package:irhebo/presentation/screens/chat/chat_controller.dart';
 import 'package:irhebo/presentation/screens/chat/widgets/chat_message_widget.dart';
 import 'package:irhebo/presentation/screens/chat/widgets/date_widget.dart';
 
-class ChatMessagesList extends GetWidget<ChatController> {
+import '../../../../app/enums.dart';
+import '../../../../app/global_imports.dart';
+
+class ChatMessagesList extends StatefulWidget {
   const ChatMessagesList({
     super.key,
   });
-  // List<String> groupedKeys = controller.groupedMessages.keys.toList();
 
+  @override
+  State<ChatMessagesList> createState() => _ChatMessagesListState();
+}
+
+class _ChatMessagesListState extends State<ChatMessagesList> {
+  final ScrollController chatScrollController = ScrollController();
+
+  @override
+  void initState() {
+    scrollToEnd();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    chatScrollController.dispose();
+    super.dispose();
+  }
+
+  scrollToEnd() async {
+    await Future.delayed(
+      const Duration(milliseconds: 500),
+      () {
+        chatScrollController.animateTo(
+          chatScrollController.position.minScrollExtent,
+          duration: const Duration(milliseconds: 500),
+          curve: Curves.fastOutSlowIn,
+        );
+      },
+    );
+  }
+
+  // List<String> groupedKeys = controller.groupedMessages.keys.toList();
   @override
   Widget build(BuildContext context) {
     var w = MediaQuery.of(context).size.width;
-    return Obx(
-      () => Padding(
-        padding: EdgeInsets.only(bottom: 21 * (w / 100)),
-        child: ListView.builder(
+    return Consumer<ChatProvider>(
+      builder: (context, provider, _) {
+        return ListView.builder(
+          padding: EdgeInsets.only(bottom: 21 * (w / 100)),
           shrinkWrap: true,
-          reverse: true, // Newest messages at the bottom
-          controller: controller.chatScrollController,
-          itemCount: (controller.groupedMessages.keys.toList()).length,
+          reverse: true,
+          // Newest messages at the bottom
+          controller: chatScrollController,
+          itemCount: (provider.groupedMessages?.keys.toList())?.length ?? 0,
           itemBuilder: (context, index) {
             // String date = groupedKeys[index];
             // List<ChatMessage> messages =
@@ -32,34 +69,40 @@ class ChatMessagesList extends GetWidget<ChatController> {
               children: [
                 // Date Header
                 DateWidget(
-                  date: (controller.groupedMessages.keys.toList())[index],
+                  date: (provider.groupedMessages?.keys.toList() ?? [])[index],
                 ),
                 // Messages for this date
                 ListView.builder(
                   shrinkWrap: true,
                   reverse: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  itemCount: controller
-                      .groupedMessages[
-                          (controller.groupedMessages.keys.toList())[index]]!
+                  itemCount: provider
+                      .groupedMessages?[
+                          (provider.groupedMessages?.keys.toList() ??
+                              [])[index]]!
                       .length,
                   itemBuilder: (context, msgIndex) {
                     // ChatMessage message = messages[msgIndex];
                     // bool isCurrentUser = message.senderId == currentUserId;
+
+                    AppPreferences prefs = sl();
+
+                    int userId = prefs.getInt(key: AppPrefsKeys.USER_ID) ?? 0;
+
                     return ChatMessageWidget(
-                      message: controller.groupedMessages[(controller
-                          .groupedMessages.keys
-                          .toList())[index]]![msgIndex],
-                      sender: true,
-                      type: controller.type,
+                      message: provider.groupedMessages![
+                          (provider.groupedMessages?.keys.toList() ??
+                              [])[index]]![msgIndex],
+                      type: ChatType.Users,
+                      userId: userId,
                     );
                   },
                 ),
               ],
             );
           },
-        ),
-      ),
+        );
+      },
     );
   }
 }

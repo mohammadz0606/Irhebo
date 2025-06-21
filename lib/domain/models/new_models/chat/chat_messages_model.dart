@@ -29,7 +29,7 @@ class ChatMessagesModelData {
   String? attachmentUrl;
   String? attachmentType;
   int? isRead;
-  String? createdAt;
+  DateTime? createdAt;
   ChatMessagesModelDataSender? sender;
   ChatMessagesModelDataReceiver? receiver;
 
@@ -50,7 +50,8 @@ class ChatMessagesModelData {
     attachmentUrl = json['attachment_url']?.toString();
     attachmentType = json['attachment_type']?.toString();
     isRead = json['is_read']?.toInt();
-    createdAt = json['created_at']?.toString();
+    createdAt = DateTime.parse(
+        json['created_at']?.toString() ?? DateTime.now().toString());
     sender = (json['sender'] != null)
         ? ChatMessagesModelDataSender.fromJson(json['sender'])
         : null;
@@ -63,29 +64,47 @@ class ChatMessagesModelData {
 class ChatMessagesModelDataSender {
   int? id;
   String? username;
+  String? avatar;
 
   ChatMessagesModelDataSender({
     this.id,
     this.username,
+    this.avatar,
   });
 
   ChatMessagesModelDataSender.fromJson(Map<String, dynamic> json) {
     id = json['id']?.toInt();
     username = json['username']?.toString();
+    avatar = json['avatar']?.toString();
   }
 }
 
 class ChatMessagesModelDataReceiver {
   int? id;
   String? username;
+  String? avatar;
 
   ChatMessagesModelDataReceiver({
     this.id,
     this.username,
+    this.avatar,
   });
 
   ChatMessagesModelDataReceiver.fromJson(Map<String, dynamic> json) {
     id = json['id']?.toInt();
     username = json['username']?.toString();
+    avatar = json['avatar']?.toString();
   }
+}
+
+final class ChatAppbar {
+  int? id;
+  String? username;
+  String? avatar;
+
+  ChatAppbar({
+    this.id,
+    this.username,
+    this.avatar,
+  });
 }
