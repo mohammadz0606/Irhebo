@@ -22,7 +22,9 @@ class _ChatMessagesListState extends State<ChatMessagesList> {
 
   @override
   void initState() {
-    scrollToEnd();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      scrollToEnd();
+    });
     super.initState();
   }
 

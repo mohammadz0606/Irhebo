@@ -158,9 +158,6 @@ class ChatProvider extends ChangeNotifier {
   }
 
 
-
-
-
   Future<void> getAllMessages({required int chatId}) async {
     try {
       if (chatMessages != null) {

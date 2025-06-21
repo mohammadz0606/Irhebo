@@ -28,7 +28,7 @@ class ChatFieldPrefix extends GetWidget<ChatController> {
               onTap: () => controller.onTapPrefix(),
               child: AppIcon(
                 padding: EdgeInsets.zero,
-                path: controller.selectedFilePath.isNotEmpty ||
+                path: controller.selectedFilePath.isNotEmpty == true ||
                         controller.isRecord.value
                     ? AppIcons.close
                     : AppIcons.add,
@@ -40,12 +40,13 @@ class ChatFieldPrefix extends GetWidget<ChatController> {
               ),
             ),
           ),
-          if (controller.selectedFilePath.isNotEmpty &&
+          if (controller.selectedFilePath.isNotEmpty == true &&
               !controller.isRecord.value) ...[
             Expanded(
               child: FieldPlaceHolder(
                 isVoice: controller.isRecord.value,
-                selectedFilePath: controller.selectedFilePath,
+                selectedFilePath: [],
+                //selectedFilePath: controller.selectedFilePath,
               ),
             ),
             SizedBox(
@@ -53,11 +54,11 @@ class ChatFieldPrefix extends GetWidget<ChatController> {
             )
           ],
           if (controller.isRecord.value) ...[
-            Stack(
+            const Stack(
               fit: StackFit.loose,
               children: [
                 MicTimer(),
-                const MicAnimation(),
+                MicAnimation(),
               ],
             ),
             SizedBox(

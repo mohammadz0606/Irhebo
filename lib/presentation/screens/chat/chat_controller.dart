@@ -128,7 +128,7 @@ class ChatController extends GetxController with GetTickerProviderStateMixin {
   AnimationController? galleryAnimationController;
   AnimationController? audioAnimationController;
   AnimationController? documentAnimationController;
-  RxList<String?> selectedFilePath = <String?>[].obs;
+  RxnString selectedFilePath = RxnString();
   RxBool attachAnimated = false.obs;
   AudioPlayer player = AudioPlayer();
 
@@ -242,8 +242,7 @@ class ChatController extends GetxController with GetTickerProviderStateMixin {
   }
 
   dismissFiles() {
-    selectedFilePath.value.clear();
-    selectedFilePath.refresh();
+    selectedFilePath?.refresh();
     attachAnimated.value = false;
   }
 
@@ -264,16 +263,19 @@ class ChatController extends GetxController with GetTickerProviderStateMixin {
     isRecord.value = false;
   }
 
-  pickChatFile(FileType fileTypee) async {
+  Future<void> pickChatFile(FileType fileType,{required Function() onComplete}) async {
     chatMessage.value.clear();
     toggleAttachAnimation();
-    var result = await FilePicker.platform
-        .pickFiles(allowMultiple: true, type: fileTypee);
+    var result = await FilePicker.platform.pickFiles(
+      allowMultiple: false,
+      type: fileType,
+    );
     if (result != null) {
-      selectedFilePath.value = result.paths;
+      selectedFilePath.value = result.files.single.path!;
       closeAttachments();
+      onComplete();
     }
-    selectedFilePath.value = result?.paths ?? [];
+    selectedFilePath.value = null;
     closeAttachments();
   }
 
@@ -281,17 +283,17 @@ class ChatController extends GetxController with GetTickerProviderStateMixin {
     log("lets send this record");
     final path = await recorderController.stop();
     releaseRecordAudio(AppSounds.record);
-    selectedFilePath.add(path); //TODO need reset the path!!
+    //selectedFilePath.add(path); //TODO need reset the path!!
     isRecord.value = false;
     stopTimer();
-    selectedFilePath.clear(); //TODO clear after send
+    //selectedFilePath.clear(); //TODO clear after send
   }
 
   onTapPrefix() {
     if (isRecord.value) {
       ignoreRecord(); // close record
     } else {
-      if (selectedFilePath.isNotEmpty) {
+      if (selectedFilePath.isNotEmpty == true) {
         dismissFiles(); //close
       } else {
         toggleAttachAnimation(); //add
@@ -322,7 +324,7 @@ class ChatController extends GetxController with GetTickerProviderStateMixin {
     if (chatMessage.value.value.text != '') {
       log("send a message"); //send normal message
     } else {
-      if (selectedFilePath.isEmpty) {
+      if (selectedFilePath.isEmpty == true) {
         if (!isRecord.value) {
           onStartRecording(); //start recording
         } else {

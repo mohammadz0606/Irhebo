@@ -49,7 +49,7 @@ class ChatTextField extends GetWidget<ChatController> {
                       : controller.onTapField(),
                   hint: controller.type == ChatType.Bot
                       ? "Type Here".tr
-                      : controller.selectedFilePath.isNotEmpty ||
+                      : controller.selectedFilePath.isNotEmpty == true ||
                               controller.attachAnimated.value
                           ? ""
                           : "Type Here".tr,
@@ -88,7 +88,7 @@ class ChatTextField extends GetWidget<ChatController> {
                           : Colors.white,
                       //imagePath: AppIcons.send,
                       imagePath: controller.type == ChatType.Bot ||
-                              controller.selectedFilePath.isNotEmpty ||
+                              controller.selectedFilePath.isNotEmpty == true ||
                               controller.chatMessage.value.text
                                   .trim()
                                   .isNotEmpty ||
