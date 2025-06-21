@@ -185,7 +185,7 @@ class ChatController extends GetxController with GetTickerProviderStateMixin {
       chatId: chatId,
     );
 
-    ChatPusherConfig().onEvent();
+    //ChatPusherConfig().onEvent();
   }
 
   void groupMessages() {

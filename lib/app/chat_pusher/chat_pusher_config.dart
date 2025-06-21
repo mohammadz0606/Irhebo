@@ -86,7 +86,7 @@ final class ChatPusherConfig {
     required int chatId,
   }) async {
     return await _pusher.subscribe(
-      channelName: 'private-chat.$chatId',
+      channelName: 'chat.$chatId',
       //channelName: 'test-channel',
     );
   }
