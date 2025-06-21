@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:irhebo/app/global_imports.dart';
+import 'package:irhebo/domain/params/new_params/chat/toggle_param.dart';
 
 import '../../../app/network/network.dart';
 import '../../../app/router/routes.dart';
@@ -98,7 +99,8 @@ class ChatProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> sendMessage({required SendMessageParam sendParam}) async {
+  Future<void> sendMessage({required SendMessageParam sendParam}) async
+  {
     try {
       final response = await Network().post(
         url: AppEndpoints.sendMessage,
@@ -124,6 +126,38 @@ class ChatProvider extends ChangeNotifier {
       }
     }
   }
+
+
+  Future<void> toggleFlag(ToggleParam param) async {
+    try {
+      final response = await Network().post(
+        url: AppEndpoints.toggleChat,
+        data:  param.toJson(),
+      );
+      String errorMessage = await Network().handelError(response: response);
+      if (errorMessage.isNotEmpty) {
+        AppSnackBar.openErrorSnackBar(
+          message: errorMessage,
+        );
+        return;
+      }
+      await getChatList();
+    } catch (error) {
+      if (error is DioException) {
+        AppSnackBar.openErrorSnackBar(
+          message: Network().handelDioException(error),
+        );
+      } else {
+        AppSnackBar.openErrorSnackBar(
+          message: error.toString(),
+        );
+      }
+    }
+  }
+
+
+
+
 
   Future<void> getAllMessages({required int chatId}) async {
     try {

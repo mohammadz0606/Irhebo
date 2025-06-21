@@ -51,7 +51,7 @@ class ChatsList extends GetWidget<AllChatsController> {
                     }
                   },
                   child: ChatRowItem(
-                    onChangeValue: (val) => controller.onChangeStatus(val, i),
+                    onChangeValue: (val) => controller.onChangeStatus(val, provider.allChatListByFilter![i].chatId ?? 0),
                     onDeleted: () => controller.onDeleteChat(i),
                     onTapMore: () => controller.onTapMoreOnChat(i),
                     chat: provider.allChatListByFilter![i],

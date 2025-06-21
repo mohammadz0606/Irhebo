@@ -4,6 +4,7 @@ import 'package:irhebo/app/enums.dart';
 import 'package:irhebo/app/global_imports.dart';
 import 'package:irhebo/app/resources/images.dart';
 import 'package:irhebo/domain/entities/chat_entity.dart';
+import 'package:irhebo/domain/params/new_params/chat/toggle_param.dart';
 
 import '../../../../../domain/providers/chat/chat_provider.dart';
 
@@ -120,12 +121,26 @@ class AllChatsController extends GetxController {
 
       case 2:
         chats[i].type = "Spam";
+        Provider.of<ChatProvider>(Get.context!, listen: false).toggleFlag(
+            ToggleParam(
+                flag: 'spam',
+                chatId:   i.toString(),
+            )
+
+
+        );
 
       case 3:
-        chats[i].type = "Unread";
-
-      case 4:
         chats[i].type = "Starred";
+        Provider.of<ChatProvider>(Get.context!, listen: false).toggleFlag(
+          ToggleParam(
+            flag: 'stared',
+            chatId:    i.toString(),
+          )
+
+
+        );
+
     }
     _chats.refresh();
   }

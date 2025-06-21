@@ -170,13 +170,8 @@ class ChatRowItem extends StatelessWidget {
                                 w: w,
                                 icon: Icons.report),
                             buildPopUpButton(
-                                title: "Move to Unread",
-                                value: 3,
-                                w: w,
-                                icon: Icons.mark_email_unread),
-                            buildPopUpButton(
                               title: "Move to Starred",
-                              value: 4,
+                              value: 3,
                               w: w,
                               icon: Icons.star,
                             )
@@ -201,6 +196,7 @@ class ChatRowItem extends StatelessWidget {
     required double w,
   }) {
     return PopupMenuItem(
+
         value: value,
         child: Row(
           mainAxisSize: MainAxisSize.min,
