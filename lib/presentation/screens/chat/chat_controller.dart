@@ -157,8 +157,10 @@ class ChatController extends GetxController with GetTickerProviderStateMixin {
     startTimer();
     stopTimer();
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       startLiveChat();
+      await Provider.of<ChatProvider>(Get.context!, listen: false)
+          .getAllMessages(chatId: chatId);
     });
     super.onInit();
     groupMessages();
@@ -203,10 +205,10 @@ class ChatController extends GetxController with GetTickerProviderStateMixin {
   }
 
   scrollToEnd() async {
-    await Future.delayed(Duration(milliseconds: 500), () {
+    await Future.delayed(const Duration(milliseconds: 500), () {
       chatScrollController.animateTo(
         chatScrollController.position.minScrollExtent,
-        duration: Duration(milliseconds: 500),
+        duration: const Duration(milliseconds: 500),
         curve: Curves.fastOutSlowIn,
       );
     });
@@ -345,7 +347,7 @@ class ChatController extends GetxController with GetTickerProviderStateMixin {
     if (!isRecord.value) {
       releaseRecordAudio(AppSounds.startRecord);
     }
-    Future.delayed(Duration(milliseconds: 700), () {
+    Future.delayed(const Duration(milliseconds: 700), () {
       startTheRecord();
     });
   }

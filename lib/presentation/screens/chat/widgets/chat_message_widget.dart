@@ -11,31 +11,40 @@ import 'package:irhebo/domain/entities/message_entity.dart';
 import 'package:irhebo/presentation/widgets/app_icon.dart';
 import 'package:irhebo/presentation/widgets/decorated_icon.dart';
 
-class ChatMessageWidget extends StatelessWidget {
-  final bool sender;
-  final ChatType type;
-  final ChatMessageEntity message;
+import '../../../../domain/models/new_models/chat/chat_messages_model.dart';
 
-  const ChatMessageWidget(
-      {super.key,
-      required this.sender,
-      required this.message,
-      required this.type});
+class ChatMessageWidget extends StatelessWidget {
+  //final bool sender;
+  final ChatType type;
+  final int userId;
+  final ChatMessagesModelData message;
+
+  const ChatMessageWidget({
+    super.key,
+    // required this.sender,
+    required this.message,
+    required this.type,
+    required this.userId,
+  });
 
   @override
   Widget build(BuildContext context) {
-    var w = MediaQuery.of(context).size.width;
+    var w = MediaQuery
+        .of(context)
+        .size
+        .width;
     return Align(
-      alignment: message.sender
-          ? AlignmentDirectional.centerEnd
-          : AlignmentDirectional.centerStart,
+      alignment: message.sender?.id == userId
+      ? AlignmentDirectional.centerEnd
+      : AlignmentDirectional.centerStart,
       child: Padding(
         padding: EdgeInsetsDirectional.only(
-            bottom: 3.48 * (w / 100),
-            start: 5.97 * (w / 100),
-            end: 5.97 * (w / 100)),
+          bottom: 3.48 * (w / 100),
+          start: 5.97 * (w / 100),
+          end: 5.97 * (w / 100),
+        ),
         child: Column(
-          crossAxisAlignment: message.sender
+          crossAxisAlignment: message.sender?.id == userId
               ? CrossAxisAlignment.end
               : CrossAxisAlignment.start,
           children: [
@@ -44,30 +53,37 @@ class ChatMessageWidget extends StatelessWidget {
               children: [
                 Container(
                   constraints: BoxConstraints(
-                      maxWidth: 74.62 * (w / 100), minWidth: 14.92 * (w / 100)),
+                    maxWidth: 74.62 * (w / 100),
+                    minWidth: 14.92 * (w / 100),
+                  ),
                   // width: 74.62*(w/100),
                   padding: EdgeInsets.only(
-                      right: 5 * (w / 100),
-                      left: 5 * (w / 100),
-                      top: 3 * (w / 100),
-                      bottom: 3 * (w / 100)),
+                    right: 5 * (w / 100),
+                    left: 5 * (w / 100),
+                    top: 3 * (w / 100),
+                    bottom: 3 * (w / 100),
+                  ),
                   decoration: BoxDecoration(
-                    color: message.sender
+                    color: message.sender?.id == userId
                         ? AppDarkColors.primaryColor
-                        : Get.find<AppController>().darkMode
-                            ? AppDarkColors.darkContainer2
-                            : Colors.white,
+                        : Get
+                        .find<AppController>()
+                        .darkMode
+                        ? AppDarkColors.darkContainer2
+                        : Colors.white,
                     borderRadius:
-                        message.sender ? senderRadius : receiverRadius,
+                    message.sender?.id == userId ? senderRadius : receiverRadius,
                   ),
                   child: Text(
-                    message.message,
+                    message.message ?? '',
                     style: Get.theme.textTheme.bodySmall!.copyWith(
-                      color: message.sender
+                      color: message.sender?.id == userId
                           ? Colors.white
-                          : Get.find<AppController>().darkMode
-                              ? Colors.white
-                              : Colors.black,
+                          : Get
+                          .find<AppController>()
+                          .darkMode
+                          ? Colors.white
+                          : Colors.black,
                     ),
                   ),
                 ),
@@ -102,7 +118,7 @@ class ChatMessageWidget extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      formatTime(message.timestamp),
+                      formatTime(message.createdAt ?? DateTime.now()),
                       style: Get.theme.textTheme.labelMedium!
                           .copyWith(fontWeight: FontWeight.w400),
                     ),
