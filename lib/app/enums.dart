@@ -85,3 +85,10 @@ enum MessageType {
   audio,
   file,
 }
+
+enum ChatStatus {
+  all,
+  unread,
+  starred,
+  spam,
+}

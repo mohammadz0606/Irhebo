@@ -42,7 +42,7 @@ class ServiceDetailsShimmer extends StatelessWidget {
                   color: Get.find<AppController>().darkMode
                       ? AppDarkColors.darkScaffoldColor
                       : AppLightColors.scaffoldColor2,
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(44),
                       topRight: Radius.circular(44))),
               child: Column(
@@ -51,7 +51,7 @@ class ServiceDetailsShimmer extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      FreelancerItemShimmer(),
+                      const FreelancerItemShimmer(),
                       SizedBox(
                         height: 4.47 * (w / 100),
                       ),
@@ -115,7 +115,7 @@ class ServiceDetailsShimmer extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Divider(
+                  const Divider(
                     height: 1,
                   ),
 
@@ -123,7 +123,7 @@ class ServiceDetailsShimmer extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      DescriptionShimmer(),
+                      const DescriptionShimmer(),
 
                       ///media
                       Column(
@@ -137,11 +137,11 @@ class ServiceDetailsShimmer extends StatelessWidget {
                                 width: 20 * (w / 100),
                                 radius: 8),
                           ),
-                          MediaItemShimmer(),
+                          const MediaItemShimmer(),
                           SizedBox(
                             height: 6.21 * (w / 100),
                           ),
-                          Divider(
+                          const Divider(
                             height: 1,
                           )
                         ],
@@ -159,7 +159,7 @@ class ServiceDetailsShimmer extends StatelessWidget {
                                   width: 20 * (w / 100),
                                   radius: 8),
                             ),
-                            ReviewItemShimmer()
+                            const ReviewItemShimmer()
                           ])
                     ],
                   )
@@ -167,7 +167,12 @@ class ServiceDetailsShimmer extends StatelessWidget {
               ),
             ),
           ),
-          Positioned(top: 16.41 * (w / 100), child: ServiceDetailsAppBar()),
+          Positioned(
+            top: 16.41 * (w / 100),
+            child: const ServiceDetailsAppBar(
+              freelancerId: 0,
+            ),
+          ),
         ],
       ),
     );

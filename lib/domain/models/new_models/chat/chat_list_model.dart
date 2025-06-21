@@ -1,6 +1,7 @@
+import '../../../../app/app_functions.dart';
+import '../../../../app/enums.dart';
+
 class ChatListModel {
-
-
   bool? status;
   String? message;
   List<ChatListModelData>? data;
@@ -10,6 +11,7 @@ class ChatListModel {
     this.message,
     this.data,
   });
+
   ChatListModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message']?.toString();
@@ -22,10 +24,7 @@ class ChatListModel {
       data = arr0;
     }
   }
-
 }
-
-
 
 class ChatListModelDataLastMessage {
   int? id;
@@ -49,6 +48,7 @@ class ChatListModelDataLastMessage {
     this.createdAt,
     this.updatedAt,
   });
+
   ChatListModelDataLastMessage.fromJson(Map<String, dynamic> json) {
     id = json['id']?.toInt();
     chatId = json['chat_id']?.toInt();
@@ -60,12 +60,9 @@ class ChatListModelDataLastMessage {
     createdAt = json['created_at']?.toString();
     updatedAt = json['updated_at']?.toString();
   }
-
 }
 
 class ChatListModelDataReceiver {
-
-
   int? id;
   String? username;
   String? image;
@@ -75,18 +72,17 @@ class ChatListModelDataReceiver {
     this.username,
     this.image,
   });
+
   ChatListModelDataReceiver.fromJson(Map<String, dynamic> json) {
     id = json['id']?.toInt();
     username = json['username']?.toString();
     image = json['image']?.toString();
   }
-
 }
 
 class ChatListModelData {
-
   int? chatId;
-  String? chatStatus;
+  ChatStatus? chatStatus;
   ChatListModelDataReceiver? receiver;
   int? unreadCount;
   ChatListModelDataLastMessage? lastMessage;
@@ -98,13 +94,16 @@ class ChatListModelData {
     this.unreadCount,
     this.lastMessage,
   });
+
   ChatListModelData.fromJson(Map<String, dynamic> json) {
     chatId = json['chat_id']?.toInt();
-    chatStatus = json['chat_status']?.toString();
-    receiver = (json['receiver'] != null) ? ChatListModelDataReceiver.fromJson(json['receiver']) : null;
+    chatStatus = chatStatusFromString(json['chat_status']?.toString());
+    receiver = (json['receiver'] != null)
+        ? ChatListModelDataReceiver.fromJson(json['receiver'])
+        : null;
     unreadCount = json['unread_count']?.toInt();
-    lastMessage = (json['last_message'] != null) ? ChatListModelDataLastMessage.fromJson(json['last_message']) : null;
+    lastMessage = (json['last_message'] != null)
+        ? ChatListModelDataLastMessage.fromJson(json['last_message'])
+        : null;
   }
-
 }
-

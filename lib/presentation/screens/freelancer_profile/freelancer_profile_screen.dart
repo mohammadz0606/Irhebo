@@ -58,6 +58,7 @@ class FreelancerProfileScreen extends GetView<FreelancerProfileController> {
                             child: ServiceDetailsAppBar(
                               profile: true,
                               onTapChat: controller.onTapChat,
+                              freelancerId: controller.freelancer?.freelancer?.id ?? 0,
                             ),
                           ),
                         ],

@@ -22,7 +22,7 @@ class ChatsList extends GetWidget<AllChatsController> {
       builder: (context, provider, child) {
         return Column(
           children: [
-            for (int i = 0; i < provider.allChatList!.length; i++)
+            for (int i = 0; i < provider.allChatListByFilter!.length; i++)
               Visibility(
                 // visible: controller.selectedTab.name ==
                 //     controller.chats[i].type ||
@@ -33,15 +33,15 @@ class ChatsList extends GetWidget<AllChatsController> {
                       AppRoutes.chat,
                       arguments: {
                         "chat_type": ChatType.Users,
-                        'userId': provider.allChatList![i].receiver?.id ?? 0,
-                        'chatId': provider.allChatList![i].chatId ?? 0,
+                        'userId': provider.allChatListByFilter![i].receiver?.id ?? 0,
+                        'chatId': provider.allChatListByFilter![i].chatId ?? 0,
                       },
                     );
 
-                    if (provider.allChatList![i].unreadCount != 0) {
+                    if (provider.allChatListByFilter![i].unreadCount != 0) {
                       await provider
                           .markRead(
-                        chatId: provider.allChatList![i].chatId ?? 0,
+                        chatId: provider.allChatListByFilter![i].chatId ?? 0,
                       )
                           .then(
                         (value) async {
@@ -54,7 +54,7 @@ class ChatsList extends GetWidget<AllChatsController> {
                     onChangeValue: (val) => controller.onChangeStatus(val, i),
                     onDeleted: () => controller.onDeleteChat(i),
                     onTapMore: () => controller.onTapMoreOnChat(i),
-                    chat: provider.allChatList![i],
+                    chat: provider.allChatListByFilter![i],
                   ),
                 ),
               ),

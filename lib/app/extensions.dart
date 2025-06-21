@@ -84,7 +84,7 @@ extension ColorExtension on String {
   }
 
   String get requestFilterTitle {
-    switch(this) {
+    switch (this) {
       case "all":
         return 'all new'.tr;
       case "pending":
@@ -95,10 +95,29 @@ extension ColorExtension on String {
         return "completed new".tr;
       case "cancelled":
         return "cancelled new".tr;
-      case "confirmed" :
+      case "confirmed":
         return "confirmed new".tr;
       default:
         return "";
+    }
+  }
+
+  String get chatStatusTitle {
+    switch (this) {
+      case 'all':
+        return 'all new'.tr;
+
+      case 'unread':
+        return 'Unread'.tr;
+
+      case 'starred':
+        return 'Starred'.tr;
+
+      case 'spam':
+        return 'Spam'.tr;
+
+      default:
+        return '';
     }
   }
 }

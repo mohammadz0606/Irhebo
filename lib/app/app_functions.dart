@@ -114,3 +114,16 @@ NotificationType? notificationTypeFromString(String? type) {
       return null;
   }
 }
+
+ChatStatus? chatStatusFromString(String? type) {
+  switch (type?.toLowerCase()) {
+    case 'unread':
+      return ChatStatus.unread;
+    case 'starred':
+      return ChatStatus.starred;
+    case 'spam':
+      return ChatStatus.spam;
+    default:
+      return ChatStatus.all;
+  }
+}

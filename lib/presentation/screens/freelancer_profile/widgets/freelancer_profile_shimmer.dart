@@ -54,6 +54,7 @@ class FreelancerProfileShimmer extends StatelessWidget {
                   child: ServiceDetailsAppBar(
                     profile: true,
                     onTapChat: () => {},
+                    freelancerId: 0,
                   )),
             ],
           ),

@@ -6,13 +6,19 @@ import 'package:irhebo/app/resources/style/colors.dart';
 import 'package:irhebo/app/resources/style/decoration.dart';
 import 'package:irhebo/presentation/widgets/decorated_icon.dart';
 
+import '../../app/global_imports.dart';
+import '../../domain/providers/chat/chat_provider.dart';
+
 class ServiceDetailsAppBar extends StatelessWidget {
   final bool profile;
   final Function()? onTapChat;
+  final int freelancerId;
+
   const ServiceDetailsAppBar({
     super.key,
     this.profile = false,
     this.onTapChat,
+    required this.freelancerId,
   });
 
   @override
@@ -47,27 +53,44 @@ class ServiceDetailsAppBar extends StatelessWidget {
             ),
           ),
           if (profile)
-            GestureDetector(
-              onTap: () => onTapChat!(),
-              child: Container(
-                decoration: Get.find<AppController>().darkMode
-                    ? AppDecoration.getGradientWithRadius(
-                        radius: 50 * (w / 100),
-                      )
-                    : null,
-                child: DecoratedIcon(
-                  height: 9.95 * (w / 100),
-                  width: 9.95 * (w / 100),
-                  padding: 2 * (w / 100),
-                  color: Get.find<AppController>().darkMode
-                      ? AppDarkColors.darkScaffoldColor
-                      : AppLightColors.secondary,
-                  imagePath: AppIcons.message,
-                  svgColor: Get.find<AppController>().darkMode
-                      ? AppDarkColors.pureWhite
-                      : AppLightColors.primaryColor,
-                ),
-              ),
+            Consumer<ChatProvider>(
+              builder: (context, provider, _) {
+                return Visibility(
+                  visible: !provider.isLoadingStartChat,
+                  replacement: const Center(
+                    child: CircularProgressIndicator.adaptive(),
+                  ),
+                  child: GestureDetector(
+                    onTap: freelancerId != 0
+                        ? () async {
+                            //onTapChat!();
+                            await provider.startChat(
+                              freelancerId: freelancerId,
+                            );
+                          }
+                        : null,
+                    child: Container(
+                      decoration: Get.find<AppController>().darkMode
+                          ? AppDecoration.getGradientWithRadius(
+                              radius: 50 * (w / 100),
+                            )
+                          : null,
+                      child: DecoratedIcon(
+                        height: 9.95 * (w / 100),
+                        width: 9.95 * (w / 100),
+                        padding: 2 * (w / 100),
+                        color: Get.find<AppController>().darkMode
+                            ? AppDarkColors.darkScaffoldColor
+                            : AppLightColors.secondary,
+                        imagePath: AppIcons.message,
+                        svgColor: Get.find<AppController>().darkMode
+                            ? AppDarkColors.pureWhite
+                            : AppLightColors.primaryColor,
+                      ),
+                    ),
+                  ),
+                );
+              },
             ),
         ],
       ),

@@ -58,16 +58,17 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
                       height: 63.68 * (w / 100),
                       color: Colors.black.withOpacity(0.2),
                     ),
-
                     Padding(
                       padding: EdgeInsets.only(top: 53.48 * (w / 100)),
                       child: const FreelancerInfoContainer(),
                     ),
-
-                      Positioned(
-                        top: 16.41 * (w / 100),
-                        child: const ServiceDetailsAppBar(),
+                    Positioned(
+                      top: 16.41 * (w / 100),
+                      child: ServiceDetailsAppBar(
+                        freelancerId:
+                            controller.serviceDetails.service?.user?.id ?? 0,
                       ),
+                    ),
                   ],
                 ),
               ),
