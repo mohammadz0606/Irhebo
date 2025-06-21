@@ -29,14 +29,11 @@ class ChatMessageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var w = MediaQuery
-        .of(context)
-        .size
-        .width;
+    var w = MediaQuery.of(context).size.width;
     return Align(
       alignment: message.sender?.id == userId
-      ? AlignmentDirectional.centerEnd
-      : AlignmentDirectional.centerStart,
+          ? AlignmentDirectional.centerEnd
+          : AlignmentDirectional.centerStart,
       child: Padding(
         padding: EdgeInsetsDirectional.only(
           bottom: 3.48 * (w / 100),
@@ -66,24 +63,21 @@ class ChatMessageWidget extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: message.sender?.id == userId
                         ? AppDarkColors.primaryColor
-                        : Get
-                        .find<AppController>()
-                        .darkMode
-                        ? AppDarkColors.darkContainer2
-                        : Colors.white,
-                    borderRadius:
-                    message.sender?.id == userId ? senderRadius : receiverRadius,
+                        : Get.find<AppController>().darkMode
+                            ? AppDarkColors.darkContainer2
+                            : Colors.white,
+                    borderRadius: message.sender?.id == userId
+                        ? senderRadius
+                        : receiverRadius,
                   ),
                   child: Text(
                     message.message ?? '',
-                    style: Get.theme.textTheme.bodySmall!.copyWith(
+                    style: Get.theme.textTheme.bodySmall?.copyWith(
                       color: message.sender?.id == userId
                           ? Colors.white
-                          : Get
-                          .find<AppController>()
-                          .darkMode
-                          ? Colors.white
-                          : Colors.black,
+                          : Get.find<AppController>().darkMode
+                              ? Colors.white
+                              : Colors.black,
                     ),
                   ),
                 ),
