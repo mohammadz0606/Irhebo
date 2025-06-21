@@ -17,7 +17,9 @@ class ChatProvider extends ChangeNotifier {
   bool isLoadingGetChatList = false;
 
   List<ChatMessagesModelData>? chatMessages;
+  ChatAppbar? appbarData;
   bool isLoadingGetChatMessages = false;
+  Map<String, List<ChatMessagesModelData>>? groupedMessages;
 
   bool isLoadingStartChat = false;
 
@@ -182,8 +184,10 @@ class ChatProvider extends ChangeNotifier {
           ChatMessagesModel.fromJson(response.data);
 
       chatMessages = chatMessagesModel.data;
+      _groupMessages();
       isLoadingGetChatMessages = false;
       notifyListeners();
+      _getAppbarData();
     } catch (error) {
       if (error is DioException) {
         AppSnackBar.openErrorSnackBar(
@@ -276,5 +280,48 @@ class ChatProvider extends ChangeNotifier {
       isLoadingStartChat = false;
       notifyListeners();
     }
+  }
+
+  _getAppbarData() {
+    if (appbarData != null) {
+      appbarData = null;
+    }
+
+    AppPreferences preferences = sl();
+
+    int userId = preferences.getInt(key: AppPrefsKeys.USER_ID) ?? 0;
+
+    if (chatMessages?.first.sender?.id != userId) {
+      appbarData = ChatAppbar(
+        id: chatMessages?.first.sender?.id,
+        username: chatMessages?.first.sender?.username,
+        avatar: chatMessages?.first.sender?.avatar,
+      );
+    } else {
+      appbarData = ChatAppbar(
+        id: chatMessages?.first.receiver?.id,
+        username: chatMessages?.first.receiver?.username,
+        avatar: chatMessages?.first.receiver?.avatar,
+      );
+    }
+
+    notifyListeners();
+  }
+
+  void _groupMessages() {
+    if (groupedMessages != null) {
+      groupedMessages = null;
+    }
+    Map<String, List<ChatMessagesModelData>> grouped = {};
+
+    chatMessages?.sort((a, b) => b.createdAt!.compareTo(a.createdAt!));
+
+    for (var message in chatMessages ?? []) {
+      String formattedDate = formatDate(message.createdAt ?? DateTime.now());
+      grouped.putIfAbsent(formattedDate, () => []).add(message);
+    }
+
+    groupedMessages = grouped;
+    notifyListeners();
   }
 }
