@@ -29,10 +29,10 @@ final class SendMessageParam {
       );
       data['attachment_type'] = messageType.name;
     }
-
-    if (message != null) {
-      data['message'] = message?.trim();
-    }
+    data['message'] = message?.trim() ?? '';
+    // if (message != null) {
+    //
+    // }
     return data;
 
     // final formData = FormData();

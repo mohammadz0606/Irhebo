@@ -8,11 +8,13 @@ class PickItemWidget extends StatelessWidget {
   final String icon;
   final String title;
   final Function() onTap;
-  const PickItemWidget(
-      {super.key,
-      required this.icon,
-      required this.title,
-      required this.onTap});
+
+  const PickItemWidget({
+    super.key,
+    required this.icon,
+    required this.title,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -33,13 +35,15 @@ class PickItemWidget extends StatelessWidget {
         child: Container(
           width: 100 * (w / 100),
           padding: EdgeInsets.symmetric(
-              vertical: 2.48 * (w / 100), horizontal: 3.98 * (w / 100)),
+            vertical: 2.48 * (w / 100),
+            horizontal: 3.98 * (w / 100),
+          ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
               Container(
                 padding: EdgeInsets.all(2 * (w / 100)),
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: AppDarkColors.primaryColor,
                   shape: BoxShape.circle,
                 ),
