@@ -118,6 +118,14 @@ class AllChatsController extends GetxController {
     switch (value) {
       case 1:
         chats.removeAt(i);
+        Provider.of<ChatProvider>(Get.context!, listen: false).toggleFlag(
+            ToggleParam(
+              flag: 'delete',
+              chatId:    i.toString(),
+            )
+
+
+        );
 
       case 2:
         chats[i].type = "Spam";
