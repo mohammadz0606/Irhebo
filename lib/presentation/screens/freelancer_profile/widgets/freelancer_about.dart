@@ -47,13 +47,13 @@ class FreelancerAbout extends StatelessWidget {
         SizedBox(
           height: 2.48 * (w / 100),
         ),
-        AboutInfoRow(
-          icon: AppIcons.availability,
-          info: freelancer?.status ?? "",
-        ),
-        SizedBox(
-          height: 2.48 * (w / 100),
-        ),
+        // AboutInfoRow(
+        //   icon: AppIcons.availability,
+        //   info: freelancer?.status ?? "",
+        // ),
+        // SizedBox(
+        //   height: 2.48 * (w / 100),
+        // ),
         AboutInfoRow(
           icon: AppIcons.experience,
           info: freelancer?.status ?? "",

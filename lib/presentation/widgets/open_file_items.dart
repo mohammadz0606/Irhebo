@@ -36,7 +36,6 @@ class OpenFileItems extends StatelessWidget {
           title: 'Open'.tr,
           width: 100,
           onPressed: () async {
-
             if (pathUrl == null) {
               AppSnackBar.openErrorSnackBar(message: 'File not found'.tr);
               return;
@@ -44,7 +43,10 @@ class OpenFileItems extends StatelessWidget {
             //final extension = path.extension(filePath).replaceFirst('.', '').toLowerCase();
             final uri = Uri.parse(pathUrl!);
             if (await canLaunchUrl(uri)) {
-              await launchUrl(uri, mode: LaunchMode.externalApplication);
+              await launchUrl(
+                uri,
+                mode: LaunchMode.externalApplication,
+              );
             } else {
               AppSnackBar.openErrorSnackBar(message: 'Cannot open the file'.tr);
             }

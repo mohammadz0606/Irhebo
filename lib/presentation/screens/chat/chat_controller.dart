@@ -173,27 +173,19 @@ class ChatController extends GetxController with GetTickerProviderStateMixin {
   startLiveChat() async {
     await ChatPusherConfig().init(
       onEvent: (event) {
-
-      },
-    );
-    //AppPreferences preferences = sl();
-    await ChatPusherConfig().subscribeToChannel(
-      chatId: chatId,
-      onEvent: (event) {
         log('-----------');
         log('START CHAT');
-        log('channelName: ${event?.channelName}');
-        log('eventName: ${event?.eventName}');
-        log('data: ${event?.data}');
+        log('channelName: ${event.channelName}');
+        log('eventName: ${event.eventName}');
+        log('data: ${event.data}');
         log('-----------');
       },
-      // clintId: getUserRole == UserRoles.client
-      //     ? preferences.getInt(key: AppPrefsKeys.USER_ID) ?? 0
-      //     : userId,
-      // freelancerId: getUserRole == UserRoles.client
-      //     ? userId
-      //     : preferences.getInt(key: AppPrefsKeys.USER_ID) ?? 0,
     );
+    await ChatPusherConfig().subscribeToChannel(
+      chatId: chatId,
+    );
+
+    ChatPusherConfig().onEvent();
   }
 
   void groupMessages() {
