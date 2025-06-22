@@ -78,17 +78,19 @@ class ChatRowItem extends StatelessWidget {
                             Visibility(
                               visible: chat.unreadCount != 0,
                               child: Container(
-                                width: 4.97 * (w / 100),
+                                //width: 6 * (w / 100),
                                 margin: EdgeInsets.symmetric(
-                                    horizontal: 1 * (w / 100)),
+                                  horizontal: 1 * (w / 100),
+                                ),
                                 decoration:
                                     AppDecoration.getDecorationWithRadius(
                                         radius: 50 * (w / 100),
                                         color: AppDarkColors.redBadge),
                                 child: Padding(
                                   padding: EdgeInsets.symmetric(
-                                      horizontal: 1.24 * (w / 100),
-                                      vertical: 0.49 * (w / 100)),
+                                    horizontal: 1.24 * (w / 100),
+                                    vertical: 0.49 * (w / 100),
+                                  ),
                                   child: Center(
                                     child: Text(
                                       '${chat.unreadCount ?? 0}',
@@ -196,7 +198,6 @@ class ChatRowItem extends StatelessWidget {
     required double w,
   }) {
     return PopupMenuItem(
-
         value: value,
         child: Row(
           mainAxisSize: MainAxisSize.min,

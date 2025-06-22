@@ -84,10 +84,10 @@ class ChatProvider extends ChangeNotifier {
             ?.where((element) => element.chatStatus == ChatStatus.unread)
             .toList();
         break;
-      case ChatStatus.starred:
-        this.chatStatus = ChatStatus.starred;
+      case ChatStatus.stared:
+        this.chatStatus = ChatStatus.stared;
         allChatListByFilter = allChatList
-            ?.where((element) => element.chatStatus == ChatStatus.starred)
+            ?.where((element) => element.chatStatus == ChatStatus.stared)
             .toList();
         break;
       case ChatStatus.spam:

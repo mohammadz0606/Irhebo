@@ -89,6 +89,6 @@ enum MessageType {
 enum ChatStatus {
   all,
   unread,
-  starred,
+  stared,
   spam,
 }

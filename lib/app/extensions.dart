@@ -110,7 +110,7 @@ extension ColorExtension on String {
       case 'unread':
         return 'Unread'.tr;
 
-      case 'starred':
+      case 'stared':
         return 'Starred'.tr;
 
       case 'spam':

@@ -119,8 +119,8 @@ ChatStatus? chatStatusFromString(String? type) {
   switch (type?.toLowerCase()) {
     case 'unread':
       return ChatStatus.unread;
-    case 'starred':
-      return ChatStatus.starred;
+    case 'stared':
+      return ChatStatus.stared;
     case 'spam':
       return ChatStatus.spam;
     default:

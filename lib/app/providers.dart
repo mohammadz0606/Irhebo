@@ -10,6 +10,7 @@ import '../domain/providers/freelancer/freelancer_services.dart';
 import '../domain/providers/freelancer/service.dart';
 import '../domain/providers/media.dart';
 import '../domain/providers/notification.dart';
+import '../domain/providers/social_auth.dart';
 import 'global_imports.dart';
 
 List<SingleChildWidget> providers = [
@@ -23,4 +24,5 @@ List<SingleChildWidget> providers = [
   ChangeNotifierProvider(create: (_) => MediaProvider()),
   ChangeNotifierProvider(create: (_) => NotificationProvider()),
   ChangeNotifierProvider(create: (_) => ChatProvider()),
+  ChangeNotifierProvider(create: (_) => SocialAuthProvider()),
 ];

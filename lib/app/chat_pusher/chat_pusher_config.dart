@@ -31,8 +31,20 @@ final class ChatPusherConfig {
       onAuthorizer: (channelName, socketId, options) async {
         log('🔥 [onAuthorizer pusher]');
 
+        final response = await Network().post(
+          url: '${AppEndpoints.base_url}/broadcasting/auth',
+          data: {
+            'socket_id': socketId,
+            'channel_name': channelName,
+          },
+        );
         log('socketId: $socketId');
         log('channelName: $channelName');
+        log(response.data);
+        log('socketId: $socketId');
+        log('channelName: $channelName');
+
+        return response.data;
 
       },
       authParams: {
