@@ -92,6 +92,14 @@ final class Notifications {
 
             break;
           case NotificationType.chat:
+            Get.toNamed(
+              AppRoutes.chat,
+              arguments: {
+                "chat_type": ChatType.Users,
+                // 'userId': startChatModel.userId ?? 0,
+                // 'chatId': startChatModel.chatId ?? 0,
+              },
+            );
             break;
           case NotificationType.call:
             break;

@@ -11,6 +11,7 @@ import 'package:irhebo/presentation/widgets/open_file_items.dart';
 
 import '../../../../domain/models/new_models/chat/chat_messages_model.dart';
 import '../../../widgets/app_image.dart';
+import '../../../widgets/audio_player.dart';
 import '../../../widgets/video_player.dart';
 
 class ChatMessageWidget extends StatelessWidget {
@@ -85,19 +86,23 @@ class ChatMessageWidget extends StatelessWidget {
                               ? AppVideoPlayer(
                                   videoUrl: message.attachmentUrl ?? '',
                                   radius: 10,
-
                                 )
-                              : Text(
-                                  message.message ?? '',
-                                  style:
-                                      Get.theme.textTheme.bodySmall?.copyWith(
-                                    color: message.sender?.id == userId
-                                        ? Colors.white
-                                        : Get.find<AppController>().darkMode
+                              : message.attachmentType == 'audio'
+                                  ? AppAudioPlayer(
+                                      audioUrl: message.attachmentUrl ?? '',
+                                      radius: 10,
+                                    )
+                                  : Text(
+                                      message.message ?? '',
+                                      style: Get.theme.textTheme.bodySmall
+                                          ?.copyWith(
+                                        color: message.sender?.id == userId
                                             ? Colors.white
-                                            : Colors.black,
-                                  ),
-                                ),
+                                            : Get.find<AppController>().darkMode
+                                                ? Colors.white
+                                                : Colors.black,
+                                      ),
+                                    ),
                 ),
               ],
             ),

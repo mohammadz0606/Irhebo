@@ -84,8 +84,9 @@ class ChatRowItem extends StatelessWidget {
                                 ),
                                 decoration:
                                     AppDecoration.getDecorationWithRadius(
-                                        radius: 50 * (w / 100),
-                                        color: AppDarkColors.redBadge),
+                                  radius: 50 * (w / 100),
+                                  color: AppDarkColors.redBadge,
+                                ),
                                 child: Padding(
                                   padding: EdgeInsets.symmetric(
                                     horizontal: 1.24 * (w / 100),

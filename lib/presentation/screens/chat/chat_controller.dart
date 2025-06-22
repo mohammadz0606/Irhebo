@@ -158,7 +158,7 @@ class ChatController extends GetxController with GetTickerProviderStateMixin {
     stopTimer();
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      startLiveChat();
+      //startLiveChat();
       await Provider.of<ChatProvider>(Get.context!, listen: false)
           .getAllMessages(chatId: chatId);
     });
@@ -170,24 +170,6 @@ class ChatController extends GetxController with GetTickerProviderStateMixin {
     type = Get.arguments["chat_type"] ?? ChatType.Users;
     userId = Get.arguments["userId"] ?? 0;
     chatId = Get.arguments["chatId"] ?? 0;
-  }
-
-  startLiveChat() async {
-    await ChatPusherConfig().init(
-      onEvent: (event) {
-        log('-----------');
-        log('START CHAT');
-        log('channelName: ${event.channelName}');
-        log('eventName: ${event.eventName}');
-        log('data: ${event.data}');
-        log('-----------');
-      },
-    );
-    await ChatPusherConfig().subscribeToChannel(
-      chatId: chatId,
-    );
-
-    //ChatPusherConfig().onEvent();
   }
 
   void groupMessages() {
@@ -263,7 +245,8 @@ class ChatController extends GetxController with GetTickerProviderStateMixin {
     isRecord.value = false;
   }
 
-  Future<void> pickChatFile(FileType fileType,{required Function() onComplete}) async {
+  Future<void> pickChatFile(FileType fileType,
+      {required Function() onComplete}) async {
     chatMessage.value.clear();
     toggleAttachAnimation();
     var result = await FilePicker.platform.pickFiles(
@@ -338,6 +321,7 @@ class ChatController extends GetxController with GetTickerProviderStateMixin {
 
   onWillPop() {
     Get.find<AnimationButtonController>().disposeAllControllers();
+    ChatPusherConfig().disconnect();
   }
 
   releaseRecordAudio(String alarmAudioPath) async {

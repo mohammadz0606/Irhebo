@@ -101,11 +101,9 @@ final class ChatPusherConfig {
     };
   }
 
-  Future<void> unsubscribeFromChannel({
-    required PusherChannel channel,
-  }) async {
-    await channel.unsubscribe();
-  }
+  // Future<void> unsubscribeFromChannel() async {
+  //   await channel.unsubscribe();
+  // }
 
   Future<void> disconnect() async {
     await _pusher.disconnect();

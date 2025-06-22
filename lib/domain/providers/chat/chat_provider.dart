@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:irhebo/app/global_imports.dart';
 import 'package:irhebo/domain/params/new_params/chat/toggle_param.dart';
 
+import '../../../app/chat_pusher/chat_pusher_config.dart';
 import '../../../app/network/network.dart';
 import '../../../app/router/routes.dart';
 import '../../models/new_models/chat/chat_list_model.dart';
@@ -101,9 +104,9 @@ class ChatProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> sendMessage({required SendMessageParam sendParam}) async
-  {
+  Future<void> sendMessage({required SendMessageParam sendParam}) async {
     try {
+
       final response = await Network().post(
         url: AppEndpoints.sendMessage,
         isUploadFile: sendParam.attachmentFile != null,
@@ -116,6 +119,10 @@ class ChatProvider extends ChangeNotifier {
         );
         return;
       }
+      // chatMessages?.add(
+      //   ChatMessagesModelData.fromJson(response.data['data']),
+      // );
+      // notifyListeners();
     } catch (error) {
       if (error is DioException) {
         AppSnackBar.openErrorSnackBar(
@@ -129,12 +136,11 @@ class ChatProvider extends ChangeNotifier {
     }
   }
 
-
   Future<void> toggleFlag(ToggleParam param) async {
     try {
       final response = await Network().post(
         url: AppEndpoints.toggleChat,
-        data:  param.toJson(),
+        data: param.toJson(),
       );
       String errorMessage = await Network().handelError(response: response);
       if (errorMessage.isNotEmpty) {
@@ -156,7 +162,6 @@ class ChatProvider extends ChangeNotifier {
       }
     }
   }
-
 
   Future<void> getAllMessages({required int chatId}) async {
     try {
@@ -185,6 +190,7 @@ class ChatProvider extends ChangeNotifier {
       isLoadingGetChatMessages = false;
       notifyListeners();
       _getAppbarData();
+      _startLiveChat(chatId: chatId);
     } catch (error) {
       if (error is DioException) {
         AppSnackBar.openErrorSnackBar(
@@ -320,5 +326,25 @@ class ChatProvider extends ChangeNotifier {
 
     groupedMessages = grouped;
     notifyListeners();
+  }
+
+  _startLiveChat({required int chatId}) async {
+    await ChatPusherConfig().init(
+      onEvent: (event) {
+        log('-----------');
+        log('START CHAT');
+        log('channelName: ${event.channelName}');
+        log('eventName: ${event.eventName}');
+        log('data: ${event.data}');
+        log('-----------');
+        // chatMessages?.add(ChatMessagesModelData.fromJson(event.data));
+        // notifyListeners();
+      },
+    );
+    await ChatPusherConfig().subscribeToChannel(
+      chatId: chatId,
+    );
+
+    //ChatPusherConfig().onEvent();
   }
 }

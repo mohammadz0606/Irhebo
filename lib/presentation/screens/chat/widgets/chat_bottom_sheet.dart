@@ -7,6 +7,7 @@ import 'package:irhebo/domain/providers/chat/chat_provider.dart';
 import 'package:irhebo/presentation/screens/chat/chat_controller.dart';
 import 'package:irhebo/presentation/screens/chat/widgets/chat_text_field.dart';
 import 'package:irhebo/presentation/screens/chat/widgets/pick_item_widget.dart';
+import 'package:path/path.dart' as p;
 
 import '../../../../app/global_imports.dart';
 import '../../../../domain/params/new_params/chat/send_message_param.dart';
@@ -31,22 +32,48 @@ class ChatBottomSheet extends GetWidget<ChatController> {
               },
               effects: [
                 FadeEffect(
-                    begin: 0,
-                    end: 1,
-                    duration: 200.ms,
-                    curve: Curves.fastLinearToSlowEaseIn),
+                  begin: 0,
+                  end: 1,
+                  duration: 200.ms,
+                  curve: Curves.fastLinearToSlowEaseIn,
+                ),
                 SlideEffect(
-                    begin: const Offset(0, 3),
-                    end: const Offset(0, 0),
-                    duration: 200.ms,
-                    curve: Curves.fastLinearToSlowEaseIn),
+                  begin: const Offset(0, 3),
+                  end: const Offset(0, 0),
+                  duration: 200.ms,
+                  curve: Curves.fastLinearToSlowEaseIn,
+                ),
               ],
               child: PickItemWidget(
                 icon: AppIcons.imgMsg,
                 title: "Gallery",
                 onTap: () => controller.pickChatFile(
                   FileType.media,
-                  onComplete: () {},
+                  onComplete: () async {
+                    if (controller.selectedFilePath.value != null) {
+                      String filePath = controller.selectedFilePath.value!;
+                      String extension = p.extension(filePath).toLowerCase();
+                      bool isImage = ['.jpg', '.jpeg', '.png', '.gif', '.webp']
+                          .contains(extension);
+                      bool isVideo = ['.mp4', '.mov', '.avi', '.mkv', '.webm']
+                          .contains(extension);
+
+                      final messageType = isImage
+                          ? MessageType.image
+                          : isVideo
+                              ? MessageType.video
+                              : MessageType.file;
+                      await provider.sendMessage(
+                        sendParam: SendMessageParam(
+                          message: '',
+                          attachmentFile:
+                              File(controller.selectedFilePath.value!),
+                          messageType: messageType,
+                          chatId: controller.chatId,
+                        ),
+                      );
+                    }
+                  },
                 ),
               ),
             ),
@@ -62,10 +89,11 @@ class ChatBottomSheet extends GetWidget<ChatController> {
                     duration: 200.ms,
                     curve: Curves.fastLinearToSlowEaseIn),
                 SlideEffect(
-                    begin: const Offset(0, 3),
-                    end: const Offset(0, 0),
-                    duration: 200.ms,
-                    curve: Curves.fastLinearToSlowEaseIn),
+                  begin: const Offset(0, 3),
+                  end: const Offset(0, 0),
+                  duration: 200.ms,
+                  curve: Curves.fastLinearToSlowEaseIn,
+                ),
               ],
               child: PickItemWidget(
                 icon: AppIcons.docMsg,
@@ -77,9 +105,9 @@ class ChatBottomSheet extends GetWidget<ChatController> {
                       if (controller.selectedFilePath.value != null) {
                         await provider.sendMessage(
                           sendParam: SendMessageParam(
-                            message: null,
+                            message: '',
                             attachmentFile:
-                            File(controller.selectedFilePath.value!),
+                                File(controller.selectedFilePath.value!),
                             messageType: MessageType.file,
                             chatId: controller.chatId,
                           ),
@@ -87,7 +115,6 @@ class ChatBottomSheet extends GetWidget<ChatController> {
                       }
                     },
                   );
-
                 },
               ),
             ),
