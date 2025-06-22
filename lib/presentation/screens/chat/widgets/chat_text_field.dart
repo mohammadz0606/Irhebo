@@ -66,16 +66,19 @@ class ChatTextField extends GetWidget<ChatController> {
               ),
               InkWell(
                 onTap: () async {
-                  controller.onTapSend();
-                  await provider.sendMessage(
-                    sendParam: SendMessageParam(
-                      message: controller.chatMessage.value.text,
-                      chatId: controller.chatId,
-                      messageType: MessageType.text,
-                      attachmentFile: null,
-                    ),
-                  );
-                  controller.chatMessage.value.clear();
+                  if (controller.isRecord.value) {
+                    controller.onTapSend();
+                  } else {
+                    await provider.sendMessage(
+                      sendParam: SendMessageParam(
+                        message: controller.chatMessage.value.text,
+                        chatId: controller.chatId,
+                        messageType: MessageType.text,
+                        attachmentFile: null,
+                      ),
+                    );
+                    controller.chatMessage.value.clear();
+                  }
                 },
                 child: Obx(
                   () {
