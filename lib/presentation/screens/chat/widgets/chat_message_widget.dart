@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:irhebo/app/app_controller.dart';
@@ -120,11 +121,17 @@ class ChatMessageWidget extends StatelessWidget {
                     SizedBox(
                       width: 0.74 * (w / 100),
                     ),
-                    AppIcon(
-                      path: AppIcons.done,
-                      height: 5.79 * (w / 100),
-                      width: 5.79 * (w / 100),
-                    ),
+                    if (message.isRead == 1)
+                      AppIcon(
+                        path: AppIcons.done,
+                        height: 5.79 * (w / 100),
+                        width: 5.79 * (w / 100),
+                      )
+                    else
+                      const Icon(
+                        CupertinoIcons.check_mark,
+                        color: CupertinoColors.activeGreen,
+                      )
                   ],
                 ),
               ),
