@@ -83,9 +83,11 @@ class ChatProvider extends ChangeNotifier {
         break;
       case ChatStatus.unread:
         this.chatStatus = ChatStatus.unread;
-        allChatListByFilter = allChatList
-            ?.where((element) => element.chatStatus == ChatStatus.unread)
-            .toList();
+        // allChatListByFilter = allChatList
+        //     ?.where((element) => element.chatStatus == ChatStatus.unread)
+        //     .toList();
+        allChatListByFilter =
+            allChatList?.where((element) => element.unreadCount != 0).toList();
         break;
       case ChatStatus.stared:
         this.chatStatus = ChatStatus.stared;
@@ -106,7 +108,6 @@ class ChatProvider extends ChangeNotifier {
 
   Future<void> sendMessage({required SendMessageParam sendParam}) async {
     try {
-
       final response = await Network().post(
         url: AppEndpoints.sendMessage,
         isUploadFile: sendParam.attachmentFile != null,
