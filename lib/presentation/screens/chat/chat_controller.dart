@@ -205,13 +205,13 @@ class ChatController extends GetxController with GetTickerProviderStateMixin {
   }
 
   scrollToEnd() async {
-    await Future.delayed(const Duration(milliseconds: 500), () {
-      chatScrollController.animateTo(
-        chatScrollController.position.minScrollExtent,
-        duration: const Duration(milliseconds: 500),
-        curve: Curves.fastOutSlowIn,
-      );
-    });
+    // await Future.delayed(const Duration(milliseconds: 500), () {
+    //   chatScrollController.animateTo(
+    //     chatScrollController.position.minScrollExtent,
+    //     duration: const Duration(milliseconds: 500),
+    //     curve: Curves.fastOutSlowIn,
+    //   );
+    // });
   }
 
   onStartTyping() {
@@ -242,7 +242,7 @@ class ChatController extends GetxController with GetTickerProviderStateMixin {
   }
 
   dismissFiles() {
-    selectedFilePath?.refresh();
+    selectedFilePath.refresh();
     attachAnimated.value = false;
   }
 

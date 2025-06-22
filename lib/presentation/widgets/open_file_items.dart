@@ -7,11 +7,11 @@ import 'app_button.dart';
 class OpenFileItems extends StatelessWidget {
   const OpenFileItems({
     super.key,
-    required this.fileName,
+    this.fileName,
     required this.pathUrl,
   });
 
-  final String fileName;
+  final String? fileName;
   final String? pathUrl;
 
   @override
@@ -30,7 +30,9 @@ class OpenFileItems extends StatelessWidget {
             : Colors.white,
       ),
       child: ListTile(
-        title: Text(fileName),
+        title: Text(
+          fileName ?? extractFileName(pathUrl!),
+        ),
         titleTextStyle: Get.theme.textTheme.labelLarge,
         trailing: AppButton(
           title: 'Open'.tr,
@@ -54,5 +56,9 @@ class OpenFileItems extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String extractFileName(String url) {
+    return Uri.parse(url).pathSegments.last;
   }
 }

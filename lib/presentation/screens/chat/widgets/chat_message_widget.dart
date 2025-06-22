@@ -5,13 +5,13 @@ import 'package:irhebo/app/app_functions.dart';
 import 'package:irhebo/app/enums.dart';
 import 'package:irhebo/app/resources/images.dart';
 import 'package:irhebo/app/resources/style/colors.dart';
-import 'package:irhebo/app/resources/style/decoration.dart';
-import 'package:irhebo/app/router/routes.dart';
-import 'package:irhebo/domain/entities/message_entity.dart';
+
 import 'package:irhebo/presentation/widgets/app_icon.dart';
-import 'package:irhebo/presentation/widgets/decorated_icon.dart';
+import 'package:irhebo/presentation/widgets/open_file_items.dart';
 
 import '../../../../domain/models/new_models/chat/chat_messages_model.dart';
+import '../../../widgets/app_image.dart';
+import '../../../widgets/video_player.dart';
 
 class ChatMessageWidget extends StatelessWidget {
   //final bool sender;
@@ -70,39 +70,35 @@ class ChatMessageWidget extends StatelessWidget {
                         ? senderRadius
                         : receiverRadius,
                   ),
-                  child: Text(
-                    message.message ?? '',
-                    style: Get.theme.textTheme.bodySmall?.copyWith(
-                      color: message.sender?.id == userId
-                          ? Colors.white
-                          : Get.find<AppController>().darkMode
-                              ? Colors.white
-                              : Colors.black,
-                    ),
-                  ),
+                  child: message.attachmentType == 'image'
+                      ? AppImage(
+                          imageUrl:
+                              message.attachmentUrl ?? AppImages.placeholder,
+                          fit: BoxFit.fill,
+                          radius: 10,
+                          width: 70 * (w / 100),
+                          height: 70 * (w / 100),
+                        )
+                      : message.attachmentType == 'file'
+                          ? OpenFileItems(pathUrl: message.attachmentUrl)
+                          : message.attachmentType == 'video'
+                              ? AppVideoPlayer(
+                                  videoUrl: message.attachmentUrl ?? '',
+                                  radius: 10,
+
+                                )
+                              : Text(
+                                  message.message ?? '',
+                                  style:
+                                      Get.theme.textTheme.bodySmall?.copyWith(
+                                    color: message.sender?.id == userId
+                                        ? Colors.white
+                                        : Get.find<AppController>().darkMode
+                                            ? Colors.white
+                                            : Colors.black,
+                                  ),
+                                ),
                 ),
-                // if (!message.sender)
-                //   GestureDetector(
-                //     onTap: () => Get.toNamed(AppRoutes.createTicket),
-                //     child: Container(
-                //       margin: EdgeInsets.symmetric(horizontal: 1 * (w / 100)),
-                //       decoration: Get.find<AppController>().darkMode
-                //           ? AppDecoration.getGradientWithRadius(
-                //               dark: Get.find<AppController>().darkMode,
-                //               radius: 50 * (w / 100))
-                //           : null,
-                //       child: DecoratedIcon(
-                //         height: 8 * (w / 100),
-                //         width: 8 * (w / 100),
-                //         padding: 2 * (w / 100),
-                //         color: Get.find<AppController>().darkMode
-                //             ? AppDarkColors.darkScaffoldColor
-                //             : AppLightColors.secondary,
-                //         imagePath: AppIcons.report,
-                //         // svgColor: AppColors.pureWhite,
-                //       ),
-                //     ),
-                //   ),
               ],
             ),
             if (type != ChatType.Bot)
@@ -133,3 +129,14 @@ class ChatMessageWidget extends StatelessWidget {
     );
   }
 }
+// if (message.attachmentType == MessageType.file.name) {
+//   return OpenFileItems(pathUrl: message.attachmentUrl);
+// } else if (message.attachmentType == MessageType.image.name) {
+//   return AppImage(
+//     imageUrl: message.attachmentUrl ?? AppImages.placeholder,
+//     fit: BoxFit.fill,
+//     radius: 20,
+//     width: 100,
+//     height: 100,
+//   );
+// }
