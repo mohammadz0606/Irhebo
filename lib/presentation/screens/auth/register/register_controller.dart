@@ -15,6 +15,7 @@ import 'package:irhebo/domain/params/register_params.dart';
 import 'package:irhebo/domain/params/send_otp_params.dart';
 import 'package:irhebo/domain/usecases/auth_usecases/register_use_case.dart';
 import 'package:irhebo/domain/usecases/auth_usecases/send_otp_use_case.dart';
+import 'package:uuid/uuid.dart';
 
 import '../../../../app/network/end_points.dart';
 import '../../../../app/network/network.dart';
@@ -118,6 +119,7 @@ class RegisterController extends GetxController {
           gender: gender?.name?.toLowerCase() ?? '',
         );
       } else {
+        String password = const Uuid().v4();
         data = RegisterParams(
           username: registerUserName.text,
           email: registerEmail.text,
@@ -126,6 +128,8 @@ class RegisterController extends GetxController {
           prefix: appController.countryCode,
           professionId: profession?.id ?? 0,
           countryId: country?.id ?? 0,
+          password: password,
+          confirmPassword: password,
           languages: selectedLanguages
               .map(
                 (element) => element?.id ?? 0,
