@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:irhebo/app/app_controller.dart';
@@ -5,6 +7,7 @@ import 'package:irhebo/app/enums.dart';
 import 'package:irhebo/app/resources/images.dart';
 import 'package:irhebo/app/resources/style/colors.dart';
 import 'package:irhebo/domain/providers/chat/chat_provider.dart';
+import 'package:irhebo/domain/providers/chat/voice_recoreder_widget.dart';
 import 'package:irhebo/presentation/screens/chat/chat_controller.dart';
 import 'package:irhebo/presentation/screens/chat/widgets/chat_field_prefix.dart';
 import 'package:irhebo/presentation/widgets/app_text_field.dart';
@@ -12,12 +15,12 @@ import 'package:irhebo/presentation/widgets/decorated_icon.dart';
 
 import '../../../../app/global_imports.dart';
 import '../../../../domain/params/new_params/chat/send_message_param.dart';
+import '../../../../domain/providers/chat/voice_recorde_provider.dart';
 
 class ChatTextField extends GetWidget<ChatController> {
   const ChatTextField({
     super.key,
   });
-
   @override
   Widget build(BuildContext context) {
     var w = MediaQuery.of(context).size.width;
@@ -64,46 +67,49 @@ class ChatTextField extends GetWidget<ChatController> {
               SizedBox(
                 width: 1.74 * (w / 100),
               ),
-              InkWell(
-                onTap: () async {
-                  if (controller.isRecord.value) {
-                    controller.onTapSend();
-                  } else {
-                    await provider.sendMessage(
-                      sendParam: SendMessageParam(
-                        message: controller.chatMessage.value.text,
-                        chatId: controller.chatId,
-                        messageType: MessageType.text,
-                        attachmentFile: null,
-                      ),
-                    );
-                    controller.chatMessage.value.clear();
-                  }
-                },
-                child: Obx(
-                  () {
-                    return DecoratedIcon(
-                      padding: 2.98 * (w / 100),
-                      width: 12.93 * (w / 100),
-                      height: 12.93 * (w / 100),
-                      matchTextDirection: true,
-                      color: Get.find<AppController>().darkMode
-                          ? AppDarkColors.darkContainer2
-                          : Colors.white,
-                      //imagePath: AppIcons.send,
-                      imagePath: controller.type == ChatType.Bot ||
-                              controller.selectedFilePath.isNotEmpty == true ||
-                              controller.chatMessage.value.text
-                                  .trim()
-                                  .isNotEmpty ||
-                              controller.isRecord.value
-                          ? AppIcons.send
-                          : AppIcons.mic,
-                      svgColor: AppDarkColors.greenContainer,
-                    );
-                  },
-                ),
-              ),
+              CustomVoiceRecorde()
+
+
+              // InkWell(
+              //   onTap: () async {
+              //     if (controller.isRecord.value) {
+              //       controller.onTapSend();
+              //     } else {
+              //       await provider.sendMessage(
+              //         sendParam: SendMessageParam(
+              //           message: controller.chatMessage.value.text,
+              //           chatId: controller.chatId,
+              //           messageType: MessageType.text,
+              //           attachmentFile: null,
+              //         ),
+              //       );
+              //       controller.chatMessage.value.clear();
+              //     }
+              //   },
+              //   child: Obx(
+              //     () {
+              //       return DecoratedIcon(
+              //         padding: 2.98 * (w / 100),
+              //         width: 12.93 * (w / 100),
+              //         height: 12.93 * (w / 100),
+              //         matchTextDirection: true,
+              //         color: Get.find<AppController>().darkMode
+              //             ? AppDarkColors.darkContainer2
+              //             : Colors.white,
+              //         //imagePath: AppIcons.send,
+              //         imagePath: controller.type == ChatType.Bot ||
+              //                 controller.selectedFilePath.isNotEmpty == true ||
+              //                 controller.chatMessage.value.text
+              //                     .trim()
+              //                     .isNotEmpty ||
+              //                 controller.isRecord.value
+              //             ? AppIcons.send
+              //             : AppIcons.mic,
+              //         svgColor: AppDarkColors.greenContainer,
+              //       );
+              //     },
+              //   ),
+              // ),
             ],
           );
         },
