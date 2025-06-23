@@ -40,19 +40,20 @@ class ChatFieldPrefix extends GetWidget<ChatController> {
               ),
             ),
           ),
-          if (controller.selectedFilePath.isNotEmpty == true &&
-              !controller.isRecord.value) ...[
-            Expanded(
-              child: FieldPlaceHolder(
-                isVoice: controller.isRecord.value,
-                selectedFilePath: [],
-                //selectedFilePath: controller.selectedFilePath,
-              ),
-            ),
-            SizedBox(
-              width: 3 * (w / 100),
-            )
-          ],
+          // if (controller.selectedFilePath.isNotEmpty == true &&
+          //     !controller.isRecord.value) ...[
+          //   Expanded(
+          //     child: FieldPlaceHolder(
+          //       isVoice: controller.isRecord.value,
+          //       selectedFilePath: [],
+          //       selectedFilePathString: controller.selectedFilePath.value,
+          //       //selectedFilePath: controller.selectedFilePath,
+          //     ),
+          //   ),
+          //   SizedBox(
+          //     width: 3 * (w / 100),
+          //   )
+          // ],
           if (controller.isRecord.value) ...[
             const Stack(
               fit: StackFit.loose,

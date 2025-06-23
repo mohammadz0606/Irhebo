@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
@@ -339,8 +340,31 @@ class ChatProvider extends ChangeNotifier {
         log('data: ${event.data}');
         log('-----------');
         if (event.eventName == 'message.sent') {
-          chatMessages?.add(ChatMessagesModelData.fromJson(event.data));
-          notifyListeners();
+          try {
+            // final raw = json.decode(event.data);
+            // final messageMap = raw['message'] as Map<String, dynamic>;
+            // //chatMessages?.add(ChatMessagesModelData.fromJsonNew(messageMap));
+            // String formattedDate = formatDate(DateTime.now());
+            // groupedMessages?.putIfAbsent(formattedDate, () => []).add(
+            //       ChatMessagesModelData.fromJsonNew(messageMap),
+            //     );
+
+            final raw = json.decode(event.data);
+            final messageMap = raw['message'] as Map<String, dynamic>;
+            final newMessage = ChatMessagesModelData.fromJsonNew(messageMap);
+            final formattedDate =
+                formatDate(newMessage.createdAt ?? DateTime.now());
+
+            groupedMessages?.update(
+              formattedDate,
+              (existingList) => [newMessage, ...existingList],
+              ifAbsent: () => [newMessage],
+            );
+
+            notifyListeners();
+          } catch (error) {
+            log(error.toString());
+          }
         }
       },
     );

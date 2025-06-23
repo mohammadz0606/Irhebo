@@ -266,13 +266,22 @@ class ChatController extends GetxController with GetTickerProviderStateMixin {
     closeAttachments();
   }
 
-  stopRecordingAndSend() async {
+  stopRecordingAndSend({required Function() onEndVoice}) async {
     log("lets send this record");
     final path = await recorderController.stop();
     releaseRecordAudio(AppSounds.record);
     //selectedFilePath.add(path); //TODO need reset the path!!
     isRecord.value = false;
     stopTimer();
+    if (path != null && path.isNotEmpty) {
+      selectedFilePath.value = path;
+      onEndVoice();
+      selectedFilePath.value = null;
+      isRecord.value = false;
+      selectedFilePath.refresh();
+      isRecord.refresh();
+    }
+
     //selectedFilePath.clear(); //TODO clear after send
   }
 
@@ -307,20 +316,22 @@ class ChatController extends GetxController with GetTickerProviderStateMixin {
     showSearch.value = !showSearch.value;
   }
 
-  onTapSend() {
-    if (chatMessage.value.value.text != '') {
-      log("send a message"); //send normal message
+  onTapSend({required Function() onEndVoice}) {
+    // if (chatMessage.value.value.text != '') {
+    //   log("send a message"); //send normal message
+    // } else {
+    //
+    // }
+    if (!isRecord.value) {
+      onStartRecording(); //start recording
     } else {
-      if (selectedFilePath.isEmpty == true) {
-        if (!isRecord.value) {
-          onStartRecording(); //start recording
-        } else {
-          stopRecordingAndSend(); //sending record
-        }
-      } else {
-        log("send attachment"); //send attachment
-      }
+      stopRecordingAndSend(onEndVoice: onEndVoice); //sending record
     }
+    // if (selectedFilePath.isEmpty == true) {
+    //
+    // } else {
+    //   log("send attachment"); //send attachment
+    // }
   }
 
   onWillPop() {
@@ -334,6 +345,7 @@ class ChatController extends GetxController with GetTickerProviderStateMixin {
   }
 
   onStartRecording() async {
+    selectedFilePath.refresh();
     if (!isRecord.value) {
       releaseRecordAudio(AppSounds.startRecord);
     }
@@ -373,7 +385,7 @@ class ChatController extends GetxController with GetTickerProviderStateMixin {
         initAnimation();
         if ((Platform.isIOS || Platform.isMacOS)) {
           var dir = await getTemporaryDirectory();
-          await recorderController.record(path: dir.path + "/recording.m4a");
+          await recorderController.record(path: "${dir.path}/recording.m4a");
         } else {
           await recorderController.record(sampleRate: 16000, bitRate: 256000);
         }

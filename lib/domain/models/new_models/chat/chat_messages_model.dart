@@ -59,6 +59,22 @@ class ChatMessagesModelData {
         ? ChatMessagesModelDataReceiver.fromJson(json['receiver'])
         : null;
   }
+
+  ChatMessagesModelData.fromJsonNew(Map<String, dynamic> json) {
+    id = json['id']?.toInt();
+    message = json['message']?.toString();
+    attachmentUrl = json['attachment_url']?.toString();
+    attachmentType = json['attachment_type']?.toString();
+    isRead = json['is_read'] == false ? 0 : 1;
+    createdAt = DateTime.parse(
+        json['created_at']?.toString() ?? DateTime.now().toString());
+    sender = (json['sender'] != null)
+        ? ChatMessagesModelDataSender.fromJson(json['sender'])
+        : null;
+    receiver = (json['receiver'] != null)
+        ? ChatMessagesModelDataReceiver.fromJson(json['receiver'])
+        : null;
+  }
 }
 
 class ChatMessagesModelDataSender {

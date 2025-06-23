@@ -9,14 +9,18 @@ import 'package:mime/mime.dart';
 
 class FieldPlaceHolder extends StatelessWidget {
   final List<String?> selectedFilePath;
+  final String? selectedFilePathString;
   final bool isVoice;
   final bool forTicket;
+
   const FieldPlaceHolder({
     super.key,
     required this.selectedFilePath,
     required this.isVoice,
+    this.selectedFilePathString,
     this.forTicket = false,
   });
+
   // List<String> groupedKeys = controller.groupedMessages.keys.toList();
 
   @override
@@ -30,48 +34,68 @@ class FieldPlaceHolder extends StatelessWidget {
           color: Get.find<AppController>().darkMode
               ? AppDarkColors.darkContainer
               : AppLightColors.secondary,
-          borderRadius: BorderRadius.all(Radius.circular(15))),
+          borderRadius: const BorderRadius.all(Radius.circular(15))),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Container(
-            padding: EdgeInsets.all(5),
-            child: Center(
-              child: AppIcon(
-                path: forTicket
-                    ? AppIcons.attachment
-                    : selectedFilePath.length > 1
-                        ? AppIcons.docMsg
-                        : getMessageIcon(selectedFilePath[0] ?? ""),
-                width: 5 * (w / 100),
-                height: 5 * (w / 100),
-                color: Get.find<AppController>().darkMode
-                    ? AppDarkColors.pureWhite.withOpacity(0.5)
-                    : AppLightColors.primaryColor,
-              ),
-            ),
-          ),
-          SizedBox(width: forTicket ? 1 * (w / 100) : 2 * (w / 100)),
-          Expanded(
-            child: Text(
-              forTicket
-                  ? selectedFilePath.length.toString()
-                  : isVoice
-                      ? "voice".tr
+          if (selectedFilePathString == null)
+            Container(
+              padding: const EdgeInsets.all(5),
+              child: Center(
+                child: AppIcon(
+                  path: forTicket
+                      ? AppIcons.attachment
                       : selectedFilePath.length > 1
-                          ? "${selectedFilePath.length} ${"files".tr}"
-                          : (selectedFilePath.first?.contains("\\") == true)
-                              ? selectedFilePath.first?.split("\\").last ?? ""
-                              : selectedFilePath.first?.split("/").last ?? "",
-              style: Get.theme.textTheme.labelSmall!.copyWith(
+                          ? AppIcons.docMsg
+                          : getMessageIcon(selectedFilePath[0] ?? ""),
+                  width: 5 * (w / 100),
+                  height: 5 * (w / 100),
                   color: Get.find<AppController>().darkMode
                       ? AppDarkColors.pureWhite.withOpacity(0.5)
                       : AppLightColors.primaryColor,
-                  fontSize: forTicket ? AppTextStyle.size14 : null),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            )
+          else
+            Container(
+              padding: const EdgeInsets.all(5),
+              child: Center(
+                child: AppIcon(
+                  path: forTicket
+                      ? AppIcons.attachment
+                      : selectedFilePathString != null
+                          ? AppIcons.docMsg
+                          : getMessageIcon(selectedFilePathString!),
+                  width: 5 * (w / 100),
+                  height: 5 * (w / 100),
+                  color: Get.find<AppController>().darkMode
+                      ? AppDarkColors.pureWhite.withOpacity(0.5)
+                      : AppLightColors.primaryColor,
+                ),
+              ),
             ),
-          ),
+          SizedBox(width: forTicket ? 1 * (w / 100) : 2 * (w / 100)),
+          if (selectedFilePathString != null)
+            Expanded(
+              child: Text(
+                forTicket
+                    ? selectedFilePath.length.toString()
+                    : isVoice
+                        ? "voice".tr
+                        : selectedFilePath.length > 1
+                            ? "${selectedFilePath.length} ${"files".tr}"
+                            : (selectedFilePath.first?.contains("\\") == true)
+                                ? selectedFilePath.first?.split("\\").last ?? ""
+                                : selectedFilePath.first?.split("/").last ?? "",
+                style: Get.theme.textTheme.labelSmall!.copyWith(
+                    color: Get.find<AppController>().darkMode
+                        ? AppDarkColors.pureWhite.withOpacity(0.5)
+                        : AppLightColors.primaryColor,
+                    fontSize: forTicket ? AppTextStyle.size14 : null),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
         ],
       ),
     );

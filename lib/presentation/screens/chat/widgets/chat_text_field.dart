@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -7,7 +8,6 @@ import 'package:irhebo/app/enums.dart';
 import 'package:irhebo/app/resources/images.dart';
 import 'package:irhebo/app/resources/style/colors.dart';
 import 'package:irhebo/domain/providers/chat/chat_provider.dart';
-import 'package:irhebo/domain/providers/chat/voice_recoreder_widget.dart';
 import 'package:irhebo/presentation/screens/chat/chat_controller.dart';
 import 'package:irhebo/presentation/screens/chat/widgets/chat_field_prefix.dart';
 import 'package:irhebo/presentation/widgets/app_text_field.dart';
@@ -21,6 +21,7 @@ class ChatTextField extends GetWidget<ChatController> {
   const ChatTextField({
     super.key,
   });
+
   @override
   Widget build(BuildContext context) {
     var w = MediaQuery.of(context).size.width;
@@ -37,8 +38,8 @@ class ChatTextField extends GetWidget<ChatController> {
           right:
               controller.type == ChatType.Bot ? 3.9 * (w / 100) : 3 * (w / 100),
           top: 3 * (w / 100)),
-      child: Consumer<ChatProvider>(
-        builder: (context, provider, _) {
+      child: Consumer2<ChatProvider, VoiceRecorderProvider>(
+        builder: (context, provider, voiceProvider, _) {
           return Row(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -67,49 +68,76 @@ class ChatTextField extends GetWidget<ChatController> {
               SizedBox(
                 width: 1.74 * (w / 100),
               ),
-              CustomVoiceRecorde()
-
-
-              // InkWell(
-              //   onTap: () async {
-              //     if (controller.isRecord.value) {
-              //       controller.onTapSend();
-              //     } else {
-              //       await provider.sendMessage(
-              //         sendParam: SendMessageParam(
-              //           message: controller.chatMessage.value.text,
-              //           chatId: controller.chatId,
-              //           messageType: MessageType.text,
-              //           attachmentFile: null,
-              //         ),
-              //       );
-              //       controller.chatMessage.value.clear();
-              //     }
-              //   },
-              //   child: Obx(
-              //     () {
-              //       return DecoratedIcon(
-              //         padding: 2.98 * (w / 100),
-              //         width: 12.93 * (w / 100),
-              //         height: 12.93 * (w / 100),
-              //         matchTextDirection: true,
-              //         color: Get.find<AppController>().darkMode
-              //             ? AppDarkColors.darkContainer2
-              //             : Colors.white,
-              //         //imagePath: AppIcons.send,
-              //         imagePath: controller.type == ChatType.Bot ||
-              //                 controller.selectedFilePath.isNotEmpty == true ||
-              //                 controller.chatMessage.value.text
-              //                     .trim()
-              //                     .isNotEmpty ||
-              //                 controller.isRecord.value
-              //             ? AppIcons.send
-              //             : AppIcons.mic,
-              //         svgColor: AppDarkColors.greenContainer,
-              //       );
-              //     },
-              //   ),
-              // ),
+              // if(voiceProvider.isRecording)
+              // const CustomVoiceRecorde(),
+              Obx(
+                () {
+                  return InkWell(
+                    onLongPress: controller.chatMessage.value.text.isEmpty
+                        ? () {
+                            log('IS RECORDING');
+                          }
+                        : null,
+                    onTap: () async {
+                      if (controller.chatMessage.value.text.trim().isNotEmpty) {
+                        await provider.sendMessage(
+                          sendParam: SendMessageParam(
+                            message: controller.chatMessage.value.text,
+                            chatId: controller.chatId,
+                            messageType: MessageType.text,
+                            attachmentFile: null,
+                          ),
+                        );
+                        controller.chatMessage.value.clear();
+                        controller.chatMessage.refresh();
+                      } else {
+                        //voiceProvider.startRecording();
+                        await controller.onTapSend(
+                          onEndVoice: () async {
+                            await provider.sendMessage(
+                              sendParam: SendMessageParam(
+                                message: null,
+                                chatId: controller.chatId,
+                                messageType: MessageType.audio,
+                                attachmentFile: File(
+                                  controller.selectedFilePath.value!,
+                                ),
+                              ),
+                            );
+                            // controller.isRecord.refresh();
+                            // controller.selectedFilePath.refresh();
+                            // controller.ignoreRecord();
+                          },
+                        );
+                      }
+                    },
+                    child: Obx(
+                      () {
+                        return DecoratedIcon(
+                          padding: 2.98 * (w / 100),
+                          width: 12.93 * (w / 100),
+                          height: 12.93 * (w / 100),
+                          matchTextDirection: true,
+                          color: Get.find<AppController>().darkMode
+                              ? AppDarkColors.darkContainer2
+                              : Colors.white,
+                          //imagePath: AppIcons.send,
+                          imagePath: controller.type == ChatType.Bot ||
+                                  controller.selectedFilePath.isNotEmpty ==
+                                      true ||
+                                  controller.chatMessage.value.text
+                                      .trim()
+                                      .isNotEmpty ||
+                                  controller.isRecord.value
+                              ? AppIcons.send
+                              : AppIcons.mic,
+                          svgColor: AppDarkColors.greenContainer,
+                        );
+                      },
+                    ),
+                  );
+                },
+              )
             ],
           );
         },

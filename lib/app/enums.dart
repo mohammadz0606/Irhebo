@@ -84,6 +84,7 @@ enum MessageType {
   video,
   audio,
   file,
+  call,
 }
 
 enum ChatStatus {
