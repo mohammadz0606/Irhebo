@@ -338,8 +338,10 @@ class ChatProvider extends ChangeNotifier {
         log('eventName: ${event.eventName}');
         log('data: ${event.data}');
         log('-----------');
-        // chatMessages?.add(ChatMessagesModelData.fromJson(event.data));
-        // notifyListeners();
+        if (event.eventName == 'message.sent') {
+          chatMessages?.add(ChatMessagesModelData.fromJson(event.data));
+          notifyListeners();
+        }
       },
     );
     await ChatPusherConfig().subscribeToChannel(

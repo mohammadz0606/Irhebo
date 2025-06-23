@@ -84,10 +84,11 @@ class ChatBottomSheet extends GetWidget<ChatController> {
               },
               effects: [
                 FadeEffect(
-                    begin: 0,
-                    end: 1,
-                    duration: 200.ms,
-                    curve: Curves.fastLinearToSlowEaseIn),
+                  begin: 0,
+                  end: 1,
+                  duration: 200.ms,
+                  curve: Curves.fastLinearToSlowEaseIn,
+                ),
                 SlideEffect(
                   begin: const Offset(0, 3),
                   end: const Offset(0, 0),
@@ -118,6 +119,17 @@ class ChatBottomSheet extends GetWidget<ChatController> {
                 },
               ),
             ),
+            // if (controller.selectedFilePath.value != null)
+            //   Container(
+            //     height: 100,
+            //     alignment: Alignment.centerLeft,
+            //     color: Colors.white,
+            //     width: double.infinity,
+            //     child: Image.file(
+            //       File(controller.selectedFilePath.value!),
+            //       fit: BoxFit.cover,
+            //     ),
+            //   ),
             const ChatTextField(),
           ],
         );

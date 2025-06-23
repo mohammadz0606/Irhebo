@@ -228,6 +228,10 @@ class ChatController extends GetxController with GetTickerProviderStateMixin {
     attachAnimated.value = false;
   }
 
+  removeFile() {
+    selectedFilePath.refresh();
+  }
+
   ignoreRecord() {
     endAnimition();
     stopTimer();
