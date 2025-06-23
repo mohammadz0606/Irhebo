@@ -66,11 +66,9 @@ class SocialAuthProvider extends ChangeNotifier {
             'google_user': googleUser,
           });
         }
-        isLoadingGoogle = true;
-        notifyListeners();
       }
 
-      isLoadingGoogle = true;
+      isLoadingGoogle = false;
       notifyListeners();
 
       //LoginModel
