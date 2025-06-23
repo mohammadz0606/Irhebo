@@ -46,6 +46,8 @@ dependencies:
   #open_filex:
   #voice_message_package: any
   image_picker: ^1.1.2
+  record: ^6.0.0
+  flutter_sound: ^9.28.0
   #
   cached_network_image:
   internet_connection_checker:
