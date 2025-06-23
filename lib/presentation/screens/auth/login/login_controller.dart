@@ -41,9 +41,10 @@ class LoginController extends GetxController {
       loginModel.value = null;
       LoginUseCase loginUseCase = sl();
       final result = await loginUseCase(LoginParams(
-          password: loginPassword.text,
-          phone: loginPhone.text,
-          prefix: appController.countryCode));
+        password: loginPassword.text,
+        phone: loginPhone.text,
+        prefix: appController.countryCode,
+      ));
       result!.fold((l) {
         isLoading = false;
       }, (r) {

@@ -84,6 +84,7 @@ class AppEndpoints {
 
   static String changeNotifiable = '$base_url/notifications/change-notifiable';
   static String markAsRead = '$base_url/notifications/mark-as-read/';
+  static String socialLogin = '$base_url/social-login';
 
   ///CHAT
   static String startChat = '$base_url/chat/start-chat?user_id=';

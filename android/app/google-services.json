@@ -12,7 +12,20 @@
           "package_name": "com.ptplatform.irhebo"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "785788554769-oe43icr7t5dl56gvvhqnb8ns2f9e4phb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ptplatform.irhebo",
+            "certificate_hash": "1b17e1d92cd5b0500cf903d55096d358d5610691"
+          }
+        },
+        {
+          "client_id": "785788554769-922i5l768f6um4diri09bsfj4jcsqohr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDjlRfStnNlTr8LtA7WLuUUlJiEXzhwyzk"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "785788554769-922i5l768f6um4diri09bsfj4jcsqohr.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "785788554769-ngcg14o7o0pcbmvphd4kchke4n34jbmv.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.ptplatform.irhebo"
+              }
+            }
+          ]
         }
       }
     }

@@ -4,7 +4,7 @@ description: "A new Flutter project."
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.1.0+30
+version: 1.8.2+33
 
 environment:
   sdk: ^3.6.1
@@ -71,7 +71,7 @@ dependencies:
   intl:
   gradient_borders: 
   provider: ^6.1.5
-  talker_dio_logger: ^4.9.0
+  talker_dio_logger: ^4.9.1
   onesignal_flutter: ^5.3.3
   firebase_core: ^3.14.0
   timeago: ^3.7.1

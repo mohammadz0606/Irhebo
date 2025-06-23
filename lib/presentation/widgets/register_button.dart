@@ -27,7 +27,7 @@ class RegisterButton extends StatelessWidget {
               children: [
                 TextSpan(
                   text: login ? "Register Now".tr : "Login".tr,
-                  style: Get.theme.textTheme.labelLarge!.copyWith(
+                  style: Get.theme.textTheme.labelLarge?.copyWith(
                     color: Get.find<AppController>().darkMode
                         ? AppDarkColors.greenText
                         : AppLightColors.primaryColor,

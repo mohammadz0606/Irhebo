@@ -39,6 +39,7 @@ class RegisterForm extends GetWidget<RegisterController> {
             AppTextField(
               controller: controller.registerEmail,
               label: "Email",
+              enabled: Get.arguments == null,
               hint: "Enter your email",
               textInputType: TextInputType.emailAddress,
               onValidate: AppValidators.validateEmail,
@@ -67,52 +68,56 @@ class RegisterForm extends GetWidget<RegisterController> {
                       ? "${controller.selectedLanguages[0]?.title ?? ""} ${controller.selectedLanguages[1]?.title ?? ""}.."
                       : "Select Language".tr,
             ),
-            AppTextField(
-                controller: controller.registerPassword,
-                label: "Password",
-                hint: "Enter Password",
-                onValidate: AppValidators.validateNewPassword,
+            if (Get.arguments == null) ...{
+              AppTextField(
+                  controller: controller.registerPassword,
+                  label: "Password",
+                  hint: "Enter Password",
+                  onValidate: AppValidators.validateNewPassword,
+                  isPassword: true,
+                  isThereError: false,
+                  isVisible: controller.registerIsVisibile,
+                  onTapVisible: () => controller.onTapVisibile(),
+                  onChange: (password) =>
+                      controller.checkPasswordStrength(password)),
+              SizedBox(
+                height: 2.98 * (w / 100),
+              ),
+              StrengthenPasswordWidget(
+                score: controller.score.value,
+              ),
+              SizedBox(
+                height: 2.89 * (w / 100),
+              ),
+              Column(
+                children: [
+                  for (int i = 0;
+                      i < AppConstants.passwordConditions.length;
+                      i++)
+                    PasswordSpecifications(
+                      condition: AppConstants.passwordConditions[i],
+                      color: i < controller.score.value
+                          ? Get.find<AppController>().darkMode
+                              ? AppDarkColors.greenContainer
+                              : const Color.fromARGB(255, 48, 2, 133)
+                          : Colors.grey[400]!,
+                    ),
+                ],
+              ),
+              SizedBox(
+                height: 2.98 * (w / 100),
+              ),
+              AppTextField(
+                controller: controller.registerConfirmPassword,
+                label: "Confirm Password",
+                hint: "ReEnter Password",
                 isPassword: true,
-                isThereError: false,
                 isVisible: controller.registerIsVisibile,
+                onValidate: (confirmed) => AppValidators.validatePasswordConf(
+                    confirmed, controller.registerPassword.text),
                 onTapVisible: () => controller.onTapVisibile(),
-                onChange: (password) =>
-                    controller.checkPasswordStrength(password)),
-            SizedBox(
-              height: 2.98 * (w / 100),
-            ),
-            StrengthenPasswordWidget(
-              score: controller.score.value,
-            ),
-            SizedBox(
-              height: 2.89 * (w / 100),
-            ),
-            Column(
-              children: [
-                for (int i = 0; i < AppConstants.passwordConditions.length; i++)
-                  PasswordSpecifications(
-                    condition: AppConstants.passwordConditions[i],
-                    color: i < controller.score.value
-                        ? Get.find<AppController>().darkMode
-                            ? AppDarkColors.greenContainer
-                            : const Color.fromARGB(255, 48, 2, 133)
-                        : Colors.grey[400]!,
-                  ),
-              ],
-            ),
-            SizedBox(
-              height: 2.98 * (w / 100),
-            ),
-            AppTextField(
-              controller: controller.registerConfirmPassword,
-              label: "Confirm Password",
-              hint: "ReEnter Password",
-              isPassword: true,
-              isVisible: controller.registerIsVisibile,
-              onValidate: (confirmed) => AppValidators.validatePasswordConf(
-                  confirmed, controller.registerPassword.text),
-              onTapVisible: () => controller.onTapVisibile(),
-            ),
+              ),
+            },
             SizedBox(
               height: 5.47 * (w / 100),
             ),

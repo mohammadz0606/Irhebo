@@ -13,6 +13,7 @@ class RegisterParams {
   final int? professionId;
   final int? countryId;
   final List<int>? languages;
+  final String? googleId;
 
   RegisterParams({
     this.username,
@@ -25,20 +26,21 @@ class RegisterParams {
     this.professionId,
     this.countryId,
     this.languages,
+    this.googleId,
   });
 
-  RegisterParams copyWith({
-    String? username,
-    String? email,
-    String? password,
-    String? confirmPassword,
-    String? prefix,
-    String? phone,
-    String? gender,
-    int? professionId,
-    int? countryId,
-    List<int>? languages,
-  }) =>
+  RegisterParams copyWith(
+          {String? username,
+          String? email,
+          String? password,
+          String? confirmPassword,
+          String? prefix,
+          String? phone,
+          String? gender,
+          int? professionId,
+          int? countryId,
+          List<int>? languages,
+          String? googleId}) =>
       RegisterParams(
         username: username ?? this.username,
         email: email ?? this.email,
@@ -50,21 +52,7 @@ class RegisterParams {
         professionId: professionId ?? this.professionId,
         countryId: countryId ?? this.countryId,
         languages: languages ?? this.languages,
-      );
-
-  factory RegisterParams.fromJson(Map<String, dynamic> json) => RegisterParams(
-        username: json["username"],
-        email: json["email"],
-        password: json["password"],
-        confirmPassword: json["confirm_password"],
-        prefix: json["prefix"],
-        phone: json["phone"],
-        gender: json["gender"],
-        professionId: json["profession_id"],
-        countryId: json["country_id"],
-        languages: json["languages"] == null
-            ? []
-            : List<int>.from(json["languages"]!.map((x) => x)),
+        googleId: googleId ?? this.googleId,
       );
 
   Map<String, dynamic> toJson() {
@@ -80,9 +68,24 @@ class RegisterParams {
       "profession_id": professionId,
       "country_id": countryId,
       "platform": Platform.isIOS ? 'ios' : 'android',
+      'google_id': googleId,
       "player_id": prefs.getString(key: AppPrefsKeys.NOTIFICATION_KEY),
       "languages":
           languages == null ? [] : List<dynamic>.from(languages!.map((x) => x)),
     };
   }
+// factory RegisterParams.fromJson(Map<String, dynamic> json) => RegisterParams(
+//       username: json["username"],
+//       email: json["email"],
+//       password: json["password"],
+//       confirmPassword: json["confirm_password"],
+//       prefix: json["prefix"],
+//       phone: json["phone"],
+//       gender: json["gender"],
+//       professionId: json["profession_id"],
+//       countryId: json["country_id"],
+//       languages: json["languages"] == null
+//           ? []
+//           : List<int>.from(json["languages"]!.map((x) => x)),
+//  );
 }

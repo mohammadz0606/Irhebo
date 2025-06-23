@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:irhebo/app/app_controller.dart';
 import 'package:irhebo/app/enums.dart';
 import 'package:irhebo/app/injection.dart';
@@ -25,11 +26,19 @@ import '../../../../domain/models/new_models/new_config_model.dart';
 class RegisterController extends GetxController {
   final appController = Get.find<AppController>();
   GlobalKey<FormState> signupKey = GlobalKey<FormState>();
-  TextEditingController registerEmail = TextEditingController();
+  TextEditingController registerEmail = TextEditingController(
+    text: Get.arguments != null
+        ? (Get.arguments['google_user'] as GoogleSignInAccount?)?.email
+        : null,
+  );
   TextEditingController registerPassword = TextEditingController();
   TextEditingController registerPhone = TextEditingController();
   TextEditingController registerConfirmPassword = TextEditingController();
-  TextEditingController registerUserName = TextEditingController();
+  TextEditingController registerUserName = TextEditingController(
+    text: Get.arguments != null
+        ? (Get.arguments['google_user'] as GoogleSignInAccount?)?.displayName
+        : null,
+  );
   RxInt score = (0).obs;
 
   final RxBool _registerIsVisibile = (false).obs;
@@ -89,8 +98,10 @@ class RegisterController extends GetxController {
     if (signupKey.currentState!.validate()) {
       isLoading = true;
       //RegisterUseCase registerUseCase = sl();
+      RegisterParams data;
 
-      RegisterParams data = RegisterParams(
+      if (Get.arguments == null) {
+        data = RegisterParams(
           username: registerUserName.text,
           confirmPassword: registerPassword.text,
           password: registerPassword.text,
@@ -104,11 +115,31 @@ class RegisterController extends GetxController {
                 (element) => element?.id ?? 0,
               )
               .toList(),
-          gender: gender?.name?.toLowerCase() ?? '');
+          gender: gender?.name?.toLowerCase() ?? '',
+        );
+      } else {
+        data = RegisterParams(
+          username: registerUserName.text,
+          email: registerEmail.text,
+          phone: registerPhone.text,
+          googleId: Get.arguments['google_id'],
+          prefix: appController.countryCode,
+          professionId: profession?.id ?? 0,
+          countryId: country?.id ?? 0,
+          languages: selectedLanguages
+              .map(
+                (element) => element?.id ?? 0,
+              )
+              .toList(),
+          gender: gender?.name?.toLowerCase() ?? '',
+        );
+      }
 
       try {
-        final response = await Network()
-            .post(url: AppEndpoints.register, data: data.toJson());
+        final response = await Network().post(
+          url: AppEndpoints.register,
+          data: data.toJson(),
+        );
         String errorMessage = await Network().handelError(response: response);
 
         if (errorMessage.isNotEmpty) {
@@ -119,7 +150,8 @@ class RegisterController extends GetxController {
           return;
         }
 
-        NewGeneralDataModel generalModel = NewGeneralDataModel.fromJson(response.data);
+        NewGeneralDataModel generalModel =
+            NewGeneralDataModel.fromJson(response.data);
 
         if (generalModel.status == true) {
           isLoading = false;
@@ -136,7 +168,6 @@ class RegisterController extends GetxController {
           );
         }
         isLoading = false;
-
       }
 
       // final result = await registerUseCase(RegisterParams(
@@ -193,7 +224,8 @@ class RegisterController extends GetxController {
         );
         return;
       }
-      NewGeneralDataModel generalModel = NewGeneralDataModel.fromJson(response.data);
+      NewGeneralDataModel generalModel =
+          NewGeneralDataModel.fromJson(response.data);
       if (generalModel.status == true) {
         Get.toNamed(AppRoutes.verification, arguments: {
           "verify_type": VerifyScreenType.register,
