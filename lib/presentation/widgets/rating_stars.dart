@@ -22,7 +22,7 @@ class RatingStars extends StatelessWidget {
         for (int i = 0; i < 5; i++)
           AppIcon(
             path: AppIcons.star,
-            padding: EdgeInsets.symmetric(horizontal: 2),
+            padding: const EdgeInsets.symmetric(horizontal: 2),
             color: (count - (i + 1)) >= 0
                 ? null
                 : Get.find<AppController>().darkMode

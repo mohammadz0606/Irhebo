@@ -7,13 +7,17 @@ import 'package:irhebo/app/resources/style/colors.dart';
 import 'package:irhebo/app/resources/style/decoration.dart';
 import 'package:irhebo/app/router/routes.dart';
 import 'package:irhebo/domain/models/login_model.dart';
+import 'package:irhebo/domain/providers/chat/chat_provider.dart';
 import 'package:irhebo/presentation/widgets/app_image.dart';
 import 'package:irhebo/presentation/widgets/decorated_icon.dart';
 import 'package:irhebo/presentation/widgets/rating_stars.dart';
 
+import '../../../../app/global_imports.dart';
+
 class RequestDetailsAccountInfo extends StatelessWidget {
   const RequestDetailsAccountInfo(
       {super.key, required this.user, this.haveIcon = true, this.rate});
+
   final UserModel? user;
   final int? rate;
   final bool haveIcon;
@@ -55,22 +59,37 @@ class RequestDetailsAccountInfo extends StatelessWidget {
             ),
           ),
           if (haveIcon)
-            InkWell(
-                onTap: () => Get.toNamed(AppRoutes.chat,
-                    arguments: {"chat_type": ChatType.Users}),
-                child: DecoratedIcon(
-                  decoration: Get.find<AppController>().darkMode
-                      ? null
-                      : BoxDecoration(
-                          color: AppLightColors.secondary,
-                          borderRadius: BorderRadius.circular(50),
-                          border:
-                              Border.all(color: AppLightColors.primaryColor)),
-                  padding: 2.23 * (w / 100),
-                  imagePath: AppIcons.message,
-                  width: 9.95 * (w / 100),
-                  height: 9.95 * (w / 100),
-                ))
+            Consumer<ChatProvider>(
+              builder: (context, provider, child) {
+                return Visibility(
+                  visible: !provider.isLoadingStartChat,
+                  replacement: const Center(
+                    child: CircularProgressIndicator.adaptive(),
+                  ),
+                  child: InkWell(
+                      onTap: () async {
+                        // Get.toNamed(AppRoutes.chat,
+                        //   arguments: {"chat_type": ChatType.Users});
+                        await provider.startChat(
+                          freelancerId: user?.id ?? 0,
+                        );
+                      },
+                      child: DecoratedIcon(
+                        decoration: Get.find<AppController>().darkMode
+                            ? null
+                            : BoxDecoration(
+                                color: AppLightColors.secondary,
+                                borderRadius: BorderRadius.circular(50),
+                                border: Border.all(
+                                    color: AppLightColors.primaryColor)),
+                        padding: 2.23 * (w / 100),
+                        imagePath: AppIcons.message,
+                        width: 9.95 * (w / 100),
+                        height: 9.95 * (w / 100),
+                      )),
+                );
+              },
+            )
         ],
       ),
     );

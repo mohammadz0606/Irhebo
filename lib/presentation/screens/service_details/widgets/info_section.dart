@@ -45,6 +45,17 @@ class InfoSection extends StatelessWidget {
             if (getUserRole != UserRoles.freelancer)
               Row(
                 children: [
+                  GestureDetector(
+                      onTap: () async {},
+                      child: DecoratedIcon(
+                        padding: 2.23 * (w / 100),
+                        imagePath: AppIcons.link,
+                        width: 9.95 * (w / 100),
+                        height: 9.95 * (w / 100),
+                      )),
+                  SizedBox(
+                    width: 3 * (w / 100),
+                  ),
                   Consumer<ChatProvider>(
                     builder: (context, provider, _) {
                       return Visibility(
@@ -54,29 +65,20 @@ class InfoSection extends StatelessWidget {
                         ),
                         child: GestureDetector(
                             onTap: () async {
+                              //onTapChat();
                               await provider.startChat(
-                                  freelancerId: service?.user?.id ?? 0);
+                                freelancerId: service?.user?.id ?? 0,
+                              );
                             },
                             child: DecoratedIcon(
                               padding: 2.23 * (w / 100),
-                              imagePath: AppIcons.link,
+                              imagePath: AppIcons.message,
                               width: 9.95 * (w / 100),
                               height: 9.95 * (w / 100),
                             )),
                       );
                     },
                   ),
-                  SizedBox(
-                    width: 3 * (w / 100),
-                  ),
-                  GestureDetector(
-                      onTap: () => onTapChat(),
-                      child: DecoratedIcon(
-                        padding: 2.23 * (w / 100),
-                        imagePath: AppIcons.message,
-                        width: 9.95 * (w / 100),
-                        height: 9.95 * (w / 100),
-                      )),
                   SizedBox(
                     width: 3 * (w / 100),
                   ),

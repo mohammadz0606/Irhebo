@@ -89,6 +89,7 @@ class VerificationController extends GetxController {
 
   resendOtp() async {
     isLoadingSend = true;
+    onResendCode();
     SendOtpUseCase requestCodeUseCase = sl();
     final result = await requestCodeUseCase(
         SendOtpParams(phone: phone, prefix: appController.countryCode));

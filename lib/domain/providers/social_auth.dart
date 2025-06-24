@@ -28,6 +28,7 @@ class SocialAuthProvider extends ChangeNotifier {
         final response =
             await Network().post(url: AppEndpoints.socialLogin, data: {
           'google_id': googleUser?.id,
+          'email': googleUser?.email,
         });
         String errorMessage = await Network().handelError(response: response);
         if (errorMessage.isNotEmpty) {

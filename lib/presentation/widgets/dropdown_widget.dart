@@ -86,21 +86,22 @@ class CustomDropdown<T> extends StatelessWidget {
           child: DropdownSearch<T>(
             enabled: enabled,
             suffixProps: DropdownSuffixProps(
-                dropdownButtonProps: DropdownButtonProps(
-                    splashRadius: 14,
-                    iconClosed: AppIcon(
-                      path: AppIcons.arrowbottom,
-                      color: Get.find<AppController>().darkMode
-                          ? AppDarkColors.pureWhite.withOpacity(0.5)
-                          : Colors.black.withOpacity(0.5),
-                    ),
-                    iconOpened: AppIcon(
-                      path: AppIcons.arrowbottom,
-                      color: Get.find<AppController>().darkMode
-                          ? AppDarkColors.pureWhite.withOpacity(0.5)
-                          : Colors.black.withOpacity(0.5),
-                    ),
-                    color: AppDarkColors.pureWhite)),
+              dropdownButtonProps: DropdownButtonProps(
+                  splashRadius: 14,
+                  iconClosed: AppIcon(
+                    path: AppIcons.arrowbottom,
+                    color: Get.find<AppController>().darkMode
+                        ? AppDarkColors.pureWhite.withOpacity(0.5)
+                        : Colors.black.withOpacity(0.5),
+                  ),
+                  iconOpened: AppIcon(
+                    path: AppIcons.arrowbottom,
+                    color: Get.find<AppController>().darkMode
+                        ? AppDarkColors.pureWhite.withOpacity(0.5)
+                        : Colors.black.withOpacity(0.5),
+                  ),
+                  color: AppDarkColors.pureWhite),
+            ),
             selectedItem: value,
             items: (filter, loadProps) => items,
             validator: validator,

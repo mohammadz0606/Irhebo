@@ -159,7 +159,12 @@ class RegisterController extends GetxController {
 
         if (generalModel.status == true) {
           isLoading = false;
-          sendOtp();
+          //sendOtp();
+          Get.toNamed(AppRoutes.verification, arguments: {
+            "verify_type": VerifyScreenType.register,
+            //"code": generalModel.data,
+            "phone": registerPhone.text,
+          });
         }
       } catch (error) {
         if (error is DioException) {

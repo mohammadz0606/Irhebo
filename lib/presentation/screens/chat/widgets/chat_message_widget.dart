@@ -19,7 +19,7 @@ class ChatMessageWidget extends StatelessWidget {
   //final bool sender;
   final ChatType type;
   final int userId;
-  final ChatMessagesModelData message;
+  final ChatMessagesModelDataMessages message;
 
   const ChatMessageWidget({
     super.key,
@@ -118,20 +118,20 @@ class ChatMessageWidget extends StatelessWidget {
                       style: Get.theme.textTheme.labelMedium!
                           .copyWith(fontWeight: FontWeight.w400),
                     ),
-                    SizedBox(
-                      width: 0.74 * (w / 100),
-                    ),
-                    if (message.isRead == 1)
-                      AppIcon(
-                        path: AppIcons.done,
-                        height: 5.79 * (w / 100),
-                        width: 5.79 * (w / 100),
-                      )
-                    else
-                      const Icon(
-                        CupertinoIcons.check_mark,
-                        color: CupertinoColors.activeGreen,
-                      )
+                    // SizedBox(
+                    //   width: 0.74 * (w / 100),
+                    // ),
+                    // if (message.isRead == 1)
+                    //   AppIcon(
+                    //     path: AppIcons.done,
+                    //     height: 5.79 * (w / 100),
+                    //     width: 5.79 * (w / 100),
+                    //   )
+                    // else
+                    //   const Icon(
+                    //     CupertinoIcons.check_mark,
+                    //     color: CupertinoColors.activeGreen,
+                    //   )
                   ],
                 ),
               ),

@@ -22,6 +22,7 @@ Map<String, dynamic> _$LoginModelToJson(LoginModel instance) =>
 UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
       id: (json['id'] as num?)?.toInt(),
       name: json['name'] as String?,
+      verifiedAt: json['verified_at'] as String?,
       email: json['email'] as String?,
       fullPhone: json['full_phone'] as String?,
       prefix: json['prefix'] as String?,

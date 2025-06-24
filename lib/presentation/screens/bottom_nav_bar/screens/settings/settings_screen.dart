@@ -97,6 +97,12 @@ class SettingsScreen extends GetView<SettingsController> {
                       title: "Logout",
                       onTap: controller.openLogoutBottomSheet,
                     ),
+
+                  if (controller.appController.token.isEmpty)
+                    SettingsRow(
+                      title: "Login",
+                      onTap: controller.goToLogin,
+                    ),
                 ],
               ),
             ),

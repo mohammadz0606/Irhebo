@@ -20,12 +20,14 @@ class ResendCodeWidget extends GetWidget<VerificationController> {
             return Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(("Didnt received a code".tr),
-                    style: Get.theme.textTheme.labelMedium!.copyWith(
-                      color: Get.find<AppController>().darkMode
-                          ? AppDarkColors.pureWhite.withOpacity(0.5)
-                          : Colors.black.withOpacity(0.5),
-                    )),
+                Text(
+                  ("Didnt received a code".tr),
+                  style: Get.theme.textTheme.labelMedium!.copyWith(
+                    color: Get.find<AppController>().darkMode
+                        ? AppDarkColors.pureWhite.withOpacity(0.5)
+                        : Colors.black.withOpacity(0.5),
+                  ),
+                ),
                 SizedBox(
                   width: 1 * (w / 100),
                 ),
@@ -37,7 +39,7 @@ class ResendCodeWidget extends GetWidget<VerificationController> {
                       ? SizedBox(
                           height: 4 * (w / 100),
                           width: 4 * (w / 100),
-                          child: CircularProgressIndicator(
+                          child: const CircularProgressIndicator(
                             color: AppDarkColors.greenContainer,
                             strokeWidth: 1,
                           ),

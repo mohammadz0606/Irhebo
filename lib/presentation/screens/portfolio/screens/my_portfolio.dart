@@ -63,6 +63,7 @@ class _MyPortfolioScreenState extends State<MyPortfolioScreen> {
                 : provider.portfolioList.isEmpty
                     ? const NoData(
                         forHome: false,
+                        enableSpace: false,
                       )
                     : GridView.builder(
                         padding:

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:irhebo/app/app_controller.dart';
+import 'package:irhebo/app/global_imports.dart';
 import 'package:irhebo/app/resources/style/text_style.dart';
 import 'package:irhebo/presentation/widgets/app_image.dart';
 
@@ -17,7 +18,7 @@ class AppLogo extends GetWidget<AppController> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         AppImage(
-          imageUrl: 'https://irhebo-backend.smartedge.me/${controller.generalData?.platformLogo ?? ""}',
+          imageUrl: '${AppEndpoints.media_url}${controller.generalData?.platformLogo ?? ""}',
           radius: 50 * (w / 100),
           width: 7.46 * (w / 100),
           height: 7.46 * (w / 100),

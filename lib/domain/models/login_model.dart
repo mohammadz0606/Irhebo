@@ -26,6 +26,8 @@ class LoginModel {
 class UserModel {
   int? id;
   String? name;
+  @JsonKey(name: 'verified_at')
+  String? verifiedAt;
   String? email;
   @JsonKey(name: 'full_phone')
   String? fullPhone;
@@ -52,6 +54,7 @@ class UserModel {
     this.prefix,
     this.phone,
     this.gender,
+    this.verifiedAt,
     this.profession,
     this.professionObject,
     this.country,
@@ -67,7 +70,7 @@ class UserModel {
     return _$UserModelFromJson(json);
   }
 
-  Map<String, dynamic> toJson() => _$UserModelToJson(this);
+  // Map<String, dynamic> toJson() => _$UserModelToJson(this);
 }
 
 @JsonSerializable()

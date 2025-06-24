@@ -52,7 +52,8 @@ class SettingsController extends GetxController {
 
   onToggleNotifications(bool value) async {
     noti = !noti;
-    await Provider.of<NotificationProvider>(Get.context!,listen: false).changeNotifiable();
+    await Provider.of<NotificationProvider>(Get.context!, listen: false)
+        .changeNotifiable();
   }
 
   onToggleMode(bool value) async {
@@ -127,6 +128,10 @@ class SettingsController extends GetxController {
 
   goToProfile() async {
     Get.toNamed(AppRoutes.profile);
+  }
+
+  goToLogin() async {
+    Get.toNamed(AppRoutes.login);
   }
 
   openLoginRequiredDialog() {

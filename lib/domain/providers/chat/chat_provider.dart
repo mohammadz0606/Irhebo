@@ -20,10 +20,12 @@ class ChatProvider extends ChangeNotifier {
   final List<int> alFreelancerChatId = [];
   bool isLoadingGetChatList = false;
 
-  List<ChatMessagesModelData>? chatMessages;
+  List<ChatMessagesModelDataMessages>? chatMessages;
+
   ChatAppbar? appbarData;
   bool isLoadingGetChatMessages = false;
-  Map<String, List<ChatMessagesModelData>>? groupedMessages;
+  Map<String, List<ChatMessagesModelDataMessages>>? groupedMessages;
+  ChatMessagesModelData? chatMessagesModelData;
 
   bool isLoadingStartChat = false;
 
@@ -169,6 +171,7 @@ class ChatProvider extends ChangeNotifier {
     try {
       if (chatMessages != null) {
         chatMessages = null;
+        chatMessagesModelData = null;
       }
 
       isLoadingGetChatMessages = true;
@@ -187,12 +190,17 @@ class ChatProvider extends ChangeNotifier {
       ChatMessagesModel chatMessagesModel =
           ChatMessagesModel.fromJson(response.data);
 
-      chatMessages = chatMessagesModel.data;
+      chatMessages = chatMessagesModel.data?.messages;
+      chatMessagesModelData = chatMessagesModel.data;
+      _startLiveChat(chatId: chatId);
+      _getAppbarData();
       _groupMessages();
+      // if (chatMessages?.isNotEmpty == true) {
+      //
+      // }
+
       isLoadingGetChatMessages = false;
       notifyListeners();
-      _getAppbarData();
-      _startLiveChat(chatId: chatId);
     } catch (error) {
       if (error is DioException) {
         AppSnackBar.openErrorSnackBar(
@@ -237,14 +245,15 @@ class ChatProvider extends ChangeNotifier {
     try {
       isLoadingStartChat = true;
       notifyListeners();
-      if (alFreelancerChatId.contains(freelancerId)) {
-        AppSnackBar.openErrorSnackBar(
-          message: 'A conversation with the freelancer already exists'.tr,
-        );
-        isLoadingStartChat = false;
-        notifyListeners();
-        return;
-      }
+      // if (alFreelancerChatId.contains(freelancerId)) {
+      //   // AppSnackBar.openErrorSnackBar(
+      //   //   message: 'A conversation with the freelancer already exists'.tr,
+      //   // );
+      //
+      //   isLoadingStartChat = false;
+      //   notifyListeners();
+      //   return;
+      // }
 
       final response = await Network().post(
         url: '${AppEndpoints.startChat}$freelancerId',
@@ -296,17 +305,17 @@ class ChatProvider extends ChangeNotifier {
 
     int userId = preferences.getInt(key: AppPrefsKeys.USER_ID) ?? 0;
 
-    if (chatMessages?.first.sender?.id != userId) {
+    if (chatMessagesModelData?.sender?.id != userId) {
       appbarData = ChatAppbar(
-        id: chatMessages?.first.sender?.id,
-        username: chatMessages?.first.sender?.username,
-        avatar: chatMessages?.first.sender?.avatar,
+        id: chatMessagesModelData?.sender?.id,
+        username: chatMessagesModelData?.sender?.username,
+        avatar: chatMessagesModelData?.sender?.avatar,
       );
     } else {
       appbarData = ChatAppbar(
-        id: chatMessages?.first.receiver?.id,
-        username: chatMessages?.first.receiver?.username,
-        avatar: chatMessages?.first.receiver?.avatar,
+        id: chatMessagesModelData?.receiver?.id,
+        username: chatMessagesModelData?.receiver?.username,
+        avatar: chatMessagesModelData?.receiver?.avatar,
       );
     }
 
@@ -317,7 +326,7 @@ class ChatProvider extends ChangeNotifier {
     if (groupedMessages != null) {
       groupedMessages = null;
     }
-    Map<String, List<ChatMessagesModelData>> grouped = {};
+    Map<String, List<ChatMessagesModelDataMessages>> grouped = {};
 
     chatMessages?.sort((a, b) => b.createdAt!.compareTo(a.createdAt!));
 
@@ -351,7 +360,8 @@ class ChatProvider extends ChangeNotifier {
 
             final raw = json.decode(event.data);
             final messageMap = raw['message'] as Map<String, dynamic>;
-            final newMessage = ChatMessagesModelData.fromJsonNew(messageMap);
+            final newMessage =
+                ChatMessagesModelDataMessages.fromJsonNew(messageMap);
             final formattedDate =
                 formatDate(newMessage.createdAt ?? DateTime.now());
 

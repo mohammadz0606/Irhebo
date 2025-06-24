@@ -21,7 +21,7 @@ class RequestDetailsBottomBar extends GetWidget<RequestDetailsController> {
         if (getUserRole != UserRoles.freelancer)
           Obx(() {
             //final request = controller.request;
-            if (controller.request.statusKey == 'completed' &&
+            if (controller.request.statusKey == 'completed' ||  controller.request.statusKey == 'confirmed'  &&
                 controller.request.isReviewed == false &&
                 getUserRole == UserRoles.client) {
               return Column(

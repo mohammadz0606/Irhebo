@@ -4,12 +4,14 @@ import 'dart:developer';
 import 'dart:ui';
 
 import 'package:country_code_picker/country_code_picker.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:irhebo/app/constants.dart';
 import 'package:irhebo/app/injection.dart';
 import 'package:irhebo/app/lang/localization_service.dart';
 import 'package:irhebo/app/resources/logger_colors.dart';
+import 'package:irhebo/app/snack_bar.dart';
 import 'package:irhebo/app/storage/app_prefs.dart';
 import 'package:irhebo/app/storage/app_prefs_keys.dart';
 import 'package:irhebo/domain/entities/gender_entity.dart';
@@ -183,11 +185,35 @@ class AppController extends GetxController {
   }
 
   Future<void> getGeneral() async {
-    GetGeneralUseCase getGeneralUseCase = sl();
-    final result = await getGeneralUseCase(());
-    result!.fold((l) {}, (r) {
-      generalData = r.data;
-    });
+    // GetGeneralUseCase getGeneralUseCase = sl();
+    // final result = await getGeneralUseCase(());
+    // result!.fold((l) {}, (r) {
+    //   generalData = r.data;
+    // });
+
+    try {
+      final response = await Network().get(url: AppEndpoints.general);
+
+      String errorMessage = await Network().handelError(response: response);
+      if (errorMessage.isNotEmpty) {
+        AppSnackBar.openErrorSnackBar(
+          message: errorMessage,
+        );
+        return;
+      }
+
+      generalData = GeneralModel.fromJson(response.data['data']);
+    } catch (error) {
+      if (error is DioException) {
+        AppSnackBar.openErrorSnackBar(
+          message: Network().handelDioException(error),
+        );
+      } else {
+        AppSnackBar.openErrorSnackBar(
+          message: error.toString(),
+        );
+      }
+    }
   }
 
   Future<void> launchUrlFun(url, {var website = false}) async {

@@ -8,9 +8,12 @@ import 'package:irhebo/presentation/widgets/app_icon.dart';
 
 class NoData extends StatelessWidget {
   final bool forHome;
+  final bool enableSpace;
+
   const NoData({
     super.key,
     this.forHome = true,
+    this.enableSpace = true,
   });
 
   @override
@@ -21,6 +24,7 @@ class NoData extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         if (!forHome)
+          if(enableSpace)
           SizedBox(
             height: 40.2 * (w / 100),
           ),
