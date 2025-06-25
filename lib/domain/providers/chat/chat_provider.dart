@@ -125,7 +125,7 @@ class ChatProvider extends ChangeNotifier {
       }
 
       final newMessage =
-          ChatMessagesModelDataMessages.fromJsonNew(response.data);
+          ChatMessagesModelDataMessages.fromJsonNew(response.data['data']);
       final formattedDate = formatDate(newMessage.createdAt ?? DateTime.now());
       // chatMessages?.add(
       //   ChatMessagesModelData.fromJson(response.data['data']),

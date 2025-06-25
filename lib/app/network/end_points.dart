@@ -14,7 +14,7 @@ class AppEndpoints {
   // static String base_url = 'https://irhebo-backend.smartedge.me/api/v1';
 
   ///STORE
-  static String base_url = kDebugMode
+  static String base_url = !kDebugMode
       ? 'https://irhebo-backend.smartedge.me/api/v1'
       : 'https://irhebo-back.smartedge.me/api/v1';
 
