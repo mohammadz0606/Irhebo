@@ -18,7 +18,7 @@ class AppEndpoints {
       ? 'https://irhebo-backend.smartedge.me/api/v1'
       : 'https://irhebo-back.smartedge.me/api/v1';
 
-  static String media_url = kDebugMode
+  static String media_url = !kDebugMode
       ? 'https://irhebo-back.smartedge.me/'
       : 'https://irhebo-back.smartedge.me/';
 
