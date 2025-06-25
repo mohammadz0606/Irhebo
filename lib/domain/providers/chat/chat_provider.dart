@@ -123,10 +123,20 @@ class ChatProvider extends ChangeNotifier {
         );
         return;
       }
+
+      final newMessage =
+          ChatMessagesModelDataMessages.fromJsonNew(response.data);
+      final formattedDate = formatDate(newMessage.createdAt ?? DateTime.now());
       // chatMessages?.add(
       //   ChatMessagesModelData.fromJson(response.data['data']),
       // );
-      // notifyListeners();
+      groupedMessages?.update(
+        formattedDate,
+        (existingList) => [newMessage, ...existingList],
+        ifAbsent: () => [newMessage],
+      );
+
+      notifyListeners();
     } catch (error) {
       if (error is DioException) {
         AppSnackBar.openErrorSnackBar(
@@ -365,12 +375,17 @@ class ChatProvider extends ChangeNotifier {
             final formattedDate =
                 formatDate(newMessage.createdAt ?? DateTime.now());
 
-            groupedMessages?.update(
-              formattedDate,
-              (existingList) => [newMessage, ...existingList],
-              ifAbsent: () => [newMessage],
-            );
+            AppPreferences preferences = sl();
 
+            int userId = preferences.getInt(key: AppPrefsKeys.USER_ID) ?? 0;
+
+            if (newMessage.sender?.id != userId) {
+              groupedMessages?.update(
+                formattedDate,
+                (existingList) => [newMessage, ...existingList],
+                ifAbsent: () => [newMessage],
+              );
+            }
             notifyListeners();
           } catch (error) {
             log(error.toString());
