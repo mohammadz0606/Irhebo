@@ -37,6 +37,7 @@ class ChatScreen extends GetView<ChatController> {
                     showSearch: controller.showSearch.value,
                     onTapSearch: () => controller.showSearchField(),
                     type: controller.type,
+                    receiverId: controller.userId,
                   ),
                 ),
               ),

@@ -33,8 +33,10 @@ class ProfileScreen extends GetView<ProfileController> {
                             children: [
                               ProfileHeader(
                                 loading: controller.isLoadingUpdate,
-                                updatePicture: () => controller
-                                    .updateProfileButton(forPicture: true),
+                                updatePicture: () {
+                                  return controller
+                                    .updateProfileButton(forPicture: true);
+                                },
                                 path: controller.imagePath,
                                 user: controller.user,
                                 pickPicture: controller.pickPicture,

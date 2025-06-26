@@ -1,8 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:irhebo/app/global_imports.dart';
+import 'package:irhebo/app/router/routes.dart';
 import 'package:irhebo/domain/models/new_models/calls/answer_call.dart';
 import 'package:irhebo/domain/models/new_models/calls/end_call.dart';
 
+import '../../app/calls/agora_configuration.dart';
 import '../../app/network/network.dart';
 import '../models/new_models/calls/start_call.dart';
 
@@ -11,14 +13,17 @@ class CallsProvider extends ChangeNotifier {
   bool isLoadingAnswerCall = false;
   bool isLoadingEndCall = false;
 
+  int callId = 0;
+
   Future<void> startCall({required int receiverId}) async {
     try {
+      callId = 0;
       isLoadingStartCall = true;
       notifyListeners();
       final response = await Network().post(
-        url: AppEndpoints.startChat,
+        url: AppEndpoints.startCall,
         data: {
-          'receiver_id': receiverId,
+          'receiver_id': receiverId.toString(),
         },
       );
 
@@ -33,7 +38,13 @@ class CallsProvider extends ChangeNotifier {
       }
 
       StartCallModel startCallModel = StartCallModel.fromJson(response.data);
-
+      callId = startCallModel.data?.call?.id ?? 0;
+      await AgoraConfiguration().initAgora(
+        token: startCallModel.data?.token ?? '',
+        channelName: startCallModel.data?.call?.channelName ?? '',
+        callerId: startCallModel.data?.call?.id ?? 0,
+      );
+      Get.toNamed(AppRoutes.call);
       isLoadingStartCall = false;
       notifyListeners();
     } catch (error) {
@@ -51,7 +62,7 @@ class CallsProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> answerCall({required int callId}) async {
+  Future<void> answerCall() async {
     try {
       isLoadingAnswerCall = true;
       notifyListeners();
@@ -91,14 +102,14 @@ class CallsProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> endCall({required int callId}) async {
+  Future<void> endCall() async {
     try {
       isLoadingEndCall = true;
       notifyListeners();
       final response = await Network().post(
         url: AppEndpoints.endCall,
         data: {
-          'call_id': callId,
+          'call_id': callId.toString(),
         },
       );
 

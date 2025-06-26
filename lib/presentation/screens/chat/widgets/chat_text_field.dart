@@ -12,6 +12,7 @@ import 'package:irhebo/presentation/screens/chat/chat_controller.dart';
 import 'package:irhebo/presentation/screens/chat/widgets/chat_field_prefix.dart';
 import 'package:irhebo/presentation/widgets/app_text_field.dart';
 import 'package:irhebo/presentation/widgets/decorated_icon.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import '../../../../app/global_imports.dart';
 import '../../../../domain/params/new_params/chat/send_message_param.dart';
@@ -91,7 +92,19 @@ class ChatTextField extends GetWidget<ChatController> {
                         controller.chatMessage.value.clear();
                         controller.chatMessage.refresh();
                       } else {
-                        //voiceProvider.startRecording();
+                        if (Platform.isIOS) {
+                          await Permission.microphone.request();
+                        } else {
+                          final micStatus =
+                              await Permission.microphone.request();
+                          if (!micStatus.isGranted) {
+                            AppSnackBar.openErrorSnackBar(
+                                message:
+                                    'Please enable the microphone permission'
+                                        .tr);
+                            return;
+                          }
+                        }
                         await controller.onTapSend(
                           onEndVoice: () async {
                             await provider.sendMessage(

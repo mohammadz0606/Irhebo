@@ -296,5 +296,8 @@ Map<String, String> en = {
   "all new": "All",
   "confirmed new": "Confirmed",
   "Loading": "Loading...",
-  "A conversation with the freelancer already exists": "A conversation with the freelancer already exists"
+  "A conversation with the freelancer already exists": "A conversation with the freelancer already exists",
+
+  "Please enable the microphone permission" : "Please enable the microphone permission",
+  "End Call" : "End Call"
 };

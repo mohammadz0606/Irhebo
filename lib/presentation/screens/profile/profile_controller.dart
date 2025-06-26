@@ -242,6 +242,7 @@ class ProfileController extends GetxController {
 
   updateProfileButton({bool forPicture = false}) {
     if (forPicture) {
+      //updateProfilePicture();
       if (imageProfile != null) {
         updateProfilePicture();
       }

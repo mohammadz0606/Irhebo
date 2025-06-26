@@ -291,5 +291,8 @@ Map<String, String> ar = {
   "all new": "الكل",
   "confirmed new": "مؤكد",
   "Loading": "تحميل...",
-  "A conversation with the freelancer already exists" : "يوجد بالفعل محاثة مع المستقل"
+  "A conversation with the freelancer already exists" : "يوجد بالفعل محاثة مع المستقل",
+  "Please enable the microphone permission" :"يرجى تفعيل إذن الميكروفون",
+  "End Call" : "إنهاء المكالمة"
+
 };

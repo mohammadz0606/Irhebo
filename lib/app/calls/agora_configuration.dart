@@ -1,0 +1,69 @@
+import 'dart:io';
+
+import 'package:agora_rtc_engine/agora_rtc_engine.dart';
+import 'package:irhebo/app/global_imports.dart';
+import 'package:permission_handler/permission_handler.dart';
+
+final class AgoraConfiguration {
+  /// Singleton class
+
+  AgoraConfiguration._();
+
+  static final AgoraConfiguration _instance = AgoraConfiguration._();
+
+  factory AgoraConfiguration() {
+    return _instance;
+  }
+
+  late RtcEngine _agoraEngine;
+
+  Future<void> initAgora({
+    required String token,
+    required String channelName,
+    required int callerId,
+  }) async {
+    if (Platform.isIOS) {
+      await Permission.microphone.request();
+    } else {
+      final micStatus = await Permission.microphone.request();
+      if (!micStatus.isGranted) {
+        AppSnackBar.openErrorSnackBar(
+            message: 'Please enable the microphone permission'.tr);
+        return;
+      }
+    }
+    _agoraEngine = createAgoraRtcEngine();
+    await _agoraEngine.initialize(
+      const RtcEngineContext(appId: '7c133475b17c4fefb2d88c6fd3c0eccf'),
+    );
+    await _agoraEngine.enableAudio();
+    _agoraEngine.registerEventHandler(
+      RtcEngineEventHandler(
+        onJoinChannelSuccess: (connection, elapsed) {
+          print("Joined channel: ${connection.channelId}");
+        },
+        onUserJoined: (connection, remoteUid, elapsed) {
+          print("User joined: $remoteUid");
+        },
+        onError: (err, msg) {
+          print("onError: $err///// $msg");
+        },
+        onUserOffline: (connection, remoteUid, reason) {
+          print("User offline: $remoteUid");
+        },
+      ),
+    );
+
+    await _agoraEngine.joinChannel(
+      token: token,
+      channelId: channelName,
+      uid: callerId,
+      options: const ChannelMediaOptions(),
+    );
+  }
+
+  Future<void> leaveCall() async {
+    await _agoraEngine.leaveChannel();
+    await _agoraEngine.release();
+  }
+}

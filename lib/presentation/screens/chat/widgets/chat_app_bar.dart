@@ -1,11 +1,10 @@
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:irhebo/app/app_controller.dart';
-import 'package:irhebo/app/enums.dart';
+
 import 'package:irhebo/app/resources/images.dart';
+import 'package:irhebo/domain/providers/calls.dart';
 import 'package:irhebo/presentation/widgets/app_icon.dart';
 import 'package:irhebo/presentation/widgets/gradient_icon.dart';
 
+import '../../../../app/global_imports.dart';
 import '../../../widgets/app_image.dart';
 
 class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -14,6 +13,7 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool showSearch;
   final ChatType type;
   final Function() onTapSearch;
+  final int receiverId;
 
   // final Function()? onTapBack;
   const ChatAppBar({
@@ -23,6 +23,7 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
     required this.onTapSearch,
     required this.showSearch,
     this.imageUrl,
+    required this.receiverId,
     // this.onTapBack,
   });
 
@@ -82,11 +83,24 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
           actions: type == ChatType.Bot
               ? []
               : [
-                  InkWell(
-                    borderRadius: BorderRadius.circular(50 * (w / 100)),
-                    child: const GradientIcon(
-                      icn: AppIcons.call,
-                    ),
+                  Consumer<CallsProvider>(
+                    builder: (context, provider, child) {
+                      return Visibility(
+                        visible: !provider.isLoadingStartCall,
+                        replacement: const Center(
+                          child: CircularProgressIndicator.adaptive(),
+                        ),
+                        child: InkWell(
+                          onTap: () async {
+                            await provider.startCall(receiverId: receiverId);
+                          },
+                          borderRadius: BorderRadius.circular(50 * (w / 100)),
+                          child: const GradientIcon(
+                            icn: AppIcons.call,
+                          ),
+                        ),
+                      );
+                    },
                   ),
                   SizedBox(
                     width: 2.48 * (w / 100),

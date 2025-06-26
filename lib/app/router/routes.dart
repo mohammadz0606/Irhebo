@@ -52,6 +52,7 @@ class AppRoutes {
   static const String createService = "/create_service";
   static const String vrificationFreelancerScreen = "/vrificationFreelancerScreen";
   static const String createPlan = "/create_plan";
+  static const String call = "/call";
 
 
 }
