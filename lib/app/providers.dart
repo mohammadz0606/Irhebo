@@ -1,5 +1,6 @@
 import 'package:provider/single_child_widget.dart';
 
+import '../domain/providers/calls.dart';
 import '../domain/providers/chat/chat_provider.dart';
 import '../domain/providers/chat/voice_recorde_provider.dart';
 import '../domain/providers/currency.dart';
@@ -26,5 +27,6 @@ List<SingleChildWidget> providers = [
   ChangeNotifierProvider(create: (_) => NotificationProvider()),
   ChangeNotifierProvider(create: (_) => ChatProvider()),
   ChangeNotifierProvider(create: (_) => SocialAuthProvider()),
-  ChangeNotifierProvider(create: (_)=>VoiceRecorderProvider())
+  ChangeNotifierProvider(create: (_) => VoiceRecorderProvider()),
+  ChangeNotifierProvider(create: (_) => CallsProvider()),
 ];

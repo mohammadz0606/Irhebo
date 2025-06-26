@@ -97,4 +97,9 @@ class AppEndpoints {
   static String getMessages = '$base_url/chat/get-messages/';
   static String markRead = '$base_url/chat/mark-read/';
   static String toggleChat = '$base_url/chat/toggle-flag';
+
+  ///CALL
+  static String startCall = '$base_url/chat/start-call';
+  static String answerCall = '$base_url/chat/answer-call';
+  static String endCall = '$base_url/chat/end-call';
 }
