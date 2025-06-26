@@ -5,6 +5,7 @@ import 'package:irhebo/app/resources/style/colors.dart';
 
 class BottomSheetHeader extends StatelessWidget {
   final String? title;
+
   const BottomSheetHeader({
     super.key,
     this.title,
@@ -31,10 +32,11 @@ class BottomSheetHeader extends StatelessWidget {
           Text(
             title?.tr ?? "",
             style: Get.theme.textTheme.titleLarge!.copyWith(
-                color: Get.find<AppController>().darkMode
-                    ? AppDarkColors.pureWhite
-                    : Colors.black,
-                fontWeight: FontWeight.w700),
+              color: Get.find<AppController>().darkMode
+                  ? AppDarkColors.pureWhite
+                  : Colors.black,
+              fontWeight: FontWeight.w700,
+            ),
           ),
           SizedBox(
             height: 2.48 * (w / 100),

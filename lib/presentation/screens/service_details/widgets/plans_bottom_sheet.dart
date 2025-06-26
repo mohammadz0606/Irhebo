@@ -39,7 +39,7 @@ class PlansBottomSheet extends GetWidget<ServiceDetailsController> {
                     i++)
                   Obx(
                     () => SizedBox(
-                      width: 27.11 * (w / 100),
+                     // width: 27.11 * (w / 100),
                       child: TagItem(
                         // freelancer: true,
                         selected: i == controller.selectedTab,
