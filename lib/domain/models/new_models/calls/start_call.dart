@@ -1,15 +1,15 @@
-class StartCallModel {
+class StartAndAnswerCallModel {
   bool? status;
   String? message;
   StartCallModelData? data;
 
-  StartCallModel({
+  StartAndAnswerCallModel({
     this.status,
     this.message,
     this.data,
   });
 
-  StartCallModel.fromJson(Map<String, dynamic> json) {
+  StartAndAnswerCallModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message']?.toString();
     data = (json['data'] != null)

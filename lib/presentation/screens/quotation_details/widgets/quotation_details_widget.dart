@@ -307,61 +307,80 @@ class QuotationDetailsWidget extends GetView<QuotationDetailsController> {
   Future<void> showStandOutDialog(BuildContext context) async {
     final TextEditingController commentController = TextEditingController();
 
-    return await Get.defaultDialog(
-      backgroundColor:
-          Get.find<AppController>().darkMode ? Colors.black : Colors.white,
-      titlePadding: const EdgeInsets.only(top: 20),
-      contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-      title: '',
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            "Stand out from the crowd!".tr,
-            style: Get.textTheme.titleLarge?.copyWith(
-              fontWeight: FontWeight.bold,
+    return await Get.dialog(
+      Dialog(
+        backgroundColor:
+            Get.find<AppController>().darkMode ? Colors.black : Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Stack(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(20.0).copyWith(top: 40),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    "Stand out from the crowd!".tr,
+                    style: Get.textTheme.titleLarge?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 20),
+                  const Icon(
+                    Icons.emoji_events_outlined,
+                    color: Colors.green,
+                    size: 60,
+                  ),
+                  const SizedBox(height: 20),
+                  Text(
+                    "Tell the client why you’re the best choice. Highlight your experience, skills, and what makes you stand out."
+                        .tr,
+                    style: Get.textTheme.bodyMedium?.copyWith(height: 1.5),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 25),
+                  AppTextField(
+                    controller: commentController,
+                    hint: "Type your comment or question here".tr,
+                    textInputType: TextInputType.multiline,
+                    maxLines: 4,
+                  ),
+                  const SizedBox(height: 25),
+                  Obx(
+                    () {
+                      return AppButton(
+                        title: "Submit",
+                        isLoading: controller.isLoadingApplyQuotation.value,
+                        onPressed: () async {
+                          final comment = commentController.text.trim();
+                          if (comment.isNotEmpty) {
+                            await controller.applyQuotation(comment: comment);
+                            Get.back(); // يمكن إزالته إذا لم ترد إغلاق الـ dialog بعد الإرسال
+                          }
+                        },
+                      );
+                    },
+                  ),
+                ],
+              ),
             ),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 20),
-          const Icon(
-            Icons.emoji_events_outlined,
-            color: Colors.green,
-            size: 60,
-          ),
-          const SizedBox(height: 20),
-          Text(
-            "Tell the client why you’re the best choice. Highlight your experience, skills, and what makes you stand out."
-                .tr,
-            style: Get.textTheme.bodyMedium?.copyWith(
-              height: 1.5,
-            ),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 25),
-          AppTextField(
-            controller: commentController,
-            hint: "Type your comment or question here".tr,
-            textInputType: TextInputType.multiline,
-            maxLines: 4,
-          ),
-          const SizedBox(height: 25),
-          Obx(
-            () {
-              return AppButton(
-                title: "Submit",
-                isLoading: controller.isLoadingApplyQuotation.value,
-                onPressed: () async {
-                  final comment = commentController.text.trim();
-                  if (comment.isNotEmpty) {
-                    await controller.applyQuotation(comment: comment);
-                  }
+            Positioned(
+              right: 0,
+              top: 0,
+              child: IconButton(
+                icon: const Icon(Icons.close),
+                onPressed: () {
+                  Get.back();
                 },
-              );
-            },
-          )
-        ],
+              ),
+            ),
+          ],
+        ),
       ),
+      barrierDismissible: false,
     );
   }
 }

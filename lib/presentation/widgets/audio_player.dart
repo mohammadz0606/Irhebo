@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
+
+import '../../app/global_imports.dart';
 
 class AppAudioPlayer extends StatefulWidget {
   final String audioUrl;
@@ -68,7 +69,7 @@ class _AppAudioPlayerState extends State<AppAudioPlayer> {
     return ClipRRect(
       borderRadius: BorderRadius.circular(widget.radius ?? 12),
       child: Container(
-        color: Colors.grey[200],
+        //color: Colors.grey[200],
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         child: Row(
           mainAxisSize: MainAxisSize.min,
@@ -76,13 +77,18 @@ class _AppAudioPlayerState extends State<AppAudioPlayer> {
             IconButton(
               icon: Icon(
                 _isPlaying ? Icons.pause_circle_filled : Icons.play_circle_fill,
-                color: Colors.black87,
+                color: Get.find<AppController>().darkMode
+                    ? Colors.white
+                    : Colors.black,
                 size: 36,
               ),
               onPressed: _togglePlayPause,
             ),
             Expanded(
               child: Slider(
+                inactiveColor: Get.find<AppController>().darkMode
+                    ? Colors.white
+                    : Colors.black,
                 min: 0,
                 max: _totalDuration.inMilliseconds.toDouble(),
                 value: _currentPosition.inMilliseconds
@@ -96,7 +102,11 @@ class _AppAudioPlayerState extends State<AppAudioPlayer> {
             ),
             Text(
               _formatDuration(_currentPosition),
-              style: const TextStyle(fontSize: 12),
+              style: TextStyle(
+                  fontSize: 12,
+                  color: Get.find<AppController>().darkMode
+                      ? Colors.white
+                      : Colors.black),
             ),
           ],
         ),

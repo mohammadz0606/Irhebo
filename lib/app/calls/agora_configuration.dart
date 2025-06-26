@@ -20,7 +20,9 @@ final class AgoraConfiguration {
   Future<void> initAgora({
     required String token,
     required String channelName,
-    required int callerId,
+    required int userID,
+    required Function() onUserAccepted,
+    required Function() onUserEndCall,
   }) async {
     if (Platform.isIOS) {
       await Permission.microphone.request();
@@ -44,12 +46,14 @@ final class AgoraConfiguration {
         },
         onUserJoined: (connection, remoteUid, elapsed) {
           print("User joined: $remoteUid");
+          onUserAccepted();
         },
         onError: (err, msg) {
           print("onError: $err///// $msg");
         },
         onUserOffline: (connection, remoteUid, reason) {
           print("User offline: $remoteUid");
+          onUserEndCall();
         },
       ),
     );
@@ -57,7 +61,7 @@ final class AgoraConfiguration {
     await _agoraEngine.joinChannel(
       token: token,
       channelId: channelName,
-      uid: callerId,
+      uid: userID,
       options: const ChannelMediaOptions(),
     );
   }

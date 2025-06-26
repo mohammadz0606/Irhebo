@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:irhebo/app/global_imports.dart';
 import 'package:irhebo/app/router/routes.dart';
-import 'package:irhebo/domain/models/new_models/calls/answer_call.dart';
 import 'package:irhebo/domain/models/new_models/calls/end_call.dart';
 
 import '../../app/calls/agora_configuration.dart';
@@ -37,12 +36,23 @@ class CallsProvider extends ChangeNotifier {
         return;
       }
 
-      StartCallModel startCallModel = StartCallModel.fromJson(response.data);
+      StartAndAnswerCallModel startCallModel = StartAndAnswerCallModel.fromJson(response.data);
       callId = startCallModel.data?.call?.id ?? 0;
+
+      AppPreferences preferences = sl();
+
+      int userID = preferences.getInt(key: AppPrefsKeys.USER_ID) ?? 0;
+
       await AgoraConfiguration().initAgora(
         token: startCallModel.data?.token ?? '',
         channelName: startCallModel.data?.call?.channelName ?? '',
-        callerId: startCallModel.data?.call?.id ?? 0,
+        userID: userID,
+        onUserAccepted: () async {
+          //await answerCall();
+        },
+        onUserEndCall: () async {
+          await endCall();
+        },
       );
       Get.toNamed(AppRoutes.call);
       isLoadingStartCall = false;
@@ -83,7 +93,25 @@ class CallsProvider extends ChangeNotifier {
         return;
       }
 
-      AnswerCallModel answerCallModel = AnswerCallModel.fromJson(response.data);
+      StartAndAnswerCallModel answerCallModel = StartAndAnswerCallModel.fromJson(response.data);
+
+      callId = answerCallModel.data?.call?.id ?? 0;
+
+      AppPreferences preferences = sl();
+
+      int userID = preferences.getInt(key: AppPrefsKeys.USER_ID) ?? 0;
+
+      await AgoraConfiguration().initAgora(
+        token: answerCallModel.data?.token ?? '',
+        channelName: answerCallModel.data?.call?.channelName ?? '',
+        userID: userID,
+        onUserAccepted: () async {
+         // await answerCall();
+        },
+        onUserEndCall: () async {
+          await endCall();
+        },
+      );
 
       isLoadingAnswerCall = false;
       notifyListeners();

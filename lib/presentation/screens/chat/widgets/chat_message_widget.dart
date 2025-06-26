@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:irhebo/app/app_controller.dart';
 import 'package:irhebo/app/app_functions.dart';
@@ -8,6 +9,7 @@ import 'package:irhebo/app/resources/images.dart';
 import 'package:irhebo/app/resources/style/colors.dart';
 
 import 'package:irhebo/presentation/widgets/app_icon.dart';
+import 'package:irhebo/presentation/widgets/app_loading.dart';
 import 'package:irhebo/presentation/widgets/open_file_items.dart';
 
 import '../../../../domain/models/new_models/chat/chat_messages_model.dart';
@@ -93,17 +95,52 @@ class ChatMessageWidget extends StatelessWidget {
                                       audioUrl: message.attachmentUrl ?? '',
                                       radius: 10,
                                     )
-                                  : Text(
-                                      message.message ?? '',
-                                      style: Get.theme.textTheme.bodySmall
-                                          ?.copyWith(
-                                        color: message.sender?.id == userId
-                                            ? Colors.white
-                                            : Get.find<AppController>().darkMode
+                                  : message.attachmentType == 'call'
+                                      ? ListTile(
+                                          contentPadding: EdgeInsets.zero,
+                                          leading: CircleAvatar(
+                                            radius: 20.r,
+                                            backgroundColor:
+                                                AppLightColors.dividerColor,
+                                            child: const Icon(
+                                              CupertinoIcons
+                                                  .phone_arrow_up_right,
+                                              color:
+                                                  AppLightColors.primaryColor,
+                                            ),
+                                          ),
+                                          title: Text('Call'.tr),
+                                          subtitle: Text(
+                                            message.message ?? '',
+                                          ),
+                                          titleTextStyle: Get
+                                              .theme.textTheme.headlineSmall
+                                              ?.copyWith(
+                                            fontSize: 19,
+                                          ),
+                                          subtitleTextStyle: Get
+                                              .theme.textTheme.bodySmall
+                                              ?.copyWith(
+                                            color: message.sender?.id == userId
                                                 ? Colors.white
-                                                : Colors.black,
-                                      ),
-                                    ),
+                                                : Get.find<AppController>()
+                                                        .darkMode
+                                                    ? Colors.white
+                                                    : Colors.black,
+                                          ),
+                                        )
+                                      : Text(
+                                          message.message ?? '',
+                                          style: Get.theme.textTheme.bodySmall
+                                              ?.copyWith(
+                                            color: message.sender?.id == userId
+                                                ? Colors.white
+                                                : Get.find<AppController>()
+                                                        .darkMode
+                                                    ? Colors.white
+                                                    : Colors.black,
+                                          ),
+                                        ),
                 ),
               ],
             ),

@@ -6,8 +6,8 @@ import '../../presentation/screens/service_details/service_details_screen.dart';
 import '../../presentation/screens/support_tickets/support_tickets_controller.dart';
 
 import '../global_imports.dart';
+import '../network/network.dart';
 import '../router/routes.dart';
-
 
 final class Notifications {
   /// Singleton class
@@ -21,12 +21,11 @@ final class Notifications {
   }
 
   Future<void> init() async {
-    OneSignal.Debug.setLogLevel(OSLogLevel.verbose);
     OneSignal.initialize('7ab59a87-79f3-46e8-af69-673331be40cc');
+    OneSignal.Debug.setLogLevel(OSLogLevel.verbose);
 
     OneSignal.LiveActivities.setupDefault();
     await OneSignal.Notifications.requestPermission(false);
-
     await getId();
 
     _navigationOnClick();
@@ -48,9 +47,30 @@ final class Notifications {
     return OneSignal.Notifications.addClickListener(
       (event) async {
         final additionalData = event.notification.additionalData;
-        int? id = additionalData?['id'];
+        int? id = additionalData?['type_id'];
         NotificationType? type =
             notificationTypeFromString(additionalData?['type'] as String?);
+        final actionId = event.result.actionId;
+
+        if (actionId != null) {
+          if (actionId == 'accept_button') {
+            final response = await Network().post(
+              url: AppEndpoints.answerCall,
+              data: {
+                'call_id': id,
+              },
+            );
+            Get.toNamed(AppRoutes.call);
+
+          } else if (actionId == 'decline_button') {
+            final response = await Network().post(
+              url: AppEndpoints.endCall,
+              data: {
+                'call_id': id,
+              },
+            );
+          }
+        }
 
         if (type == null) {
           return;
@@ -97,7 +117,7 @@ final class Notifications {
               arguments: {
                 "chat_type": ChatType.Users,
                 // 'userId': startChatModel.userId ?? 0,
-                // 'chatId': startChatModel.chatId ?? 0,
+                'chatId': id,
               },
             );
             break;
