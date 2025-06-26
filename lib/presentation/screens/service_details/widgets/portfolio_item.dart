@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:irhebo/app/app_controller.dart';
 import 'package:irhebo/domain/models/config_model.dart';
+import 'package:irhebo/presentation/screens/bottom_nav_bar/screens/home/home_controller.dart';
 import 'package:irhebo/presentation/screens/bottom_nav_bar/screens/home/widgets/bottom_shadow_widget.dart';
 import 'package:irhebo/presentation/screens/bottom_nav_bar/screens/home/widgets/video_play_widget.dart';
 import 'package:irhebo/presentation/widgets/app_image.dart';
@@ -66,7 +67,7 @@ class PortfolioItem extends StatelessWidget {
               ),
             ),
           ),
-          if(getUserRole == UserRoles.freelancer) ... {
+          if (getUserRole == UserRoles.freelancer) ...{
             Positioned(
               top: 2.98 * (w / 100),
               right: 2.98 * (w / 100),
@@ -96,8 +97,18 @@ class PortfolioItem extends StatelessWidget {
                               TextButton(
                                 onPressed: () async {
                                   await provider.deletePortfolio(
-                                    onSuccess: () {
-                                      provider.onRefreshList();
+                                    onSuccess: () async {
+                                      await provider.onRefreshList();
+                                      if (getUserRole == UserRoles.client ||
+                                          getUserRole == UserRoles.non) {
+                                        await Get.find<HomeController>()
+                                            .getHome();
+                                        await Get.find<HomeController>()
+                                            .getFeaturedPortfolio();
+                                      } else {
+                                        await Get.find<HomeController>()
+                                            .getFreelancerHome();
+                                      }
                                       log('DONE DELETE PORTFOLIO');
                                     },
                                     id: portfoilo.id ?? 0,
@@ -157,7 +168,6 @@ class PortfolioItem extends StatelessWidget {
               ),
             ),
           }
-
         ],
       ),
     );

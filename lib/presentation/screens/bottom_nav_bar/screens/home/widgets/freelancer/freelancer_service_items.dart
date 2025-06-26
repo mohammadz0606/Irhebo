@@ -1,8 +1,12 @@
+import 'dart:developer';
+
 import '../../../../../../../app/global_imports.dart';
 import '../../../../../../../domain/models/new_models/freelancer/freelancer_home_model.dart';
+import '../../../../../../../domain/providers/freelancer/freelancer_services.dart';
 import '../../../../../../widgets/app_image.dart';
 import '../../../../../../widgets/pricing_widget.dart';
 import '../../../../../service_details/service_details_screen.dart';
+import '../../home_controller.dart';
 import 'edit_or_delete.dart';
 
 class FreelancerServiceItems extends StatelessWidget {
@@ -81,6 +85,63 @@ class FreelancerServiceItems extends StatelessWidget {
               child: EditOrDelete(
                 id: data?.id ?? 0,
                 space: space ?? 36,
+                onDeleteTap: () {
+                  showAdaptiveDialog(
+                    context: Get.context!,
+                    barrierDismissible: false,
+                    builder: (_) {
+                      return Consumer<FreelancerServicesProvider>(
+                        builder: (context, provider, _) {
+                          return AlertDialog.adaptive(
+                            title: Text('Delete Confirmation'.tr),
+                            content: Text(
+                              "Are you sure you want to delete this item?".tr,
+                            ),
+                            actions: [
+                              TextButton(
+                                onPressed: () async {
+                                  await provider.deleteService(
+                                    onSuccess: () async {
+                                      await provider.onRefreshList();
+                                      if (getUserRole == UserRoles.client ||
+                                          getUserRole == UserRoles.non) {
+                                        await Get.find<HomeController>()
+                                            .getHome();
+                                        await Get.find<HomeController>()
+                                            .getFeaturedPortfolio();
+                                      } else {
+                                        await Get.find<HomeController>()
+                                            .getFreelancerHome();
+                                      }
+                                      log('DONE DELETE PORTFOLIO');
+                                    },
+                                    id: data?.id ?? 0,
+                                  );
+                                  Navigator.of(Get.context!).pop();
+                                },
+                                child: Text(
+                                  "Yes".tr,
+                                  style: const TextStyle(color: Colors.red),
+                                ),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(Get.context!).pop();
+                                },
+                                child: Text(
+                                  "No".tr,
+                                  style: const TextStyle(
+                                    color: AppLightColors.greenText,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
+                  );
+                },
               ),
             ),
           ],

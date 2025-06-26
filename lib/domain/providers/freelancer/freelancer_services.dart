@@ -4,6 +4,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import '../../../app/global_imports.dart';
 import '../../../app/network/network.dart';
 import '../../models/new_models/freelancer/freelancer_service_model.dart';
+import '../../models/new_models/general_model.dart';
 import '../../params/new_params/freelanser/freelancer_service_param.dart';
 
 class FreelancerServicesProvider extends ChangeNotifier {
@@ -14,6 +15,8 @@ class FreelancerServicesProvider extends ChangeNotifier {
   RefreshController refreshController =
       RefreshController(initialRefresh: false);
   List<FreelancerServiceModelDataServices?>? services = [];
+
+  bool isLoadingDelete = false;
 
   Future<void> getFreeLancerServices({
     required FreelancerServiceParam data,
@@ -96,5 +99,50 @@ class FreelancerServicesProvider extends ChangeNotifier {
     );
     refreshController.refreshCompleted();
     refreshController.refreshToIdle();
+  }
+
+  Future<void> deleteService({
+    required Function() onSuccess,
+    required int id,
+  }) async {
+    try {
+      isLoadingDelete = true;
+      notifyListeners();
+      final response = await Network().delete(
+        url: '${AppEndpoints.deleteService}$id',
+      );
+      String errorMessage = await Network().handelError(response: response);
+      if (errorMessage.isNotEmpty) {
+        isLoadingDelete = false;
+        notifyListeners();
+        AppSnackBar.openErrorSnackBar(
+          message: errorMessage,
+        );
+        return;
+      }
+
+      NewGeneralModel newGeneralModel = NewGeneralModel.fromJson(response.data);
+      if (newGeneralModel.status ?? false) {
+        AppSnackBar.openSuccessSnackBar(
+          message: 'Portfolio delete successfully'.tr,
+        );
+        onSuccess();
+      }
+
+      isLoadingDelete = false;
+      notifyListeners();
+    } catch (error) {
+      if (error is DioException) {
+        AppSnackBar.openErrorSnackBar(
+          message: Network().handelDioException(error),
+        );
+      } else {
+        AppSnackBar.openErrorSnackBar(
+          message: error.toString(),
+        );
+      }
+      isLoadingDelete = false;
+      notifyListeners();
+    }
   }
 }
