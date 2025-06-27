@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:irhebo/app/global_imports.dart';
@@ -25,10 +26,14 @@ class SocialAuthProvider extends ChangeNotifier {
         log(googleAuth?.accessToken ?? '');
         log('--------------------------');
 
+        AppPreferences prefs = sl();
+
         final response =
             await Network().post(url: AppEndpoints.socialLogin, data: {
           'google_id': googleUser?.id,
           'email': googleUser?.email,
+          "platform": Platform.isIOS ? 'ios' : 'android',
+          "player_id": prefs.getString(key: AppPrefsKeys.NOTIFICATION_KEY),
         });
         String errorMessage = await Network().handelError(response: response);
         if (errorMessage.isNotEmpty) {

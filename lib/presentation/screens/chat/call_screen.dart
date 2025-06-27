@@ -1,16 +1,32 @@
 import 'package:flutter/cupertino.dart';
 import 'package:irhebo/domain/providers/calls.dart';
 import 'package:irhebo/domain/providers/chat/chat_provider.dart';
-import 'package:irhebo/presentation/widgets/app_button.dart';
 import 'package:irhebo/presentation/widgets/app_image.dart';
 
 import '../../../app/calls/agora_configuration.dart';
 import '../../../app/global_imports.dart';
 import '../../../app/resources/images.dart';
+import '../../widgets/app_button.dart';
 import '../../widgets/gradient_icon.dart';
 
-class CallScreen extends StatelessWidget {
+
+class CallScreen extends StatefulWidget {
   const CallScreen({super.key});
+
+  @override
+  State<CallScreen> createState() => _CallScreenState();
+}
+
+class _CallScreenState extends State<CallScreen> {
+
+  @override
+  void initState() {
+    if(Get.arguments != null) {
+      Provider.of<CallsProvider>(Get.context!, listen: false).callId = Get.arguments['call_id'];
+    }
+    super.initState();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -87,3 +103,59 @@ class CallScreen extends StatelessWidget {
     return true;
   }
 }
+
+/*
+SafeArea(
+              child: Stack(
+                children: [
+                  Align(
+                    alignment: Alignment.topCenter,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        AppImage(
+                          imageUrl: chatProvider.appbarData?.avatar ??
+                              AppImages.placeholder,
+                          fit: BoxFit.cover,
+                          radius: 20,
+                          height: 180,
+                        ),
+                        const SizedBox(height: 20),
+                        Text(
+                          'In Call...'.tr,
+                          style: Get.theme.textTheme.titleLarge,
+                        ),
+                      ],
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 40),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          AgoraVideoButtons(
+                            client: provider.client!,
+                            disconnectButtonChild: const Icon(
+                              CupertinoIcons.phone_down_fill,
+                              size: 30,
+                              color: Colors.white,
+                            ),
+                            onDisconnect: () async {
+                              await onEndCall();
+                            },
+
+                            enabledButtons: const [
+                              BuiltInButtons.toggleMic,
+                              BuiltInButtons.callEnd,
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+ */

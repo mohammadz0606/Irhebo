@@ -5,6 +5,7 @@ import 'package:irhebo/domain/models/new_models/calls/end_call.dart';
 
 import '../../app/calls/agora_configuration.dart';
 import '../../app/network/network.dart';
+
 import '../models/new_models/calls/start_call.dart';
 
 class CallsProvider extends ChangeNotifier {
@@ -12,12 +13,17 @@ class CallsProvider extends ChangeNotifier {
   bool isLoadingAnswerCall = false;
   bool isLoadingEndCall = false;
 
+  //late AgoraClient? client;
+
   int callId = 0;
 
   Future<void> startCall({required int receiverId}) async {
     try {
       callId = 0;
       isLoadingStartCall = true;
+      //client = null;
+
+
       notifyListeners();
       final response = await Network().post(
         url: AppEndpoints.startCall,
@@ -36,14 +42,28 @@ class CallsProvider extends ChangeNotifier {
         return;
       }
 
-      StartAndAnswerCallModel startCallModel = StartAndAnswerCallModel.fromJson(response.data);
+      StartAndAnswerCallModel startCallModel =
+          StartAndAnswerCallModel.fromJson(response.data);
       callId = startCallModel.data?.call?.id ?? 0;
 
       AppPreferences preferences = sl();
 
       int userID = preferences.getInt(key: AppPrefsKeys.USER_ID) ?? 0;
+      // client = AgoraClient(
+      //   agoraConnectionData: AgoraConnectionData(
+      //     appId: "7c133475b17c4fefb2d88c6fd3c0eccf",
+      //     channelName: startCallModel.data?.call?.channelName ?? '',
+      //     rtmEnabled: false,
+      //     //username: 'JALAL',
+      //     uid: userID,
+      //     screenSharingEnabled: false,
+      //   ),
+      //   enabledPermission: [Permission.microphone],
+      // );
+      // await client?.initialize();
 
-      await AgoraConfiguration().initAgora(
+      await AgoraConfiguration()
+          .initAgora(
         token: startCallModel.data?.token ?? '',
         channelName: startCallModel.data?.call?.channelName ?? '',
         userID: userID,
@@ -54,6 +74,8 @@ class CallsProvider extends ChangeNotifier {
           await endCall();
         },
       );
+
+
       Get.toNamed(AppRoutes.call);
       isLoadingStartCall = false;
       notifyListeners();
@@ -93,7 +115,8 @@ class CallsProvider extends ChangeNotifier {
         return;
       }
 
-      StartAndAnswerCallModel answerCallModel = StartAndAnswerCallModel.fromJson(response.data);
+      StartAndAnswerCallModel answerCallModel =
+          StartAndAnswerCallModel.fromJson(response.data);
 
       callId = answerCallModel.data?.call?.id ?? 0;
 
@@ -106,12 +129,25 @@ class CallsProvider extends ChangeNotifier {
         channelName: answerCallModel.data?.call?.channelName ?? '',
         userID: userID,
         onUserAccepted: () async {
-         // await answerCall();
+          // await answerCall();
         },
         onUserEndCall: () async {
           await endCall();
         },
       );
+
+      // client = AgoraClient(
+      //   agoraConnectionData: AgoraConnectionData(
+      //     appId: "7c133475b17c4fefb2d88c6fd3c0eccf",
+      //     channelName: answerCallModel.data?.call?.channelName ?? '',
+      //     rtmEnabled: false,
+      //     //username: 'JALAL',
+      //     uid: userID,
+      //     screenSharingEnabled: false,
+      //   ),
+      //   enabledPermission: [Permission.microphone],
+      // );
+      // await client?.initialize();
 
       isLoadingAnswerCall = false;
       notifyListeners();

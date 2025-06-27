@@ -1,10 +1,12 @@
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 
+import '../../domain/models/new_models/calls/start_call.dart';
 import '../../presentation/screens/bottom_nav_bar/screens/requests/requests_controller.dart';
 import '../../presentation/screens/request_details/request_details_controller.dart';
 import '../../presentation/screens/service_details/service_details_screen.dart';
 import '../../presentation/screens/support_tickets/support_tickets_controller.dart';
 
+import '../calls/agora_configuration.dart';
 import '../global_imports.dart';
 import '../network/network.dart';
 import '../router/routes.dart';
@@ -60,8 +62,35 @@ final class Notifications {
                 'call_id': id,
               },
             );
-            Get.toNamed(AppRoutes.call);
 
+            StartAndAnswerCallModel answerCallModel =
+                StartAndAnswerCallModel.fromJson(response.data);
+            AppPreferences preferences = sl();
+
+            int userID = preferences.getInt(key: AppPrefsKeys.USER_ID) ?? 0;
+            int callId = answerCallModel.data?.call?.id ?? 0;
+
+            await AgoraConfiguration().initAgora(
+              token: answerCallModel.data?.token ?? '',
+              channelName: answerCallModel.data?.call?.channelName ?? '',
+              userID: userID,
+              onUserAccepted: () async {
+                // await answerCall();
+              },
+              onUserEndCall: () async {
+                final response = await Network().post(
+                  url: AppEndpoints.endCall,
+                  data: {
+                    'call_id': callId,
+                  },
+                );
+                await AgoraConfiguration().leaveCall();
+              },
+            );
+
+            Get.toNamed(AppRoutes.call, arguments: {
+              'call_id': callId,
+            });
           } else if (actionId == 'decline_button') {
             final response = await Network().post(
               url: AppEndpoints.endCall,
@@ -122,6 +151,42 @@ final class Notifications {
             );
             break;
           case NotificationType.call:
+            final response = await Network().post(
+              url: AppEndpoints.answerCall,
+              data: {
+                'call_id': id,
+              },
+            );
+
+            StartAndAnswerCallModel answerCallModel =
+                StartAndAnswerCallModel.fromJson(response.data);
+            AppPreferences preferences = sl();
+
+            int userID = preferences.getInt(key: AppPrefsKeys.USER_ID) ?? 0;
+            int callId = answerCallModel.data?.call?.id ?? 0;
+
+            await AgoraConfiguration().initAgora(
+              token: answerCallModel.data?.token ?? '',
+              channelName: answerCallModel.data?.call?.channelName ?? '',
+              userID: userID,
+              onUserAccepted: () async {
+                // await answerCall();
+              },
+              onUserEndCall: () async {
+                final response = await Network().post(
+                  url: AppEndpoints.endCall,
+                  data: {
+                    'call_id': callId,
+                  },
+                );
+                await AgoraConfiguration().leaveCall();
+              },
+            );
+
+            Get.toNamed(AppRoutes.call, arguments: {
+              'call_id': callId,
+            });
+
             break;
           case NotificationType.verified:
             Get.toNamed(AppRoutes.profile);

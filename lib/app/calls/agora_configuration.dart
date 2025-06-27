@@ -38,9 +38,16 @@ final class AgoraConfiguration {
     await _agoraEngine.initialize(
       const RtcEngineContext(appId: '7c133475b17c4fefb2d88c6fd3c0eccf'),
     );
+
+    await _agoraEngine.setClientRole(role: ClientRoleType.clientRoleBroadcaster);
     await _agoraEngine.enableAudio();
+    await _agoraEngine.enableLocalVideo(false);
+    await _agoraEngine.enableLocalAudio(true);
+    await _agoraEngine.muteLocalAudioStream(false);
+
     _agoraEngine.registerEventHandler(
       RtcEngineEventHandler(
+
         onJoinChannelSuccess: (connection, elapsed) {
           print("Joined channel: ${connection.channelId}");
         },
@@ -57,6 +64,7 @@ final class AgoraConfiguration {
         },
       ),
     );
+
 
     await _agoraEngine.joinChannel(
       token: token,

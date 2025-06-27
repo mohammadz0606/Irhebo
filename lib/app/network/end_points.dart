@@ -13,10 +13,13 @@ class AppEndpoints {
   ///LOCAL
   // static String base_url = 'https://irhebo-backend.smartedge.me/api/v1';
 
+  ///CLIENT
+  static String base_url = 'https://irhebo-back.smartedge.me/api/v1';
+
   ///STORE
-  static String base_url = !kDebugMode
-      ? 'https://irhebo-backend.smartedge.me/api/v1'
-      : 'https://irhebo-back.smartedge.me/api/v1';
+  // static String base_url = !kDebugMode
+  //     ? 'https://irhebo-backend.smartedge.me/api/v1'
+  //     : 'https://irhebo-back.smartedge.me/api/v1';
 
   static String media_url = !kDebugMode
       ? 'https://irhebo-back.smartedge.me/'

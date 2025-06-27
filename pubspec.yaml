@@ -19,7 +19,6 @@ dependencies:
   # path_provider:
   # flutter_statusbarcolor_ns:
   cupertino_back_gesture:
-  http:
   oktoast:
   logger:
   # retry:
@@ -35,7 +34,7 @@ dependencies:
   audio_waveforms:
   path_provider:
   readmore:
-  file_picker: ^10.1.9
+  file_picker: ^10.2.0
   mime: #1.0.4 #^1.0.5 
   flutter_animate:
   flutter_slidable:
@@ -83,6 +82,7 @@ dependencies:
   audioplayers: ^6.5.0
   uuid: ^4.5.1
   agora_rtc_engine: ^6.5.2
+  http: ^1.4.0
 
 dev_dependencies:
   flutter_test:
