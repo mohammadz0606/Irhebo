@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import '../../../../../../../app/global_imports.dart';
+import '../../../../../../../app/router/routes.dart';
 import '../../../../../../../domain/models/new_models/freelancer/freelancer_home_model.dart';
 import '../../../../../../../domain/providers/freelancer/freelancer_services.dart';
 import '../../../../../../widgets/app_image.dart';
@@ -139,6 +140,14 @@ class FreelancerServiceItems extends StatelessWidget {
                           );
                         },
                       );
+                    },
+                  );
+                },
+                onEditTap: () {
+                  Get.toNamed(
+                    AppRoutes.createService,
+                    arguments: {
+                      'id': data?.id ?? 0,
                     },
                   );
                 },

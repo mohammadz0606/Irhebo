@@ -224,7 +224,7 @@ Map<String, String> en = {
   "Create Service": "Create Service",
   "Add Portfolio": "Add Portfolio",
   "My Portfolio": "My Portfolio",
-  "Crete Portfolio": "Crete Portfolio",
+  "Crete Portfolio": "Create Portfolio",
   "Create portfolio entries to showcase your work":
       "Create portfolio entries to showcase your work",
   "Upload Image": "Upload Image/Video",
@@ -300,5 +300,7 @@ Map<String, String> en = {
 
   "Please enable the microphone permission" : "Please enable the microphone permission",
   "End Call" : "End Call",
-  "Call" : "Call"
+  "Call" : "Call",
+  "Service Update Successfully" : "Service Update Successfully",
+  "Update Service" : "Update Service"
 };

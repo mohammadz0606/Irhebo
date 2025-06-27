@@ -21,7 +21,8 @@ class ServiceProvider extends ChangeNotifier {
   List<SubcategoryModel>? subcategories;
   List<TagsModelData?>? tagsList;
   List<PlanModelData?>? planList;
-  List<String> tagsId = [];
+  List<String> tagsSlug = [];
+  List<TagsModelData?>? selectedTage;
 
   final TextEditingController titleController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
@@ -47,8 +48,9 @@ class ServiceProvider extends ChangeNotifier {
   List<bool> sourceFile = [false];
 
   bool isLoadingWithCreate = false;
+  bool isLoadingUpdate = false;
 
-  createNewService() async {
+  Future<void> createNewService() async {
     try {
       isLoadingWithCreate = true;
       notifyListeners();
@@ -79,7 +81,7 @@ class ServiceProvider extends ChangeNotifier {
         revision: revisionController.map((e) => int.parse(e.text)).toList(),
         sourceFile: sourceFile,
         supCategoryId: subcategoryModel?.id ?? 0,
-        tags: tagsId,
+        tags: tagsSlug,
       );
 
       final response = await Network().post(
@@ -118,6 +120,60 @@ class ServiceProvider extends ChangeNotifier {
     }
   }
 
+  Future<void> updateService({required int id}) async {
+    try {
+      isLoadingUpdate = true;
+      notifyListeners();
+      var data = CreateServiceParam(
+        title: titleController.text,
+        cover: cover,
+        currency: selectedCurrency?.code ?? '',
+        deliveryDays:
+            deliveryDayController.map((e) => int.parse(e.text)).toList(),
+        description: descriptionController.text,
+        media: media,
+        planId: plan.map((e) => e?.id ?? 0).toList(),
+        price: priceController.map((e) => double.parse(e.text)).toList(),
+        revision: revisionController.map((e) => int.parse(e.text)).toList(),
+        sourceFile: sourceFile,
+        supCategoryId: subcategoryModel?.id ?? 0,
+        tags: tagsSlug,
+      );
+
+      final response = await Network().post(
+        isUploadFile: true,
+        data: await data.toJson(),
+        url: '${AppEndpoints.serivceUpdate}$id',
+      );
+      String errorMessage = await Network().handelError(response: response);
+      if (errorMessage.isNotEmpty) {
+        isLoadingWithCreate = false;
+        notifyListeners();
+        AppSnackBar.openErrorSnackBar(message: errorMessage);
+        return;
+      }
+
+      isLoadingUpdate = false;
+      notifyListeners();
+      AppSnackBar.openSuccessSnackBar(
+          message: 'Service Update Successfully'.tr);
+      disposeAll();
+      Get.offAllNamed(AppRoutes.bottomNavBar);
+    } catch (error) {
+      if (error is DioException) {
+        AppSnackBar.openErrorSnackBar(
+          message: Network().handelDioException(error),
+        );
+      } else {
+        AppSnackBar.openErrorSnackBar(
+          message: error.toString(),
+        );
+      }
+      isLoadingUpdate = false;
+      notifyListeners();
+    }
+  }
+
   onChangeCover(File? value) {
     cover = value;
     notifyListeners();
@@ -133,15 +189,15 @@ class ServiceProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  onChangeCategory(CategoryModel? value) {
+  Future<void> onChangeCategory(CategoryModel? value) async {
     categoryModel = value;
     notifyListeners();
-    getSubcategories(value?.id ?? 0);
+    await getSubcategories(value?.id ?? 0);
   }
 
-  onChangeSubcategory(SubcategoryModel? value) {
+  Future<void> onChangeSubcategory(SubcategoryModel? value) async {
     subcategoryModel = value;
-    getTags();
+    await getTags();
     notifyListeners();
   }
 
@@ -156,11 +212,12 @@ class ServiceProvider extends ChangeNotifier {
   }
 
   onChangeTags(List<TagsModelData?> value) {
-    tagsId = value.map((e) => e?.slug ?? '').toList();
+    tagsSlug = value.map((e) => e?.slug ?? '').toList();
+    selectedTage = value;
     notifyListeners();
   }
 
-  getCategories() async {
+  Future<void> getCategories() async {
     categories?.clear();
     isLoadingCategory = true;
     notifyListeners();
@@ -267,8 +324,7 @@ class ServiceProvider extends ChangeNotifier {
     if (plan[planListUIndex]?.id == null) {
       AppSnackBar.openErrorSnackBar(message: 'Please select a plan.'.tr);
       return;
-    }
-    else if(selectedCurrency == null) {
+    } else if (selectedCurrency == null) {
       AppSnackBar.openErrorSnackBar(message: 'Please select a currency.'.tr);
       return;
     }
@@ -302,7 +358,7 @@ class ServiceProvider extends ChangeNotifier {
       priceController.removeAt(index);
       deliveryDayController.removeAt(index);
       revisionController.removeAt(index);
-      if(plan[index]?.id != null && planList?.contains(plan[index]) == false) {
+      if (plan[index]?.id != null && planList?.contains(plan[index]) == false) {
         planList?.add(plan[index]);
       }
       plan.removeAt(index);
@@ -351,7 +407,8 @@ class ServiceProvider extends ChangeNotifier {
     media.clear();
     categoryModel = null;
     subcategoryModel = null;
-    tagsId.clear();
+    tagsSlug.clear();
+    selectedTage?.clear();
     tagsList?.clear();
     planListUIndex = 0;
     selectedCurrency = null;

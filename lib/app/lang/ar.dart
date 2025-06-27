@@ -295,5 +295,8 @@ Map<String, String> ar = {
       "يوجد بالفعل محاثة مع المستقل",
   "Please enable the microphone permission": "يرجى تفعيل إذن الميكروفون",
   "End Call": "إنهاء المكالمة",
-  "Call": "مكالمة"
+  "Call": "مكالمة",
+  "Service Update Successfully": "تم تحديث الخدمة بنجاح",
+  "Update Service" : "تحديث الخدمة"
+
 };

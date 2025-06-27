@@ -10,7 +10,7 @@ final class CreateServiceParam {
   final int supCategoryId;
   final String title;
   final String description;
-  final File cover;
+  final File? cover;
   final List<File> media;
   final List<int> planId;
   final List<double> price;
@@ -36,7 +36,17 @@ final class CreateServiceParam {
   });
 
   Future<FormData> toJson() async {
-    final coverFileName = cover.path.split('/').last;
+    final formDataFields = <MapEntry<String, dynamic>>[];
+
+    if(cover != null) {
+      final coverFileName = cover!.path.split('/').last;
+      formDataFields.add(MapEntry(
+        "cover",
+        await MultipartFile.fromFile(cover!.path, filename: coverFileName),
+      ));
+    }
+
+
     List<MultipartFile> multiFiles = [];
     for (var file in media) {
       final fileName = file.path.split('/').last;
@@ -44,15 +54,11 @@ final class CreateServiceParam {
         await MultipartFile.fromFile(file.path, filename: fileName),
       );
     }
-    final formDataFields = <MapEntry<String, dynamic>>[];
 
     formDataFields.add(MapEntry("sub_category_id", supCategoryId));
     formDataFields.add(MapEntry("title", title.trim()));
     formDataFields.add(MapEntry("description", description.trim()));
-    formDataFields.add(MapEntry(
-      "cover",
-      await MultipartFile.fromFile(cover.path, filename: coverFileName),
-    ));
+
 
     formDataFields.add(MapEntry("currency", currency));
 
@@ -69,8 +75,7 @@ final class CreateServiceParam {
       ///---
       formDataFields.add(MapEntry("plans[$i][features][0][title]", 'Price'));
       formDataFields.add(MapEntry("plans[$i][features][0][type]", 'price'));
-      formDataFields.add(MapEntry("plans[$i][features][0][value]", price[i]));
-
+      formDataFields.add(MapEntry("plans[$i][features][0][value]", price[i].toString().replaceAll(',', '.')));
       ///----
       formDataFields
           .add(MapEntry("plans[$i][features][1][title]", 'Delivery Days'));

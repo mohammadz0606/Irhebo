@@ -29,13 +29,19 @@ class ServiceDetailsController extends GetxController {
   final RxBool _isLoadingPlan = false.obs;
 
   int get selectedTab => _selectedTab.value;
+
   ServiceDetailsModel get serviceDetails => _serviceDetails.value;
+
   bool get isLoading => _isLoading.value;
+
   bool get isLoadingPlan => _isLoadingPlan.value;
 
   set selectedTab(value) => _selectedTab.value = value;
+
   set isLoading(value) => _isLoading.value = value;
+
   set isLoadingPlan(value) => _isLoadingPlan.value = value;
+
   set serviceDetails(value) => _serviceDetails.value = value;
 
   int id = 0;
@@ -208,11 +214,11 @@ class ServiceDetailsController extends GetxController {
     // });
   }
 
-  getServiceDetails() async {
+  getServiceDetails([int? id]) async {
     _moreReviews.clear();
     isLoading = true;
     GetServiceDetailsUseCase getServiceDetailsUseCase = sl();
-    final result = await getServiceDetailsUseCase(id);
+    final result = await getServiceDetailsUseCase(id ?? this.id);
     result!.fold((l) {
       isLoading = false;
     }, (r) {

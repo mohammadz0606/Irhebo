@@ -1,15 +1,20 @@
 import 'package:dio/dio.dart';
+import 'package:irhebo/presentation/screens/service_details/service_details_controller.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import '../../../app/global_imports.dart';
 import '../../../app/network/network.dart';
 import '../../models/new_models/freelancer/freelancer_service_model.dart';
 import '../../models/new_models/general_model.dart';
+import '../../models/service_details_model.dart';
 import '../../params/new_params/freelanser/freelancer_service_param.dart';
+import '../../usecases/home_usecases/get_service_details_use_case.dart';
 
 class FreelancerServicesProvider extends ChangeNotifier {
   bool isLoading = false;
+  bool isLoadingGetDetails = false;
   FreelancerServiceModel? freelancerServiceModel;
+  ServiceDetailsModel? serviceDetails;
 
   int pageNumber = 1;
   RefreshController refreshController =
@@ -145,4 +150,47 @@ class FreelancerServicesProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  Future<void> getServicesDetails({
+    required int id,
+    required Function(ServiceDetailsModel serviceDetails) onSuccess,
+  }) async {
+    try {
+      if(serviceDetails != null) {
+        serviceDetails = null;
+      }
+      isLoadingGetDetails = true;
+      notifyListeners();
+      // Get.put(ServiceDetailsController());
+      // Get.find<ServiceDetailsController>().getServiceDetails(id);
+
+      GetServiceDetailsUseCase getServiceDetailsUseCase = sl();
+      final result = await getServiceDetailsUseCase(id);
+      result!.fold((l) {
+        isLoadingGetDetails = false;
+        notifyListeners();
+      }, (r) {
+        onSuccess(r.data ?? ServiceDetailsModel());
+        serviceDetails = r.data;
+        isLoadingGetDetails = false;
+        notifyListeners();
+      });
+    } catch (error) {
+      if (error is DioException) {
+        AppSnackBar.openErrorSnackBar(
+          message: Network().handelDioException(error),
+        );
+      } else {
+        AppSnackBar.openErrorSnackBar(
+          message: error.toString(),
+        );
+      }
+      isLoadingGetDetails = false;
+      notifyListeners();
+    }
+  }
+
+
+
+
 }

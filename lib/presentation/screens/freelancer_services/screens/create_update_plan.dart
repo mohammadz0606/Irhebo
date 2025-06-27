@@ -57,11 +57,18 @@ class CreatePlanScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 50),
                   AppButton(
-                    isLoading: provider.isLoadingWithCreate,
+                    isLoading: provider.isLoadingWithCreate ||
+                        provider.isLoadingUpdate,
                     title: 'Submit',
                     backGroundColor: AppLightColors.greenContainer,
                     onPressed: () async {
-                      await provider.createNewService();
+                      if (Get.arguments != null) {
+                        await provider.updateService(
+                          id: Get.arguments['id'],
+                        );
+                      } else {
+                        await provider.createNewService();
+                      }
                     },
                   ),
                 ],

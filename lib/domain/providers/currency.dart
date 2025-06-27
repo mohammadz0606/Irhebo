@@ -12,7 +12,7 @@ class CurrencyProvider extends ChangeNotifier {
 
   CurrencyModel? currencyModel;
 
-  getCurrencies() async {
+  Future<void> getCurrencies() async {
     try {
       if (currencyModel != null) {
         currencyModel = null;

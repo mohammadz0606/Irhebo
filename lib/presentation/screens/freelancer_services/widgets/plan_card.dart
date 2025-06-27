@@ -87,7 +87,8 @@ class _PlanCardState extends State<PlanCard> {
                               decimal: true),
                           inputFormatters: [
                             FilteringTextInputFormatter.allow(
-                                RegExp(r'^\d*\.?\d{0,2}')),
+                              RegExp(r'^\d*\.?\d{0,2}'),
+                            ),
                           ],
                           textInputAction: TextInputAction.done,
                         ),

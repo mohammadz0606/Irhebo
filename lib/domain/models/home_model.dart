@@ -5,6 +5,8 @@ import 'package:irhebo/domain/models/config_model.dart';
 import 'package:irhebo/domain/models/freelancer_details_model.dart';
 import 'package:irhebo/domain/models/login_model.dart';
 
+import 'new_models/tags_model.dart';
+
 part 'home_model.g.dart';
 
 @JsonSerializable()
@@ -14,6 +16,7 @@ class HomeModel {
   List<ServiceModel>? recommendedServices;
   @JsonKey(name: 'featured_portfolios')
   PaginationModel? featuredPortfolios;
+
   HomeModel({
     this.categories,
     this.recommendedServices,
@@ -37,6 +40,7 @@ class CategoryModel {
   String? description;
   String? cover;
   bool checked;
+
   CategoryModel({
     this.id,
     this.icon,
@@ -61,6 +65,7 @@ class SubcategoryModel {
   int? categoryId;
   String? icon;
   String? title;
+
   SubcategoryModel({
     this.id,
     this.categoryId,
@@ -82,6 +87,7 @@ class TagModel {
   int? subCategoryId;
   String? title;
   String? slug;
+
   TagModel({
     this.id,
     this.subCategoryId,
@@ -101,6 +107,7 @@ class AllServices {
   List<ServiceModel>? services;
   MetaModel? meta;
   List<TagModel>? tags;
+
   AllServices({
     this.services,
     this.meta,
@@ -119,6 +126,8 @@ class ServiceModel {
   int? id;
   @JsonKey(name: 'sub_category_id')
   int? subCategoryId;
+  @JsonKey(name: 'category_id')
+  int? categoryId;
   String? title;
   String? description;
   String? cover;
@@ -131,6 +140,7 @@ class ServiceModel {
   String? startServiceFrom;
   UserModel? user;
   List<MediaModel>? media;
+  List<TagsModelData?>? tags;
 
   ServiceModel(
       {this.id,
@@ -143,7 +153,9 @@ class ServiceModel {
       this.rating,
       this.startServiceFrom,
       this.user,
-      this.media});
+      this.categoryId,
+      this.media,
+      this.tags});
 
   factory ServiceModel.fromJson(Map<String, dynamic> json) {
     return _$ServiceModelFromJson(json);
@@ -165,14 +177,17 @@ class MediaModel {
   int? userId;
   @JsonKey(name: 'created_at')
   String? createdAt;
-  MediaModel({
-    this.id,
-    this.mediaPath,
-    this.mediaType,
-    this.messageId,
-    this.userId,
-    this.createdAt,
-  });
+  @JsonKey(name: 'is_cover')
+  bool? isCover;
+
+  MediaModel(
+      {this.id,
+      this.mediaPath,
+      this.mediaType,
+      this.messageId,
+      this.userId,
+      this.createdAt,
+      this.isCover});
 
   factory MediaModel.fromJson(Map<String, dynamic> json) {
     return _$MediaModelFromJson(json);
@@ -191,6 +206,7 @@ class FilterModel {
   bool checked;
   int? rateValue;
   List<FilterOptionModel>? options;
+
   // TextEditingController? minCon = TextEditingController();
   // TextEditingController? maxCon = TextEditingController();
   // RangeValues? slider;
@@ -221,6 +237,7 @@ class FilterOptionModel {
   @JsonKey(name: 'filter_id')
   int? filterId;
   String? title;
+
   FilterOptionModel({
     this.id,
     this.filterId,

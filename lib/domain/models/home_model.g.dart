@@ -99,6 +99,7 @@ Map<String, dynamic> _$AllServicesToJson(AllServices instance) =>
 ServiceModel _$ServiceModelFromJson(Map<String, dynamic> json) => ServiceModel(
       id: (json['id'] as num?)?.toInt(),
       subCategoryId: (json['sub_category_id'] as num?)?.toInt(),
+      categoryId: (json['category_id'] as num?)?.toInt(),
       title: json['title'] as String?,
       description: json['description'] as String?,
       cover: json['cover'] as String?,
@@ -106,6 +107,11 @@ ServiceModel _$ServiceModelFromJson(Map<String, dynamic> json) => ServiceModel(
       isWishlist: json['is_wishlist'] as bool?,
       rating: (json['rating'] as num?)?.toInt(),
       startServiceFrom: json['start_service_from'] as String?,
+      tags: (json['tags'] as List<dynamic>?)?.map(
+        (e) {
+          return TagsModelData.fromJson(e as Map<String, dynamic>);
+        },
+      ).toList(),
       user: json['user'] == null
           ? null
           : UserModel.fromJson(json['user'] as Map<String, dynamic>),
@@ -136,6 +142,7 @@ MediaModel _$MediaModelFromJson(Map<String, dynamic> json) => MediaModel(
       messageId: (json['message_id'] as num?)?.toInt(),
       userId: (json['user_id'] as num?)?.toInt(),
       createdAt: json['created_at'] as String?,
+      isCover: json['is_cover'],
     );
 
 Map<String, dynamic> _$MediaModelToJson(MediaModel instance) =>

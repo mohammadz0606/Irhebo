@@ -60,6 +60,7 @@ class AppEndpoints {
   static String freelancerCategories = '$base_url/users/freelancer-categories';
   static String subcategories = '$base_url/sub-categories/';
   static String serivceDetails = '$base_url/services/details/';
+  static String serivceUpdate = '$base_url/services/update/';
   static String portfolioDetails = '$base_url/portfolio/details/';
   static String verifyCode = '$base_url/verify-code';
   static String resetPassword = '$base_url/reset-password';
