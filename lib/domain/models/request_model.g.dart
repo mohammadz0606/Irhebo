@@ -11,6 +11,7 @@ RequestModel _$RequestModelFromJson(Map<String, dynamic> json) => RequestModel(
       title: json['title'] as String?,
       image: json['image'] as String?,
       orderNumber: json['order_number'] as String?,
+      contractPath: json['contract_path'] as String?,
       createdAt: json['created_at'] as String?,
       createdSince: json['created_since'] as String?,
       statusLabel: json['status_label'] as String?,

@@ -19,6 +19,7 @@ class ChatProvider extends ChangeNotifier {
   List<ChatListModelData>? allChatList;
   final List<int> alFreelancerChatId = [];
   bool isLoadingGetChatList = false;
+  bool isLoadingSendMessages = false;
 
   List<ChatMessagesModelDataMessages>? chatMessages;
 
@@ -111,6 +112,8 @@ class ChatProvider extends ChangeNotifier {
 
   Future<void> sendMessage({required SendMessageParam sendParam}) async {
     try {
+      isLoadingSendMessages = true;
+      notifyListeners();
       final response = await Network().post(
         url: AppEndpoints.sendMessage,
         isUploadFile: sendParam.attachmentFile != null,
@@ -121,6 +124,8 @@ class ChatProvider extends ChangeNotifier {
         AppSnackBar.openErrorSnackBar(
           message: errorMessage,
         );
+        isLoadingSendMessages = false;
+        notifyListeners();
         return;
       }
 
@@ -135,7 +140,7 @@ class ChatProvider extends ChangeNotifier {
         (existingList) => [newMessage, ...existingList],
         ifAbsent: () => [newMessage],
       );
-
+      isLoadingSendMessages = false;
       notifyListeners();
     } catch (error) {
       if (error is DioException) {
@@ -147,6 +152,8 @@ class ChatProvider extends ChangeNotifier {
           message: error.toString(),
         );
       }
+      isLoadingSendMessages = false;
+      notifyListeners();
     }
   }
 

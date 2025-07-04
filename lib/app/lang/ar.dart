@@ -297,6 +297,6 @@ Map<String, String> ar = {
   "End Call": "إنهاء المكالمة",
   "Call": "مكالمة",
   "Service Update Successfully": "تم تحديث الخدمة بنجاح",
-  "Update Service" : "تحديث الخدمة"
-
+  "Update Service": "تحديث الخدمة",
+  "ErrorOnDownload": "خطأ في التحميل"
 };

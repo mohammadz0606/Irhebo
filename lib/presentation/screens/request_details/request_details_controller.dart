@@ -21,6 +21,7 @@ import 'package:irhebo/presentation/screens/request_details/widgets/update_reque
 import 'package:irhebo/presentation/widgets/app_bottom_sheet.dart';
 import 'package:irhebo/presentation/widgets/app_dialog.dart';
 
+import '../../../app/network/download_file.dart';
 import '../../../app/network/end_points.dart';
 import '../../../app/network/network.dart';
 import '../../../app/snack_bar.dart';
@@ -34,6 +35,7 @@ class RequestDetailsController extends GetxController {
   TextEditingController commentController = TextEditingController();
   final RxInt _currentRate = 0.obs;
   final RxBool _isLoading = false.obs;
+  final RxBool _isLoadingDownloadContract = false.obs;
   final RxBool _isLoadingUpdate = false.obs;
   final RxBool _isLoadingReview = false.obs;
   final RxBool _isLoadingConfirmRequest = false.obs;
@@ -50,11 +52,16 @@ class RequestDetailsController extends GetxController {
 
   bool get isLoadingConfirmRequest => _isLoadingConfirmRequest.value;
 
+  bool get isLoadingDownloadContract => _isLoadingDownloadContract.value;
+
   RequestModel get request => _request.value;
 
   set currentRate(value) => _currentRate.value = value;
 
   set isLoading(value) => _isLoading.value = value;
+
+  set isLoadingDownloadContract(value) =>
+      _isLoadingDownloadContract.value = value;
 
   set isLoadingUpdate(value) => _isLoadingUpdate.value = value;
 
@@ -323,5 +330,25 @@ class RequestDetailsController extends GetxController {
         child: UpdateRequestDialog(status: status),
       ),
     );
+  }
+
+  downloadContract({required String url}) async {
+    try {
+      isLoadingDownloadContract = true;
+
+      String fileName = Uri.parse(url).pathSegments.last;
+      final response = await PDFHandler.downloadAndOpenPDF(url, fileName);
+
+      if(response?.statusCode == 200) {
+        isLoadingDownloadContract = false;
+      } else {
+        AppSnackBar.openErrorSnackBar(message: 'ErrorOnDownload'.tr);
+        isLoadingDownloadContract = false;
+      }
+
+    } catch (error) {
+      AppSnackBar.openErrorSnackBar(message: error.toString());
+      isLoadingDownloadContract = false;
+    }
   }
 }

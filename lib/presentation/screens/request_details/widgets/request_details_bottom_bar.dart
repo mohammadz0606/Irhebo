@@ -21,9 +21,10 @@ class RequestDetailsBottomBar extends GetWidget<RequestDetailsController> {
         if (getUserRole != UserRoles.freelancer)
           Obx(() {
             //final request = controller.request;
-            if (controller.request.statusKey == 'completed' ||  controller.request.statusKey == 'confirmed'  &&
-                controller.request.isReviewed == false &&
-                getUserRole == UserRoles.client) {
+            if (controller.request.statusKey == 'completed' ||
+                controller.request.statusKey == 'confirmed' &&
+                    controller.request.isReviewed == false &&
+                    getUserRole == UserRoles.client) {
               return Column(
                 children: [
                   AppButton(
@@ -111,7 +112,7 @@ class RequestDetailsBottomBar extends GetWidget<RequestDetailsController> {
             },
           ),
         } else if (getUserRole == UserRoles.client &&
-            controller.request.statusKey == 'completed')... {
+            controller.request.statusKey == 'completed') ...{
           AppButton(
             onPressed: () async {
               await controller.openUpdateRequestDialog(status: 'confirmed');
@@ -120,19 +121,17 @@ class RequestDetailsBottomBar extends GetWidget<RequestDetailsController> {
           ),
           SizedBox(height: 2 * (w / 100)),
         },
-
-
-        if (controller.request.statusKey == 'in_progress' && getUserRole == UserRoles.freelancer)...{
+        if (controller.request.statusKey == 'in_progress' &&
+            getUserRole == UserRoles.freelancer) ...{
           AppButton(
-            onPressed: () async{
+            onPressed: () async {
               await controller.openUpdateRequestDialog(status: 'completed');
             },
             title: "Complete Request",
           ),
           SizedBox(height: 2 * (w / 100)),
         },
-
-        if (controller.request.statusKey == 'in_progress')...{
+        if (controller.request.statusKey == 'in_progress') ...{
           AppButton(
             onPressed: () {
               controller.openUpdateRequestDialog(status: 'in_progress');
@@ -142,14 +141,19 @@ class RequestDetailsBottomBar extends GetWidget<RequestDetailsController> {
           SizedBox(height: 2 * (w / 100)),
         },
         SizedBox(height: 2 * (w / 100)),
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 5.9 * (w / 100)),
-          child: AppButton(
-            onPressed: () {
-
-            },
-            title: "Download Contract",
-          ),
+        Obx(
+          () {
+            return Padding(
+              padding: EdgeInsets.symmetric(horizontal: 5.9 * (w / 100)),
+              child: AppButton(
+                isLoading: controller.isLoadingDownloadContract,
+                onPressed: () async {
+                  await controller.downloadContract(url: controller.request.contractPath ?? '');
+                },
+                title: "Download Contract",
+              ),
+            );
+          },
         ),
         SizedBox(height: 4 * (w / 100)),
       ],

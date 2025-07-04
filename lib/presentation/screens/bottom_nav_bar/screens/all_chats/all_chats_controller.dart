@@ -105,7 +105,9 @@ class AllChatsController extends GetxController {
   onInit() async {
     super.onInit();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<ChatProvider>(Get.context!, listen: false).getChatList();
+      if (getUserRole != UserRoles.non) {
+        Provider.of<ChatProvider>(Get.context!, listen: false).getChatList();
+      }
     });
   }
 
@@ -118,37 +120,27 @@ class AllChatsController extends GetxController {
     switch (value) {
       case 1:
         chats.removeAt(i);
-        Provider.of<ChatProvider>(Get.context!, listen: false).toggleFlag(
-            ToggleParam(
-              flag: 'delete',
-              chatId:    i.toString(),
-            )
-
-
-        );
+        Provider.of<ChatProvider>(Get.context!, listen: false)
+            .toggleFlag(ToggleParam(
+          flag: 'delete',
+          chatId: i.toString(),
+        ));
 
       case 2:
         chats[i].type = "Spam";
-        Provider.of<ChatProvider>(Get.context!, listen: false).toggleFlag(
-            ToggleParam(
-                flag: 'spam',
-                chatId:   i.toString(),
-            )
-
-
-        );
+        Provider.of<ChatProvider>(Get.context!, listen: false)
+            .toggleFlag(ToggleParam(
+          flag: 'spam',
+          chatId: i.toString(),
+        ));
 
       case 3:
         chats[i].type = "Starred";
-        Provider.of<ChatProvider>(Get.context!, listen: false).toggleFlag(
-          ToggleParam(
-            flag: 'stared',
-            chatId:    i.toString(),
-          )
-
-
-        );
-
+        Provider.of<ChatProvider>(Get.context!, listen: false)
+            .toggleFlag(ToggleParam(
+          flag: 'stared',
+          chatId: i.toString(),
+        ));
     }
     _chats.refresh();
   }

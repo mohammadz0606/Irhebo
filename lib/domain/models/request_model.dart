@@ -14,6 +14,8 @@ class RequestModel {
   String? image;
   @JsonKey(name: 'order_number')
   String? orderNumber;
+  @JsonKey(name: 'contract_path')
+  String? contractPath;
   @JsonKey(name: 'created_at')
   String? createdAt;
   @JsonKey(name: 'created_since')
@@ -63,6 +65,7 @@ class RequestModel {
     this.elapsedDays,
     this.totalDays,
     this.progressPercentage,
+    this.contractPath,
   });
 
   factory RequestModel.fromJson(Map<String, dynamic> json) {

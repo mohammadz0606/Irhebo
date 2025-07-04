@@ -124,30 +124,33 @@ class ChatTextField extends GetWidget<ChatController> {
                         );
                       }
                     },
-                    child: Obx(
-                      () {
-                        return DecoratedIcon(
-                          padding: 2.98 * (w / 100),
-                          width: 12.93 * (w / 100),
-                          height: 12.93 * (w / 100),
-                          matchTextDirection: true,
-                          color: Get.find<AppController>().darkMode
-                              ? AppDarkColors.darkContainer2
-                              : Colors.white,
-                          //imagePath: AppIcons.send,
-                          imagePath: controller.type == ChatType.Bot ||
-                                  controller.selectedFilePath.isNotEmpty ==
-                                      true ||
-                                  controller.chatMessage.value.text
-                                      .trim()
-                                      .isNotEmpty ||
-                                  controller.isRecord.value
-                              ? AppIcons.send
-                              : AppIcons.mic,
-                          svgColor: AppDarkColors.greenContainer,
-                        );
-                      },
-                    ),
+                    child: provider.isLoadingSendMessages
+                        ? const Center(child: CircularProgressIndicator())
+                        : Obx(
+                            () {
+                              return DecoratedIcon(
+                                padding: 2.98 * (w / 100),
+                                width: 12.93 * (w / 100),
+                                height: 12.93 * (w / 100),
+                                matchTextDirection: true,
+                                color: Get.find<AppController>().darkMode
+                                    ? AppDarkColors.darkContainer2
+                                    : Colors.white,
+                                //imagePath: AppIcons.send,
+                                imagePath: controller.type == ChatType.Bot ||
+                                        controller
+                                                .selectedFilePath.isNotEmpty ==
+                                            true ||
+                                        controller.chatMessage.value.text
+                                            .trim()
+                                            .isNotEmpty ||
+                                        controller.isRecord.value
+                                    ? AppIcons.send
+                                    : AppIcons.mic,
+                                svgColor: AppDarkColors.greenContainer,
+                              );
+                            },
+                          ),
                   );
                 },
               )
