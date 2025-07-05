@@ -31,8 +31,7 @@ class RequestModel {
   @JsonKey(name: 'is_reviewed')
   bool? isReviewed;
   UserModel? user;
-  @JsonKey(name: 'freelancer_user')
-  UserFreelancerModelDataFreelancer? freelancer;
+  FreelancerDataModel? freelancer;
   ServiceModel? service;
   PlanModel? plan;
   List<LogModel>? logs;
@@ -84,6 +83,47 @@ class RequestModel {
 
   Map<String, dynamic> toJson() => _$RequestModelToJson(this);
 }
+
+
+class FreelancerDataModel {
+  int? id;
+  String? name;
+  String? email;
+  String? fullPhone;
+  String? phone;
+  String? prefix;
+  String? gender;
+  String? avatar;
+  String? role;
+  String? bio;
+  String? profession;
+  List<LanguageModel>? languages;
+
+  FreelancerDataModel.fromJson(Map<String, dynamic> json) {
+    id = json['id']?.toInt();
+    name = json['name']?.toString();
+    email = json['email']?.toString();
+    fullPhone = json['full_phone']?.toString();
+    prefix = json['prefix']?.toString();
+    phone = json['phone']?.toString();
+    gender = json['gender']?.toString();
+    avatar = json['avatar']?.toString();
+    role = json['role']?.toString();
+    bio = json['bio']?.toString();
+    profession = json['profession']?.toString();
+
+    if (json['languages'] != null) {
+      final v = json['languages'];
+      final arr0 = <LanguageModel>[];
+      v.forEach((v) {
+        arr0.add(LanguageModel.fromJson(v));
+      });
+      languages = arr0;
+    }
+  }
+
+}
+
 
 @JsonSerializable()
 class LogModel {

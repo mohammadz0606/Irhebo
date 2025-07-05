@@ -21,9 +21,9 @@ RequestModel _$RequestModelFromJson(Map<String, dynamic> json) => RequestModel(
       user: json['user'] == null
           ? null
           : UserModel.fromJson(json['user'] as Map<String, dynamic>),
-      freelancer: json['freelancer_user'] == null
+      freelancer: json['freelancer'] == null
           ? null
-          : UserFreelancerModelDataFreelancer.fromJson(json['freelancer_user'] as Map<String, dynamic>),
+          : FreelancerDataModel.fromJson(json['freelancer'] as Map<String, dynamic>),
       needAction: json['need_action'] as bool?,
       service: json['service'] == null
           ? null

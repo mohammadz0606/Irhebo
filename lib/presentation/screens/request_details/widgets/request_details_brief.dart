@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:irhebo/app/app_controller.dart';
+import 'package:irhebo/app/app_functions.dart';
+import 'package:irhebo/app/global_imports.dart';
 import 'package:irhebo/app/resources/style/colors.dart';
 import 'package:irhebo/domain/models/login_model.dart';
 import 'package:irhebo/domain/models/request_model.dart';
@@ -12,6 +14,7 @@ class RequestDetailsBrief extends StatelessWidget {
       required this.request,
       required this.user,
       this.haveIcon = true});
+
   final RequestModel? request;
   final UserModel? user;
   final bool haveIcon;
@@ -26,7 +29,19 @@ class RequestDetailsBrief extends StatelessWidget {
           height: 5.22 * (w / 100),
         ),
         RequestDetailsAccountInfo(
-          user: user,
+          user: getUserRole == UserRoles.freelancer
+              ? user
+              : UserModel(
+                  username: request?.freelancer?.name,
+                  name: request?.freelancer?.name,
+                  id: request?.freelancer?.id,
+                  avatar: request?.freelancer?.avatar,
+                  profession: request?.freelancer?.profession,
+                  email: request?.freelancer?.email,
+                  phone: request?.freelancer?.phone,
+                  prefix: request?.freelancer?.prefix,
+                  role: request?.freelancer?.role,
+                ),
           haveIcon: haveIcon,
           rate: request?.service?.rating ?? 0,
         ),
