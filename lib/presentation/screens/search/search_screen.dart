@@ -27,10 +27,10 @@ class SearchScreen extends GetView<sr.SearchControllerGetx> {
                       })
                     }
                 : null,
-            onTapFilter:
-                controller.pageIndex == 2 && !controller.isLoadingFilters
-                    ? () => controller.openFilterBottomSheet()
-                    : null,
+            // onTapFilter:
+            //     controller.pageIndex == 2 && !controller.isLoadingFilters
+            //         ? () => controller.openFilterBottomSheet()
+            //         : null,
           ),
           body: Column(
             children: [

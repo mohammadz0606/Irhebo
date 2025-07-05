@@ -46,7 +46,7 @@ class _CreateServicesScreenState extends State<CreateServicesScreen> {
           id: Get.arguments['id'],
           onSuccess: (result) {
             var data = Provider.of<ServiceProvider>(context, listen: false);
-            //data.quillController.text = result.service?.description ?? '';
+            data.descriptionController.text = result.service?.description ?? '';
             data.titleController.text = result.service?.title ?? '';
             coverURL = result.service?.cover ?? '';
             mediaURLs = result.service?.media
@@ -159,6 +159,7 @@ class _CreateServicesScreenState extends State<CreateServicesScreen> {
       }
     });
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -290,24 +291,10 @@ class _CreateServicesScreenState extends State<CreateServicesScreen> {
                     const SizedBox(height: 10),
                     AppTextField(
                       hint: "Description",
-                      controller: TextEditingController(),
+                      controller: provider.descriptionController,
                       textInputType: TextInputType.multiline,
-                      maxLines: 1,
-                      readOnly: true,
-                      onTap: () {
-                        Get.bottomSheet(
-                          HtmlFormat(
-                            quillController: provider.quillController,
-                          ),
-                          backgroundColor: Get.find<AppController>().darkMode
-                              ? AppDarkColors.darkScaffoldColor
-                              : AppLightColors.pureWhite,
-                          barrierColor: Get.find<AppController>().darkMode
-                              ? AppDarkColors.darkContainer.withOpacity(0.3)
-                              : AppLightColors.shadow.withOpacity(0.3),
-                          elevation: 0,
-                        );
-                      },
+                      maxLines: 4,
+                      readOnly: false,
                       textInputAction: TextInputAction.newline,
                       // onValidate: AppValidators.validateName,
                     ),
@@ -349,7 +336,7 @@ class _CreateServicesScreenState extends State<CreateServicesScreen> {
                         if (provider.titleController.text.trim().isEmpty) {
                           AppSnackBar.openErrorSnackBar(
                               message: "Title is required.".tr);
-                        } else if (provider.quillController.document.isEmpty()) {
+                        } else if (provider.descriptionController.text.trim().isEmpty) {
                           AppSnackBar.openErrorSnackBar(
                               message: "Description is required.".tr);
                         } else if (provider.cover == null) {

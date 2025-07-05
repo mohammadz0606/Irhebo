@@ -94,6 +94,8 @@ class AppEndpoints {
   static String markAsRead = '$base_url/notifications/mark-as-read/';
   static String socialLogin = '$base_url/social-login';
   static String deleteService = '$base_url/services/delete/';
+  static String newSearch = '$base_url/services/search-services-and-sub-categories/search';
+
 
   ///CHAT
   static String startChat = '$base_url/chat/start-chat?user_id=';

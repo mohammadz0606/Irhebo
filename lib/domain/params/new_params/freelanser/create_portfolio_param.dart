@@ -1,12 +1,12 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-
-import '../../../models/new_models/freelancer/freelancer_service_model.dart';
+import 'package:flutter_quill/flutter_quill.dart';
+import 'package:vsc_quill_delta_to_html/vsc_quill_delta_to_html.dart';
 
 final class CreatePortfolioParam {
   final String title;
-  final String description;
+  final QuillController description;
   final File? cover;
   final List<int> services;
   final List<File>? media;
@@ -25,17 +25,26 @@ final class CreatePortfolioParam {
     if (media != null && media!.isNotEmpty) {
       for (var file in media!) {
         final fileName = file.path.split('/').last;
-        final multipart = await MultipartFile.fromFile(file.path, filename: fileName);
+        final multipart =
+            await MultipartFile.fromFile(file.path, filename: fileName);
         formData.files.add(MapEntry("media[]", multipart));
       }
     }
 
     formData.fields.add(MapEntry("title", title.trim()));
-    formData.fields.add(MapEntry("description", description.trim()));
+
+    final delta = description.document.toDelta();
+    final deltaJson = delta.toJson();
+
+    final converter = QuillDeltaToHtmlConverter(deltaJson);
+    final html = converter.convert();
+
+    formData.fields.add(MapEntry("description", html));
 
     if (cover != null) {
       final coverFileName = cover!.path.split('/').last;
-      final coverMultipart = await MultipartFile.fromFile(cover!.path, filename: coverFileName);
+      final coverMultipart =
+          await MultipartFile.fromFile(cover!.path, filename: coverFileName);
       formData.files.add(MapEntry("cover", coverMultipart));
     }
 

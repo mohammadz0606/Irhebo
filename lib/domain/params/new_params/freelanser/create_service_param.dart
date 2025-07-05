@@ -1,8 +1,9 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_quill/flutter_quill.dart';
-import 'package:vsc_quill_delta_to_html/vsc_quill_delta_to_html.dart';
+
 
 import '../../../../app/injection.dart';
 import '../../../../app/storage/app_prefs.dart';
@@ -11,7 +12,7 @@ import '../../../../app/storage/app_prefs_keys.dart';
 final class CreateServiceParam {
   final int supCategoryId;
   final String title;
-  final QuillController description;
+  final String description;
   final File? cover;
   final List<File> media;
   final List<int> planId;
@@ -59,13 +60,7 @@ final class CreateServiceParam {
     formDataFields.add(MapEntry("sub_category_id", supCategoryId));
     formDataFields.add(MapEntry("title", title.trim()));
 
-    final delta = description.document.toDelta();
-    final deltaJson = delta.toJson();
-
-    final converter = QuillDeltaToHtmlConverter(deltaJson);
-    final html = converter.convert();
-
-    formDataFields.add(MapEntry("description", html));
+    formDataFields.add(MapEntry("description", description.trim()));
 
     formDataFields.add(MapEntry("currency", currency));
 

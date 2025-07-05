@@ -26,8 +26,7 @@ class ServiceProvider extends ChangeNotifier {
   List<TagsModelData?>? selectedTage;
 
   final TextEditingController titleController = TextEditingController();
-  //final TextEditingController descriptionController = TextEditingController();
-  final QuillController quillController = QuillController.basic();
+  final TextEditingController descriptionController = TextEditingController();
 
   /*
   final delta = provider.quillController.document.toDelta();
@@ -85,7 +84,7 @@ print(html);
         currency: selectedCurrency?.code ?? '',
         deliveryDays:
             deliveryDayController.map((e) => int.parse(e.text)).toList(),
-        description: quillController,
+        description: descriptionController.text,
         media: media,
         planId: plan.map((e) => e?.id ?? 0).toList(),
         price: priceController.map((e) => double.parse(e.text)).toList(),
@@ -141,7 +140,7 @@ print(html);
         currency: selectedCurrency?.code ?? '',
         deliveryDays:
             deliveryDayController.map((e) => int.parse(e.text)).toList(),
-        description: quillController,
+        description: descriptionController.text,
         media: media,
         planId: plan.map((e) => e?.id ?? 0).toList(),
         price: priceController.map((e) => double.parse(e.text)).toList(),
@@ -413,8 +412,8 @@ print(html);
 
   void disposeAll() {
     titleController.clear();
-    //descriptionController.clear();
-    quillController.dispose();
+    descriptionController.clear();
+    //quillController.dispose();
     cover = null;
     media.clear();
     categoryModel = null;

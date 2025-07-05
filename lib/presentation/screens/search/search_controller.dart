@@ -25,6 +25,9 @@ import 'package:irhebo/presentation/widgets/app_dialog.dart';
 import 'package:irhebo/presentation/widgets/login_required_dialog.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
+import '../../../domain/models/login_model.dart';
+import '../../../domain/models/new_models/search/new_search_model.dart';
+
 class SearchControllerGetx extends GetxController {
   final appController = Get.find<AppController>();
 
@@ -41,6 +44,7 @@ class SearchControllerGetx extends GetxController {
   TextEditingController maxSliderController = TextEditingController();
 
   final RxList<CategoryModel> _categories = <CategoryModel>[].obs;
+  final Rx<NewSearchModel> _newSearchModel = NewSearchModel().obs;
   final RxList<SubcategoryModel> _subcategories = <SubcategoryModel>[].obs;
   final RxList<FilterModel> _multiDropDownButtonsFilters = <FilterModel>[].obs;
 
@@ -76,7 +80,7 @@ class SearchControllerGetx extends GetxController {
 
   int get pageIndex => _pageIndex.value;
 
-  bool get isLoadingCategory => _isLoadingCategory.value;
+  bool get isLoadingSubcategoriesNew => _isLoadingCategory.value;
 
   bool get isLoadingFilters => _isLoadingFilters.value;
 
@@ -106,11 +110,15 @@ class SearchControllerGetx extends GetxController {
 
   List<CategoryModel> get categories => _filteredCategories;
 
+  NewSearchModel get searchModel => _newSearchModel.value;
+
   List<SubcategoryModel> get subcategories => _filteredSubcategories;
 
   set pageNumber(value) => _pageNumber.value = value;
 
   set categories(value) => _categories.value = value;
+
+  set searchModel(value) => _newSearchModel.value = value;
 
   set subcategories(value) => _subcategories.value = value;
 
@@ -124,7 +132,7 @@ class SearchControllerGetx extends GetxController {
 
   set pageIndex(value) => _pageIndex.value = value;
 
-  set isLoadingCategory(value) => _isLoadingCategory.value = value;
+  set isLoadingSubcategoriesNew(value) => _isLoadingCategory.value = value;
 
   set isLoadingFilters(value) => _isLoadingFilters.value = value;
 
@@ -268,7 +276,7 @@ class SearchControllerGetx extends GetxController {
       _pageIndex(1);
       getSubcategories(categoryId);
     } else {
-      getCategories();
+      getSubcategoriesAndServicesNew();
     }
     searchController.addListener(() {
       if (pageIndex == 0) {
@@ -422,11 +430,15 @@ class SearchControllerGetx extends GetxController {
       openLoginRequiredDialog();
     } else {
       services[index].isWishlist = !services[index].isWishlist!;
+      _newSearchModel.value.data?.services?[index]?.isWishlist = !_newSearchModel.value.data!.services![index]!.isWishlist!;
       _services.refresh();
+      _newSearchModel.refresh();
       bool result = await appController.addToWishlist(services[index].id);
       if (!result) {
         services[index].isWishlist = !services[index].isWishlist!;
+        _newSearchModel.value.data?.services?[index]?.isWishlist = !_newSearchModel.value.data!.services![index]!.isWishlist!;
         _services.refresh();
+        _newSearchModel.refresh();
       }
     }
   }
@@ -523,18 +535,75 @@ class SearchControllerGetx extends GetxController {
     _checkboxFilters.refresh();
   }
 
-  Future<void> getCategories() async {
-    isLoadingCategory = true;
-    GetCategoriesUseCase getCategoriesUseCase = sl();
-    final result = await getCategoriesUseCase(());
-    result!.fold((l) {
-      isLoadingCategory = false;
-    }, (r) {
-      isLoadingCategory = false;
-      categories = r.data;
-      _categories.refresh();
-      _filteredCategories.value = r.data ?? [];
-    });
+  Future<void> getSubcategoriesAndServicesNew() async {
+    try {
+      _newSearchModel.refresh();
+      _services.refresh();
+      isLoadingSubcategoriesNew = true;
+
+      final response = await Network().get(url: AppEndpoints.newSearch, query: {
+        'perPage': 100,
+        'search': '',
+      });
+      String errorMessage = await Network().handelError(response: response);
+      if (errorMessage.isNotEmpty) {
+        isLoadingSubcategoriesNew = false;
+        AppSnackBar.openErrorSnackBar(
+          message: errorMessage,
+        );
+        return;
+      }
+
+      searchModel = NewSearchModel.fromJson(response.data);
+
+      services = searchModel.data?.services?.map(
+        (e) {
+          return ServiceModel(
+            id: e?.id,
+            title: e?.title,
+            cover: e?.cover,
+            description: e?.description,
+            isRecommended: e?.isRecommended,
+            isWishlist: e?.isWishlist,
+            rating: e?.rating,
+            startServiceFrom: e?.startServiceFrom,
+            subCategoryId: e?.subCategoryId,
+            user: UserModel(
+              id: e?.user?.id,
+              username: e?.user?.username,
+              name: e?.user?.username,
+              profession: e?.user?.profession,
+              avatar: e?.user?.avatar,
+            ),
+          );
+        },
+      ).toList();
+      //categories
+      isLoadingSubcategoriesNew = false;
+    } catch (error) {
+      if (error is DioException) {
+        AppSnackBar.openErrorSnackBar(
+          message: Network().handelDioException(error),
+        );
+      } else {
+        AppSnackBar.openErrorSnackBar(
+          message: error.toString(),
+        );
+      }
+      isLoadingSubcategoriesNew = false;
+    }
+
+    //?perPage=100&search=
+    // GetCategoriesUseCase getCategoriesUseCase = sl();
+    // final result = await getCategoriesUseCase(());
+    // result!.fold((l) {
+    //   isLoadingCategory = false;
+    // }, (r) {
+    //   isLoadingCategory = false;
+    //   categories = r.data;
+    //   _categories.refresh();
+    //   _filteredCategories.value = r.data ?? [];
+    // });
   }
 
   getSubcategories(int id) async {

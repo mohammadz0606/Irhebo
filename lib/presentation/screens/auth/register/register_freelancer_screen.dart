@@ -68,7 +68,7 @@ class _RegisterFreelancerScreenState extends State<RegisterFreelancerScreen> {
       setState(() {});
     }
 
-    searchController.getCategories().then((_) {
+    searchController.getSubcategoriesAndServicesNew().then((_) {
       if (widget.userFreelancerModelData != null) {
         _biography.text = widget.userFreelancerModelData?.freelancer?.bio ?? '';
 

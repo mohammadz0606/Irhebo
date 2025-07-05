@@ -2,6 +2,8 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter_quill_delta_from_html/flutter_quill_delta_from_html.dart';
+import 'package:flutter_quill/flutter_quill.dart';
 import 'package:irhebo/domain/providers/files_manager.dart';
 import 'package:irhebo/presentation/screens/auth/register/widgets/upload_file.dart';
 
@@ -11,6 +13,7 @@ import '../../../../domain/params/new_params/freelanser/create_portfolio_param.d
 import '../../../../domain/providers/freelancer/freelancer_portfolio.dart';
 import '../../../widgets/app_button.dart';
 import '../../../widgets/app_text_field.dart';
+import '../../../widgets/html_form.dart';
 import '../../../widgets/normal_app_bar.dart';
 import '../widgets/related_services.dart';
 import '../widgets/upload_multiple_file.dart';
@@ -32,14 +35,17 @@ class _CreateNewUpdatePortfolioScreenState
   late FreelancerPortfolioProvider freelancerPortfolioProvider;
   final TextEditingController title = TextEditingController();
   final TextEditingController desc = TextEditingController();
- // List<int> selectedServices = [];
+
+  // List<int> selectedServices = [];
   String? urlCover;
   List<String>? mediaUrls;
+  QuillController quillController = QuillController.basic();
 
   @override
   void dispose() {
     title.dispose();
     desc.dispose();
+    quillController.dispose();
     super.dispose();
   }
 
@@ -59,14 +65,15 @@ class _CreateNewUpdatePortfolioScreenState
     super.initState();
   }
 
-  _onLoadEditData() async {
+  Future<void> _onLoadEditData() async {
     if (Get.arguments?['data'] != null) {
       await freelancerPortfolioProvider.getPortfolioDetails(
         Get.arguments?['id'],
         (data) async {
           media.clear();
           title.text = data?.title ?? '';
-          desc.text = data?.description ?? '';
+          //desc.text = data?.description ?? '';
+          quillController = await quillControllerFromHtml(data?.description ?? '');
           urlCover = data?.media
               ?.firstWhere(
                 (element) => element?.isCover == true,
@@ -98,6 +105,14 @@ class _CreateNewUpdatePortfolioScreenState
         },
       );
     }
+  }
+
+  Future<QuillController> quillControllerFromHtml(String html) async {
+    final delta = HtmlToDelta().convert(html, transformTableAsEmbed: false);
+    return QuillController(
+      document: Document.fromDelta(delta),
+      selection: const TextSelection.collapsed(offset: 0),
+    );
   }
 
   @override
@@ -176,7 +191,24 @@ class _CreateNewUpdatePortfolioScreenState
                           AppTextField(
                             controller: desc,
                             textInputType: TextInputType.multiline,
-                            maxLines: 3,
+                            readOnly: true,
+                            onTap: () {
+                              Get.bottomSheet(
+                                HtmlFormat(
+                                  quillController: quillController,
+                                ),
+                                backgroundColor:
+                                    Get.find<AppController>().darkMode
+                                        ? AppDarkColors.darkScaffoldColor
+                                        : AppLightColors.pureWhite,
+                                barrierColor: Get.find<AppController>().darkMode
+                                    ? AppDarkColors.darkContainer
+                                        .withOpacity(0.3)
+                                    : AppLightColors.shadow.withOpacity(0.3),
+                                elevation: 0,
+                              );
+                            },
+                            maxLines: 1,
                             textInputAction: TextInputAction.newline,
                           ),
                           const SizedBox(height: 25),
@@ -209,7 +241,7 @@ class _CreateNewUpdatePortfolioScreenState
                     onPressed: () async {
                       if (Get.arguments?['data'] != null) {
                         if (title.text.trim().isEmpty ||
-                            desc.text.trim().isEmpty ||
+                            quillController.document.isEmpty() ||
                             services.isEmpty) {
                           AppSnackBar.openErrorSnackBar(
                             message: 'Please fill all fields'.tr,
@@ -220,7 +252,7 @@ class _CreateNewUpdatePortfolioScreenState
                           id: Get.arguments?['id'],
                           CreatePortfolioParam(
                             cover: cove,
-                            description: desc.text,
+                            description: quillController,
                             title: title.text,
                             services: services,
                             media: media.isEmpty ? null : media,
@@ -230,7 +262,7 @@ class _CreateNewUpdatePortfolioScreenState
                         if (media.isEmpty ||
                             cove == null ||
                             title.text.trim().isEmpty ||
-                            desc.text.trim().isEmpty ||
+                            quillController.document.isEmpty() ||
                             services.isEmpty) {
                           AppSnackBar.openErrorSnackBar(
                             message: 'Please fill all fields'.tr,
@@ -240,7 +272,7 @@ class _CreateNewUpdatePortfolioScreenState
                         await provider.createPortfolio(
                           CreatePortfolioParam(
                             cover: cove!,
-                            description: desc.text,
+                            description: quillController,
                             title: title.text,
                             services: services,
                             media: media,

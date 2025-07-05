@@ -13,6 +13,8 @@ class HtmlFormat extends StatefulWidget {
 
 class _HtmlFormatState extends State<HtmlFormat> {
   //final QuillController quillController = QuillController.basic();
+  final FocusNode _focusNode = FocusNode();
+  final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
@@ -23,7 +25,9 @@ class _HtmlFormatState extends State<HtmlFormat> {
 
   @override
   void dispose() {
-    widget.quillController.dispose();
+    _focusNode.dispose();
+    _scrollController.dispose();
+    //widget.quillController.dispose();
     super.dispose();
   }
 
@@ -39,9 +43,11 @@ class _HtmlFormatState extends State<HtmlFormat> {
         Expanded(
           child: QuillEditor.basic(
             controller: widget.quillController,
-            scrollController: ScrollController(),
-            focusNode: FocusNode(),
+            focusNode: _focusNode,
+            scrollController: _scrollController,
             config: QuillEditorConfig(
+              padding: const EdgeInsets.all(8),
+              autoFocus: true,
               scrollPhysics: const ClampingScrollPhysics(),
               onTapOutside: (event, focusNode) {
                 FocusScope.of(context).unfocus();

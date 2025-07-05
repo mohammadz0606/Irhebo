@@ -45,7 +45,7 @@ class NormalAppBar extends StatelessWidget implements PreferredSizeWidget {
                 InkWell(
                   borderRadius: BorderRadius.circular(50 * (w / 100)),
                   onTap: () => onTapBack != null ? onTapBack!() : Get.back(),
-                  child: GradientIcon(
+                  child: const GradientIcon(
                     icn: AppIcons.arrowLeft,
                     matchTextDirection: true,
                   ),
@@ -60,7 +60,7 @@ class NormalAppBar extends StatelessWidget implements PreferredSizeWidget {
           InkWell(
             borderRadius: BorderRadius.circular(50 * (w / 100)),
             onTap: () => onTapFilter!(),
-            child: GradientIcon(
+            child: const GradientIcon(
               icn: AppIcons.filter,
               svgColor: AppDarkColors.pureWhite,
             ),
@@ -73,7 +73,7 @@ class NormalAppBar extends StatelessWidget implements PreferredSizeWidget {
           InkWell(
             borderRadius: BorderRadius.circular(50 * (w / 100)),
             onTap: () => onTapHelp!(),
-            child: GradientIcon(
+            child: const GradientIcon(
               icn: AppIcons.help,
               svgColor: AppDarkColors.pureWhite,
             ),
@@ -86,7 +86,7 @@ class NormalAppBar extends StatelessWidget implements PreferredSizeWidget {
           InkWell(
             borderRadius: BorderRadius.circular(50 * (w / 100)),
             onTap: () => onTapHistory!(),
-            child: GradientIcon(
+            child: const GradientIcon(
               icn: AppIcons.history,
               svgColor: AppDarkColors.pureWhite,
             ),
@@ -108,7 +108,7 @@ class NormalAppBar extends StatelessWidget implements PreferredSizeWidget {
                   ? SizedBox(
                       width: 3.5 * (w / 100),
                       height: 3.5 * (w / 100),
-                      child: CircularProgressIndicator(
+                      child: const CircularProgressIndicator(
                         strokeWidth: 1,
                       ))
                   : Text(
