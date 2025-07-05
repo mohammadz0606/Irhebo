@@ -1,7 +1,7 @@
 import 'package:flutter/services.dart';
 
 FilteringTextInputFormatter englishOnlyFormatter = FilteringTextInputFormatter(
-  RegExp(r'^[a-zA-Z0-9_\-]+'),
+  RegExp(r'[a-zA-Z0-9!@#$%^&*(),.?":{}|<>]'),
   allow: true,
 );
 

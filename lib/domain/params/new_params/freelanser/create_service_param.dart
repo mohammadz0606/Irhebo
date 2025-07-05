@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:flutter_quill/flutter_quill.dart';
+import 'package:vsc_quill_delta_to_html/vsc_quill_delta_to_html.dart';
 
 import '../../../../app/injection.dart';
 import '../../../../app/storage/app_prefs.dart';
@@ -9,7 +11,7 @@ import '../../../../app/storage/app_prefs_keys.dart';
 final class CreateServiceParam {
   final int supCategoryId;
   final String title;
-  final String description;
+  final QuillController description;
   final File? cover;
   final List<File> media;
   final List<int> planId;
@@ -38,14 +40,13 @@ final class CreateServiceParam {
   Future<FormData> toJson() async {
     final formDataFields = <MapEntry<String, dynamic>>[];
 
-    if(cover != null) {
+    if (cover != null) {
       final coverFileName = cover!.path.split('/').last;
       formDataFields.add(MapEntry(
         "cover",
         await MultipartFile.fromFile(cover!.path, filename: coverFileName),
       ));
     }
-
 
     List<MultipartFile> multiFiles = [];
     for (var file in media) {
@@ -57,8 +58,14 @@ final class CreateServiceParam {
 
     formDataFields.add(MapEntry("sub_category_id", supCategoryId));
     formDataFields.add(MapEntry("title", title.trim()));
-    formDataFields.add(MapEntry("description", description.trim()));
 
+    final delta = description.document.toDelta();
+    final deltaJson = delta.toJson();
+
+    final converter = QuillDeltaToHtmlConverter(deltaJson);
+    final html = converter.convert();
+
+    formDataFields.add(MapEntry("description", html));
 
     formDataFields.add(MapEntry("currency", currency));
 
@@ -75,7 +82,9 @@ final class CreateServiceParam {
       ///---
       formDataFields.add(MapEntry("plans[$i][features][0][title]", 'Price'));
       formDataFields.add(MapEntry("plans[$i][features][0][type]", 'price'));
-      formDataFields.add(MapEntry("plans[$i][features][0][value]", price[i].toString().replaceAll(',', '.')));
+      formDataFields.add(MapEntry("plans[$i][features][0][value]",
+          price[i].toString().replaceAll(',', '.')));
+
       ///----
       formDataFields
           .add(MapEntry("plans[$i][features][1][title]", 'Delivery Days'));

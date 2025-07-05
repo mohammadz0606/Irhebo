@@ -4,6 +4,7 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:cupertino_back_gesture/cupertino_back_gesture.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_quill/flutter_quill.dart';
 
 import 'package:irhebo/app/connection_internet.dart';
 import 'package:irhebo/app/global_imports.dart';
@@ -64,6 +65,7 @@ class Irhebo extends StatelessWidget {
                     GlobalMaterialLocalizations.delegate,
                     GlobalWidgetsLocalizations.delegate,
                     GlobalCupertinoLocalizations.delegate,
+                    FlutterQuillLocalizations.delegate,
                   ],
                   builder: (context, child) {
                     return MediaQuery(

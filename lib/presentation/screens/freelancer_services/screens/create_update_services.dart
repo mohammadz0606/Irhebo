@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter_quill/flutter_quill.dart';
 import 'package:irhebo/domain/models/new_models/plan_model.dart';
 import 'package:irhebo/domain/providers/freelancer/freelancer_services.dart';
 import 'package:irhebo/domain/providers/freelancer/service.dart';
@@ -17,6 +18,7 @@ import '../../../../domain/providers/currency.dart';
 import '../../../widgets/app_text_field.dart';
 import '../../../widgets/dropdown_item.dart';
 import '../../../widgets/dropdown_widget.dart';
+import '../../../widgets/html_form.dart';
 import '../../../widgets/multi_dropdown_widget.dart';
 import '../../../widgets/normal_app_bar.dart';
 import '../../auth/register/widgets/upload_file.dart';
@@ -44,7 +46,7 @@ class _CreateServicesScreenState extends State<CreateServicesScreen> {
           id: Get.arguments['id'],
           onSuccess: (result) {
             var data = Provider.of<ServiceProvider>(context, listen: false);
-            data.descriptionController.text = result.service?.description ?? '';
+            //data.quillController.text = result.service?.description ?? '';
             data.titleController.text = result.service?.title ?? '';
             coverURL = result.service?.cover ?? '';
             mediaURLs = result.service?.media
@@ -288,9 +290,24 @@ class _CreateServicesScreenState extends State<CreateServicesScreen> {
                     const SizedBox(height: 10),
                     AppTextField(
                       hint: "Description",
-                      controller: provider.descriptionController,
+                      controller: TextEditingController(),
                       textInputType: TextInputType.multiline,
-                      maxLines: 4,
+                      maxLines: 1,
+                      readOnly: true,
+                      onTap: () {
+                        Get.bottomSheet(
+                          HtmlFormat(
+                            quillController: provider.quillController,
+                          ),
+                          backgroundColor: Get.find<AppController>().darkMode
+                              ? AppDarkColors.darkScaffoldColor
+                              : AppLightColors.pureWhite,
+                          barrierColor: Get.find<AppController>().darkMode
+                              ? AppDarkColors.darkContainer.withOpacity(0.3)
+                              : AppLightColors.shadow.withOpacity(0.3),
+                          elevation: 0,
+                        );
+                      },
                       textInputAction: TextInputAction.newline,
                       // onValidate: AppValidators.validateName,
                     ),
@@ -332,9 +349,7 @@ class _CreateServicesScreenState extends State<CreateServicesScreen> {
                         if (provider.titleController.text.trim().isEmpty) {
                           AppSnackBar.openErrorSnackBar(
                               message: "Title is required.".tr);
-                        } else if (provider.descriptionController.text
-                            .trim()
-                            .isEmpty) {
+                        } else if (provider.quillController.document.isEmpty()) {
                           AppSnackBar.openErrorSnackBar(
                               message: "Description is required.".tr);
                         } else if (provider.cover == null) {

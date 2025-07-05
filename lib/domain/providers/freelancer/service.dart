@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:flutter_quill/flutter_quill.dart';
 import 'package:irhebo/app/router/routes.dart';
 
 import '../../../app/global_imports.dart';
@@ -25,7 +26,17 @@ class ServiceProvider extends ChangeNotifier {
   List<TagsModelData?>? selectedTage;
 
   final TextEditingController titleController = TextEditingController();
-  final TextEditingController descriptionController = TextEditingController();
+  //final TextEditingController descriptionController = TextEditingController();
+  final QuillController quillController = QuillController.basic();
+
+  /*
+  final delta = provider.quillController.document.toDelta();
+final json = delta.toJson();
+
+final html = quillDeltaToHtml(delta);
+
+print(html);
+   */
 
   File? cover;
   List<File> media = [];
@@ -74,7 +85,7 @@ class ServiceProvider extends ChangeNotifier {
         currency: selectedCurrency?.code ?? '',
         deliveryDays:
             deliveryDayController.map((e) => int.parse(e.text)).toList(),
-        description: descriptionController.text,
+        description: quillController,
         media: media,
         planId: plan.map((e) => e?.id ?? 0).toList(),
         price: priceController.map((e) => double.parse(e.text)).toList(),
@@ -130,7 +141,7 @@ class ServiceProvider extends ChangeNotifier {
         currency: selectedCurrency?.code ?? '',
         deliveryDays:
             deliveryDayController.map((e) => int.parse(e.text)).toList(),
-        description: descriptionController.text,
+        description: quillController,
         media: media,
         planId: plan.map((e) => e?.id ?? 0).toList(),
         price: priceController.map((e) => double.parse(e.text)).toList(),
@@ -201,17 +212,17 @@ class ServiceProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  onChangePlan(PlanModelData? value) {
+  void onChangePlan(PlanModelData? value) {
     plan[planListUIndex] = value;
     notifyListeners();
   }
 
-  onSelectedCurrency(CurrencyModelData? value) {
+  void onSelectedCurrency(CurrencyModelData? value) {
     selectedCurrency = value;
     notifyListeners();
   }
 
-  onChangeTags(List<TagsModelData?> value) {
+  void onChangeTags(List<TagsModelData?> value) {
     tagsSlug = value.map((e) => e?.slug ?? '').toList();
     selectedTage = value;
     notifyListeners();
@@ -235,7 +246,7 @@ class ServiceProvider extends ChangeNotifier {
     });
   }
 
-  getSubcategories(int id) async {
+  Future<void> getSubcategories(int id) async {
     isLoadingSubcategory = true;
     subcategories?.clear();
     notifyListeners();
@@ -400,9 +411,10 @@ class ServiceProvider extends ChangeNotifier {
     return null;
   }
 
-  disposeAll() {
+  void disposeAll() {
     titleController.clear();
-    descriptionController.clear();
+    //descriptionController.clear();
+    quillController.dispose();
     cover = null;
     media.clear();
     categoryModel = null;
