@@ -406,10 +406,12 @@ class SearchControllerGetx extends GetxController {
   }
 
   onTapSubCategory(int index) async {
-    appBarTitle = subcategories[index].title;
+    //appBarTitle = subcategories[index].title;
+    appBarTitle = searchModel.data?.subCategories?[index]?.title;
     controller.animateToPage(pageIndex + 1,
         duration: const Duration(milliseconds: 250), curve: Curves.linear);
-    subcategoryId = subcategories[index].id ?? 0;
+    //subcategoryId = subcategories[index].id ?? 0;
+    subcategoryId = searchModel.data?.subCategories?[index]?.id ?? 0;
     searchController.clear();
     log("jnkjnjknjk");
     getPaginatedServicesById();
@@ -419,7 +421,7 @@ class SearchControllerGetx extends GetxController {
     clearData();
     isLoadingTag = true;
     isLoadingService = true;
-    getServicesFilters();
+    //getServicesFilters();
     await getServiceBySubcategoryId();
     isLoadingTag = false;
     isLoadingService = false;

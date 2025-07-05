@@ -23,8 +23,8 @@ class SearchPageView extends StatelessWidget {
         onPageChanged: onPageChanged,
         children: const [
           SubCategoryAndServicesPageViewItem(),
-          SubCategoryPageViewItem(),
           ServicePageViewItem(),
+          SubCategoryPageViewItem(),
         ],
       ),
     );
