@@ -10,6 +10,8 @@ import 'package:irhebo/presentation/screens/auth/create_password/widgets/passwor
 import 'package:irhebo/presentation/screens/auth/create_password/widgets/strengthen_password_widget.dart';
 import 'package:irhebo/presentation/widgets/app_text_field.dart';
 
+import '../../../../../app/app_regex.dart';
+
 class CretaePasswordForm extends GetWidget<CreatePasswordController> {
   const CretaePasswordForm({
     super.key,
@@ -35,6 +37,10 @@ class CretaePasswordForm extends GetWidget<CreatePasswordController> {
                       isVisible: controller.createIsVisibile,
                       onTapVisible: () => controller.onTapVisibile(),
                       onValidate: AppValidators.validatePassword,
+                      textInputType: TextInputType.visiblePassword,
+                      inputFormatters: [
+                        englishOnlyFormatter
+                      ],
                     ),
                     SizedBox(
                       height: 2.98 * (w / 100),
@@ -47,6 +53,10 @@ class CretaePasswordForm extends GetWidget<CreatePasswordController> {
                   hint: "Enter Password",
                   isPassword: true,
                   isThereError: false,
+                  textInputType: TextInputType.visiblePassword,
+                  inputFormatters: [
+                    englishOnlyFormatter
+                  ],
                   isVisible: controller.createIsVisibile,
                   onTapVisible: () => controller.onTapVisibile(),
                   onValidate: AppValidators.validateNewPassword,
@@ -66,6 +76,10 @@ class CretaePasswordForm extends GetWidget<CreatePasswordController> {
                 label: "Confirm New Password",
                 hint: "ReEnter Password",
                 isPassword: true,
+                textInputType: TextInputType.visiblePassword,
+                inputFormatters: [
+                  englishOnlyFormatter
+                ],
                 isVisible: controller.createIsVisibile,
                 onValidate: (confirmed) => AppValidators.validatePasswordConf(
                     confirmed, controller.createPassword.text),

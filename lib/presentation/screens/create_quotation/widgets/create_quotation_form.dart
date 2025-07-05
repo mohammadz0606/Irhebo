@@ -8,6 +8,7 @@ import 'package:irhebo/presentation/screens/create_quotation/create_quotation_co
 import 'package:irhebo/presentation/widgets/app_text_field.dart';
 import 'package:multi_select_flutter/util/multi_select_item.dart';
 
+import '../../../../app/app_regex.dart';
 import '../../../../domain/models/home_model.dart';
 import '../../../widgets/dropdown_item.dart';
 import '../../../widgets/dropdown_widget.dart';
@@ -101,6 +102,7 @@ class CreateQuotationForm extends GetWidget<CreateQuotationController> {
                 label: 'Price',
                 hint: 'Enter price',
                 textInputType: TextInputType.number,
+                inputFormatters: [digitsAmountOnly],
                 onValidate: AppValidators.validateField,
               ),
               SizedBox(
@@ -113,9 +115,7 @@ class CreateQuotationForm extends GetWidget<CreateQuotationController> {
                 hint: 'Select delivery day',
                 onValidate: AppValidators.validateField,
                 textInputType: TextInputType.number,
-                inputFormatters: [
-                  FilteringTextInputFormatter.digitsOnly,
-                ],
+                inputFormatters: [digitsOnly],
                 //onTap: () => controller.openDateTimePicker(context),
                 // suffixIcon: const Icon(
                 //   Icons.calendar_month,
@@ -130,6 +130,7 @@ class CreateQuotationForm extends GetWidget<CreateQuotationController> {
                 label: 'Revisions',
                 hint: 'Enter number of revisions',
                 textInputType: TextInputType.number,
+                inputFormatters: [digitsOnly],
                 onValidate: AppValidators.validateField,
               ),
               SizedBox(

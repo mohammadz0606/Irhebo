@@ -25,6 +25,7 @@ export 'storage/app_prefs_keys.dart';
 export 'lang/localization_service.dart';
 
 export 'package:get/get.dart';
+export 'app_regex.dart';
 
 export 'package:irhebo/presentation/widgets/background_image.dart';
 

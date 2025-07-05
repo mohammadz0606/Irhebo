@@ -17,40 +17,40 @@ class ChatScreen extends GetView<ChatController> {
     return Consumer<ChatProvider>(
       builder: (context, provider, _) {
         return WillPopScope(
-          onWillPop: () => controller.onWillPop(),
-          child: GestureDetector(
-            onTap: () => controller.onTapOutside(),
-            child: Scaffold(
-              resizeToAvoidBottomInset: true,
-              appBar: PreferredSize(
-                preferredSize: Size.fromHeight(
-                  controller.showSearch.value ? 32 * (w / 100) : 15 * (w / 100),
-                ),
-                child: Visibility(
-                  visible: !provider.isLoadingGetChatMessages,
-                  replacement: const Center(
-                    child: CircularProgressIndicator.adaptive(),
-                  ),
-                  child: ChatAppBar(
-                    title: provider.appbarData?.username ?? '',
-                    imageUrl: provider.appbarData?.avatar,
-                    showSearch: controller.showSearch.value,
-                    onTapSearch: () => controller.showSearchField(),
-                    type: controller.type,
-                    receiverId: controller.userId,
-                  ),
-                ),
+          onWillPop: controller.onWillPop,
+          child: Scaffold(
+            resizeToAvoidBottomInset: true,
+            appBar: PreferredSize(
+              preferredSize: Size.fromHeight(
+                controller.showSearch.value ? 32 * (w / 100) : 15 * (w / 100),
               ),
-              body: Visibility(
+              child: Visibility(
                 visible: !provider.isLoadingGetChatMessages,
-                replacement: const Align(
-                  alignment: Alignment.topCenter,
-                  child: LinearProgressIndicator(),
+                replacement: const Center(
+                  child: CircularProgressIndicator.adaptive(),
                 ),
-                child: const ChatMessagesList(),
+                child: ChatAppBar(
+                  title: provider.appbarData?.username ?? '',
+                  imageUrl: provider.appbarData?.avatar,
+                  showSearch: controller.showSearch.value,
+                  onTapSearch: () => controller.showSearchField(),
+                  type: controller.type,
+                  receiverId: controller.userId,
+                  onTapBack: () async {
+                   await controller.onWillPop();
+                  },
+                ),
               ),
-              bottomSheet: const ChatBottomSheet(),
             ),
+            body: Visibility(
+              visible: !provider.isLoadingGetChatMessages,
+              replacement: const Align(
+                alignment: Alignment.topCenter,
+                child: LinearProgressIndicator(),
+              ),
+              child: const ChatMessagesList(),
+            ),
+            bottomSheet: const ChatBottomSheet(),
           ),
         );
       },

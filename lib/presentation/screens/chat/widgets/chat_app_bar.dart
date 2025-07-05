@@ -14,6 +14,7 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
   final ChatType type;
   final Function() onTapSearch;
   final int receiverId;
+  final Function() onTapBack;
 
   // final Function()? onTapBack;
   const ChatAppBar({
@@ -24,6 +25,7 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
     required this.showSearch,
     this.imageUrl,
     required this.receiverId,
+    required this.onTapBack,
     // this.onTapBack,
   });
 
@@ -41,7 +43,10 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
               ),
               InkWell(
                 borderRadius: BorderRadius.circular(50 * (w / 100)),
-                onTap: () => Get.back(),
+                onTap: () {
+                  Get.back();
+                  onTapBack();
+                },
                 child: const GradientIcon(
                   icn: AppIcons.arrowLeft,
                   matchTextDirection: true,

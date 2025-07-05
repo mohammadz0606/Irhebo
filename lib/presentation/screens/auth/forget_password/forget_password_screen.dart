@@ -9,6 +9,9 @@ import 'package:irhebo/presentation/widgets/auth_app_bar.dart';
 import 'package:irhebo/presentation/widgets/auth_headline.dart';
 import 'package:irhebo/presentation/widgets/background_image.dart';
 
+import '../../../../app/app_regex.dart' show englishOnlyFormatter;
+import '../../../../app/global_imports.dart';
+
 class ForgetPasswordScreen extends GetView<ForgetPasswordController> {
   const ForgetPasswordScreen({super.key});
 
@@ -39,6 +42,10 @@ class ForgetPasswordScreen extends GetView<ForgetPasswordController> {
                     controller: controller.phoneConfirmation,
                     label: "Phone Number",
                     hint: "05***********",
+                    textInputType: TextInputType.phone,
+                    inputFormatters: [
+                      digitsOnly
+                    ],
                     initialSelection: controller.appController.countryCode,
                     isPhone: true,
                     onValidate: AppValidators.validatePhone,

@@ -166,6 +166,8 @@ class ChatController extends GetxController with GetTickerProviderStateMixin {
     groupMessages();
   }
 
+
+
   receiveParameters() {
     type = Get.arguments["chat_type"] ?? ChatType.Users;
     userId = Get.arguments["userId"] ?? 0;
@@ -334,9 +336,11 @@ class ChatController extends GetxController with GetTickerProviderStateMixin {
     // }
   }
 
-  onWillPop() {
-    Get.find<AnimationButtonController>().disposeAllControllers();
+  Future<bool> onWillPop() async {
+    log('POP PAGE');
     ChatPusherConfig().disconnect();
+    Get.find<AnimationButtonController>().disposeAllControllers();
+    return true;
   }
 
   releaseRecordAudio(String alarmAudioPath) async {

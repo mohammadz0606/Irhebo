@@ -338,12 +338,19 @@ class _RegisterFreelancerScreenState extends State<RegisterFreelancerScreen> {
                             if (avatar != null ||
                                 _biography.text.trim().isNotEmpty ||
                                 categoryIds.isEmpty ||
-                                certificateFile != null ||
-                                selectedFiles.isNotEmpty ||
-                                fileDescriptions.isNotEmpty) {
+                                selectedFiles.isNotEmpty) {
+                              //certificateFile != null
+                              //fileDescriptions.isNotEmpty
                               List<File> allFiles = [];
-                              allFiles.add(certificateFile!);
-                              allFiles.addAll(selectedFiles.whereType<File>());
+                              if(certificateFile != null) {
+                                allFiles.add(certificateFile!);
+                              }
+
+                              if(fileDescriptions.isNotEmpty) {
+                                allFiles.addAll(selectedFiles.whereType<File>());
+                              }
+
+
 
                               await provider.completeProfile(
                                 data: CompleteProfileParam(

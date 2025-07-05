@@ -81,9 +81,11 @@ final class CompleteProfileParam {
       formData.fields.add(MapEntry("category_ids[]", id.toString()));
     }
 
-    for (var description in descriptions) {
-      if (description.trim().isNotEmpty) {
-        formData.fields.add(MapEntry("description[]", description.trim()));
+    if (descriptions.isEmpty) {
+      for (var description in descriptions) {
+        if (description.trim().isNotEmpty) {
+          formData.fields.add(MapEntry("description[]", description.trim()));
+        }
       }
     }
 

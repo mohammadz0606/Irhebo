@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:irhebo/app/app_controller.dart';
+import 'package:irhebo/app/global_imports.dart';
 import 'package:irhebo/app/resources/style/colors.dart';
 import 'package:irhebo/app/resources/validators.dart';
 import 'package:irhebo/presentation/screens/auth/login/login_controller.dart';
@@ -24,6 +25,10 @@ class LoginForm extends GetWidget<LoginController> {
             label: "Phone Number",
             hint: "05***********",
             isPhone: true,
+            textInputType: TextInputType.phone,
+            inputFormatters: [
+              digitsOnly,
+            ],
             initialSelection: controller.appController.countryCode,
             onValidate: AppValidators.validatePhone,
             onChangeCountryCode: controller.appController.onChangeCountryCode,
@@ -37,6 +42,10 @@ class LoginForm extends GetWidget<LoginController> {
               label: "Password",
               hint: "Enter Password",
               isPassword: true,
+              textInputType: TextInputType.visiblePassword,
+              inputFormatters: [
+                englishOnlyFormatter,
+              ],
               isVisible: controller.isVisibileLogin,
               onValidate: AppValidators.validatePassword,
               onTapVisible: () => controller.onTapVisibile(),
