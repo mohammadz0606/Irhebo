@@ -1,3 +1,7 @@
+import 'dart:developer';
+
+import 'package:intl/intl.dart';
+
 import '../../../../app/app_functions.dart';
 import '../../../../app/enums.dart';
 
@@ -34,7 +38,7 @@ class ChatListModelDataLastMessage {
   String? attachmentUrl;
   String? attachmentType;
   int? isRead;
-  String? createdAt;
+  DateTime? createdAt;
   String? updatedAt;
 
   ChatListModelDataLastMessage({
@@ -57,7 +61,17 @@ class ChatListModelDataLastMessage {
     attachmentUrl = json['attachment_url']?.toString();
     attachmentType = json['attachment_type']?.toString();
     isRead = json['is_read']?.toInt();
-    createdAt = json['created_at']?.toString();
+    final dateString = json['created_at']?.toString();
+    if (dateString != null) {
+      try {
+        createdAt = DateFormat('EEE, MMM d, yyyy h:mm a', 'en_US').parse(dateString);
+      } catch (e) {
+        log('Date parsing error: $e | value = $dateString');
+        createdAt = DateTime.now();
+      }
+    }
+    // createdAt = DateTime.parse(
+    //     json['created_at']?.toString() ?? DateTime.now().toString());
     updatedAt = json['updated_at']?.toString();
   }
 }

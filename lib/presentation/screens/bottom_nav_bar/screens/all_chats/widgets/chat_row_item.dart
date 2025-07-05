@@ -119,7 +119,7 @@ class ChatRowItem extends StatelessWidget {
                         padding:
                             EdgeInsets.symmetric(horizontal: 1 * (w / 100)),
                         child: Text(
-                          chat.lastMessage?.createdAt?.formatTimeAgo ?? '',
+                          chat.lastMessage?.createdAt?.toString().formatTimeAgo ?? '',
                           style: Get.theme.textTheme.labelSmall!.copyWith(
                               color: AppDarkColors.pureWhite.withOpacity(0.5)),
                           maxLines: 1,

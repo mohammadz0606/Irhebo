@@ -1,3 +1,7 @@
+import 'dart:developer';
+
+import 'package:intl/intl.dart';
+
 class ChatMessagesModel {
   bool? status;
   String? message;
@@ -45,8 +49,17 @@ class ChatMessagesModelDataMessages {
     attachmentUrl = json['attachment_url']?.toString();
     attachmentType = json['attachment_type']?.toString();
     isRead = json['is_read']?.toInt();
-    createdAt = DateTime.parse(
-        json['created_at']?.toString() ?? DateTime.now().toString());
+    final dateString = json['created_at']?.toString();
+    if (dateString != null) {
+      try {
+        createdAt = DateFormat('EEE, MMM d, yyyy h:mm a', 'en_US').parse(dateString);
+      } catch (e) {
+        log('Date parsing error: $e | value = $dateString');
+        createdAt = DateTime.now();
+      }
+    }
+    // createdAt = DateTime.parse(
+    //     json['created_at']?.toString() ?? DateTime.now().toString());
     sender = (json['sender'] != null)
         ? ChatMessagesModelDataMessagesSender.fromJson(json['sender'])
         : null;
@@ -61,8 +74,15 @@ class ChatMessagesModelDataMessages {
     message = json['message']?.toString();
     attachmentUrl = json['attachment_url']?.toString();
     attachmentType = json['attachment_type']?.toString();
-    createdAt = DateTime.parse(
-        json['created_at']?.toString() ?? DateTime.now().toString());
+    final dateString = json['created_at']?.toString();
+    if (dateString != null) {
+      try {
+        createdAt = DateFormat('EEE, MMM d, yyyy h:mm a', 'en_US').parse(dateString);
+      } catch (e) {
+        log('Date parsing error: $e | value = $dateString');
+        createdAt = DateTime.now();
+      }
+    }
     sender = (json['sender'] != null)
         ? ChatMessagesModelDataMessagesSender.fromJson(json['sender'])
         : null;

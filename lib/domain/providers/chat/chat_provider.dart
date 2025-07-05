@@ -348,6 +348,7 @@ class ChatProvider extends ChangeNotifier {
     chatMessages?.sort((a, b) => b.createdAt!.compareTo(a.createdAt!));
 
     for (var message in chatMessages ?? []) {
+      //String formattedDate = formatDate(DateTime.parse(message.createdAt ?? DateTime.now()));
       String formattedDate = formatDate(message.createdAt ?? DateTime.now());
       grouped.putIfAbsent(formattedDate, () => []).add(message);
     }

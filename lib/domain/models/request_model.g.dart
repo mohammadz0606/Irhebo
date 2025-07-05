@@ -17,9 +17,13 @@ RequestModel _$RequestModelFromJson(Map<String, dynamic> json) => RequestModel(
       statusLabel: json['status_label'] as String?,
       statusKey: json['status_key'] as String?,
       isReviewed: json['is_reviewed'] as bool?,
+      // "created_at": "Fri, Jul 4, 2025 10:45 AM"
       user: json['user'] == null
           ? null
           : UserModel.fromJson(json['user'] as Map<String, dynamic>),
+      freelancer: json['freelancer_user'] == null
+          ? null
+          : UserFreelancerModelDataFreelancer.fromJson(json['freelancer_user'] as Map<String, dynamic>),
       needAction: json['need_action'] as bool?,
       service: json['service'] == null
           ? null
@@ -73,8 +77,8 @@ LogModel _$LogModelFromJson(Map<String, dynamic> json) => LogModel(
       attachments: json['attachments'] == null
           ? null
           : (json['attachments'] as List)
-          .map((e) => AttachmentModel.fromJson(e as Map<String, dynamic>))
-          .toList(),
+              .map((e) => AttachmentModel.fromJson(e as Map<String, dynamic>))
+              .toList(),
     );
 
 Map<String, dynamic> _$LogModelToJson(LogModel instance) => <String, dynamic>{
@@ -87,14 +91,14 @@ Map<String, dynamic> _$LogModelToJson(LogModel instance) => <String, dynamic>{
 
 AttachmentModel _$AttachmentModelFromJson(Map<String, dynamic> json) =>
     AttachmentModel(
-          id: json['id'] as int?,
-          mediaPath: json['media_path'] as String?,
-          mediaType: json['media_type'] as String?,
+      id: json['id'] as int?,
+      mediaPath: json['media_path'] as String?,
+      mediaType: json['media_type'] as String?,
     );
 
 Map<String, dynamic> _$AttachmentModelToJson(AttachmentModel instance) =>
     <String, dynamic>{
-          'id': instance.id,
-          'media_path': instance.mediaPath,
-          'media_type': instance.mediaType,
+      'id': instance.id,
+      'media_path': instance.mediaPath,
+      'media_type': instance.mediaType,
     };

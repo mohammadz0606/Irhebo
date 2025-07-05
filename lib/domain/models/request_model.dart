@@ -1,9 +1,13 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:developer';
+
 import 'package:json_annotation/json_annotation.dart';
 
 import 'package:irhebo/domain/models/home_model.dart';
 import 'package:irhebo/domain/models/login_model.dart';
 import 'package:irhebo/domain/models/service_details_model.dart';
+
+import 'new_models/freelancer/freelancer_user.dart';
 
 part 'request_model.g.dart';
 
@@ -27,6 +31,8 @@ class RequestModel {
   @JsonKey(name: 'is_reviewed')
   bool? isReviewed;
   UserModel? user;
+  @JsonKey(name: 'freelancer_user')
+  UserFreelancerModelDataFreelancer? freelancer;
   ServiceModel? service;
   PlanModel? plan;
   List<LogModel>? logs;
@@ -44,6 +50,7 @@ class RequestModel {
   bool? needAction;
   @JsonKey(name: 'progress_percentage')
   int? progressPercentage;
+
   RequestModel({
     this.id,
     this.title,
@@ -66,9 +73,12 @@ class RequestModel {
     this.totalDays,
     this.progressPercentage,
     this.contractPath,
+    this.freelancer,
   });
 
   factory RequestModel.fromJson(Map<String, dynamic> json) {
+    log('ALL JSON');
+    log(json.toString());
     return _$RequestModelFromJson(json);
   }
 
@@ -85,17 +95,16 @@ class LogModel {
   String? createdAt;
   UserModel? user;
   List<AttachmentModel>? attachments;
-  LogModel({
-    this.id,
-    this.requestId,
-    this.action,
-    this.createdAt,
-    this.user,
-    this.attachments
-  });
+
+  LogModel(
+      {this.id,
+      this.requestId,
+      this.action,
+      this.createdAt,
+      this.user,
+      this.attachments});
 
   factory LogModel.fromJson(Map<String, dynamic> json) {
-
     return _$LogModelFromJson(json);
   }
 
