@@ -9,7 +9,6 @@ import '../../../app/resources/images.dart';
 import '../../widgets/app_button.dart';
 import '../../widgets/gradient_icon.dart';
 
-
 class CallScreen extends StatefulWidget {
   const CallScreen({super.key});
 
@@ -18,15 +17,17 @@ class CallScreen extends StatefulWidget {
 }
 
 class _CallScreenState extends State<CallScreen> {
-
   @override
   void initState() {
-    if(Get.arguments != null) {
-      Provider.of<CallsProvider>(Get.context!, listen: false).callId = Get.arguments['call_id'];
+    if (Get.arguments != null) {
+      Provider.of<CallsProvider>(Get.context!, listen: false).callId =
+          Get.arguments['call_id'];
     }
     super.initState();
   }
 
+  bool isMuted = false;
+  bool isSpeakerOn = false;
 
   @override
   Widget build(BuildContext context) {
@@ -60,6 +61,48 @@ class _CallScreenState extends State<CallScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 spacing: 50,
                 children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CircleAvatar(
+                        radius: 25.r,
+                        child: IconButton(
+                          color: AppLightColors.pureWhite,
+                          iconSize: 36,
+                          onPressed: () {
+                            isMuted = !isMuted;
+                            setState(() {});
+                            AgoraConfiguration().muteMic(isMuted);
+                          },
+                          icon: Icon(
+                            isMuted
+                                ? CupertinoIcons.mic_slash_fill
+                                : CupertinoIcons.mic_fill,
+                            // color: isMuted ? Colors.red : Colors.black,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 40),
+                      CircleAvatar(
+                        radius: 25.r,
+                        child: IconButton(
+                          color: AppLightColors.pureWhite,
+                          iconSize: 36,
+                          onPressed: () {
+                            isSpeakerOn = !isSpeakerOn;
+                            setState(() {});
+                            AgoraConfiguration().switchSpeaker(isSpeakerOn);
+                          },
+                          icon: Icon(
+                            isSpeakerOn
+                                ? CupertinoIcons.speaker_3_fill
+                                : CupertinoIcons.speaker_1_fill,
+                            //color: isSpeakerOn ? Colors.green : Colors.black,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                   AppImage(
                     imageUrl: chatProvider.appbarData?.avatar ??
                         AppImages.placeholder,

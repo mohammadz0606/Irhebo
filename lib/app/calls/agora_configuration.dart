@@ -39,15 +39,16 @@ final class AgoraConfiguration {
       const RtcEngineContext(appId: '7c133475b17c4fefb2d88c6fd3c0eccf'),
     );
 
-    await _agoraEngine.setClientRole(role: ClientRoleType.clientRoleBroadcaster);
+    await _agoraEngine.setClientRole(
+        role: ClientRoleType.clientRoleBroadcaster);
     await _agoraEngine.enableAudio();
     await _agoraEngine.enableLocalVideo(false);
     await _agoraEngine.enableLocalAudio(true);
     await _agoraEngine.muteLocalAudioStream(false);
+    await _agoraEngine.setEnableSpeakerphone(false);
 
     _agoraEngine.registerEventHandler(
       RtcEngineEventHandler(
-
         onJoinChannelSuccess: (connection, elapsed) {
           print("Joined channel: ${connection.channelId}");
         },
@@ -65,13 +66,20 @@ final class AgoraConfiguration {
       ),
     );
 
-
     await _agoraEngine.joinChannel(
       token: token,
       channelId: channelName,
       uid: userID,
       options: const ChannelMediaOptions(),
     );
+  }
+
+  void muteMic(bool mute) async {
+    await _agoraEngine.muteLocalAudioStream(mute);
+  }
+
+  void switchSpeaker(bool enableSpeaker) async {
+    await _agoraEngine.setEnableSpeakerphone(enableSpeaker);
   }
 
   Future<void> leaveCall() async {

@@ -168,8 +168,10 @@ class CallsProvider extends ChangeNotifier {
 
   Future<void> endCall() async {
     try {
+
       isLoadingEndCall = true;
       notifyListeners();
+      Get.back();
       final response = await Network().post(
         url: AppEndpoints.endCall,
         data: {
@@ -188,6 +190,7 @@ class CallsProvider extends ChangeNotifier {
       }
 
       EndCallModel endCallModel = EndCallModel.fromJson(response.data);
+      await AgoraConfiguration().leaveCall();
 
       isLoadingEndCall = false;
       notifyListeners();

@@ -1,3 +1,4 @@
+import 'package:dio/src/response.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 import '../../domain/models/new_models/calls/start_call.dart';
@@ -56,41 +57,7 @@ final class Notifications {
 
         if (actionId != null) {
           if (actionId == 'accept_button') {
-            final response = await Network().post(
-              url: AppEndpoints.answerCall,
-              data: {
-                'call_id': id,
-              },
-            );
-
-            StartAndAnswerCallModel answerCallModel =
-                StartAndAnswerCallModel.fromJson(response.data);
-            AppPreferences preferences = sl();
-
-            int userID = preferences.getInt(key: AppPrefsKeys.USER_ID) ?? 0;
-            int callId = answerCallModel.data?.call?.id ?? 0;
-
-            await AgoraConfiguration().initAgora(
-              token: answerCallModel.data?.token ?? '',
-              channelName: answerCallModel.data?.call?.channelName ?? '',
-              userID: userID,
-              onUserAccepted: () async {
-                // await answerCall();
-              },
-              onUserEndCall: () async {
-                final response = await Network().post(
-                  url: AppEndpoints.endCall,
-                  data: {
-                    'call_id': callId,
-                  },
-                );
-                await AgoraConfiguration().leaveCall();
-              },
-            );
-
-            Get.toNamed(AppRoutes.call, arguments: {
-              'call_id': callId,
-            });
+            await _onCall(id: id ?? 0);
           } else if (actionId == 'decline_button') {
             final response = await Network().post(
               url: AppEndpoints.endCall,
@@ -151,42 +118,7 @@ final class Notifications {
             );
             break;
           case NotificationType.call:
-            final response = await Network().post(
-              url: AppEndpoints.answerCall,
-              data: {
-                'call_id': id,
-              },
-            );
-
-            StartAndAnswerCallModel answerCallModel =
-                StartAndAnswerCallModel.fromJson(response.data);
-            AppPreferences preferences = sl();
-
-            int userID = preferences.getInt(key: AppPrefsKeys.USER_ID) ?? 0;
-            int callId = answerCallModel.data?.call?.id ?? 0;
-
-            await AgoraConfiguration().initAgora(
-              token: answerCallModel.data?.token ?? '',
-              channelName: answerCallModel.data?.call?.channelName ?? '',
-              userID: userID,
-              onUserAccepted: () async {
-                // await answerCall();
-              },
-              onUserEndCall: () async {
-                final response = await Network().post(
-                  url: AppEndpoints.endCall,
-                  data: {
-                    'call_id': callId,
-                  },
-                );
-                await AgoraConfiguration().leaveCall();
-              },
-            );
-
-            Get.toNamed(AppRoutes.call, arguments: {
-              'call_id': callId,
-            });
-
+            await _onCall(id: id ?? 0);
             break;
           case NotificationType.verified:
             Get.toNamed(AppRoutes.profile);
@@ -226,5 +158,41 @@ final class Notifications {
         }
       },
     );
+  }
+
+  Future<void> _onCall({required int id}) async {
+    final response = await Network().post(
+      url: AppEndpoints.answerCall,
+      data: {
+        'call_id': id,
+      },
+    );
+    StartAndAnswerCallModel answerCallModel =
+        StartAndAnswerCallModel.fromJson(response.data);
+    AppPreferences preferences = sl();
+
+    int userID = preferences.getInt(key: AppPrefsKeys.USER_ID) ?? 0;
+    int callId = answerCallModel.data?.call?.id ?? 0;
+
+    await AgoraConfiguration().initAgora(
+      token: answerCallModel.data?.token ?? '',
+      channelName: answerCallModel.data?.call?.channelName ?? '',
+      userID: userID,
+      onUserAccepted: () async {},
+      onUserEndCall: () async {
+        Get.back();
+        final response = await Network().post(
+          url: AppEndpoints.endCall,
+          data: {
+            'call_id': callId,
+          },
+        );
+        await AgoraConfiguration().leaveCall();
+      },
+    );
+
+    Get.toNamed(AppRoutes.call, arguments: {
+      'call_id': callId,
+    });
   }
 }
