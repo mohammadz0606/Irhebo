@@ -325,39 +325,39 @@ class _CreateServicesScreenState extends State<CreateServicesScreen> {
                       title: 'Next',
                       backGroundColor: AppLightColors.greenContainer,
                       onPressed: () {
-                        if (Get.arguments == null) {
-                          Get.toNamed(AppRoutes.createPlan);
-                        } else {
-                          Get.toNamed(AppRoutes.createPlan, arguments: {
-                            'id': Get.arguments['id'],
-                          });
-                        }
-
-                        // if (provider.titleController.text.trim().isEmpty) {
-                        //   AppSnackBar.openErrorSnackBar(
-                        //       message: "Title is required.".tr);
-                        // } else if (provider.descriptionController.text.trim().isEmpty) {
-                        //   AppSnackBar.openErrorSnackBar(
-                        //       message: "Description is required.".tr);
-                        // } else if (provider.cover == null) {
-                        //   AppSnackBar.openErrorSnackBar(
-                        //       message: "Cover photo is required.".tr);
-                        // } else if (provider.media.isEmpty) {
-                        //   AppSnackBar.openErrorSnackBar(
-                        //       message: "Media photos is required.".tr);
-                        // } else if (provider.subcategoryModel == null ||
-                        //     provider.subcategoryModel?.id == 0) {
-                        //   AppSnackBar.openErrorSnackBar(
-                        //       message: "Subcategory is required.".tr);
+                        // if (Get.arguments == null) {
+                        //   Get.toNamed(AppRoutes.createPlan);
                         // } else {
-                        //   if (Get.arguments == null) {
-                        //     Get.toNamed(AppRoutes.createPlan);
-                        //   } else {
-                        //     Get.toNamed(AppRoutes.createPlan, arguments: {
-                        //       'id': Get.arguments['id'],
-                        //     });
-                        //   }
+                        //   Get.toNamed(AppRoutes.createPlan, arguments: {
+                        //     'id': Get.arguments['id'],
+                        //   });
                         // }
+
+                        if (provider.titleController.text.trim().isEmpty) {
+                          AppSnackBar.openErrorSnackBar(
+                              message: "Title is required.".tr);
+                        } else if (provider.descriptionController.text.trim().isEmpty) {
+                          AppSnackBar.openErrorSnackBar(
+                              message: "Description is required.".tr);
+                        } else if (provider.cover == null) {
+                          AppSnackBar.openErrorSnackBar(
+                              message: "Cover photo is required.".tr);
+                        } else if (provider.media.isEmpty) {
+                          AppSnackBar.openErrorSnackBar(
+                              message: "Media photos is required.".tr);
+                        } else if (provider.subcategoryModel == null ||
+                            provider.subcategoryModel?.id == 0) {
+                          AppSnackBar.openErrorSnackBar(
+                              message: "Subcategory is required.".tr);
+                        } else {
+                          if (Get.arguments == null) {
+                            Get.toNamed(AppRoutes.createPlan);
+                          } else {
+                            Get.toNamed(AppRoutes.createPlan, arguments: {
+                              'id': Get.arguments['id'],
+                            });
+                          }
+                        }
                       },
                     ),
                   ],
