@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -22,20 +23,12 @@ class ServiceProvider extends ChangeNotifier {
   List<SubcategoryModel>? subcategories;
   List<TagsModelData?>? tagsList;
   List<PlanModelData?>? planList;
+  List<PlanModelDataTemp?>? tempPlanList;
   List<String> tagsSlug = [];
   List<TagsModelData?>? selectedTage;
 
   final TextEditingController titleController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
-
-  /*
-  final delta = provider.quillController.document.toDelta();
-final json = delta.toJson();
-
-final html = quillDeltaToHtml(delta);
-
-print(html);
-   */
 
   File? cover;
   List<File> media = [];
@@ -212,9 +205,30 @@ print(html);
   }
 
   void onChangePlan(PlanModelData? value) {
+
+    var oldValue = plan[planListUIndex];
+
+    if (oldValue != null && oldValue.id != null) {
+      planList?.add(oldValue);
+    }
     plan[planListUIndex] = value;
+
+    planList?.remove(value);
+
+    print('plan List onChangePlan: ${planList.toString()}');
+    print('temp plan List onChangePlan: ${tempPlanList.toString()}');
+
     notifyListeners();
   }
+
+  // for (var data in tempPlanList!) {
+  //   planList?.add(PlanModelData(
+  //     id: data?.id,
+  //     title: data?.title,
+  //     value: data?.title,
+  //   ));
+  // }
+
 
   void onSelectedCurrency(CurrencyModelData? value) {
     selectedCurrency = value;
@@ -298,6 +312,7 @@ print(html);
   getPlans() async {
     try {
       planList?.clear();
+      tempPlanList?.clear();
       isLoadingPlan = true;
       notifyListeners();
       final response = await Network().get(
@@ -313,6 +328,13 @@ print(html);
       }
       PlanModel pansModel = PlanModel.fromJson(response.data);
       planList = pansModel.data;
+      for (var element in pansModel.data!) {
+        tempPlanList?.add(PlanModelDataTemp(
+          id: element?.id,
+          title: element?.title,
+          value: element?.value,
+        ));
+      }
       isLoadingPlan = false;
       notifyListeners();
     } catch (error) {
@@ -330,12 +352,21 @@ print(html);
     }
   }
 
-  addPlanListUIndex() {
+  void addPlanListUIndex() {
     if (plan[planListUIndex]?.id == null) {
       AppSnackBar.openErrorSnackBar(message: 'Please select a plan.'.tr);
       return;
     } else if (selectedCurrency == null) {
       AppSnackBar.openErrorSnackBar(message: 'Please select a currency.'.tr);
+      return;
+    } else if(priceController[planListUIndex].text.trim().isEmpty) {
+      AppSnackBar.openErrorSnackBar(message: 'Please add a price'.tr);
+      return;
+    } else if(deliveryDayController[planListUIndex].text.trim().isEmpty) {
+      AppSnackBar.openErrorSnackBar(message: 'Please add a delivery day'.tr);
+      return;
+    } else if(revisionController[planListUIndex].text.trim().isEmpty) {
+      AppSnackBar.openErrorSnackBar(message: 'Please add a revision number'.tr);
       return;
     }
 
@@ -343,9 +374,16 @@ print(html);
       planList?.removeWhere(
         (element) => element?.id == data?.id,
       );
+      // tempPlanList?.removeWhere(
+      //   (element) => element?.id == data?.id,
+      // );
+      print('plan List addPlanListUIndex: ${planList..toString()}');
+      print('temp plan List addPlanListUIndex: ${tempPlanList.toString()}');
+      //planList?.isEmpty == true ||
       if (planList?.isEmpty == true) {
         AppSnackBar.openErrorSnackBar(
-            message: 'A new plan cannot be added.'.tr);
+          message: 'A new plan cannot be added.'.tr,
+        );
         return;
       }
     }
@@ -361,7 +399,7 @@ print(html);
     notifyListeners();
   }
 
-  removePlanAtIndex(int index) {
+  void removePlanAtIndex(int index) {
     if (index >= 0 && index < listOfPlans.length) {
       listOfPlans.removeAt(index);
       planListUIndex = listOfPlans.length - 1;
@@ -370,7 +408,14 @@ print(html);
       revisionController.removeAt(index);
       if (plan[index]?.id != null && planList?.contains(plan[index]) == false) {
         planList?.add(plan[index]);
+        // tempPlanList?.add(PlanModelDataTemp(
+        //   value: plan[index]?.value,
+        //   title: plan[index]?.title,
+        //   id: plan[index]?.id,
+        // ));
       }
+      print('plan List removePlanAtIndex: ${planList.toString()}');
+      print('temp plan List removePlanAtIndex: ${tempPlanList.toString()}');
       plan.removeAt(index);
       //selectedCurrency.removeAt(index);
       sourceFile.removeAt(index);
@@ -423,6 +468,7 @@ print(html);
     tagsList?.clear();
     planListUIndex = 0;
     selectedCurrency = null;
+    tempPlanList?.clear();
 
     listOfPlans = [const PlanCard()];
     priceController = [TextEditingController()];

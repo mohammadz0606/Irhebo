@@ -39,6 +39,36 @@ class PlanModelData {
     value = json['value']?.toString();
   }
 
+
+
+  @override
+  String toString() {
+    return 'PlanModelData(id: $id, name: $title)';
+  }
+}
+
+class PlanModelDataTemp {
+  int? id;
+  String? title;
+  String? value;
+
+  PlanModelDataTemp({
+    this.id,
+    this.title,
+    this.value,
+  });
+  PlanModelDataTemp.fromJson(Map<String, dynamic> json) {
+    id = json['id']?.toInt();
+    title = json['title']?.toString();
+    value = json['value']?.toString();
+  }
+
+
+
+  @override
+  String toString() {
+    return 'PlanModelData(id: $id, name: $title)';
+  }
 }
 
 

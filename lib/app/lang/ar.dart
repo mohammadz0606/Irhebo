@@ -298,5 +298,8 @@ Map<String, String> ar = {
   "Call": "مكالمة",
   "Service Update Successfully": "تم تحديث الخدمة بنجاح",
   "Update Service": "تحديث الخدمة",
-  "ErrorOnDownload": "خطأ في التحميل"
+  "ErrorOnDownload": "خطأ في التحميل",
+  "Please add a price": "يرجى إضافة السعر.",
+  "Please add a delivery day": "يرجى إضافة يوم التسليم.",
+  "Please add a revision number": "يرجى إضافة عدد التعديلات."
 };

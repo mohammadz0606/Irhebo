@@ -60,8 +60,13 @@ class _PlanCardState extends State<PlanCard> {
                       showSearchBox: true,
                       label: "Plans",
                       hintText: "Plans Choices",
-                      enabled:
-                          provider.plan[widget.currentIndex ?? 0]?.id == null,
+                      enabled: widget.currentIndex == 0
+                          ? provider.plan.length > 1
+                              ? false
+                              : true
+                          : (widget.currentIndex! == provider.planListUIndex) ? true : false,
+                      // enabled:
+                      //     provider.plan[widget.currentIndex ?? 0]?.id == null,
                       items: provider.planList ?? [],
                       onChanged: provider.onChangePlan,
                       value: provider.plan[widget.currentIndex ?? 0],
@@ -83,7 +88,8 @@ class _PlanCardState extends State<PlanCard> {
                           controller: provider
                               .priceController[widget.currentIndex ?? 0],
                           hint: 'Enter Price',
-                          textInputType: const TextInputType.numberWithOptions(decimal: true),
+                          textInputType: const TextInputType.numberWithOptions(
+                              decimal: true),
                           inputFormatters: [digitsAmountOnly],
                           textInputAction: TextInputAction.done,
                         ),
