@@ -87,6 +87,9 @@ dependencies:
   flutter_quill: ^11.4.1
   vsc_quill_delta_to_html: ^1.0.5
   flutter_quill_delta_from_html: ^1.5.2
+  quill_html_editor:
+    path: packages/quill_html_editor-main
+  flutter_html: ^3.0.0
 
 dev_dependencies:
   flutter_test:

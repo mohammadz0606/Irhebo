@@ -306,5 +306,7 @@ Map<String, String> en = {
   "Call" : "Call",
   "Service Update Successfully" : "Service Update Successfully",
   "Update Service" : "Update Service",
-  "ErrorOnDownload" : "Error On Download"
+  "ErrorOnDownload" : "Error On Download",
+
+  "can not launch url" : "Can Not Launch a Url!"
 };

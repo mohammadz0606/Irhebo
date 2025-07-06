@@ -301,5 +301,7 @@ Map<String, String> ar = {
   "ErrorOnDownload": "خطأ في التحميل",
   "Please add a price": "يرجى إضافة السعر.",
   "Please add a delivery day": "يرجى إضافة يوم التسليم.",
-  "Please add a revision number": "يرجى إضافة عدد التعديلات."
+  "Please add a revision number": "يرجى إضافة عدد التعديلات.",
+  "can not launch url" : "لا يمكن فتح الرابط"
+
 };
