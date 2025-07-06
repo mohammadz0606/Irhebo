@@ -30,14 +30,28 @@ class CategoryPageViewItem extends GetWidget<sr.SearchControllerGetx> {
                 runSpacing: 11.9 * (w / 100),
                 spacing: 7.46 * (w / 100),
                 children: [
-                  for (int i = 0; i < controller.categories.length; i++)
-                    GestureDetector(
-                      onTap: () => controller.onTapCategory(i),
-                      child: CategoryItem(
-                        category: controller.categories[i],
-                        homeCategory: false,
-                      ),
-                    )
+
+                  if(controller.searchText.value.trim().isEmpty) ... {
+                    for (int i = 0; i < controller.categories.length; i++)
+                      GestureDetector(
+                        onTap: () => controller.onTapCategory(i),
+                        child: CategoryItem(
+                          category: controller.categories[i],
+                          homeCategory: false,
+                        ),
+                      )
+                  } else ...{
+                    for (int i = 0; i < controller.categoriesSearch.length; i++)
+                      GestureDetector(
+                        onTap: () => controller.onTapCategory(i),
+                        child: CategoryItem(
+                          category: controller.categoriesSearch[i],
+                          homeCategory: false,
+                        ),
+                      )
+                  }
+
+
                 ],
               )
             ],

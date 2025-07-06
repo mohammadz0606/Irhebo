@@ -25,15 +25,29 @@ class SubCategoryPageViewItem extends GetWidget<sr.SearchControllerGetx> {
                     padding: EdgeInsets.symmetric(horizontal: 3.98 * (w / 100)),
                     child: Column(
                       children: [
-                        for (int i = 0;
-                            i < controller.subcategories.length;
-                            i++)
-                          GestureDetector(
-                            onTap: () => controller.onTapSubCategory(i,pageIndex: 3),
-                            child: SubcategoryItem(
-                              subcategory: controller.subcategories[i],
-                            ),
-                          )
+                        if (controller.searchText.trim().isEmpty) ...{
+                          for (int i = 0;
+                              i < controller.subcategories.length;
+                              i++)
+                            GestureDetector(
+                              onTap: () =>
+                                  controller.onTapSubCategory(i, pageIndex: 3),
+                              child: SubcategoryItem(
+                                subcategory: controller.subcategories[i],
+                              ),
+                            )
+                        } else ...{
+                          for (int i = 0;
+                              i < controller.searchSubcategories.length;
+                              i++)
+                            GestureDetector(
+                              onTap: () =>
+                                  controller.onTapSubCategory(i, pageIndex: 3),
+                              child: SubcategoryItem(
+                                subcategory: controller.searchSubcategories[i],
+                              ),
+                            )
+                        }
                       ],
                     ),
                   )

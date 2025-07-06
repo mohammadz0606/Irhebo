@@ -40,6 +40,8 @@ class SearchControllerGetx extends GetxController {
   final GlobalKey<FormState> searchFormKey = GlobalKey<FormState>();
   PageController controller = PageController(initialPage: 0);
   TextEditingController searchController = TextEditingController();
+  final RxString searchText = ''.obs;
+
   TextEditingController minSliderController = TextEditingController();
   TextEditingController maxSliderController = TextEditingController();
 
@@ -50,7 +52,10 @@ class SearchControllerGetx extends GetxController {
 
   // final RxList<FilterModel> _dropDownButtonsFilters = <FilterModel>[].obs;
   final RxList<CategoryModel> _filteredCategories = <CategoryModel>[].obs;
+  final RxList<CategoryModel> _categoriesSearch = <CategoryModel>[].obs;
   final RxList<SubcategoryModel> _filteredSubcategories =
+      <SubcategoryModel>[].obs;
+  final RxList<SubcategoryModel> _searchSubcategories =
       <SubcategoryModel>[].obs;
 
   final RxList<FilterModel> _checkboxFilters = <FilterModel>[].obs;
@@ -71,6 +76,7 @@ class SearchControllerGetx extends GetxController {
   final RxDouble _selectedMax = 499.0.obs;
   RangeValues sliderRange = const RangeValues(0, 500);
   final RxList<ServiceModel> _services = <ServiceModel>[].obs;
+  final RxList<ServiceModel> _servicesSearch = <ServiceModel>[].obs;
   final RxList<TagModel> _tags = <TagModel>[].obs;
 
   int get pageNumber => _pageNumber.value;
@@ -95,6 +101,8 @@ class SearchControllerGetx extends GetxController {
 
   List<ServiceModel> get services => _services;
 
+  List<ServiceModel> get servicesSearch => _servicesSearch;
+
   List<FilterModel> get multiDropDownButtonsFilters =>
       _multiDropDownButtonsFilters;
 
@@ -113,9 +121,13 @@ class SearchControllerGetx extends GetxController {
 
   List<CategoryModel> get categories => _filteredCategories;
 
+  List<CategoryModel> get categoriesSearch => _categoriesSearch;
+
   NewSearchModel get searchModel => _newSearchModel.value;
 
   List<SubcategoryModel> get subcategories => _filteredSubcategories;
+
+  List<SubcategoryModel> get searchSubcategories => _searchSubcategories;
 
   set pageNumber(value) => _pageNumber.value = value;
 
@@ -346,25 +358,53 @@ class SearchControllerGetx extends GetxController {
     selectedDropdownItems.refresh();
   }
 
-  onChangeHandler(value) {
-    const duration = Duration(milliseconds: 800);
-    if (_debounce != null) {
-      _debounce!.cancel();
+  onChangeHandler(value) async {
+    searchText.value = value;
+    if (pageIndex == 0) {
+      await getSubcategoriesAndServicesNew(text: searchController.text.trim());
+    } else if (pageIndex == 1) {
+      final searchText = value.trim().toLowerCase();
+      final data = services.where((service) {
+        final name = service.title?.toLowerCase() ?? '';
+        return name.contains(searchText);
+      }).toList();
+      _servicesSearch.value = data;
+    } else if (pageIndex == 2) {
+      final searchText = value.trim().toLowerCase();
+      final data = categories.where((category) {
+        final name = category.title?.toLowerCase() ?? '';
+        return name.contains(searchText);
+      }).toList();
+      _categoriesSearch.value = data;
+    } else if (pageIndex == 3) {
+      final searchText = value.trim().toLowerCase();
+      final data = subcategories.where((subcategory) {
+        final name = subcategory.title?.toLowerCase() ?? '';
+        return name.contains(searchText);
+      }).toList();
+      _searchSubcategories.value = data;
     }
-    _debounce = Timer(duration, () async {
-      if (pageIndex == 2) {
-        if (searchController.text.length >= 3) {
-          pageNumber = 1;
-          services.clear();
-          await searchService(value);
-        } else {
-          AppSnackBar.openErrorSnackBar(
-              message: "please enter three characters at least");
-        }
-      }
-    });
   }
 
+// const duration = Duration(milliseconds: 800);
+  // if (_debounce != null) {
+  //   _debounce!.cancel();
+  // }
+  // _debounce = Timer(
+  //   duration,
+  //   () async {
+  //     if (pageIndex == 2) {
+  //       if (searchController.text.length >= 3) {
+  //         pageNumber = 1;
+  //         services.clear();
+  //         await searchService(value);
+  //       } else {
+  //         AppSnackBar.openErrorSnackBar(
+  //             message: "please enter three characters at least");
+  //       }
+  //     }
+  //   },
+  // );
   onPageChanged(int index) {
     pageIndex = index;
   }
@@ -379,32 +419,28 @@ class SearchControllerGetx extends GetxController {
           //Get.back();
         } else {
           searchController.clear();
+          searchText.value = '';
           appBarTitle = "Categories";
         }
-      }
-      else {
+      } else {
         searchController.clear();
+        searchText.value = '';
         services.clear();
         appBarTitle = subccategoryTitle;
-        if(!isSeeAll) {
+        if (!isSeeAll) {
           Get.back();
         }
       }
       if (fromCategories && !isSeeAll) {
         controller.jumpToPage(3);
         pageIndex = 3;
-      }
-      else if(isSeeAll && pageIndex == 1) {
+      } else if (isSeeAll && pageIndex == 1) {
         controller.jumpToPage(3);
         pageIndex = 3;
-      }
-      else if(isSeeAll && pageIndex == 3) {
+      } else if (isSeeAll && pageIndex == 3) {
         controller.jumpToPage(2);
         pageIndex = 2;
-      }
-
-
-      else {
+      } else {
         controller.animateToPage(pageIndex - 1,
             duration: const Duration(milliseconds: 250), curve: Curves.linear);
         pageIndex = pageIndex - 1;
@@ -420,6 +456,7 @@ class SearchControllerGetx extends GetxController {
         duration: const Duration(milliseconds: 250), curve: Curves.linear);
     categoryId = categories[index].id ?? 0;
     searchController.clear();
+    searchText.value = '';
     await getSubcategories(categoryId);
   }
 
@@ -449,6 +486,7 @@ class SearchControllerGetx extends GetxController {
     //     duration: const Duration(milliseconds: 250), curve: Curves.linear);
     //subcategoryId = subcategories[index].id ?? 0;
     searchController.clear();
+    searchText.value = '';
     controller.jumpToPage(1);
     log("jnkjnjknjk");
     getPaginatedServicesById();
@@ -507,12 +545,16 @@ class SearchControllerGetx extends GetxController {
   onLoadingServices() async {
     if (selectedType == 0) {
       searchController.clear();
+      searchText.value = '';
+
       await getServiceBySubcategoryId();
     }
     if (searchController.text.isNotEmpty) {
       searchService(searchController.text);
     } else {
       searchController.clear();
+      searchText.value = '';
+
       getServiceByTag();
     }
   }
@@ -576,7 +618,7 @@ class SearchControllerGetx extends GetxController {
     _checkboxFilters.refresh();
   }
 
-  Future<void> getSubcategoriesAndServicesNew() async {
+  Future<void> getSubcategoriesAndServicesNew({String text = ''}) async {
     try {
       _newSearchModel.refresh();
       _services.refresh();
@@ -584,7 +626,7 @@ class SearchControllerGetx extends GetxController {
 
       final response = await Network().get(url: AppEndpoints.newSearch, query: {
         'perPage': 100,
-        'search': '',
+        'search': text,
       });
       String errorMessage = await Network().handelError(response: response);
       if (errorMessage.isNotEmpty) {
@@ -650,6 +692,7 @@ class SearchControllerGetx extends GetxController {
   Future<void> getCategory() async {
     //?perPage=100&search=
     isLoadingCategory = true;
+    _categoriesSearch.clear();
     GetCategoriesUseCase getCategoriesUseCase = sl();
     final result = await getCategoriesUseCase(());
     result!.fold((l) {
@@ -657,7 +700,9 @@ class SearchControllerGetx extends GetxController {
     }, (r) {
       isLoadingCategory = false;
       categories = r.data;
+      _categoriesSearch.value = r.data ?? [];
       _categories.refresh();
+      _categoriesSearch.refresh();
       _filteredCategories.value = r.data ?? [];
     });
   }
@@ -672,7 +717,9 @@ class SearchControllerGetx extends GetxController {
       isLoadingSubcategory = false;
       subcategories = r.data ?? [];
       _subcategories.refresh();
+      _searchSubcategories.refresh();
       _filteredSubcategories.value = r.data ?? [];
+      _searchSubcategories.value = r.data ?? [];
     });
   }
 
@@ -687,6 +734,7 @@ class SearchControllerGetx extends GetxController {
 
   clearData() {
     searchController.clear();
+    searchText.value = '';
     selectedType = 0;
     pageNumber = 1;
     services.clear();
@@ -713,6 +761,8 @@ class SearchControllerGetx extends GetxController {
       }
       pageNumber = pageNumber + 1;
       services.addAll(r.data!.services ?? []);
+      _servicesSearch.refresh();
+      _servicesSearch.value = services;
       if (r.data!.services!.isEmpty) {
         refreshController.loadNoData();
       } else {

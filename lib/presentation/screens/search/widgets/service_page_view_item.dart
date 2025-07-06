@@ -35,36 +35,77 @@ class ServicePageViewItem extends GetWidget<sr.SearchControllerGetx> {
               footer: const CustomePaginagtionFooter(),
               onLoading: controller.onLoadingServices,
               child: SingleChildScrollView(
-                child: Column(
+                child: controller.searchText.value.trim().isEmpty
+                    ? Column(
                   children: [
                     controller.isLoadingService
                         ? const SearchServiceShimmer()
                         : controller.services.isEmpty
-                            ? Padding(
-                                padding: EdgeInsets.symmetric(
-                                    vertical: 50 * (w / 100)),
-                                child: const NoData(
-                                  forHome: true,
-                                ),
-                              )
-                            : Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 3.98 * (w / 100)),
-                                child: Column(
-                                  children: [
-                                    for (int i = 0;
-                                        i < controller.services.length;
-                                        i++)
-                                      SearchServiceItem(
-                                        onTapService: () =>
-                                            controller.onTapService(i),
-                                        onLikeService: () =>
-                                            controller.onLikeService(i),
-                                        service: controller.services[i],
-                                      )
-                                  ],
-                                ),
-                              )
+                        ? Padding(
+                      padding: EdgeInsets.symmetric(
+                          vertical: 50 * (w / 100)),
+                      child: const NoData(
+                        forHome: true,
+                      ),
+                    )
+                        : Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 3.98 * (w / 100)),
+                      child: Column(
+                        children: [
+                          for (int i = 0;
+                          i <
+                              controller
+                                  .services.length;
+                          i++)
+                            SearchServiceItem(
+                              onTapService: () => controller
+                                  .onTapService(i),
+                              onLikeService: () =>
+                                  controller
+                                      .onLikeService(i),
+                              service:
+                              controller.services[i],
+                            )
+                        ],
+                      ),
+                    )
+                  ],
+                )
+                    : Column(
+                  children: [
+                    controller.isLoadingService
+                        ? const SearchServiceShimmer()
+                        : controller.servicesSearch.isEmpty
+                        ? Padding(
+                      padding: EdgeInsets.symmetric(
+                          vertical: 50 * (w / 100)),
+                      child: const NoData(
+                        forHome: true,
+                      ),
+                    )
+                        : Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 3.98 * (w / 100)),
+                      child: Column(
+                        children: [
+                          for (int i = 0;
+                          i <
+                              controller.servicesSearch
+                                  .length;
+                          i++)
+                            SearchServiceItem(
+                              onTapService: () => controller
+                                  .onTapService(i),
+                              onLikeService: () =>
+                                  controller
+                                      .onLikeService(i),
+                              service: controller
+                                  .servicesSearch[i],
+                            )
+                        ],
+                      ),
+                    )
                   ],
                 ),
               ),
