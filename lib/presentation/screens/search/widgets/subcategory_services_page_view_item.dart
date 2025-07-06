@@ -63,7 +63,7 @@ class SubCategoryAndServicesPageViewItem
                       (i) => Padding(
                         padding: EdgeInsets.only(right: 7.46 * (w / 100)),
                         child: GestureDetector(
-                          onTap: () => controller.onTapSubCategory(i),
+                          onTap: () => controller.onTapSubCategory(i,pageIndex: 3),
                           child: CategoryItem(
                             category: CategoryModel(
                               id: controller

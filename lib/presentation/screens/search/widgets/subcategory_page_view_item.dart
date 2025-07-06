@@ -29,7 +29,7 @@ class SubCategoryPageViewItem extends GetWidget<sr.SearchControllerGetx> {
                             i < controller.subcategories.length;
                             i++)
                           GestureDetector(
-                            onTap: () => controller.onTapSubCategory(i),
+                            onTap: () => controller.onTapSubCategory(i,pageIndex: 3),
                             child: SubcategoryItem(
                               subcategory: controller.subcategories[i],
                             ),

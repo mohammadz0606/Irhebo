@@ -27,7 +27,7 @@ class ChatBotProvider extends ChangeNotifier {
       );
       groupedMessages?.update(
         formatDate(date),
-        (existingList) => [newMessageUser,...existingList],
+        (existingList) => [newMessageUser, ...existingList],
         ifAbsent: () => [newMessageUser],
       );
       notifyListeners();
@@ -58,11 +58,11 @@ class ChatBotProvider extends ChangeNotifier {
         role: sendBotMessageModel.data?.role,
         message: sendBotMessageModel.data?.message,
         createdAt: sendBotMessageModel.data?.createdAt,
-        services: [],
+        services: sendBotMessageModel.data?.services,
       );
       groupedMessages?.update(
         formatDate(sendBotMessageModel.data?.createdAt ?? DateTime.now()),
-            (existingList) => [newMessageBot,...existingList],
+        (existingList) => [newMessageBot, ...existingList],
         ifAbsent: () => [newMessageBot],
       );
       isLoadingSendMessages = false;

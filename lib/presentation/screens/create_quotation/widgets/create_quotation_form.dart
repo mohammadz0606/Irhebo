@@ -101,7 +101,7 @@ class CreateQuotationForm extends GetWidget<CreateQuotationController> {
                 controller: controller.priceController,
                 label: 'Price',
                 hint: 'Enter price',
-                textInputType: TextInputType.number,
+                textInputType: const TextInputType.numberWithOptions(decimal: true),
                 inputFormatters: [digitsAmountOnly],
                 onValidate: AppValidators.validateField,
               ),

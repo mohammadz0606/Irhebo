@@ -83,13 +83,8 @@ class _PlanCardState extends State<PlanCard> {
                           controller: provider
                               .priceController[widget.currentIndex ?? 0],
                           hint: 'Enter Price',
-                          textInputType: const TextInputType.numberWithOptions(
-                              decimal: true),
-                          inputFormatters: [
-                            FilteringTextInputFormatter.allow(
-                              RegExp(r'^\d*\.?\d{0,2}'),
-                            ),
-                          ],
+                          textInputType: const TextInputType.numberWithOptions(decimal: true),
+                          inputFormatters: [digitsAmountOnly],
                           textInputAction: TextInputAction.done,
                         ),
                       ),

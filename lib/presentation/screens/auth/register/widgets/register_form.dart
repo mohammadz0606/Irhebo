@@ -11,6 +11,8 @@ import 'package:irhebo/presentation/screens/auth/register/widgets/register_info_
 import 'package:irhebo/presentation/widgets/app_button.dart';
 import 'package:irhebo/presentation/widgets/app_text_field.dart';
 
+import '../../../../../app/app_regex.dart';
+
 class RegisterForm extends GetWidget<RegisterController> {
   const RegisterForm({
     super.key,
@@ -43,6 +45,9 @@ class RegisterForm extends GetWidget<RegisterController> {
               hint: "Enter your email",
               textInputType: TextInputType.emailAddress,
               onValidate: AppValidators.validateEmail,
+              inputFormatters: [
+                englishOnlyFormatter
+              ],
             ),
             SizedBox(
               height: 2.98 * (w / 100),
@@ -73,6 +78,10 @@ class RegisterForm extends GetWidget<RegisterController> {
                   controller: controller.registerPassword,
                   label: "Password",
                   hint: "Enter Password",
+                  textInputType: TextInputType.visiblePassword,
+                  inputFormatters: [
+                    englishOnlyFormatter
+                  ],
                   onValidate: AppValidators.validateNewPassword,
                   isPassword: true,
                   isThereError: false,
@@ -109,8 +118,12 @@ class RegisterForm extends GetWidget<RegisterController> {
               ),
               AppTextField(
                 controller: controller.registerConfirmPassword,
+                textInputType: TextInputType.visiblePassword,
                 label: "Confirm Password",
                 hint: "ReEnter Password",
+                inputFormatters: [
+                  englishOnlyFormatter
+                ],
                 isPassword: true,
                 isVisible: controller.registerIsVisibile,
                 onValidate: (confirmed) => AppValidators.validatePasswordConf(

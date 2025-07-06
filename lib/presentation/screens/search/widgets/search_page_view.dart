@@ -4,6 +4,8 @@ import 'package:irhebo/presentation/screens/search/widgets/subcategory_services_
 import 'package:irhebo/presentation/screens/search/widgets/service_page_view_item.dart';
 import 'package:irhebo/presentation/screens/search/widgets/subcategory_page_view_item.dart';
 
+import 'category_page_view_item.dart';
+
 class SearchPageView extends StatelessWidget {
   final PageController controller;
   final Function(int index) onPageChanged;
@@ -24,6 +26,7 @@ class SearchPageView extends StatelessWidget {
         children: const [
           SubCategoryAndServicesPageViewItem(),
           ServicePageViewItem(),
+          CategoryPageViewItem(),
           SubCategoryPageViewItem(),
         ],
       ),
@@ -31,3 +34,8 @@ class SearchPageView extends StatelessWidget {
   }
 }
 //onTapSubCategory
+
+// SubCategoryAndServicesPageViewItem(),
+//           CategoryPageViewItem(),
+//           SubCategoryPageViewItem(),
+//           ServicePageViewItem(),

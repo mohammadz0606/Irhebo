@@ -2,8 +2,9 @@ import 'dart:developer';
 
 import 'package:intl/intl.dart';
 
-class SendBotMessageModel {
+import 'chat_bot_messages_model.dart';
 
+class SendBotMessageModel {
   bool? success;
   String? message;
   SendBotMessageModelData? data;
@@ -13,18 +14,20 @@ class SendBotMessageModel {
     this.message,
     this.data,
   });
+
   SendBotMessageModel.fromJson(Map<String, dynamic> json) {
     success = json['success'];
     message = json['message']?.toString();
-    data = (json['data'] != null) ? SendBotMessageModelData.fromJson(json['data']) : null;
+    data = (json['data'] != null)
+        ? SendBotMessageModelData.fromJson(json['data'])
+        : null;
   }
 }
 
-
 class SendBotMessageModelData {
-
   int? userId;
   String? message;
+  List<BotMessagesModelMessagesServices>? services;
   String? role;
   String? type;
   String? updatedAt;
@@ -39,7 +42,9 @@ class SendBotMessageModelData {
     this.updatedAt,
     this.createdAt,
     this.id,
+    this.services,
   });
+
   SendBotMessageModelData.fromJson(Map<String, dynamic> json) {
     userId = json['user_id']?.toInt();
     message = json['message']?.toString();
@@ -49,14 +54,21 @@ class SendBotMessageModelData {
     final dateString = json['created_at']?.toString();
     if (dateString != null) {
       try {
-        createdAt = DateFormat('EEE, MMM d, yyyy h:mm a', 'en_US').parse(dateString);
+        createdAt =
+            DateFormat('EEE, MMM d, yyyy h:mm a', 'en_US').parse(dateString);
       } catch (e) {
         log('Date parsing error: $e | value = $dateString');
         createdAt = DateTime.now();
       }
     }
+    if (json['services'] != null) {
+      final v = json['services'];
+      final arr0 = <BotMessagesModelMessagesServices>[];
+      v.forEach((v) {
+        arr0.add(BotMessagesModelMessagesServices.fromJson(v));
+      });
+      services = arr0;
+    }
     id = json['id']?.toInt();
   }
-
 }
-

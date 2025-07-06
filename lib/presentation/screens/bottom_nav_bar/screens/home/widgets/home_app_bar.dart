@@ -159,7 +159,7 @@ class HomeAppBar extends GetWidget<HomeController>
                             .tr,
                         child: InkWell(
                           onTap: () => Get.toNamed(AppRoutes.search,
-                              arguments: {"fromSubcategories": false}),
+                              arguments: {"fromSubcategories": false,}),
                           borderRadius: BorderRadius.circular(50 * (w / 100)),
                           // onTap: () => Get.back(),
                           child: const GradientIcon(

@@ -21,7 +21,9 @@ class CategoriesSection extends GetWidget<HomeController> {
         AppTitleWithAction(
           title: "Popular Categories",
           action: "See All",
-          onTapAction: () => Get.toNamed(AppRoutes.search),
+          onTapAction: () => Get.toNamed(AppRoutes.search,arguments: {
+            'is_see_all' : true,
+          }),
         ),
         Obx(
           () => controller.isLoading

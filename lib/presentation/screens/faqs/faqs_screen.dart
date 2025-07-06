@@ -11,6 +11,8 @@ import 'package:irhebo/presentation/widgets/app_button.dart';
 import 'package:irhebo/presentation/widgets/app_icon.dart';
 import 'package:irhebo/presentation/widgets/normal_app_bar.dart';
 
+import '../../../app/enums.dart';
+
 class FaqsScreen extends GetView<FaqsController> {
   final int? categoryId;
   const FaqsScreen({super.key, this.categoryId});
@@ -19,7 +21,7 @@ class FaqsScreen extends GetView<FaqsController> {
   Widget build(BuildContext context) {
     var w = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: NormalAppBar(
+      appBar: const NormalAppBar(
         title: "FAQ",
       ),
       body: SingleChildScrollView(
@@ -29,7 +31,7 @@ class FaqsScreen extends GetView<FaqsController> {
               () => Padding(
                 padding: EdgeInsets.symmetric(vertical: 1 * (w / 100)),
                 child: controller.isLoading
-                    ? FaqsShimmer()
+                    ? const FaqsShimmer()
                     : Column(
                         children: [
                           for (int i = 0; i < controller.faqs.length; i++)
@@ -41,7 +43,7 @@ class FaqsScreen extends GetView<FaqsController> {
                                   isVisible: controller.faqs[i].visible,
                                   onTapOpen: () => controller.onTapFaqs(i),
                                 ),
-                                Divider(
+                                const Divider(
                                   height: 1,
                                 )
                               ],
@@ -56,7 +58,10 @@ class FaqsScreen extends GetView<FaqsController> {
       bottomNavigationBar: (controller.appController.token.isNotEmpty)
           ? AppButton(
               bottom: true,
-              onPressed: () => Get.toNamed(AppRoutes.supportTickets),
+              onPressed: () => Get.toNamed(AppRoutes.chat, arguments: {
+                "chat_type": ChatType.Bot,
+                'chat_bot_type': ChatBotType.faq,
+              }),
               backGroundColor: Get.find<AppController>().darkMode
                   ? AppDarkColors.darkContainer
                   : AppLightColors.primaryColor,
@@ -71,7 +76,7 @@ class FaqsScreen extends GetView<FaqsController> {
                     width: 1 * (w / 100),
                   ),
                   AppIcon(
-                    padding: EdgeInsets.symmetric(horizontal: 2),
+                    padding: const EdgeInsets.symmetric(horizontal: 2),
                     path: AppIcons.customer,
                     color: Colors.white,
                     width: 5.47 * (w / 100),

@@ -61,6 +61,7 @@ class SearchControllerGetx extends GetxController {
   final RxInt _pageIndex = 0.obs;
   final RxInt _selectedType = (0).obs;
   final RxString _appBarTitle = "".obs;
+  final RxBool _isLoadingSubCategoryNew = false.obs;
   final RxBool _isLoadingCategory = false.obs;
   final RxBool _isLoadingFilters = false.obs;
   final RxBool _isLoadingTag = false.obs;
@@ -80,7 +81,9 @@ class SearchControllerGetx extends GetxController {
 
   int get pageIndex => _pageIndex.value;
 
-  bool get isLoadingSubcategoriesNew => _isLoadingCategory.value;
+  bool get isLoadingSubcategoriesNew => _isLoadingSubCategoryNew.value;
+
+  bool get isLoadingCategory => _isLoadingCategory.value;
 
   bool get isLoadingFilters => _isLoadingFilters.value;
 
@@ -132,7 +135,10 @@ class SearchControllerGetx extends GetxController {
 
   set pageIndex(value) => _pageIndex.value = value;
 
-  set isLoadingSubcategoriesNew(value) => _isLoadingCategory.value = value;
+  set isLoadingSubcategoriesNew(value) =>
+      _isLoadingSubCategoryNew.value = value;
+
+  set isLoadingCategory(value) => _isLoadingCategory.value = value;
 
   set isLoadingFilters(value) => _isLoadingFilters.value = value;
 
@@ -162,6 +168,7 @@ class SearchControllerGetx extends GetxController {
   // List<SubcategoryModel> subcategories = [];
   String subccategoryTitle = "";
   bool fromCategories = false;
+  bool isSeeAll = false;
   int categoryId = 0;
   int subcategoryId = 0;
 
@@ -270,11 +277,14 @@ class SearchControllerGetx extends GetxController {
     deliveryDayRange = const RangeValues(1, 180);
     sourceFile.value = false;
     receiveParams();
-
+    getCategory();
     if (fromCategories == true) {
-      controller = PageController(initialPage: 1);
-      _pageIndex(1);
+      controller = PageController(initialPage: 3);
+      _pageIndex(3);
       getSubcategories(categoryId);
+    } else if (isSeeAll) {
+      controller = PageController(initialPage: 2);
+      _pageIndex(2);
     } else {
       getSubcategoriesAndServicesNew();
     }
@@ -314,10 +324,11 @@ class SearchControllerGetx extends GetxController {
       fromCategories = Get.arguments["from_category"] ?? false;
       categoryId = Get.arguments["category_id"] ?? 0;
       appBarTitle = Get.arguments["title"] ?? "";
+      isSeeAll = Get.arguments['is_see_all'] ?? false;
       subccategoryTitle = appBarTitle;
     }
     if (!fromCategories) {
-      appBarTitle = "Categories";
+      appBarTitle = "Search".tr;
     }
   }
 
@@ -359,25 +370,45 @@ class SearchControllerGetx extends GetxController {
   }
 
   Future<bool> onTapBack() {
-    if (pageIndex == 0) {
+    if (pageIndex == 0 || pageIndex == 2) {
       Get.back();
       return Future.value(true);
     } else {
       if (pageIndex == 1) {
         if (fromCategories) {
-          Get.back();
+          //Get.back();
         } else {
           searchController.clear();
           appBarTitle = "Categories";
         }
-      } else {
+      }
+      else {
         searchController.clear();
         services.clear();
         appBarTitle = subccategoryTitle;
+        if(!isSeeAll) {
+          Get.back();
+        }
       }
-      controller.animateToPage(pageIndex - 1,
-          duration: const Duration(milliseconds: 250), curve: Curves.linear);
-      pageIndex = pageIndex - 1;
+      if (fromCategories && !isSeeAll) {
+        controller.jumpToPage(3);
+        pageIndex = 3;
+      }
+      else if(isSeeAll && pageIndex == 1) {
+        controller.jumpToPage(3);
+        pageIndex = 3;
+      }
+      else if(isSeeAll && pageIndex == 3) {
+        controller.jumpToPage(2);
+        pageIndex = 2;
+      }
+
+
+      else {
+        controller.animateToPage(pageIndex - 1,
+            duration: const Duration(milliseconds: 250), curve: Curves.linear);
+        pageIndex = pageIndex - 1;
+      }
     }
     return Future.value(false);
   }
@@ -405,14 +436,20 @@ class SearchControllerGetx extends GetxController {
     }
   }
 
-  onTapSubCategory(int index) async {
+  onTapSubCategory(int index, {required int pageIndex}) async {
     //appBarTitle = subcategories[index].title;
-    appBarTitle = searchModel.data?.subCategories?[index]?.title;
-    controller.animateToPage(pageIndex + 1,
-        duration: const Duration(milliseconds: 250), curve: Curves.linear);
+    if (searchModel.data?.subCategories == null) {
+      appBarTitle = subcategories[index].title;
+      subcategoryId = subcategories[index].id ?? 0;
+    } else {
+      appBarTitle = searchModel.data?.subCategories?[index]?.title;
+      subcategoryId = searchModel.data?.subCategories?[index]?.id ?? 0;
+    }
+    // controller.animateToPage(1,
+    //     duration: const Duration(milliseconds: 250), curve: Curves.linear);
     //subcategoryId = subcategories[index].id ?? 0;
-    subcategoryId = searchModel.data?.subCategories?[index]?.id ?? 0;
     searchController.clear();
+    controller.jumpToPage(1);
     log("jnkjnjknjk");
     getPaginatedServicesById();
   }
@@ -432,13 +469,15 @@ class SearchControllerGetx extends GetxController {
       openLoginRequiredDialog();
     } else {
       services[index].isWishlist = !services[index].isWishlist!;
-      _newSearchModel.value.data?.services?[index]?.isWishlist = !_newSearchModel.value.data!.services![index]!.isWishlist!;
+      _newSearchModel.value.data?.services?[index]?.isWishlist =
+          !_newSearchModel.value.data!.services![index]!.isWishlist!;
       _services.refresh();
       _newSearchModel.refresh();
       bool result = await appController.addToWishlist(services[index].id);
       if (!result) {
         services[index].isWishlist = !services[index].isWishlist!;
-        _newSearchModel.value.data?.services?[index]?.isWishlist = !_newSearchModel.value.data!.services![index]!.isWishlist!;
+        _newSearchModel.value.data?.services?[index]?.isWishlist =
+            !_newSearchModel.value.data!.services![index]!.isWishlist!;
         _services.refresh();
         _newSearchModel.refresh();
       }
@@ -606,6 +645,21 @@ class SearchControllerGetx extends GetxController {
     //   _categories.refresh();
     //   _filteredCategories.value = r.data ?? [];
     // });
+  }
+
+  Future<void> getCategory() async {
+    //?perPage=100&search=
+    isLoadingCategory = true;
+    GetCategoriesUseCase getCategoriesUseCase = sl();
+    final result = await getCategoriesUseCase(());
+    result!.fold((l) {
+      isLoadingCategory = false;
+    }, (r) {
+      isLoadingCategory = false;
+      categories = r.data;
+      _categories.refresh();
+      _filteredCategories.value = r.data ?? [];
+    });
   }
 
   getSubcategories(int id) async {
