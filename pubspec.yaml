@@ -69,7 +69,7 @@ dependencies:
   another_flushbar:
   country_code_picker:
   pull_to_refresh:
-  intl:
+  intl: ^0.20.2
   gradient_borders:
   provider: ^6.1.5
   talker_dio_logger: ^4.9.1

@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:irhebo/presentation/screens/portfolio_details/portfolio_details_controller.dart';
 import 'package:irhebo/presentation/screens/portfolio_details/widgets/portfolio_details_shimmer.dart';
 import 'package:irhebo/presentation/screens/portfolio_details/widgets/portfolio_media.dart';
+import 'package:irhebo/presentation/screens/portfolio_details/widgets/view_html_details.dart';
 import 'package:irhebo/presentation/widgets/normal_app_bar.dart';
 
 import '../../../app/global_imports.dart';
@@ -110,6 +111,11 @@ class PortfolioDetailsScreen extends GetView<PortfolioDetailsController> {
                       SizedBox(
                         height: 3 * (w / 100),
                       ),
+                      ViewHtmlDetails(html: controller.portfolio?.description ?? '',),
+                      SizedBox(
+                        height: 3 * (w / 100),
+                      ),
+
                       const PortfolioMedia()
                     ],
                   ),
