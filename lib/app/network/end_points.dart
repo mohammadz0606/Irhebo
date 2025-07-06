@@ -94,8 +94,8 @@ class AppEndpoints {
   static String markAsRead = '$base_url/notifications/mark-as-read/';
   static String socialLogin = '$base_url/social-login';
   static String deleteService = '$base_url/services/delete/';
-  static String newSearch = '$base_url/services/search-services-and-sub-categories/search';
-
+  static String newSearch =
+      '$base_url/services/search-services-and-sub-categories/search';
 
   ///CHAT
   static String startChat = '$base_url/chat/start-chat?user_id=';
@@ -104,6 +104,11 @@ class AppEndpoints {
   static String getMessages = '$base_url/chat/get-messages/';
   static String markRead = '$base_url/chat/mark-read/';
   static String toggleChat = '$base_url/chat/toggle-flag';
+
+  ///BOT
+  static String sendMessageForBot = '$base_url/bot/send-message';
+  static String getMessagesForBot = '$base_url/bot/get-messages';
+  static String deleteMessagesForBot = '$base_url/bot/delete-messages';
 
   ///CALL
   static String startCall = '$base_url/chat/start-call';

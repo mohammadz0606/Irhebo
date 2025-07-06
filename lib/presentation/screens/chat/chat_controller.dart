@@ -159,14 +159,16 @@ class ChatController extends GetxController with GetTickerProviderStateMixin {
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       //startLiveChat();
-      await Provider.of<ChatProvider>(Get.context!, listen: false)
-          .getAllMessages(chatId: chatId);
+
+      if (type == ChatType.Bot) {
+      } else {
+        await Provider.of<ChatProvider>(Get.context!, listen: false)
+            .getAllMessages(chatId: chatId);
+      }
     });
     super.onInit();
     groupMessages();
   }
-
-
 
   receiveParameters() {
     type = Get.arguments["chat_type"] ?? ChatType.Users;
@@ -337,9 +339,12 @@ class ChatController extends GetxController with GetTickerProviderStateMixin {
   }
 
   Future<bool> onWillPop() async {
-    log('POP PAGE');
-    ChatPusherConfig().disconnect();
-    Get.find<AnimationButtonController>().disposeAllControllers();
+    if (type == ChatType.Bot) {
+    } else {
+      log('POP PAGE');
+      ChatPusherConfig().disconnect();
+      Get.find<AnimationButtonController>().disposeAllControllers();
+    }
     return true;
   }
 

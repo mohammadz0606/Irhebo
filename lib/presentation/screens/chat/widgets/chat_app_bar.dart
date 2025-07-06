@@ -1,4 +1,3 @@
-
 import 'package:irhebo/app/resources/images.dart';
 import 'package:irhebo/domain/providers/calls.dart';
 import 'package:irhebo/presentation/widgets/app_icon.dart';
@@ -45,7 +44,10 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
                 borderRadius: BorderRadius.circular(50 * (w / 100)),
                 onTap: () {
                   Get.back();
-                  onTapBack();
+                  if (type == ChatType.Bot) {
+                  } else {
+                    onTapBack();
+                  }
                 },
                 child: const GradientIcon(
                   icn: AppIcons.arrowLeft,

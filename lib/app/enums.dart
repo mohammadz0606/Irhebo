@@ -93,3 +93,8 @@ enum ChatStatus {
   stared,
   spam,
 }
+
+enum ChatBotType {
+  faq,
+  service,
+}

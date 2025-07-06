@@ -39,8 +39,8 @@ class ChatTextField extends GetWidget<ChatController> {
           right:
               controller.type == ChatType.Bot ? 3.9 * (w / 100) : 3 * (w / 100),
           top: 3 * (w / 100)),
-      child: Consumer2<ChatProvider, VoiceRecorderProvider>(
-        builder: (context, provider, voiceProvider, _) {
+      child: Consumer<ChatProvider>(
+        builder: (context, provider, _) {
           return Row(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
