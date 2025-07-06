@@ -10,6 +10,8 @@ import 'package:irhebo/domain/models/home_model.dart';
 import 'package:irhebo/domain/params/create_quotation_params.dart';
 import 'package:irhebo/domain/usecases/setting_usecase/create_quotation_use_case.dart';
 
+import '../../../domain/models/new_models/currency_model.dart';
+import '../../../domain/providers/currency.dart';
 import '../search/search_controller.dart';
 
 class CreateQuotationController extends GetxController {
@@ -21,6 +23,7 @@ class CreateQuotationController extends GetxController {
   TextEditingController deliveryDayController = TextEditingController();
   TextEditingController revisionsController = TextEditingController();
   Rx<CategoryModel?> categoryModel = Rx<CategoryModel?>(null);
+  Rx<CurrencyModelData?> selectedCurrency = Rx<CurrencyModelData?>(null);
   Rx<SubcategoryModel?> subcategoryModel = Rx<SubcategoryModel?>(null);
 
   final RxBool _isLoading = false.obs;
@@ -45,12 +48,17 @@ class CreateQuotationController extends GetxController {
   @override
   void onInit() {
     clearData();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await Provider.of<CurrencyProvider>(Get.context!, listen: false)
+          .getCurrencies();
+    });
+
     super.onInit();
   }
 
   createQuotation() async {
     if (formKey.currentState!.validate()) {
-      if (categoryModel.value == null || subcategoryModel.value == null) {
+      if (categoryModel.value == null || subcategoryModel.value == null || selectedCurrency.value == null) {
         AppSnackBar.openErrorSnackBar(message: 'Please fill all fields'.tr);
         return;
       }
@@ -66,6 +74,7 @@ class CreateQuotationController extends GetxController {
           revisions: int.tryParse(revisionsController.text),
           sourceFile: checked,
           subCategoryId: subcategoryModel.value?.id,
+          currency: selectedCurrency.value?.symbolEn ?? 'USD',
         ),
       );
       result!.fold((l) {
@@ -89,10 +98,15 @@ class CreateQuotationController extends GetxController {
     checked = false;
     categoryModel.value = null;
     subcategoryModel.value = null;
+    selectedCurrency.value = null;
   }
 
   onChangeCheck(bool? value) {
     checked = value;
+  }
+
+  onSelectedCurrency(CurrencyModelData? value) {
+    selectedCurrency.value = value;
   }
 
   onChangeCategory(CategoryModel? value) async {

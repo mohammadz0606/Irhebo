@@ -10,6 +10,7 @@ class CreateQuotationParams {
   int? revisions;
   bool? sourceFile;
   int? subCategoryId;
+  String? currency;
 
   CreateQuotationParams({
     this.title,
@@ -19,17 +20,18 @@ class CreateQuotationParams {
     this.revisions,
     this.sourceFile,
     this.subCategoryId,
+    this.currency,
   });
 
-  CreateQuotationParams.fromJson(Map<String, dynamic> json) {
-    title = json['title'];
-    description = json['description'];
-    price = json['price'];
-    deliveryDay = json['delivery_day'];
-    revisions = json['revisions'];
-    sourceFile = json['source_file'];
-    subCategoryId = json['sub_category_id'];
-  }
+  // CreateQuotationParams.fromJson(Map<String, dynamic> json) {
+  //   title = json['title'];
+  //   description = json['description'];
+  //   price = json['price'];
+  //   deliveryDay = json['delivery_day'];
+  //   revisions = json['revisions'];
+  //   sourceFile = json['source_file'];
+  //   subCategoryId = json['sub_category_id'];
+  // }
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
@@ -39,7 +41,8 @@ class CreateQuotationParams {
       if (revisions != null) 'revisions': revisions,
       if (deliveryDay != null) 'delivery_day': deliveryDay,
       if (sourceFile != null) 'source_file': sourceFile,
-      'currency' : AppPreferences(sl()).getString(key: AppPrefsKeys.CURRENCY) ?? 'USD',
+      //'currency' : AppPreferences(sl()).getString(key: AppPrefsKeys.CURRENCY) ?? 'USD',
+      'currency' : currency,
       'sub_category_id' : subCategoryId,
     };
   }
