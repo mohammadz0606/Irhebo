@@ -19,6 +19,7 @@ import 'package:path_provider/path_provider.dart';
 
 import '../../../app/chat_pusher/chat_pusher_config.dart';
 import '../../../app/global_imports.dart';
+import '../../../domain/providers/chat/chat_bot_provider.dart';
 import '../../../domain/providers/chat/chat_provider.dart';
 
 class ChatController extends GetxController with GetTickerProviderStateMixin {
@@ -139,6 +140,7 @@ class ChatController extends GetxController with GetTickerProviderStateMixin {
   ChatType type = ChatType.Users;
   int chatId = 0;
   int userId = 0;
+  ChatBotType chatBotType = ChatBotType.service;
 
   set messages(List<ChatMessageEntity> value) {
     _messages.value = value;
@@ -161,6 +163,10 @@ class ChatController extends GetxController with GetTickerProviderStateMixin {
       //startLiveChat();
 
       if (type == ChatType.Bot) {
+        await Provider.of<ChatBotProvider>(Get.context!, listen: false)
+            .getMessages(
+          chatBotType: chatBotType,
+        );
       } else {
         await Provider.of<ChatProvider>(Get.context!, listen: false)
             .getAllMessages(chatId: chatId);
@@ -174,6 +180,7 @@ class ChatController extends GetxController with GetTickerProviderStateMixin {
     type = Get.arguments["chat_type"] ?? ChatType.Users;
     userId = Get.arguments["userId"] ?? 0;
     chatId = Get.arguments["chatId"] ?? 0;
+    chatBotType = Get.arguments["chat_bot_type"] ?? ChatBotType.service;
   }
 
   void groupMessages() {

@@ -19,8 +19,10 @@ class BotFloatingButton extends StatelessWidget {
     var h = MediaQuery.of(context).size.height;
 
     return GestureDetector(
-      onTap: () =>
-          Get.toNamed(AppRoutes.chat, arguments: {"chat_type": ChatType.Bot}),
+      onTap: () => Get.toNamed(AppRoutes.chat, arguments: {
+        "chat_type": ChatType.Bot,
+        'chat_bot_type': ChatBotType.service,
+      }),
       child: Container(
         padding: EdgeInsets.symmetric(
           horizontal: 0.5 * (w / 100),

@@ -33,7 +33,7 @@ class BotMessagesModelMessages {
   int? id;
   String? message;
   String? role;
-  List<BotMessagesModelMessagesServices?>? services;
+  List<BotMessagesModelMessagesServices>? services;
   DateTime? createdAt;
 
   BotMessagesModelMessages({

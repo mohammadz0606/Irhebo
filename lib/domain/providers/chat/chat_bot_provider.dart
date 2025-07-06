@@ -77,6 +77,7 @@ class ChatBotProvider extends ChangeNotifier {
         );
         return;
       }
+      chatBotMessages = BotMessagesModel.fromJson(response.data).messages;
       _groupMessages();
       isLoadingGetMessages = false;
       notifyListeners();
