@@ -14,22 +14,39 @@ class ChatBotProvider extends ChangeNotifier {
   Future<void> sendMessage({
     required String message,
     required ChatBotType chatBotType,
+    required Function() onLoading,
   }) async {
     try {
       isLoadingSendMessages = true;
+      onLoading();
       final date = DateTime.now();
+      int idSendLoading = date.microsecondsSinceEpoch;
       BotMessagesModelMessages newMessageUser = BotMessagesModelMessages(
-        id: date.microsecondsSinceEpoch,
+        id: idSendLoading + 1,
         role: 'user',
         message: message.trim(),
         createdAt: date,
         services: [],
       );
+      BotMessagesModelMessages newMessageBotLoading = BotMessagesModelMessages(
+        id: idSendLoading,
+        role: 'bot',
+        message: 'Loading'.tr,
+        createdAt: date,
+        services: [],
+      );
       groupedMessages?.update(
         formatDate(date),
-        (existingList) => [newMessageUser, ...existingList],
+            (existingList) => [newMessageUser, ...existingList],
         ifAbsent: () => [newMessageUser],
       );
+
+      groupedMessages?.update(
+        formatDate(date),
+        (existingList) => [newMessageBotLoading, ...existingList],
+        ifAbsent: () => [newMessageBotLoading],
+      );
+
       notifyListeners();
 
       final response = await Network().post(
@@ -59,6 +76,13 @@ class ChatBotProvider extends ChangeNotifier {
         message: sendBotMessageModel.data?.message,
         createdAt: sendBotMessageModel.data?.createdAt,
         services: sendBotMessageModel.data?.services,
+      );
+      groupedMessages?.update(
+        formatDate(date),
+            (existingList) {
+          existingList.removeWhere((msg) => msg.id == idSendLoading);
+          return existingList;
+        },
       );
       groupedMessages?.update(
         formatDate(sendBotMessageModel.data?.createdAt ?? DateTime.now()),

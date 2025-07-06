@@ -4,20 +4,20 @@ import 'dart:developer';
 import 'package:intl/intl.dart';
 
 class BotMessagesModel {
-  bool? success;
+  bool? status;
   String? message;
   List<BotMessagesModelMessages>? messages;
 
   BotMessagesModel({
-    this.success,
+    this.status,
     this.message,
     this.messages,
   });
   BotMessagesModel.fromJson(Map<String, dynamic> json) {
-    success = json['success'];
+    status = json['status'];
     message = json['message']?.toString();
-    if (json['messages'] != null) {
-      final v = json['messages'];
+    if (json['data'] != null) {
+      final v = json['data'];
       final arr0 = <BotMessagesModelMessages>[];
       v.forEach((v) {
         arr0.add(BotMessagesModelMessages.fromJson(v));
@@ -28,7 +28,6 @@ class BotMessagesModel {
 }
 
 class BotMessagesModelMessages {
-
 
   int? id;
   String? message;

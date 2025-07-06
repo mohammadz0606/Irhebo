@@ -28,18 +28,18 @@ class _ChatBotMessagesListState extends State<ChatBotMessagesList> {
     super.dispose();
   }
 
-  scrollToEnd() async {
-    await Future.delayed(
-      const Duration(milliseconds: 500),
-      () {
-        chatScrollController.animateTo(
-          chatScrollController.position.minScrollExtent,
-          duration: const Duration(milliseconds: 500),
-          curve: Curves.fastOutSlowIn,
-        );
-      },
-    );
-  }
+  // scrollToEnd() async {
+  //   await Future.delayed(
+  //     const Duration(milliseconds: 500),
+  //     () {
+  //       chatScrollController.animateTo(
+  //         chatScrollController.position.minScrollExtent,
+  //         duration: const Duration(milliseconds: 500),
+  //         curve: Curves.fastOutSlowIn,
+  //       );
+  //     },
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {

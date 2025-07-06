@@ -83,11 +83,14 @@ class ChatTextField extends GetWidget<ChatController> {
                                   .trim()
                                   .isNotEmpty) {
                                 await chatBotProvider.sendMessage(
+                                  onLoading: () {
+                                    controller.chatMessage.value.clear();
+                                    controller.chatMessage.refresh();
+                                  },
                                   message: controller.chatMessage.value.text,
                                   chatBotType: controller.chatBotType,
                                 );
-                                controller.chatMessage.value.clear();
-                                controller.chatMessage.refresh();
+
                               }
                             },
                       child: chatBotProvider.isLoadingSendMessages
