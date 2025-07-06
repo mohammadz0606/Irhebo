@@ -98,19 +98,31 @@ class ChatBotMessage extends StatelessWidget {
                             id: botMessagesModelMessages.services?[index].id,
                             subCategoryId: botMessagesModelMessages
                                 .services?[index].subCategoryId,
-                            cover: botMessagesModelMessages.services?[index].cover,
-                            isWishlist: botMessagesModelMessages.services?[index].isWishlist,
-                            title: botMessagesModelMessages.services?[index].title,
-                            description: botMessagesModelMessages.services?[index].description,
-                            rating: botMessagesModelMessages.services?[index].rating,
-                            isRecommended: botMessagesModelMessages.services?[index].isRecommended,
-                            startServiceFrom: botMessagesModelMessages.services?[index].startServiceFrom,
+                            cover:
+                                botMessagesModelMessages.services?[index].cover,
+                            isWishlist: botMessagesModelMessages
+                                .services?[index].isWishlist,
+                            title:
+                                botMessagesModelMessages.services?[index].title,
+                            description: botMessagesModelMessages
+                                .services?[index].description,
+                            rating: botMessagesModelMessages
+                                .services?[index].rating,
+                            isRecommended: botMessagesModelMessages
+                                .services?[index].isRecommended,
+                            startServiceFrom: botMessagesModelMessages
+                                .services?[index].startServiceFrom,
                             user: UserModel(
-                              id: botMessagesModelMessages.services?[index].user?.id,
-                              username: botMessagesModelMessages.services?[index].user?.username,
-                              name: botMessagesModelMessages.services?[index].user?.username,
-                              profession: botMessagesModelMessages.services?[index].user?.profession,
-                              avatar: botMessagesModelMessages.services?[index].user?.avatar,
+                              id: botMessagesModelMessages
+                                  .services?[index].user?.id,
+                              username: botMessagesModelMessages
+                                  .services?[index].user?.username,
+                              name: botMessagesModelMessages
+                                  .services?[index].user?.username,
+                              profession: botMessagesModelMessages
+                                  .services?[index].user?.profession,
+                              avatar: botMessagesModelMessages
+                                  .services?[index].user?.avatar,
                             ),
                           ),
                         );

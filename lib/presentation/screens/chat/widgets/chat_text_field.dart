@@ -16,6 +16,7 @@ import 'package:permission_handler/permission_handler.dart';
 
 import '../../../../app/global_imports.dart';
 import '../../../../domain/params/new_params/chat/send_message_param.dart';
+import '../../../../domain/providers/chat/chat_bot_provider.dart';
 import '../../../../domain/providers/chat/voice_recorde_provider.dart';
 
 class ChatTextField extends GetWidget<ChatController> {
@@ -71,89 +72,129 @@ class ChatTextField extends GetWidget<ChatController> {
               ),
               // if(voiceProvider.isRecording)
               // const CustomVoiceRecorde(),
-              Obx(
-                () {
-                  return InkWell(
-                    onLongPress: controller.chatMessage.value.text.isEmpty
-                        ? () {
-                            log('IS RECORDING');
-                          }
-                        : null,
-                    onTap: () async {
-                      if (controller.chatMessage.value.text.trim().isNotEmpty) {
-                        await provider.sendMessage(
-                          sendParam: SendMessageParam(
-                            message: controller.chatMessage.value.text,
-                            chatId: controller.chatId,
-                            messageType: MessageType.text,
-                            attachmentFile: null,
-                          ),
-                        );
-                        controller.chatMessage.value.clear();
-                        controller.chatMessage.refresh();
-                      } else {
-                        if (Platform.isIOS) {
-                          await Permission.microphone.request();
-                        } else {
-                          final micStatus =
-                              await Permission.microphone.request();
-                          if (!micStatus.isGranted) {
-                            AppSnackBar.openErrorSnackBar(
-                                message:
-                                    'Please enable the microphone permission'
-                                        .tr);
-                            return;
-                          }
-                        }
-                        await controller.onTapSend(
-                          onEndVoice: () async {
-                            await provider.sendMessage(
-                              sendParam: SendMessageParam(
-                                message: null,
-                                chatId: controller.chatId,
-                                messageType: MessageType.audio,
-                                attachmentFile: File(
-                                  controller.selectedFilePath.value!,
-                                ),
-                              ),
-                            );
-                            // controller.isRecord.refresh();
-                            // controller.selectedFilePath.refresh();
-                            // controller.ignoreRecord();
-                          },
-                        );
-                      }
-                    },
-                    child: provider.isLoadingSendMessages
-                        ? const Center(child: CircularProgressIndicator())
-                        : Obx(
-                            () {
-                              return DecoratedIcon(
-                                padding: 2.98 * (w / 100),
-                                width: 12.93 * (w / 100),
-                                height: 12.93 * (w / 100),
-                                matchTextDirection: true,
-                                color: Get.find<AppController>().darkMode
-                                    ? AppDarkColors.darkContainer2
-                                    : Colors.white,
-                                //imagePath: AppIcons.send,
-                                imagePath: controller.type == ChatType.Bot ||
-                                        controller
-                                                .selectedFilePath.isNotEmpty ==
-                                            true ||
-                                        controller.chatMessage.value.text
-                                            .trim()
-                                            .isNotEmpty ||
-                                        controller.isRecord.value
-                                    ? AppIcons.send
-                                    : AppIcons.mic,
-                                svgColor: AppDarkColors.greenContainer,
-                              );
+              if (controller.type == ChatType.Bot) ...{
+                Consumer<ChatBotProvider>(
+                  builder: (context, chatBotProvider, child) {
+                    return InkWell(
+                      onTap: chatBotProvider.isLoadingSendMessages
+                          ? null
+                          : () async {
+                              if (controller.chatMessage.value.text
+                                  .trim()
+                                  .isNotEmpty) {
+                                await chatBotProvider.sendMessage(
+                                  message: controller.chatMessage.value.text,
+                                  chatBotType: controller.chatBotType,
+                                );
+                                controller.chatMessage.value.clear();
+                                controller.chatMessage.refresh();
+                              }
                             },
-                          ),
-                  );
-                },
-              )
+                      child: chatBotProvider.isLoadingSendMessages
+                          ? const Center(child: CircularProgressIndicator())
+                          : DecoratedIcon(
+                              padding: 2.98 * (w / 100),
+                              width: 12.93 * (w / 100),
+                              height: 12.93 * (w / 100),
+                              matchTextDirection: true,
+                              imagePath: AppIcons.send,
+                              svgColor: AppDarkColors.greenContainer,
+                              color: Get.find<AppController>().darkMode
+                                  ? AppDarkColors.darkContainer2
+                                  : Colors.white,
+                            ),
+                    );
+                  },
+                ),
+              } else ...{
+                Obx(
+                  () {
+                    return InkWell(
+                      onLongPress: controller.chatMessage.value.text.isEmpty
+                          ? () {
+                              log('IS RECORDING');
+                            }
+                          : null,
+                      onTap: provider.isLoadingSendMessages
+                          ? null
+                          : () async {
+                              if (controller.chatMessage.value.text
+                                  .trim()
+                                  .isNotEmpty) {
+                                await provider.sendMessage(
+                                  sendParam: SendMessageParam(
+                                    message: controller.chatMessage.value.text,
+                                    chatId: controller.chatId,
+                                    messageType: MessageType.text,
+                                    attachmentFile: null,
+                                  ),
+                                );
+                                controller.chatMessage.value.clear();
+                                controller.chatMessage.refresh();
+                              } else {
+                                if (Platform.isIOS) {
+                                  await Permission.microphone.request();
+                                } else {
+                                  final micStatus =
+                                      await Permission.microphone.request();
+                                  if (!micStatus.isGranted) {
+                                    AppSnackBar.openErrorSnackBar(
+                                        message:
+                                            'Please enable the microphone permission'
+                                                .tr);
+                                    return;
+                                  }
+                                }
+                                await controller.onTapSend(
+                                  onEndVoice: () async {
+                                    await provider.sendMessage(
+                                      sendParam: SendMessageParam(
+                                        message: null,
+                                        chatId: controller.chatId,
+                                        messageType: MessageType.audio,
+                                        attachmentFile: File(
+                                          controller.selectedFilePath.value!,
+                                        ),
+                                      ),
+                                    );
+                                    // controller.isRecord.refresh();
+                                    // controller.selectedFilePath.refresh();
+                                    // controller.ignoreRecord();
+                                  },
+                                );
+                              }
+                            },
+                      child: provider.isLoadingSendMessages
+                          ? const Center(child: CircularProgressIndicator())
+                          : Obx(
+                              () {
+                                return DecoratedIcon(
+                                  padding: 2.98 * (w / 100),
+                                  width: 12.93 * (w / 100),
+                                  height: 12.93 * (w / 100),
+                                  matchTextDirection: true,
+                                  color: Get.find<AppController>().darkMode
+                                      ? AppDarkColors.darkContainer2
+                                      : Colors.white,
+                                  //imagePath: AppIcons.send,
+                                  imagePath: controller.type == ChatType.Bot ||
+                                          controller.selectedFilePath
+                                                  .isNotEmpty ==
+                                              true ||
+                                          controller.chatMessage.value.text
+                                              .trim()
+                                              .isNotEmpty ||
+                                          controller.isRecord.value
+                                      ? AppIcons.send
+                                      : AppIcons.mic,
+                                  svgColor: AppDarkColors.greenContainer,
+                                );
+                              },
+                            ),
+                    );
+                  },
+                ),
+              }
             ],
           );
         },

@@ -106,7 +106,7 @@ class ServiceItem extends StatelessWidget {
                       Padding(
                         padding: EdgeInsets.all(2.48 * (w / 100)),
                         child: GestureDetector(
-                          onTap: () => onTapFreelancer(),
+                          onTap: onTapFreelancer,
                           child: FreelancerWidget(
                             freelancerEntity: service?.user,
                           ),

@@ -87,7 +87,7 @@ class FreelancerInfoContainer extends GetWidget<ServiceDetailsController> {
               ),
             ),
           if (getUserRole != UserRoles.freelancer)
-          if (controller.serviceDetails.recommended!.isNotEmpty) ...[
+          if (controller.serviceDetails.recommended?.isNotEmpty == true) ...[
             const AppTitleWithAction(
               title: "Recommended",
               services: true,

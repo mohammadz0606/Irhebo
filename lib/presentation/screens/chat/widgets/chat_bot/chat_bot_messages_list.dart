@@ -17,7 +17,7 @@ class _ChatBotMessagesListState extends State<ChatBotMessagesList> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      scrollToEnd();
+      //scrollToEnd();
     });
     super.initState();
   }
@@ -29,16 +29,16 @@ class _ChatBotMessagesListState extends State<ChatBotMessagesList> {
   }
 
   scrollToEnd() async {
-    // await Future.delayed(
-    //   const Duration(milliseconds: 500),
-    //   () {
-    //     chatScrollController.animateTo(
-    //       chatScrollController.position.minScrollExtent,
-    //       duration: const Duration(milliseconds: 500),
-    //       curve: Curves.fastOutSlowIn,
-    //     );
-    //   },
-    // );
+    await Future.delayed(
+      const Duration(milliseconds: 500),
+      () {
+        chatScrollController.animateTo(
+          chatScrollController.position.minScrollExtent,
+          duration: const Duration(milliseconds: 500),
+          curve: Curves.fastOutSlowIn,
+        );
+      },
+    );
   }
 
   @override
@@ -46,11 +46,21 @@ class _ChatBotMessagesListState extends State<ChatBotMessagesList> {
     var w = MediaQuery.of(context).size.width;
 
     return Consumer<ChatBotProvider>(
+
       builder: (context, provider, child) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (chatScrollController.hasClients) {
+            chatScrollController.animateTo(
+              chatScrollController.position.minScrollExtent,
+              duration: const Duration(milliseconds: 500),
+              curve: Curves.easeOut,
+            );
+          }
+        });
         return ListView.builder(
           padding: EdgeInsets.only(bottom: 21 * (w / 100)),
           shrinkWrap: true,
-          reverse: false,
+          reverse: true,
           // Newest messages at the bottom
           controller: chatScrollController,
           itemCount: (provider.groupedMessages?.keys.toList())?.length ?? 0,
@@ -64,7 +74,7 @@ class _ChatBotMessagesListState extends State<ChatBotMessagesList> {
                 ),
                 ListView.builder(
                   shrinkWrap: true,
-                  reverse: false,
+                  reverse: true,
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: provider
                       .groupedMessages?[

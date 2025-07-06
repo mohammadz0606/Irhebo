@@ -23,7 +23,7 @@ class _ChatMessagesListState extends State<ChatMessagesList> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      scrollToEnd();
+      //scrollToEnd();
     });
     super.initState();
   }
@@ -35,16 +35,16 @@ class _ChatMessagesListState extends State<ChatMessagesList> {
   }
 
   scrollToEnd() async {
-    // await Future.delayed(
-    //   const Duration(milliseconds: 500),
-    //   () {
-    //     chatScrollController.animateTo(
-    //       chatScrollController.position.minScrollExtent,
-    //       duration: const Duration(milliseconds: 500),
-    //       curve: Curves.fastOutSlowIn,
-    //     );
-    //   },
-    // );
+    await Future.delayed(
+      const Duration(milliseconds: 500),
+      () {
+        chatScrollController.animateTo(
+          chatScrollController.position.minScrollExtent,
+          duration: const Duration(milliseconds: 500),
+          curve: Curves.fastOutSlowIn,
+        );
+      },
+    );
   }
 
   // List<String> groupedKeys = controller.groupedMessages.keys.toList();
@@ -53,6 +53,15 @@ class _ChatMessagesListState extends State<ChatMessagesList> {
     var w = MediaQuery.of(context).size.width;
     return Consumer<ChatProvider>(
       builder: (context, provider, _) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (chatScrollController.hasClients) {
+            chatScrollController.animateTo(
+              chatScrollController.position.minScrollExtent,
+              duration: const Duration(milliseconds: 500),
+              curve: Curves.easeOut,
+            );
+          }
+        });
         return ListView.builder(
           padding: EdgeInsets.only(bottom: 21 * (w / 100)),
           shrinkWrap: true,

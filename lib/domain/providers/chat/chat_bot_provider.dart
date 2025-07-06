@@ -11,19 +11,31 @@ class ChatBotProvider extends ChangeNotifier {
   List<BotMessagesModelMessages>? chatBotMessages;
   Map<String, List<BotMessagesModelMessages>>? groupedMessages;
 
-
   Future<void> sendMessage({
     required String message,
     required ChatBotType chatBotType,
   }) async {
     try {
       isLoadingSendMessages = true;
+      final date = DateTime.now();
+      BotMessagesModelMessages newMessageUser = BotMessagesModelMessages(
+        id: date.microsecondsSinceEpoch,
+        role: 'user',
+        message: message.trim(),
+        createdAt: date,
+        services: [],
+      );
+      groupedMessages?.update(
+        formatDate(date),
+        (existingList) => [newMessageUser,...existingList],
+        ifAbsent: () => [newMessageUser],
+      );
       notifyListeners();
 
       final response = await Network().post(
         url: AppEndpoints.sendMessageForBot,
         data: {
-          'service': chatBotType.name,
+          'type': chatBotType.name,
           'message': message.trim(),
         },
       );
@@ -40,6 +52,19 @@ class ChatBotProvider extends ChangeNotifier {
 
       SendBotMessageModel sendBotMessageModel =
           SendBotMessageModel.fromJson(response.data);
+
+      BotMessagesModelMessages newMessageBot = BotMessagesModelMessages(
+        id: sendBotMessageModel.data?.id,
+        role: sendBotMessageModel.data?.role,
+        message: sendBotMessageModel.data?.message,
+        createdAt: sendBotMessageModel.data?.createdAt,
+        services: [],
+      );
+      groupedMessages?.update(
+        formatDate(sendBotMessageModel.data?.createdAt ?? DateTime.now()),
+            (existingList) => [newMessageBot,...existingList],
+        ifAbsent: () => [newMessageBot],
+      );
       isLoadingSendMessages = false;
       notifyListeners();
     } catch (error) {
@@ -59,6 +84,7 @@ class ChatBotProvider extends ChangeNotifier {
 
   Future<void> getMessages({required ChatBotType chatBotType}) async {
     isLoadingGetMessages = true;
+
     if (chatBotMessages != null) {
       chatBotMessages = null;
     }
@@ -100,6 +126,7 @@ class ChatBotProvider extends ChangeNotifier {
   void _groupMessages() {
     if (groupedMessages != null) {
       groupedMessages = null;
+      notifyListeners();
     }
     Map<String, List<BotMessagesModelMessages>> grouped = {};
 
