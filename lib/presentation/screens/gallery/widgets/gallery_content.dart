@@ -8,11 +8,13 @@ class GalleryContent extends StatelessWidget {
   final List<MediaModel> media;
   final PageController? pageController;
   final Function(int) onPageChanged;
-  const GalleryContent(
-      {super.key,
-      required this.media,
-      required this.pageController,
-      required this.onPageChanged});
+
+  const GalleryContent({
+    super.key,
+    required this.media,
+    required this.pageController,
+    required this.onPageChanged,
+  });
 
   @override
   Widget build(BuildContext context) {

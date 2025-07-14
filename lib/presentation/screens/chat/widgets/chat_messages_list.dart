@@ -101,6 +101,7 @@ class _ChatMessagesListState extends State<ChatMessagesList> {
                     int userId = prefs.getInt(key: AppPrefsKeys.USER_ID) ?? 0;
 
                     return ChatMessageWidget(
+                      currentIndex: msgIndex,
                       message: provider.groupedMessages![
                           (provider.groupedMessages?.keys.toList() ??
                               [])[index]]![msgIndex],

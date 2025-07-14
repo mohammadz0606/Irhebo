@@ -22,30 +22,27 @@ class GalleryBottomSlider extends StatelessWidget {
       child: SingleChildScrollView(
         controller: scrollController,
         scrollDirection: Axis.horizontal,
-        child: Container(
-          // width: 1 * w,
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              for (int i = 0; i < media.length; i++)
-                Padding(
-                  padding: pageIndex == i
-                      ? EdgeInsets.symmetric(horizontal: 5 * (w / 100))
-                      : EdgeInsets.zero,
-                  child: GestureDetector(
-                    onTap: () => onTapSliderImage(i),
-                    child: media[i].mediaType != "image"
-                        ? VideoMediaWidget(mediaUrl: media[i].mediaPath ?? "")
-                        : AppImage(
-                            imageUrl: media[i].mediaPath ?? "",
-                            width: 10 * (w / 100),
-                            height: 10 * (w / 100),
-                            fit: BoxFit.cover,
-                          ),
-                  ),
-                )
-            ],
-          ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            for (int i = 0; i < media.length; i++)
+              Padding(
+                padding: pageIndex == i
+                    ? EdgeInsets.symmetric(horizontal: 5 * (w / 100))
+                    : EdgeInsets.zero,
+                child: GestureDetector(
+                  onTap: () => onTapSliderImage(i),
+                  child: media[i].mediaType != "image"
+                      ? VideoMediaWidget(mediaUrl: media[i].mediaPath ?? "")
+                      : AppImage(
+                          imageUrl: media[i].mediaPath ?? "",
+                          width: 10 * (w / 100),
+                          height: 10 * (w / 100),
+                          fit: BoxFit.cover,
+                        ),
+                ),
+              )
+          ],
         ),
       ),
     );

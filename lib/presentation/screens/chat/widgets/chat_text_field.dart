@@ -160,6 +160,15 @@ class ChatTextField extends GetWidget<ChatController> {
                                         ),
                                       ),
                                     );
+
+                                    await provider.sendMessage(
+                                      sendParam: SendMessageParam(
+                                        message: ' ',
+                                        chatId: controller.chatId,
+                                        messageType: MessageType.text,
+                                        attachmentFile: null,
+                                      ),
+                                    );
                                     // controller.isRecord.refresh();
                                     // controller.selectedFilePath.refresh();
                                     // controller.ignoreRecord();

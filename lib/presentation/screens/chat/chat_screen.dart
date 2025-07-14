@@ -16,7 +16,6 @@ class ChatScreen extends GetView<ChatController> {
   @override
   Widget build(BuildContext context) {
     var w = MediaQuery.of(context).size.width;
-
       if(controller.type == ChatType.Bot){
         return Consumer<ChatBotProvider>(
           builder: (context, chatBotProvider, child) {

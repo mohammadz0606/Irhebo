@@ -135,11 +135,15 @@ class ChatProvider extends ChangeNotifier {
       // chatMessages?.add(
       //   ChatMessagesModelData.fromJson(response.data['data']),
       // );
+      chatMessages?.add(newMessage);
       groupedMessages?.update(
         formattedDate,
         (existingList) => [newMessage, ...existingList],
         ifAbsent: () => [newMessage],
       );
+
+
+
       isLoadingSendMessages = false;
       notifyListeners();
     } catch (error) {
@@ -393,6 +397,7 @@ class ChatProvider extends ChangeNotifier {
                 (existingList) => [newMessage, ...existingList],
                 ifAbsent: () => [newMessage],
               );
+              chatMessages?.add(newMessage);
             }
             notifyListeners();
           } catch (error) {
