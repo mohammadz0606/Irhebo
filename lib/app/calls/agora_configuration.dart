@@ -70,7 +70,9 @@ final class AgoraConfiguration {
       token: token,
       channelId: channelName,
       uid: userID,
-      options: const ChannelMediaOptions(),
+      options: const ChannelMediaOptions(
+        clientRoleType: ClientRoleType.clientRoleBroadcaster,
+      ),
     );
   }
 

@@ -80,6 +80,7 @@ class CallsProvider extends ChangeNotifier {
       isLoadingStartCall = false;
       notifyListeners();
     } catch (error) {
+      print('ERROR ON CALL ${error.toString()}');
       if (error is DioException) {
         AppSnackBar.openErrorSnackBar(
           message: Network().handelDioException(error),

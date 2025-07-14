@@ -30,6 +30,10 @@ class AppImage extends StatelessWidget {
         width: width,
         height: height,
         imageUrl: imageUrl,
+        fadeInDuration: Duration.zero,
+        fadeOutDuration: Duration.zero,
+        memCacheWidth: width?.toInt(),
+        memCacheHeight: height?.toInt(),
         fit: fit ?? BoxFit.cover,
         placeholder: (context, url) => AppLoading(
           radius: radius ?? 0,
