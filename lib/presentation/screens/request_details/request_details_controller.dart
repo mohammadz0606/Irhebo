@@ -167,8 +167,10 @@ class RequestDetailsController extends GetxController {
   }
 
   submit() {
-    if (reviewKey.currentState!.validate()) {
+    if (reviewController.text.trim().isNotEmpty) {
       review();
+    } else {
+      AppSnackBar.openErrorSnackBar(message: "write your comment".tr);
     }
   }
 

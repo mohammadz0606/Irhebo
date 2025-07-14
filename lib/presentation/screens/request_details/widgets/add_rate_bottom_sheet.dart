@@ -13,45 +13,43 @@ class AddRateBottomSheet extends GetWidget<RequestDetailsController> {
   @override
   Widget build(BuildContext context) {
     var w = MediaQuery.of(context).size.width;
-    return Container(
-      // color: Colors.white,
-      child: Column(
-          mainAxisSize: MainAxisSize.min,
-          // crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Obx(
-              () => Padding(
-                padding: EdgeInsets.symmetric(vertical: 6 * (w / 100)),
-                child: FilterRateWidget(
-                  onChange: (rate) => controller.onRate(rate),
-                  currentRate: controller.currentRate,
-                ),
-              ),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      // crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Obx(
+          () => Padding(
+            padding: EdgeInsets.symmetric(vertical: 6 * (w / 100)),
+            child: FilterRateWidget(
+              onChange: (rate) => controller.onRate(rate),
+              currentRate: controller.currentRate,
             ),
-            Form(
-              key: controller.reviewKey,
-              child: AppTextField(
-                hint: "write your comment",
-                maxLines: 4,
-                controller: controller.reviewController,
-                onValidate: AppValidators.validateReview,
-              ),
-            ),
-            SizedBox(
-              height: 10 * (w / 100),
-            ),
-            Obx(
-              () => AppButton(
-                isLoading: controller.isLoadingReview,
-                onPressed: controller.submit,
-                title: "Rate",
-                // width: 30*(w/100),
-              ),
-            ),
-            SizedBox(
-              height: 4 * (w / 100),
-            ),
-          ]),
+          ),
+        ),
+        Form(
+          key: controller.reviewKey,
+          child: AppTextField(
+            hint: "write your comment",
+            maxLines: 4,
+            controller: controller.reviewController,
+            //onValidate: AppValidators.validateReview,
+          ),
+        ),
+        SizedBox(
+          height: 10 * (w / 100),
+        ),
+        Obx(
+          () => AppButton(
+            isLoading: controller.isLoadingReview,
+            onPressed: controller.submit,
+            title: "Rate",
+            // width: 30*(w/100),
+          ),
+        ),
+        SizedBox(
+          height: 4 * (w / 100),
+        ),
+      ],
     );
   }
 }
