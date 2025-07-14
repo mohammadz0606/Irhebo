@@ -120,7 +120,7 @@ class GetOptions {
         'lang': Get.find<AppController>().lang.value.languageCode,
         // 'currency': Get.find<AppController>().currency,
         'Device-Type': Platform.isAndroid ? 'Android' : 'IOS',
-        'currency': AppPreferences(sl()).getString(key: AppPrefsKeys.CURRENCY) ?? 'USD',
+        'currency': AppPreferences(sl()).getString(key: AppPrefsKeys.CURRENCY) ?? 'usd',
       };
       options.validateStatus = (status) => status! < 500;
     } else {
@@ -132,7 +132,7 @@ class GetOptions {
         // 'applicationToken': applicationTokenModel?.applicationToken,
         // 'currency': Get.find<AppController>().currency,
         'Device-Type': Platform.isAndroid ? 'Android' : 'IOS',
-        'currency': AppPreferences(sl()).getString(key: AppPrefsKeys.CURRENCY) ?? 'USD',
+        'currency': AppPreferences(sl()).getString(key: AppPrefsKeys.CURRENCY) ?? 'usd',
       };
       options.validateStatus = (status) => status! < 500;
     }

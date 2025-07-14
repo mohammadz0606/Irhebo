@@ -21,105 +21,106 @@ class AppNavigationBarContainer extends GetWidget<AppController> {
 
     return Obx(
       () => Container(
-          decoration: BoxDecoration(
-              color: Get.find<AppController>().darkMode
-                  ? AppDarkColors.darkScaffoldColor
-                  : AppLightColors.scaffoldColor2,
-              border: Get.find<AppController>().darkMode
-                  ? null
-                  : const Border(top: BorderSide(color: AppLightColors.secondary))),
-          padding: EdgeInsets.symmetric(horizontal: 3.98 * (w / 100)),
-          height: 8.7 * (h / 100),
-          child: Row(
-            children: (getUserRole != UserRoles.freelancer)?  [
-              const Expanded(
-                flex: 1,
-                child: AppNavigationBarItem(
-                  index: 0,
-                  imagePath: AppIcons.requests,
-                ),
-              ),
-              Expanded(
-                flex: 1,
-                child: Showcase(
-                  key: Get.find<AppController>().chatKey,
-                  description: "This is chats section".tr,
-                  child: const AppNavigationBarItem(
-                    index: 1,
-                    imagePath: AppIcons.message,
+        decoration: BoxDecoration(
+            color: Get.find<AppController>().darkMode
+                ? AppDarkColors.darkScaffoldColor
+                : AppLightColors.scaffoldColor2,
+            border: Get.find<AppController>().darkMode
+                ? null
+                : const Border(
+                    top: BorderSide(color: AppLightColors.secondary))),
+        padding: EdgeInsets.symmetric(horizontal: 3.98 * (w / 100)),
+        height: 8.7 * (h / 100),
+        child: Row(
+          children: (getUserRole != UserRoles.freelancer)
+              ? [
+                  const Expanded(
+                    flex: 1,
+                    child: AppNavigationBarItem(
+                      index: 0,
+                      imagePath: AppIcons.requests,
+                    ),
                   ),
-                ),
-              ),
-              const Expanded(
-                flex: 1,
-                child: AppNavigationBarItem(
-                  index: 2,
-                  imagePath: AppIcons.home,
-                ),
-              ),
-              (getUserRole != UserRoles.freelancer)?const
-              Expanded(
-                flex: 1,
-                child: AppNavigationBarItem(
-                  index: 3,
-                  imagePath: AppIcons.heart,
-                ),
-              ):SizedBox.shrink(),
-              const Expanded(
-                flex: 1,
-                child: AppNavigationBarItem(
-                  index: 4,
-                  imagePath: AppIcons.settings,
-                ),
-              ),
-            ]:
-
-            [
-            const Expanded(
-              flex: 1,
-              child: AppNavigationBarItem(
-                index: 2,
-                imagePath: AppIcons.home,
-              ),
-            ),
-            Expanded(
-              flex: 1,
-              child: Showcase(
-                key: Get.find<AppController>().chatKey,
-                description: "This is chats section".tr,
-                child: const AppNavigationBarItem(
-                  index: 1,
-                  imagePath: AppIcons.message,
-                ),
-              ),
-            ),
-            const Expanded(
-              flex: 1,
-              child: AppNavigationBarItem(
-                index: 0,
-                imagePath: AppIcons.requests,
-              ),
-            ),
-
-
-            (getUserRole != UserRoles.freelancer)?const
-            Expanded(
-              flex: 1,
-              child: AppNavigationBarItem(
-                index: 3,
-                imagePath: AppIcons.heart,
-              ),
-            ):SizedBox.shrink(),
-            const Expanded(
-              flex: 1,
-              child: AppNavigationBarItem(
-                index: 4,
-                imagePath: AppIcons.settings,
-              ),
-            ),
-            ]
-            ,
-          )),
+                  Expanded(
+                    flex: 1,
+                    child: Showcase(
+                      key: Get.find<AppController>().chatKey,
+                      description: "This is chats section".tr,
+                      child: const AppNavigationBarItem(
+                        index: 1,
+                        imagePath: AppIcons.message,
+                      ),
+                    ),
+                  ),
+                  const Expanded(
+                    flex: 1,
+                    child: AppNavigationBarItem(
+                      index: 2,
+                      imagePath: AppIcons.home,
+                    ),
+                  ),
+                  (getUserRole != UserRoles.freelancer)
+                      ? const Expanded(
+                          flex: 1,
+                          child: AppNavigationBarItem(
+                            index: 3,
+                            imagePath: AppIcons.heart,
+                          ),
+                        )
+                      : const SizedBox.shrink(),
+                  const Expanded(
+                    flex: 1,
+                    child: AppNavigationBarItem(
+                      index: 4,
+                      imagePath: AppIcons.settings,
+                    ),
+                  ),
+                ]
+              : [
+                  const Expanded(
+                    flex: 1,
+                    child: AppNavigationBarItem(
+                      index: 2,
+                      imagePath: AppIcons.home,
+                    ),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: Showcase(
+                      key: Get.find<AppController>().chatKey,
+                      description: "This is chats section".tr,
+                      child: const AppNavigationBarItem(
+                        index: 1,
+                        imagePath: AppIcons.message,
+                      ),
+                    ),
+                  ),
+                  const Expanded(
+                    flex: 1,
+                    child: AppNavigationBarItem(
+                      index: 0,
+                      imagePath: AppIcons.requests,
+                    ),
+                  ),
+                  (getUserRole != UserRoles.freelancer)
+                      ? const Expanded(
+                          flex: 1,
+                          child: AppNavigationBarItem(
+                            index: 3,
+                            imagePath: AppIcons.heart,
+                          ),
+                        )
+                      : const SizedBox.shrink(),
+                  const Expanded(
+                    flex: 1,
+                    child: AppNavigationBarItem(
+                      index: 4,
+                      imagePath: AppIcons.settings,
+                    ),
+                  ),
+                ],
+        ),
+      ),
     );
   }
 }

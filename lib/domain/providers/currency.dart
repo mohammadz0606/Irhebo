@@ -62,7 +62,7 @@ class CurrencyProvider extends ChangeNotifier {
 
   CurrencyModelData? get getCurrentCurrency {
     String currency =
-        AppPreferences(sl()).getString(key: AppPrefsKeys.CURRENCY) ?? 'USD';
+        AppPreferences(sl()).getString(key: AppPrefsKeys.CURRENCY) ?? 'usd';
 
     return currencyModel?.data
         ?.firstWhere((element) => element.code == currency);

@@ -17,7 +17,7 @@ class LanguageBottomSheet extends GetWidget<AppController> {
         height: 4.97 * (w / 100),
       ),
       AppButton(
-        onPressed: () => {
+        onPressed: Get.locale?.languageCode == 'en' ? null : () => {
           Get.back(),
           controller.onChangeLanguage(AppLanguage.en.name),
           Get.offAllNamed(AppRoutes.splash)
@@ -35,8 +35,10 @@ class LanguageBottomSheet extends GetWidget<AppController> {
         backGroundColor: Get.find<AppController>().darkMode
             ? AppDarkColors.darkContainer2
             : AppLightColors.primaryColor,
-        borderColor: Get.find<AppController>().darkMode
+        borderColor: Get.locale?.languageCode == 'en'
+            ? Get.find<AppController>().darkMode
             ? AppDarkColors.greenContainer
+            : null
             : null,
         title: "English",
       ),
@@ -44,7 +46,7 @@ class LanguageBottomSheet extends GetWidget<AppController> {
         height: 4.97 * (w / 100),
       ),
       AppButton(
-        onPressed: () => {
+        onPressed: Get.locale?.languageCode == 'ar' ? null : () => {
           Get.back(),
           controller.onChangeLanguage(AppLanguage.ar.name),
           Get.offAllNamed(AppRoutes.splash)
@@ -53,8 +55,10 @@ class LanguageBottomSheet extends GetWidget<AppController> {
         backGroundColor: Get.find<AppController>().darkMode
             ? AppDarkColors.darkContainer2
             : AppLightColors.primaryColor,
-        borderColor: Get.find<AppController>().darkMode
-            ? AppDarkColors.greenContainer
+        borderColor: Get.locale?.languageCode == 'ar'
+            ? Get.find<AppController>().darkMode
+                ? AppDarkColors.greenContainer
+                : null
             : null,
       ),
       SizedBox(

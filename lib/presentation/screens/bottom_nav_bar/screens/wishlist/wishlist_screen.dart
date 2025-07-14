@@ -22,9 +22,9 @@ class WishlistScreen extends GetView<WishlistController> {
       body: Obx(
         () => SingleChildScrollView(
           child: controller.isLoading
-              ? SearchServiceShimmer()
+              ? const SearchServiceShimmer()
               : controller.services.isEmpty
-                  ? NoData(
+                  ? const NoData(
                       forHome: false,
                     )
                   : Padding(

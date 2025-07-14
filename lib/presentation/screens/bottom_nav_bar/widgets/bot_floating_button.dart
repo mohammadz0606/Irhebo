@@ -7,7 +7,10 @@ import 'package:irhebo/app/resources/style/colors.dart';
 import 'package:irhebo/app/router/routes.dart';
 import 'package:irhebo/presentation/widgets/app_icon.dart';
 
-class BotFloatingButton extends StatelessWidget {
+import '../../../widgets/app_dialog.dart';
+import '../../../widgets/login_required_dialog.dart';
+
+class BotFloatingButton extends GetView<AppController> {
   // final bool isGuest;
   const BotFloatingButton({
     super.key,
@@ -19,10 +22,24 @@ class BotFloatingButton extends StatelessWidget {
     var h = MediaQuery.of(context).size.height;
 
     return GestureDetector(
-      onTap: () => Get.toNamed(AppRoutes.chat, arguments: {
+      onTap: () {
+        if(controller.token.isEmpty) {
+          Get.dialog(
+            barrierColor: Get.find<AppController>().darkMode
+                ? AppDarkColors.darkContainer.withOpacity(0.3)
+                : AppLightColors.shadow.withOpacity(0.3),
+            const AppDialog(
+              child: LoginRequiredDialog(),
+            ),
+          );
+          return;
+        }
+
+        Get.toNamed(AppRoutes.chat, arguments: {
         "chat_type": ChatType.Bot,
         'chat_bot_type': ChatBotType.service,
-      }),
+      });
+      },
       child: Container(
         padding: EdgeInsets.symmetric(
           horizontal: 0.5 * (w / 100),

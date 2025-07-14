@@ -56,18 +56,19 @@ class AppButton extends StatelessWidget {
       child: ElevatedButton(
           onPressed: isLoading ? null : onPressed,
           style: ElevatedButton.styleFrom(
-              elevation: elevation ?? 0,
-              padding: EdgeInsets.zero,
-              fixedSize:
-                  Size(width ?? 88 * (w / 100), hieght ?? 13.18 * (w / 100)),
-              backgroundColor: backGroundColor ?? AppDarkColors.primaryColor,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(borderRadius ?? 38),
-                side: BorderSide(
-                  color: borderColor ?? Colors.transparent,
-                ),
+            elevation: elevation ?? 0,
+            padding: EdgeInsets.zero,
+            fixedSize:
+                Size(width ?? 88 * (w / 100), hieght ?? 13.18 * (w / 100)),
+            backgroundColor: backGroundColor ?? AppDarkColors.primaryColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(borderRadius ?? 38),
+              side: BorderSide(
+                color: borderColor ?? Colors.transparent,
               ),
-              shadowColor: shadowColor),
+            ),
+            shadowColor: shadowColor,
+          ),
           child: isLoading
               ? const CircularProgressIndicator(
                   color: Colors.white,

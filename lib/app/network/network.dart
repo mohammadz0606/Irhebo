@@ -124,7 +124,7 @@ final class Network {
       'Accept-Language': Get.locale?.languageCode,
       'lang': Get.find<AppController>().lang.value.languageCode,
       'Device-Type': Platform.isAndroid ? 'Android' : 'IOS',
-      'currency': AppPreferences(sl()).getString(key: AppPrefsKeys.CURRENCY) ?? 'USD',
+      'currency': AppPreferences(sl()).getString(key: AppPrefsKeys.CURRENCY) ?? 'usd',
     };
     AppPreferences prefs = sl();
     String token = prefs.getAccessToken();

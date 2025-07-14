@@ -141,8 +141,13 @@ extension OnString on String? {
   }
 
   String get formatTimeAgo {
-    final dateTime = DateTime.parse(this ?? DateTime.now().toString());
-    return timeago.format(dateTime);
+    try {
+      final formatter = DateFormat('EEE, MMM d, yyyy h:mm a');
+      final dateTime = formatter.parse(this ?? DateTime.now().toString());
+      return timeago.format(dateTime);
+    } catch (e) {
+      return timeago.format(DateTime.now());
+    }
   }
 }
 

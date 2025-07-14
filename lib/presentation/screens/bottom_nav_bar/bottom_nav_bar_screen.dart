@@ -24,12 +24,15 @@ class BottomNavBarScreen extends GetView<BottomNavBarController> {
             .setBoolValue(true, AppPrefsKeys.SHOW_CASE_HOME),
         builder: (context) => Obx(
           () => Scaffold(
-            floatingActionButton: (getUserRole == UserRoles.freelancer)?Showcase(
-                targetBorderRadius: BorderRadius.circular(50),
-                key: Get.find<AppController>().botKey,
-                description: "This is bot made for you".tr,
-                child: const BotFloatingButton()):null,
-              floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+            floatingActionButton: (getUserRole == UserRoles.freelancer)
+                ? Showcase(
+                    targetBorderRadius: BorderRadius.circular(50),
+                    key: Get.find<AppController>().botKey,
+                    description: "This is bot made for you".tr,
+                    child: const BotFloatingButton())
+                : null,
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.centerDocked,
             body: controller.pages[controller.index],
             bottomNavigationBar: const AppNavigationBarContainer(),
           ),
