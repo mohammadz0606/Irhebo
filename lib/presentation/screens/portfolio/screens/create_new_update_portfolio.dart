@@ -2,8 +2,9 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter_quill/quill_delta.dart';
 import 'package:flutter_quill_delta_from_html/flutter_quill_delta_from_html.dart';
-import 'package:flutter_quill/flutter_quill.dart';
+import 'package:flutter_quill/flutter_quill.dart' as quill;
 import 'package:irhebo/domain/providers/files_manager.dart';
 import 'package:irhebo/presentation/screens/auth/register/widgets/upload_file.dart';
 
@@ -39,7 +40,7 @@ class _CreateNewUpdatePortfolioScreenState
   // List<int> selectedServices = [];
   String? urlCover;
   List<String>? mediaUrls;
-  QuillController quillController = QuillController.basic();
+  quill.QuillController quillController = quill.QuillController.basic();
 
   @override
   void dispose() {
@@ -72,8 +73,8 @@ class _CreateNewUpdatePortfolioScreenState
         (data) async {
           media.clear();
           title.text = data?.title ?? '';
-          //desc.text = data?.description ?? '';
-          quillController = await quillControllerFromHtml(data?.description ?? '');
+          desc.text = data?.description ?? '';
+          //quillController = await quillControllerFromHtml(data?.description ?? '');
           urlCover = data?.media
               ?.firstWhere(
                 (element) => element?.isCover == true,
@@ -107,10 +108,10 @@ class _CreateNewUpdatePortfolioScreenState
     }
   }
 
-  Future<QuillController> quillControllerFromHtml(String html) async {
+  Future<quill.QuillController> quillControllerFromHtml(String html) async {
     final delta = HtmlToDelta().convert(html, transformTableAsEmbed: false);
-    return QuillController(
-      document: Document.fromDelta(delta),
+    return quill.QuillController(
+      document: quill.Document.fromDelta(delta),
       selection: const TextSelection.collapsed(offset: 0),
     );
   }
@@ -188,29 +189,39 @@ class _CreateNewUpdatePortfolioScreenState
                             style: Get.textTheme.labelMedium,
                           ),
                           const SizedBox(height: 20),
+
                           AppTextField(
                             controller: desc,
                             textInputType: TextInputType.multiline,
-                            readOnly: true,
-                            onTap: () {
-                              Get.bottomSheet(
-                                HtmlFormat(
-                                  quillController: quillController,
-                                ),
-                                backgroundColor:
-                                    Get.find<AppController>().darkMode
-                                        ? AppDarkColors.darkScaffoldColor
-                                        : AppLightColors.pureWhite,
-                                barrierColor: Get.find<AppController>().darkMode
-                                    ? AppDarkColors.darkContainer
-                                        .withOpacity(0.3)
-                                    : AppLightColors.shadow.withOpacity(0.3),
-                                elevation: 0,
-                              );
-                            },
-                            maxLines: 1,
+                            maxLines: 3,
                             textInputAction: TextInputAction.newline,
+                            onChange: (value) {
+                                    //quillController
+                            },
                           ),
+                          // AppTextField(
+                          //   controller: desc,
+                          //   textInputType: TextInputType.multiline,
+                          //   readOnly: true,
+                          //   onTap: () {
+                          //     Get.bottomSheet(
+                          //       HtmlFormat(
+                          //         quillController: quillController,
+                          //       ),
+                          //       backgroundColor:
+                          //           Get.find<AppController>().darkMode
+                          //               ? AppDarkColors.darkScaffoldColor
+                          //               : AppLightColors.pureWhite,
+                          //       barrierColor: Get.find<AppController>().darkMode
+                          //           ? AppDarkColors.darkContainer
+                          //               .withOpacity(0.3)
+                          //           : AppLightColors.shadow.withOpacity(0.3),
+                          //       elevation: 0,
+                          //     );
+                          //   },
+                          //   maxLines: 1,
+                          //   textInputAction: TextInputAction.newline,
+                          // ),
                           const SizedBox(height: 25),
                           RelatedServicesWidget(
                             initialValue: services,
@@ -241,13 +252,14 @@ class _CreateNewUpdatePortfolioScreenState
                     onPressed: () async {
                       if (Get.arguments?['data'] != null) {
                         if (title.text.trim().isEmpty ||
-                            quillController.document.isEmpty() ||
+                            desc.text.trim().isEmpty||
                             services.isEmpty) {
                           AppSnackBar.openErrorSnackBar(
                             message: 'Please fill all fields'.tr,
                           );
                           return;
                         }
+                        updateQuillWithHTML(desc.text, quillController);
                         await provider.updatePortfolio(
                           id: Get.arguments?['id'],
                           CreatePortfolioParam(
@@ -269,6 +281,7 @@ class _CreateNewUpdatePortfolioScreenState
                           );
                           return;
                         }
+                        updateQuillWithHTML(desc.text, quillController);
                         await provider.createPortfolio(
                           CreatePortfolioParam(
                             cover: cove!,
@@ -294,5 +307,24 @@ class _CreateNewUpdatePortfolioScreenState
         ),
       ),
     );
+  }
+
+
+  void updateQuillWithHTML(String input, quill.QuillController quillController) {
+    final html = _convertTextToHtml(input);
+    final doc = quill.Document.fromDelta(
+      Delta()..insert('$html\n'),
+    );
+    quillController.document = doc;
+    setState(() {});
+  }
+
+  String _convertTextToHtml(String text) {
+    final urlRegex = RegExp(r'(https?:\/\/[^\s]+)');
+    final processed = text.replaceAllMapped(urlRegex, (match) {
+      final url = match.group(0);
+      return '<a href="$url">$url</a>';
+    });
+    return '<p>${processed.replaceAll('\n', '<br>')}</p>';
   }
 }
