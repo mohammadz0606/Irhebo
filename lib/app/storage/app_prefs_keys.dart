@@ -13,6 +13,7 @@ class AppPrefsKeys {
   static const String LANGUAGE_DIALOG = "FIRST_TIME_LANGUAGE_DIALOG_KEY";
 
   static const String SHOW_CASE_HOME = "TUTORIAL_HOME_KEY";
+  static const String SHOW_CASE_HOME_Freelancer = "TUTORIAL_HOME_KEY_Freelancer";
   static const String USER_ROLE = "USER_ROLE";
   static const String USER_ID = "USER_ID";
   static const String CURRENCY = "CURRENCY";

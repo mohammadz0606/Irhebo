@@ -20,8 +20,16 @@ class BottomNavBarScreen extends GetView<BottomNavBarController> {
       canPop: false,
       onPopInvokedWithResult: (didPop, result) => controller.onWillPop(didPop),
       child: ShowCaseWidget(
-        onFinish: () => Get.find<AppController>()
-            .setBoolValue(true, AppPrefsKeys.SHOW_CASE_HOME),
+        onFinish: () {
+          if(getUserRole == UserRoles.freelancer) {
+            Get.find<AppController>()
+                .setBoolValue(true, AppPrefsKeys.SHOW_CASE_HOME_Freelancer);
+          } else {
+            Get.find<AppController>()
+                .setBoolValue(true, AppPrefsKeys.SHOW_CASE_HOME);
+          }
+
+        },
         builder: (context) => Obx(
           () => Scaffold(
             floatingActionButton: (getUserRole == UserRoles.freelancer)

@@ -24,6 +24,7 @@ import 'package:showcaseview/showcaseview.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../domain/models/new_models/new_config_model.dart';
+import 'app_functions.dart';
 import 'enums.dart';
 import 'network/end_points.dart';
 import 'network/network.dart';
@@ -66,6 +67,10 @@ class AppController extends GetxController {
     await getGeneral();
     token = prefs.getAccessToken();
 
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await showCaseView(Get.context!);
+    });
+
     log("${AppLoggerColors.magenta}${token}token");
   }
 
@@ -83,23 +88,51 @@ class AppController extends GetxController {
   final serviceFreelancer = GlobalKey();
 
   showCaseView(context) {
-    bool showcaseHomeKey = getBoolValue(AppPrefsKeys.SHOW_CASE_HOME);
-    if (!showcaseHomeKey) {
-      // ShowCaseWidget.of(context).startShowCase([
-      //   chatKey,
-      //   botKey,
-      //   searchKey,
-      //   whatsappKey,
-      //   notificationsKey,
-      //   categoriesKey,
-      //   serviceKey,
-      //   porfolioKey,
-      //   requestFreelancer,
-      //   serviceFreelancer,
-      //   porfolioFreelancerKey,
-      //   quotationFreelancerKey,
-      // ]);
+    if (getUserRole == UserRoles.freelancer) {
+      bool showcaseHomeKey =
+          getBoolValue(AppPrefsKeys.SHOW_CASE_HOME_Freelancer);
+      if (!showcaseHomeKey) {
+        ShowCaseWidget.of(context).startShowCase([
+          chatKey,
+          botKey,
+          requestFreelancer,
+          serviceFreelancer,
+          porfolioFreelancerKey,
+          quotationFreelancerKey,
+          whatsappKey,
+        ]);
+      }
+    } else {
+      bool showcaseHomeKey = getBoolValue(AppPrefsKeys.SHOW_CASE_HOME);
+      if (!showcaseHomeKey) {
+        ShowCaseWidget.of(context).startShowCase([
+          searchKey,
+          whatsappKey,
+          notificationsKey,
+          categoriesKey,
+          serviceKey,
+          porfolioKey,
+        ]);
+      }
     }
+
+    // bool showcaseHomeKey = getBoolValue(AppPrefsKeys.SHOW_CASE_HOME);
+    // if (!showcaseHomeKey) {
+    //   ShowCaseWidget.of(context).startShowCase([
+    //     chatKey,
+    //     botKey,
+    //     searchKey,
+    //     whatsappKey,
+    //     notificationsKey,
+    //     categoriesKey,
+    //     serviceKey,
+    //     porfolioKey,
+    //     requestFreelancer,
+    //     serviceFreelancer,
+    //     porfolioFreelancerKey,
+    //     quotationFreelancerKey,
+    //   ]);
+    // }
   }
 
   detectAppTheme() {
