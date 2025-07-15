@@ -56,176 +56,182 @@ class ChatMessageWidget extends StatelessWidget {
                   ? CrossAxisAlignment.end
                   : CrossAxisAlignment.start,
               children: [
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Container(
-                      constraints: BoxConstraints(
-                        maxWidth: 74.62 * (w / 100),
-                        minWidth: 14.92 * (w / 100),
-                      ),
-                      // width: 74.62*(w/100),
-                      padding: EdgeInsets.only(
-                        right: 5 * (w / 100),
-                        left: 5 * (w / 100),
-                        top: 3 * (w / 100),
-                        bottom: 3 * (w / 100),
-                      ),
-                      decoration: BoxDecoration(
-                        color: message.sender?.id == userId
-                            ? AppDarkColors.primaryColor
-                            : Get.find<AppController>().darkMode
-                            ? AppDarkColors.darkContainer2
-                            : Colors.white,
-                        borderRadius: message.sender?.id == userId
-                            ? senderRadius
-                            : receiverRadius,
-                      ),
-                      child: message.attachmentType == 'image'
-                          ? GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) {
-                                return GalleryChatsScreen(
-                                  currentPath:
-                                  message.attachmentUrl ?? '',
-                                  isVideo: false,
-                                  images: provider.chatMessages
-                                      ?.where(
-                                        (e) =>
-                                    e.attachmentType ==
-                                        'image',
-                                  )
-                                      .toList() ??
-                                      [],
-                                );
-                              },
-                            ),
-                          );
-                        },
-                        child: AppImage(
-                          imageUrl: message.attachmentUrl ??
-                              AppImages.placeholder,
-                          fit: BoxFit.fill,
-                          radius: 10,
-                          width: 70 * (w / 100),
-                          height: 70 * (w / 100),
+                Opacity(
+                  opacity: message.message == '/////vvvXXX////' ? 0 : 1,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                        constraints: BoxConstraints(
+                          maxWidth: 74.62 * (w / 100),
+                          minWidth: 14.92 * (w / 100),
                         ),
-                      )
-                          : message.attachmentType == 'file'
-                          ? OpenFileItems(pathUrl: message.attachmentUrl)
-                          : message.attachmentType == 'video'
-                          ? GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) {
-                                return GalleryChatsScreen(
-                                  currentPath:
-                                  message.attachmentUrl ?? '',
-                                  isVideo: true,
-                                  images: provider.chatMessages
-                                      ?.where(
-                                        (e) =>
-                                    e.attachmentType ==
-                                        'video',
-                                  )
-                                      .toList() ??
-                                      [],
-                                );
-                              },
-                            ),
-                          );
-                        },
-                        child: AppVideoPlayer(
-                          videoUrl: message.attachmentUrl ?? '',
-                          radius: 10,
+                        // width: 74.62*(w/100),
+                        padding: EdgeInsets.only(
+                          right: 5 * (w / 100),
+                          left: 5 * (w / 100),
+                          top: 3 * (w / 100),
+                          bottom: 3 * (w / 100),
                         ),
-                      )
-                          : message.attachmentType == 'audio'
-                          ? AppAudioPlayer(
-                        audioUrl: message.attachmentUrl ?? '',
-                        radius: 10,
-                      )
-                          : message.attachmentType == 'call'
-                          ? ListTile(
-                        contentPadding: EdgeInsets.zero,
-                        leading: CircleAvatar(
-                          radius: 20.r,
-                          backgroundColor:
-                          AppLightColors.dividerColor,
-                          child: const Icon(
-                            CupertinoIcons
-                                .phone_arrow_up_right,
-                            color: AppLightColors
-                                .primaryColor,
+                        decoration: BoxDecoration(
+                          color: message.sender?.id == userId
+                              ? AppDarkColors.primaryColor
+                              : Get.find<AppController>().darkMode
+                              ? AppDarkColors.darkContainer2
+                              : Colors.white,
+                          borderRadius: message.sender?.id == userId
+                              ? senderRadius
+                              : receiverRadius,
+                        ),
+                        child: message.attachmentType == 'image'
+                            ? GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return GalleryChatsScreen(
+                                    currentPath:
+                                    message.attachmentUrl ?? '',
+                                    isVideo: false,
+                                    images: provider.chatMessages
+                                        ?.where(
+                                          (e) =>
+                                      e.attachmentType ==
+                                          'image',
+                                    )
+                                        .toList() ??
+                                        [],
+                                  );
+                                },
+                              ),
+                            );
+                          },
+                          child: AppImage(
+                            imageUrl: message.attachmentUrl ??
+                                AppImages.placeholder,
+                            fit: BoxFit.fill,
+                            radius: 10,
+                            width: 70 * (w / 100),
+                            height: 70 * (w / 100),
+                          ),
+                        )
+                            : message.attachmentType == 'file'
+                            ? OpenFileItems(pathUrl: message.attachmentUrl)
+                            : message.attachmentType == 'video'
+                            ? GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return GalleryChatsScreen(
+                                    currentPath:
+                                    message.attachmentUrl ?? '',
+                                    isVideo: true,
+                                    images: provider.chatMessages
+                                        ?.where(
+                                          (e) =>
+                                      e.attachmentType ==
+                                          'video',
+                                    )
+                                        .toList() ??
+                                        [],
+                                  );
+                                },
+                              ),
+                            );
+                          },
+                          child: AppVideoPlayer(
+                            videoUrl: message.attachmentUrl ?? '',
+                            radius: 10,
+                          ),
+                        )
+                            : message.attachmentType == 'audio'
+                            ? AppAudioPlayer(
+                          audioUrl: message.attachmentUrl ?? '',
+                          radius: 10,
+                        )
+                            : message.attachmentType == 'call'
+                            ? ListTile(
+                          contentPadding: EdgeInsets.zero,
+                          leading: CircleAvatar(
+                            radius: 20.r,
+                            backgroundColor:
+                            AppLightColors.dividerColor,
+                            child: const Icon(
+                              CupertinoIcons
+                                  .phone_arrow_up_right,
+                              color: AppLightColors
+                                  .primaryColor,
+                            ),
+                          ),
+                          title: Text('Call'.tr),
+                          subtitle: Text(
+                            message.message ?? '',
+                          ),
+                          titleTextStyle: Get
+                              .theme.textTheme.headlineSmall
+                              ?.copyWith(
+                            fontSize: 19,
+                          ),
+                          subtitleTextStyle: Get
+                              .theme.textTheme.bodySmall
+                              ?.copyWith(
+                            color: message.sender?.id ==
+                                userId
+                                ? Colors.white
+                                : Get.find<AppController>()
+                                .darkMode
+                                ? Colors.white
+                                : Colors.black,
+                          ),
+                        )
+                            : Text(
+                          message.message ?? '',
+                          style: Get
+                              .theme.textTheme.bodySmall
+                              ?.copyWith(
+                            color: message.sender?.id ==
+                                userId
+                                ? Colors.white
+                                : Get.find<AppController>()
+                                .darkMode
+                                ? Colors.white
+                                : Colors.black,
                           ),
                         ),
-                        title: Text('Call'.tr),
-                        subtitle: Text(
-                          message.message ?? '',
-                        ),
-                        titleTextStyle: Get
-                            .theme.textTheme.headlineSmall
-                            ?.copyWith(
-                          fontSize: 19,
-                        ),
-                        subtitleTextStyle: Get
-                            .theme.textTheme.bodySmall
-                            ?.copyWith(
-                          color: message.sender?.id ==
-                              userId
-                              ? Colors.white
-                              : Get.find<AppController>()
-                              .darkMode
-                              ? Colors.white
-                              : Colors.black,
-                        ),
-                      )
-                          : Text(
-                        message.message ?? '',
-                        style: Get
-                            .theme.textTheme.bodySmall
-                            ?.copyWith(
-                          color: message.sender?.id ==
-                              userId
-                              ? Colors.white
-                              : Get.find<AppController>()
-                              .darkMode
-                              ? Colors.white
-                              : Colors.black,
-                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
                 if (type != ChatType.Bot)
-                  Padding(
-                    padding: EdgeInsets.only(top: 1.74 * (w / 100)),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          formatTime(message.createdAt ?? DateTime.now()),
-                          style: Get.theme.textTheme.labelMedium!
-                              .copyWith(fontWeight: FontWeight.w400),
-                        ),
-                        // SizedBox(
-                        //   width: 0.74 * (w / 100),
-                        // ),
-                        // if (message.isRead == 1)
-                        //   AppIcon(
-                        //     path: AppIcons.done,
-                        //     height: 5.79 * (w / 100),
-                        //     width: 5.79 * (w / 100),
-                        //   )
-                        // else
-                        //   const Icon(
-                        //     CupertinoIcons.check_mark,
-                        //     color: CupertinoColors.activeGreen,
-                        //   )
-                      ],
+                  Visibility(
+                    visible: message.message != '/////vvvXXX////',
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 1.74 * (w / 100)),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            formatTime(message.createdAt ?? DateTime.now()),
+                            style: Get.theme.textTheme.labelMedium!
+                                .copyWith(fontWeight: FontWeight.w400),
+                          ),
+                          // SizedBox(
+                          //   width: 0.74 * (w / 100),
+                          // ),
+                          // if (message.isRead == 1)
+                          //   AppIcon(
+                          //     path: AppIcons.done,
+                          //     height: 5.79 * (w / 100),
+                          //     width: 5.79 * (w / 100),
+                          //   )
+                          // else
+                          //   const Icon(
+                          //     CupertinoIcons.check_mark,
+                          //     color: CupertinoColors.activeGreen,
+                          //   )
+                        ],
+                      ),
                     ),
                   ),
               ],

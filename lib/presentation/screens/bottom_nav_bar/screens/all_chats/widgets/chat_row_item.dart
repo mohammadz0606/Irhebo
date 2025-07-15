@@ -135,7 +135,7 @@ class ChatRowItem extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Text(
-                          chat.lastMessage?.message ?? '',
+                          chat.lastMessage?.message == '/////vvvXXX////'?''  : chat.lastMessage?.message ?? '',
                           style: Get.theme.textTheme.bodySmall,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,

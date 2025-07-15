@@ -160,10 +160,9 @@ class ChatTextField extends GetWidget<ChatController> {
                                         ),
                                       ),
                                     );
-
                                     await provider.sendMessage(
                                       sendParam: SendMessageParam(
-                                        message: ' ',
+                                        message: '/////vvvXXX////',
                                         chatId: controller.chatId,
                                         messageType: MessageType.text,
                                         attachmentFile: null,
