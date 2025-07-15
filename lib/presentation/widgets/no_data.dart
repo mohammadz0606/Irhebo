@@ -22,12 +22,14 @@ class NoData extends StatelessWidget {
     return Center(
         child: Column(
       mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         if (!forHome)
           if(enableSpace)
-          SizedBox(
-            height: 40.2 * (w / 100),
-          ),
+            SizedBox(
+              height: 30 * (w / 100),
+            ),
         SizedBox(
             // color: Colors.amber,
             height: forHome ? 40 * (w / 100) : 80.2 * (w / 100),

@@ -187,8 +187,8 @@ class ServiceProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  onChangeSourceFile(bool? value) {
-    sourceFile[planListUIndex] = value ?? false;
+  onChangeSourceFile(bool? value,int index) {
+    sourceFile[index] = value ?? false;
     notifyListeners();
   }
 

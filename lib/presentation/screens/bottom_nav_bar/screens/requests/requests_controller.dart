@@ -35,7 +35,7 @@ class RequestsController extends GetxController {
   Future<void> onInit() async {
     super.onInit();
     if (appController.token.isNotEmpty) {
-      if (getUserRole == UserRoles.client) {
+      if (getUserRole != UserRoles.non) {
         getRequests();
       }
     }

@@ -121,6 +121,7 @@ class _PlanCardState extends State<PlanCard> {
                   ),
                   const SizedBox(height: 15),
                   CheckboxListTile(
+                    enabled: true,
                     controlAffinity: ListTileControlAffinity.leading,
                     contentPadding: EdgeInsets.zero,
                     title: Text(
@@ -129,7 +130,9 @@ class _PlanCardState extends State<PlanCard> {
                     ),
                     dense: true,
                     value: provider.sourceFile[widget.currentIndex ?? 0],
-                    onChanged: provider.onChangeSourceFile,
+                    onChanged: (value) {
+                      provider.onChangeSourceFile(value,widget.currentIndex ?? 0);
+                    },
                   )
                 ],
               ),

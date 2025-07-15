@@ -34,16 +34,19 @@ class CreateTicketController extends GetxController {
   // ignore: invalid_use_of_protected_member
   final formData = dio.FormData();
 
-  Rx<RequestModel> _request = RequestModel().obs;
+  final Rx<RequestModel> _request = RequestModel().obs;
 
   bool get isLoading => _isLoading.value;
+
   RequestModel get request => _request.value;
 
   set isLoading(value) => _isLoading.value = value;
+
   set request(value) => _request.value = value;
 
   @override
   onInit() async {
+    await Get.find<RequestsController>().getRequests();
     super.onInit();
   }
 

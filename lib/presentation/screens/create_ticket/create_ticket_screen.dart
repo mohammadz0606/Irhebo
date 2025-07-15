@@ -18,7 +18,7 @@ class CreateTicketScreen extends GetView<CreateTicketController> {
         title: "Add Ticket",
         color: Get.find<AppController>().darkMode ? null : Colors.white,
       ),
-      body: SingleChildScrollView(child: CreateTicketForm()),
+      body: const SingleChildScrollView(child: CreateTicketForm()),
       bottomNavigationBar: Obx(
         () => AppButton(
           isLoading: controller.isLoading,
