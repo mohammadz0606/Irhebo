@@ -27,7 +27,7 @@ class PinPutWidget extends GetWidget<VerificationController> {
                   length: 6,
                   // pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
                   // validator: AppValidators.validateOtp,
-                  keyboardType: TextInputType.numberWithOptions(),
+                  keyboardType: const TextInputType.numberWithOptions(),
                   inputFormatters: [
                     FilteringTextInputFormatter.allow(RegExp(
                         r'[0-9A-Za-z]')), // Allows only numbers and letters
@@ -84,7 +84,7 @@ class PinPutWidget extends GetWidget<VerificationController> {
             SizedBox(
               height: 9.2 * (w / 100),
             ),
-            ResendCodeWidget()
+            const ResendCodeWidget()
           ],
         ),
       ),
