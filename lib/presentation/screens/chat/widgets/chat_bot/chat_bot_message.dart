@@ -6,6 +6,7 @@ import '../../../../../app/router/routes.dart';
 import '../../../../../domain/models/home_model.dart';
 import '../../../../../domain/models/new_models/chat/chat_bot_messages_model.dart';
 import '../../../bottom_nav_bar/screens/home/widgets/service_item.dart';
+import '../../../portfolio_details/widgets/view_html_details.dart';
 import '../../../service_details/service_details_screen.dart';
 
 class ChatBotMessage extends StatelessWidget {
@@ -55,16 +56,20 @@ class ChatBotMessage extends StatelessWidget {
                         ? senderRadius
                         : receiverRadius,
                   ),
-                  child: Text(
-                    botMessagesModelMessages.message ?? '',
-                    style: Get.theme.textTheme.bodySmall?.copyWith(
-                      color: botMessagesModelMessages.role == 'user'
-                          ? Colors.white
-                          : Get.find<AppController>().darkMode
-                              ? Colors.white
-                              : Colors.black,
-                    ),
-                  ),
+                  child: botMessagesModelMessages.role == 'user'
+                      ? Text(
+                          botMessagesModelMessages.message ?? '',
+                          style: Get.theme.textTheme.bodySmall?.copyWith(
+                            color: botMessagesModelMessages.role == 'user'
+                                ? Colors.white
+                                : Get.find<AppController>().darkMode
+                                    ? Colors.white
+                                    : Colors.black,
+                          ),
+                        )
+                      : ViewHtmlDetails(
+                          html: botMessagesModelMessages.message ?? '',
+                        ),
                 ),
                 if (botMessagesModelMessages.role != 'user' &&
                     botMessagesModelMessages.services?.isNotEmpty == true) ...{
